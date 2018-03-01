@@ -7,14 +7,21 @@
       <sicon name="test" scale="10" color="#EF5350"></sicon>
     </div>
     <cube-button @click="test">发起请求</cube-button>
+    <div>
+      vant-ui
+    </div>
+    <van-button type="default">vant默认按钮</van-button>
   </div>
 </template>
 
 <script>
+  //vant
+  import { Button } from 'vant'
   import HomeHeader from './components/header.vue'
   export default {
     components: {
-      HomeHeader
+      HomeHeader,
+      [Button.name]: Button
     },
     methods: {
       async test() {

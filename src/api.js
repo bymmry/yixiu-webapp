@@ -3,7 +3,12 @@ const ajax = ajaxLib.ajax
 class Api {
   //hello world
   static async hello() {
-    return ajax.get('/hello')
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('hello world!')
+      }, 1000)
+    })
+    return promise
   }
 }
 export default {
