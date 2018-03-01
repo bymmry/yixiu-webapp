@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '../views/home/router'
+import orders from '../views/common/router'
 
 Vue.use(Router)
 export default new Router({
@@ -9,6 +10,7 @@ export default new Router({
       path: '/',
       redirect:'/home'
     },
-    ...home
+    ...home,
+    ...orders
   ]
 })
