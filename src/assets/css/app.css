@@ -1,0 +1,14 @@
+html,body{
+  overflow: hidden
+}
+.tf2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word
+}
+p{
+  line-height: 1.6
+}
