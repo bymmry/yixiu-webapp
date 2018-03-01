@@ -1,6 +1,8 @@
-const App = () => ({
-  component: import ('./App')
-})
+//按需加载方式
+// const App = () => ({
+//   component: import ('./App')
+// })
+import App from './App'
 
 export default [{
   path: '/home',
