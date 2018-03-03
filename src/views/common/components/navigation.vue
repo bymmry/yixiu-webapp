@@ -21,7 +21,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    height: 50px;
+    height: 8vh;
     border-top: 1px solid #eee;
     box-shadow: 0 -1px 0 #eee;
   }

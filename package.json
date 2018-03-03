@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "better-scroll": "^0.1.15",
     "cube-ui": "^1.5.0",
     "fastclick": "^1.0.6",
     "vant": "^0.12.11",
