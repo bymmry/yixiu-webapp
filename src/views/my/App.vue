@@ -1,76 +1,52 @@
 <template>
   <div class="my-container">
+    <van-nav-bar
+      title="个人中心"
+      left-text="返回"
+      fixed
+      left-arrow
+      @click-left="prepage"
+    />
+    <!-- 顶部留白 -->
+    <div class="topblank"></div>
+  
     <!-- 个人中心-信息 -->
-    <router-link to="/my/information">
-      <div class="box-container">
-        <div class="infobox">
-          <div class="profile-picture">
-            <img :src="userInfo.img">
-          </div>
-          <div class="userinfo">
-            {{ userInfo.id }}
-          </div>
-        </div>
-        <div class="userinfo moreInfo">会员信息<sicon name="my-rightArr" scale="1.7"></sicon></div>
+    <!-- 顶部背景图 -->
+    <div class="userbg"></div>
+
+    <!-- 用户头像及登录注册 -->
+    <div class="user-area">
+      <div class="user-profile">
+        <img :src="userInfo.img">
       </div>
-    </router-link>
-
-    <!-- 个人中心-优惠券 -->
-    <div class="box-container">
-      <div class="coupon-container">
-        <router-link to="/my/mycoupus" class="coupon">
-            <div>
-              <div>我的优惠券</div>
-              <div class="use-coupon" v-if=" userInfo.name!='' ">{{ userInfo.coupon }}张可用</div>
-            </div>
-            <div><sicon name="my-rightArr" scale="1.7" color="#a6a6a6"></sicon></div>
-        </router-link>
-        <div class="coupon-line"></div>
-
-        <router-link to="/my/mycoupus" class="coupon">
-          <div>
-            <div>领券中心</div>
-          </div>
-          <div><sicon name="my-rightArr" scale="1.7" color="#a6a6a6"></sicon></div>
-        </router-link>
+      <div class="usermessage">
+        <div>登录</div>
+        <div>|</div>
+        <div>注册</div>
       </div>
     </div>
-
-    <!-- 个人中心-其他 -->
-    <div class="box-container">
-      <div class="list-container">
-
-        <div v-for="(catalog, index) in catalogs">
-          <!-- 分割线 -->
-          <div class="list-line" v-if="index != 0"></div>
-          <router-link  :to="{ path: catalog.url }" :key="index" class="list-box" v-if="catalog.name==='我的地址'">
-            <div class="list-L">
-              <sicon :name="catalog.icon" scale="2" color="#353535"></sicon>
-              <div>{{ catalog.name}}</div>
-            </div>
-            <div><sicon name="my-rightArr" scale="1.3" color="#a6a6a6"></sicon></div>
-          </router-link>
-          <div class="list-box" v-else @click="toast_no">
-            <div class="list-L">
-              <sicon :name="catalog.icon" scale="2" color="#353535"></sicon>
-              <div>{{ catalog.name}}</div>
-            </div>
-            <div><sicon name="my-rightArr" scale="1.3" color="#a6a6a6"></sicon></div>
-          </div>
-        </div>
-        
-
-      </div>
+    <!-- 个人中心-功能菜单 -->
+    <div class="user-menu">
+        <van-cell-group>
+          <van-cell 
+            v-for="(catalog,index) in catalogs" 
+            :key="index"
+            :title="catalog.name" 
+            :icon="catalog.icon" 
+            is-link
+            @click="changepage(catalog.url)"
+            />
+        </van-cell-group>
     </div>
-
-    <van-button type="default" @click="sign_out">退出</van-button>
-
   </div>
 </template>
 
 <script>
   //van
-  import { Button } from 'vant'
+  import { Button } from 'vant';
+  import { NavBar } from 'vant';
+  import { Cell, CellGroup } from 'vant';
+
   export default {
     data () {
       return {
@@ -78,35 +54,52 @@
         userInfo:{   
           img: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
           id: "13368161676",
-          coupon: 1,
         },
         //功能菜单列表
         catalogs:[    
           {
-            name: "我的积分",
-            icon: "my-coin",
+            name: "优惠券",
+            icon: "gold-coin",
+            url: "my/mycoupus"
+          },
+          {
+            name: "个人信息",
+            icon: "contact",
+            url: "my/information"
+          },
+          {
+            name: "我的钱包",
+            icon: "pending-payment",
             url: ""
           },
           {
             name: "我的收藏",
-            icon: "my-collect",
+            icon: "like-o",
             url: ""
           },
           {
             name: "我的地址",
-            icon: "my-address",
+            icon: "location",
             url: "my/myaddress"
           },
           {
             name: "问题反馈",
-            icon: "my-question",
+            icon: "question",
             url: ""
+          },
+          {
+            name: "退出登录",
+            icon: "close",
+            url: "logout"
           }
         ]
       }
     },
     components: {
-      [Button.name]: Button
+      [Button.name]: Button,
+      [NavBar.name]: NavBar,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup,
     },
     methods: {
       //功能无法使用的提示
@@ -119,6 +112,7 @@
         //使用show调出方法
         toast.show()
       },
+      //登出
       async sign_out(){
         const toast = this.$createToast({
           time: 0,
@@ -141,114 +135,76 @@
           })
           toast.show()
         }
+      },
+      //返回首页
+      prepage(){
+        this.$router.push({ path: "/home"})
+      },
+      //点击功能后进行跳转
+      async changepage(url){
+        if (url==="") {
+          this.toast_no();
+        }else if(url==="logout"){
+          this.sign_out();
+        }else{
+          this.$router.push({ path: url })
+        }
+        
+
       }
     }
   }
 </script>
 
 <style scoped>
+  html{
+    overflow: scroll;
+  }
   .my-container{
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 2vh 3vw 5vh 3vw;
-    background: rgb(240, 241, 245);
-  }
-  .box-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    border: 0.1vw solid #ddd;
-    padding: 3vw;
-    margin-bottom: 2vw;
+    padding: 0.3vh 0vw 5vh 0vw;
+    margin-bottom: 70px;
     background: #fff;
-    -moz-box-shadow:0.5vw 0.5vh 3vw #DDD; 
-    -webkit-box-shadow:0.5vw 0.5vh 3vw #DDD; 
-    box-shadow:0.5vw 0.5vh 3vw #DDD;
   }
-  .infobox{
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    height: 9vh;
+  .topblank{
+    margin-top: 45.6px;
   }
-  .profile-picture{
-    width: 12vw;
-    height: 12vw;
-    margin-right: 2vw;
-    overflow: hidden;
-    border-radius: 50%;
+  .userbg{
+    height: 24vh;
+    border: 0.1vw solid #e9e9e9;
+    border-radius: 5px;
+    -moz-box-shadow:0vw 1vh 4vw #e9e9e9; 
+    -webkit-box-shadow:0vw 1vh 4vw #e9e9e9; 
+    box-shadow:0vw 1vh 4vw #e9e9e9;
+    background: url(https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/lattice.jpg);
   }
-  .profile-picture img{
-    width: 100%;
-    height: 100%
-  }
-  .userinfo {
-    color:#313131;
-    font-size: 5vw;
-  }
-  .moreInfo{
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-  }
-
-
-  .coupon-container{
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  .coupon{
-    width: 45%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    color: #353535
-  }
-  .coupon-line{
-    display: inline-block;
-    height: 8vh;
-    width: 0.5vw;
-    background: #ecebeb;
-    margin:0 2vw;
-  }
-  .use-coupon{
-    margin-top: 1vh;
-    color: #a6a6a6;
-    font-size: 14px;
-  }
-
-
-  .list-container{
-    width: 100%;
+  .user-area{
     display: flex;
     flex-direction: column;
+    align-items:center;
+    margin-top: -8vw;
+    margin-bottom: 7vh;
   }
-  .list-box{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 7vh;
+  .user-profile{
+    width: 16vw;
+    height: 16vw;
+    border-radius: 50%;
+    border: 0.1vw solid #b6baba;
+    margin-bottom: 2vh;
+    -moz-box-shadow:0vw 0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw 0.5vh 3vw #b6baba; 
+    box-shadow:0vw 0.5vh 3vw #b6baba;
+    overflow: hidden;
   }
-  .list-line{
+  .user-profile img{
     width: 100%;
-    height: 0.3vh;
-    margin-top: 1vh;
-    margin-bottom: 1vh;
-    background: #ecebeb;
+    height: 100%;
   }
-  .list-L{
-    font-size: 5vw;
+  .usermessage{
     display: flex;
     flex-direction: row;
-    color: #353535;
+    justify-content: space-between;
+    width: 25vw;
+    color: #42535e
   }
-  .list-L svg{
-    margin-left: 1vw;
-    margin-right: 3vw;
-  }
+
 </style>
