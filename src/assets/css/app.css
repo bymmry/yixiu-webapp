@@ -1,7 +1,11 @@
 html,body{
-  width: 100%;
-  height: 100%;
-  overflow: hidden
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*overflow: hidden*/
+  overflow-y: scroll;
+  
+  /* 这个overflow:hidden 导致页面无法滚动，我加了一个y方向滚动 */
+  /* 如果有什么问题希望能告诉我一声，我的电脑是不去掉hidden就无法滚动的  by 文俊霖*/ 
 }
 #app {
   width: 100%;
