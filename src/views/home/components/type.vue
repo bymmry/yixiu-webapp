@@ -2,9 +2,10 @@
   <div class="type-container">
     <div class="type">
 			<TypeItem 
-				v-for="(name, index) in data" 
+				v-for="(item, index) in data" 
 				:key="index" 
-				:name="name"
+				:name="item.name"
+        :icon="item.icon"
 				/>
     </div>
   </div>
@@ -18,7 +19,16 @@
     },
     data () {
     	return {
-				data: ['手机维修', '精品手机', '家电维修', '手机配件', '企业设备维护', '汽车维修', '手机回收', '全部分类']
+				data: [
+          {name: '手机维修', icon: 'typePhone'}, 
+          {name: '精品手机', icon: 'typeNicePhone'}, 
+          {name: '家电维修', icon: 'typeCamera'}, 
+          {name: '手机配件', icon: 'typeFixing'}, 
+          {name: '企业设备维护', icon: 'typeEquipment'}, 
+          {name: '汽车维修', icon: 'typeCar'}, 
+          {name: '手机回收', icon: 'typeRecovery'}, 
+          {name: '全部分类', icon: 'typeAll'}
+        ]
 			}
     }
   }

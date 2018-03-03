@@ -6,6 +6,7 @@
       :key="index"
       :city="city"
     />
+    <div class="space"></div>
   </div>
 </template>
 
@@ -39,5 +40,8 @@
 </script>
 
 <style scoped>
-
+.space {
+  width: 100%;
+  height: 8vh;
+}
 </style>

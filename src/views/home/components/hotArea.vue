@@ -3,9 +3,10 @@
 		<p class="hot__title">新用户专区</p>
 		<div class="hot__content">
 			<type-item
-				v-for="(name, index) in data" 
+				v-for="(item, index) in data" 
 				:key="index" 
-				:name="name"
+				:name="item.name"
+				:icon="item.icon"
 			/>
 		</div>
 	</div>
@@ -19,7 +20,16 @@
 		},
 		data () {
 			return {
-				data: ['电池电源', '屏幕问题', '摄像头问题', '声音问题', '按键问题', '外壳边框', '信号|有线|无线', '全部服务']
+				data: [
+					{name: '电池电源', icon: 'hotBattery'}, 
+					{name: '屏幕问题', icon: 'hotScreen'}, 
+					{name: '摄像头问题', icon: 'hotCamera'}, 
+					{name: '声音问题', icon: 'hotSound'}, 
+					{name: '按键问题', icon: 'hotKeyBoard'}, 
+					{name: '外壳边框', icon: 'hotHull'}, 
+					{name: '信号|有线|无线', icon: 'hotWire'}, 
+					{name: '全部服务', icon: 'hotAll'}
+				]
 			}
 		}
 	}
@@ -29,11 +39,10 @@
 .hot {
 	width: 100%;
 	text-align: center;
+	margin-top: 20px;
 }
 .hot__content {
 	width: 90%;
 	display: inline-block;
-	border: 2px solid #eee;
-	border-radius: 4px;
 }
 </style>

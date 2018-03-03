@@ -1,6 +1,6 @@
 <template>
   <div class="type__item">
-      <sicon name="position" scale="3.8"></sicon>
+      <sicon :name="icon" scale="3.8"></sicon>
       <br>
       <p>{{name}}</p>
   </div>
@@ -10,7 +10,8 @@
 
   export default {
     props: {
-    	name: String
+      name: String,
+      icon: String
     }
   }
 </script>
@@ -21,6 +22,7 @@
 	width: 25%;
 	text-align: center;
 	font-size: 12px;
-	color: #949191;
+  color: #949191;
+  margin: 10px 0;
 }
 </style>

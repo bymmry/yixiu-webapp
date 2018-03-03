@@ -29,10 +29,10 @@
 
 <style scoped>
 .swipe {
-  height: 150px;
+  height: 120px;
 }
 
 .van-swipe {
-  height: 150px;
+  height: 120px;
 }
 </style>

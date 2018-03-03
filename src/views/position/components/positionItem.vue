@@ -20,8 +20,8 @@
 
 <style scoped>
 .position__item {
-  padding: 16px;
-  width: 100%;
+  padding: 5%; 
+  width: 90%;
   font-size: 18px;
   border-bottom: 1px solid #eee;
 }

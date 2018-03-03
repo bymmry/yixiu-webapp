@@ -4,6 +4,9 @@
     <Swipe></Swipe>
     <Type></Type>
     <HotArea></HotArea>
+    <Ticket></Ticket>
+    <Activity></Activity>
+    <div class="space"></div>
   </div>
 </template>
 
@@ -13,13 +16,17 @@
   import Swipe from './components/swipe.vue'
   import Type from './components/type.vue'
   import HotArea from './components/hotArea.vue'
+  import Ticket from './components/tickets.vue'
+  import Activity from './components/activity.vue'
   export default {
     components: {
       Nav,
       HomeHeader,
       Swipe,
       Type,
-      HotArea
+      HotArea,
+      Ticket,
+      Activity
     },
     methods: {
       
@@ -28,5 +35,8 @@
 </script>
 
 <style scoped>
-
+.space {
+  width: 100%;
+  height: 8vh;
+}
 </style>
