@@ -4,6 +4,10 @@ import home from '../views/home/router'
 import orders from '../views/common/router'
 import my from '../views/my/router'
 import find from '../views/find/router'
+import position from '../views/position/router'
+import login from '../views/login/router'
+import register from '../views/register/router'
+import search from '../views/search/router'
 
 Vue.use(Router)
 export default new Router({
@@ -15,6 +19,10 @@ export default new Router({
     ...home,
     ...orders,
     ...my,
-    ...find
+    ...find,
+    ...position,
+    ...login,
+    ...register,
+    ...search
   ]
 })

@@ -20,17 +20,17 @@ ajax.interceptors.request.use(config => {
   return Promise.reject(err)
 })
 // 注册响应拦截器
-ajax.interceptors.response.use(response => {
-  let res = response.data
-  if (res.code === 200) {
-    return Promise.resolve(res.data)
-  } else {
-    alert(res.errMsg)
-    return Promise.resolve()
-  }
-}, err => {
-  return Promise.reject(err)
-})
+// ajax.interceptors.response.use(response => {
+//   let res = response.data
+//   if (res.code === 200) {
+//     return Promise.resolve(res.data)
+//   } else {
+//     alert(res.errMsg)
+//     return Promise.resolve()
+//   }
+// }, err => {
+//   return Promise.reject(err)
+// })
 
 export default {
   install(Vue) {

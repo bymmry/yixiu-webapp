@@ -1,15 +1,85 @@
 <template>
-  <div>
-    home header
+  <div class="header">
+    <router-link to="/position">
+      <div class="header__pos">
+        <span class="pos__name">{{city}}</span>
+        <sicon name="position" scale="2" class="pos__icon"></sicon>
+        <div id="allmap"></div>
+      </div>
+    </router-link>
+    <router-link class="header__search" to="/search">
+      <input type="text" class="header__input" placeholder="请输入想要搜索的内容"/>
+    </router-link>
+    <sicon name="more" scale="3.8" class="header__operate"></sicon>
   </div>
 </template>
 
 <script>
   export default {
-    
+    data () {
+      return {
+        city: ''
+      }
+    },
+    mounted () {
+      this.initPosition();
+    },
+    methods: {
+      initPosition () {
+        let map = new BMap.Map("allmap");
+        let point = new BMap.Point(116.331398,39.897445);
+        map.centerAndZoom(point,12);
+        let _this = this;
+
+        function getLoaction (res) {
+          let city = res.name;
+          map.setCenter(city);
+          _this.city = city;
+        }
+
+        const myCity = new BMap.LocalCity();
+        myCity.get(getLoaction);
+      }
+    }
+
   }
 </script>
 
 <style scoped>
+.header {
+  display: flex;
+  justify-content: space-between;
+  background: #ffbd5c;
+  padding: 10px 0;
+}
 
+.header__search {
+  width: 60%;
+  margin-top: 2px;
+}
+
+.header__input {
+  width: 90%;
+  border-radius: 5px;
+  padding: 6px;
+}
+
+.header__pos {
+  margin-left: 6px;
+  display: flex;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.header__pos .pos__name {
+  color: #fff;
+}
+
+.header__operate {
+  margin-right: 6px;
+}
 </style>
