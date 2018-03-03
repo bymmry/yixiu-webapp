@@ -25,16 +25,16 @@ export default [
 {
   path: '/my/mycoupus',
   component: mycoupus,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 },
 {
   path: '/my/myaddress',
   component: myaddress,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 }
 
 ]
