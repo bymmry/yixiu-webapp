@@ -93,6 +93,11 @@
         },
       }
     },
+    created() {
+      this.$ajax.get('https://m.yixiutech.com/shop').then((res) => {
+        console.log(res);
+      })
+    },
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;
