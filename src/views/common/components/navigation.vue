@@ -3,7 +3,7 @@
     <div class="routerBox">
       <router-link to="/home"><sicon name="home" scale="2.3"></sicon><br/><span>首页</span></router-link>
       <router-link to="/orders"><sicon name="orders" scale="2.3"></sicon><br/><span>订单</span></router-link>
-      <router-link to="/find"><sicon name="find" scale="2.3"></sicon><br/><span>发现</span></router-link>
+      <router-link to="/find/question"><sicon name="find" scale="2.3"></sicon><br/><span>发现</span></router-link>
       <router-link to="/my"><sicon name="my" scale="2.3"></sicon><br/><span>我的</span></router-link>
     </div>
   </div>

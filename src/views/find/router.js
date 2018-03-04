@@ -3,11 +3,18 @@
 //   component: import ('./App')
 // })
 import App from './App'
+import question from './children/question'
 
 export default [{
   path: '/find',
   component: App,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  children: [
+    {
+      path: "/find/question", //商家详情
+      component: question
+    }
+  ],
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 }]
