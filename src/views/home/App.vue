@@ -6,6 +6,7 @@
     <HotArea></HotArea>
     <Ticket></Ticket>
     <Activity></Activity>
+    <shop-list></shop-list>
     <div class="space"></div>
   </div>
 </template>
@@ -18,6 +19,7 @@
   import HotArea from './components/hotArea.vue'
   import Ticket from './components/tickets.vue'
   import Activity from './components/activity.vue'
+  import shopList from '../common/components/shopList'
   export default {
     components: {
       Nav,
@@ -26,10 +28,11 @@
       Type,
       HotArea,
       Ticket,
-      Activity
+      Activity,
+      shopList
     },
     methods: {
-      
+
     }
   }
 </script>

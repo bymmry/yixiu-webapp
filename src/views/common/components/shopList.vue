@@ -1,5 +1,8 @@
 <template>
   <div class="shopList">
+    <div class="shopTitle">
+      <h3><sicon name="home" scale="1.6"></sicon><span>附近为维修店</span></h3>
+    </div>
     <div class="shopSort">
       <ul ref="shopSort">
         <li @click="chooseMainType(0)" ref="shopSortItem" :class="{'active': currentIndex===0}"><span>{{nowColumnsType}}<sicon name="choose" scale="2"></sicon></span>
@@ -123,9 +126,27 @@
     width: 100%;
     height: auto;
   }
+  .shopList .shopTitle{
+    width: auto;
+    height: 5vh;
+  }
+  .shopList .shopTitle h3{
+    width: auto;
+    text-align: center;
+  }
+  .shopList .shopTitle h3 svg{
+    color: #eea17a;
+    margin-right: 2px;
+  }
+  .shopList .shopTitle h3 svg,  .shopList .shopTitle h3 span{
+    vertical-align: middle;
+    display: inline-block;
+    line-height: 5vh;
+    font-size: 13px;
+  }
   .shopList .shopSort{
     width: 100%;
-    height: 10vh;
+    height: 7vh;
     line-height: 50px;
     font-size: 13px;
   }
@@ -154,12 +175,13 @@
 
   .shopDes{
     width: 100%;
-    height: 82vh;
+    /*height: 80vh;*/
+    height: auto;
   }
   .shopDes .shopMain{
     width: auto;
     height: 60px;
-    padding: 10px 10px;
+    padding: 0 10px 20px 10px;
     display: flex;
   }
   .shopDes .shopMain > div{
