@@ -2,27 +2,39 @@
   <div>
     <!-- 导航栏 -->
     <van-nav-bar
-      title="发现"
+      
       left-text="返回"
       fixed
       left-arrow
       @click-left="prepage"
-    />
-    <!-- 搜索框 -->
-    
-    <van-search
-      v-model="searchvalue"
-      show-action
-      @search="onSearch"
-      class="search-box"
     >
-      <div slot="action" @click="onSearch">搜索</div>
-    </van-search>
-    
+      <van-search
+        v-model="searchvalue"
+        @search="onSearch"
+        slot="title"
+        class="titleSearch"
+      >
+      </van-search>
+    </van-nav-bar>
 
     <!-- 顶部留白 -->
     <div class="topblank"></div>
-    <div>123456</div>
+    <!-- Vant 标签页组件 -->
+    <van-tabs :active="active" @disabled="onClickDisabled"  @click="handleTabClick">
+      <van-tab v-for="index in 2" :disabled="index === 2">
+
+        <div slot="title" class="kindtitlebox" v-if="index===1">
+          <van-icon name="question" />问答
+        </div>
+
+        <div slot="title" v-else class="kindtitlebox">
+          <van-icon name="close" />热榜
+        </div>
+
+        <router-view></router-view>
+
+      </van-tab>
+    </van-tabs>
     
   </div>
 </template>
@@ -31,6 +43,8 @@
   //vant
   import { NavBar } from 'vant';
   import { Search } from 'vant';
+  import { Tab, Tabs } from 'vant';
+  import { Icon } from 'vant';
 
   export default {
     data(){
@@ -41,12 +55,35 @@
     },
     components: {
       [NavBar.name]: NavBar,
-      [Search.name]: Search
+      [Search.name]: Search,
+      [Icon.name]: Icon,
+      [Tabs.name]: Tabs,
+      [Tab.name]: Tab
     },
     methods: {
       //返回首页
       prepage(){
         this.$router.push({ path: "/home"})
+      },
+      //点击不可使用
+      onClickDisabled() {
+        const toast = this.$createToast({
+          txt: '本功能即将到来',
+          type: 'error',
+          time: 1500
+        })
+        //使用show调出方法
+        toast.show()
+      },
+      //点击标签
+      handleTabClick() {
+        const toast = this.$createToast({
+          time: 0,
+          type: "loading"
+        })
+        toast.show();
+        this.$router.push({ path: "/find/question"});
+        toast.hide();
       },
       async onSearch(){
         alert("搜索")
@@ -57,16 +94,22 @@
 
 <style scoped>
   .topblank{
-    margin-top: 87.6px;
-    margin-top: 150px;
+    margin-top: 46px;
   }
-  .search-box{
-    position: fixed;
-    top: 45.6px;
-    width: 100%;
-    padding-top: 5vh;
-    padding-bottom: 3vh;
-    /*background: url(https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg) !important;*/
+  .titleSearch{
+    float: right;
+    width: 80%;
+    margin-top: 2px;
+    background: transparent !important;
+  }
+  .kindtitlebox{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: center;
+  }
+  .kindtitlebox i{
+    margin-right: 2vw;
   }
   
 </style>
