@@ -158,7 +158,7 @@
   .shopDetail{
     position: fixed;
     top: 0;
-    bottom: 8vh;
+    bottom: 9vh;
     width: 100%;
     z-index: 10;
     background-color: #fff;
@@ -228,5 +228,4 @@
   .isShowStep{
     display: none;
   }
-
 </style>

@@ -14,7 +14,7 @@
             @click="showList = true"
           />
           <!-- 优惠券列表 -->
-          <div class="couponList" v-if="showList" position="bottom">
+          <van-popup v-model="showList" position="bottom">
             <van-coupon-list
               :coupons="coupons"
               :chosen-coupon="chosenCoupon"
@@ -22,7 +22,7 @@
               @change="onChange"
               @exchange="onExchange"
             />
-          </div>
+          </van-popup>
         </div>
       </div>
       <div class="stepButton">
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-  import { CouponCell, CouponList, Button } from 'vant';
+  import { CouponCell, CouponList, Popup, Toast, Button } from 'vant';
   const coupon = {
     available: 1,
     discount: 0,
@@ -49,7 +49,7 @@
     origin_condition: 0,
     reason: '',
     value: 150,
-    name: '优惠券名称',
+    // name: '优惠券',
     start_at: 1489104000,
     end_at: 1514592000
   }
@@ -84,7 +84,9 @@
     components: {
       [Button.name]: Button,
       [CouponCell.name]: CouponCell,
-      [CouponList.name]: CouponList
+      [CouponList.name]: CouponList,
+      [Popup.name]: Popup,
+      [Toast.name]: Toast
     },
     methods: {
       goBack: function () {
@@ -92,6 +94,8 @@
       },
       nextStep: function () {
       //  确认下单
+        Toast("确认下单");
+        console.log(this.chooseData);
       },
       onChange(index) {
         this.showList = false;
@@ -134,14 +138,6 @@
     float: right;
   }
 
-  .couponList{
-    position: fixed;
-    top: 10vh;
-    bottom: 8vh;
-    left: 0;
-    right: 0;
-    z-index: 12;
-  }
 
   .chooseInfos .stepButton{
     width: 100%;
