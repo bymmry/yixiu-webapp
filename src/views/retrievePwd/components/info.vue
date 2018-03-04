@@ -7,25 +7,22 @@
 			:icon="tip.icon"
 			:type="tip.type"
 		/>
-		<button class="info__btn" @click="login">登录</button>
-		<div class="info__tip">
-			<router-link class="tip__pwd" to="/home">忘记密码</router-link>
-			<router-link class="tip__register" to="/register">立即注册</router-link>
-		</div>
+		<button class="info__btn" @click="login">提交</button>
   </div>
 </template>
 
 <script>
 import InfoItem from './infoItem'
 export default {
+
 	components: {
 		InfoItem
 	},
 	data () {
 		return {
 			tips: [
-				{ msg: '请输入手机号码', type: 'text', icon: 'phone'}, 
-				{ msg: '请输入密码', type: 'password', icon: 'lock'}
+				{ msg: '请输入原密码', type: 'password', icon: 'lock'}, 
+				{ msg: '请输入新密码', type: 'password', icon: 'lock'},
 			]
 		}
 	},

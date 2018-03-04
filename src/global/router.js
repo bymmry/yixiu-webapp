@@ -4,10 +4,13 @@ import home from '../views/home/router'
 import common from '../views/common/router'
 import my from '../views/my/router'
 import find from '../views/find/router'
-import position from '../views/position/router'
 import login from '../views/login/router'
-import register from '../views/register/router'
 import search from '../views/search/router'
+import position from '../views/position/router'
+import register from '../views/register/router'
+import businessLogin from '../views/businessLogin/router'
+import RetrievePwd from '../views/retrievePwd/router'
+import SellerHome from '../views/sellerHome/router'
 
 Vue.use(Router)
 export default new Router({
@@ -23,6 +26,9 @@ export default new Router({
     ...position,
     ...login,
     ...register,
-    ...search
+    ...search,
+    ...businessLogin,
+    ...RetrievePwd,
+    ...SellerHome
   ]
 })

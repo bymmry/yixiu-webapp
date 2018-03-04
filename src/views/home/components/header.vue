@@ -10,7 +10,7 @@
     <router-link class="header__search" to="/search">
       <input type="text" class="header__input" placeholder="请输入想要搜索的内容"/>
     </router-link>
-    <sicon name="more" scale="3.8" class="header__operate"></sicon>
+    <sicon name="more" scale="3.4" class="header__operate"></sicon>
   </div>
 </template>
 
@@ -48,7 +48,7 @@
 <style scoped>
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   background: #ffbd5c;
   padding: 10px 0;
 }
@@ -65,9 +65,8 @@
 }
 
 .header__pos {
-  margin-left: 6px;
   display: flex;
-  padding: 8px 10px;
+  padding: 2vw 0.5vh;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   justify-content: center;
@@ -77,9 +76,5 @@
 
 .header__pos .pos__name {
   color: #fff;
-}
-
-.header__operate {
-  margin-right: 6px;
 }
 </style>

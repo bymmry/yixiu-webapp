@@ -10,7 +10,7 @@
 		<button class="info__btn" @click="login">登录</button>
 		<div class="info__tip">
 			<router-link class="tip__pwd" to="/home">忘记密码</router-link>
-			<router-link class="tip__register" to="/register">立即注册</router-link>
+			<router-link class="tip__register" to="/home">立即注册</router-link>
 		</div>
   </div>
 </template>
