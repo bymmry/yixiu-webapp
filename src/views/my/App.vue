@@ -19,24 +19,27 @@
       <div class="user-profile">
         <img :src="userInfo.img">
       </div>
-      <div class="usermessage">
-        <div>登录</div>
+      <div class="usermessage" v-if="!loggedin">
+        <router-link id="login" to="/login">登录</router-link>
         <div>|</div>
-        <div>注册</div>
+        <router-link id="register" to="/register">注册</router-link>
+      </div>
+      <div class="usermessage" v-else>
+        {{ userInfo.id }}
       </div>
     </div>
     <!-- 个人中心-功能菜单 -->
     <div class="user-menu">
-        <van-cell-group>
-          <van-cell 
-            v-for="(catalog,index) in catalogs" 
-            :key="index"
-            :title="catalog.name" 
-            :icon="catalog.icon" 
-            is-link
-            @click="changepage(catalog.url)"
-            />
-        </van-cell-group>
+      <van-cell-group>
+        <van-cell 
+          v-for="(catalog,index) in catalogs" 
+          :key="index"
+          :title="catalog.name" 
+          :icon="catalog.icon" 
+          is-link
+          @click="changepage(catalog.url)"
+          />
+      </van-cell-group>
     </div>
   </div>
 </template>
@@ -50,6 +53,7 @@
   export default {
     data () {
       return {
+        loggedin: true,    //是否已登录
         //用户信息
         userInfo:{   
           img: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
@@ -142,15 +146,23 @@
       },
       //点击功能后进行跳转
       async changepage(url){
-        if (url==="") {
-          this.toast_no();
-        }else if(url==="logout"){
-          this.sign_out();
+        if (this.loggedin===false) {
+          const toast = this.$createToast({
+            txt: '请先登录',
+            type: 'error',
+            time: 1500
+          })
+          //使用show调出方法
+          toast.show()
         }else{
-          this.$router.push({ path: url })
+          if (url==="") {
+            this.toast_no();
+          }else if(url==="logout"){
+            this.sign_out();
+          }else{
+            this.$router.push({ path: url })
+          }
         }
-        
-
       }
     }
   }
@@ -203,8 +215,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 25vw;
+    min-width: 25vw;
     color: #42535e
   }
-
 </style>

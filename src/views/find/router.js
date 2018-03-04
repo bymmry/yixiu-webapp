@@ -5,7 +5,7 @@
 import App from './App'
 
 export default [{
-  path: '/home',
+  path: '/find',
   component: App,
   meta: {
     keepAlive: true // 需要被缓存

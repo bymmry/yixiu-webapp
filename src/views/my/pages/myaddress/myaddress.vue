@@ -85,11 +85,6 @@
         setTimeout(() => {
           location.reload()
         }, 1000);
-        
-
-
-
-        
       },
       //导航栏 前往个人中心
       prepage(){
