@@ -53,7 +53,7 @@
   export default {
     data () {
       return {
-        loggedin: true,    //是否已登录
+        loggedin: false,    //是否已登录
         //用户信息
         userInfo:{   
           img: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
