@@ -1,12 +1,18 @@
 <template>
   <div class="info">
-		<InfoItem
-			v-for="(tip ,index) in tips"
-			:key="index"
-			:tip="tip.msg"
-			:icon="tip.icon"
-			:type="tip.type"
+
+		<van-field
+			v-model="infos.username"
+			label="用户名"
+			placeholder="请输入用户名"
 		/>
+
+		<van-field
+			v-model="infos.password"
+			label="密码"
+			placeholder="请输入密码"
+		/>
+
 		<button class="info__btn" @click="login">登录</button>
 		<div class="info__tip">
 			<router-link class="tip__pwd" to="/home">忘记密码</router-link>
@@ -16,22 +22,27 @@
 </template>
 
 <script>
-import InfoItem from './infoItem'
+import { Field } from 'vant'
 export default {
 	components: {
-		InfoItem
+		[Field.name]: Field
 	},
 	data () {
 		return {
-			tips: [
-				{ msg: '请输入手机号码', type: 'text', icon: 'phone'}, 
-				{ msg: '请输入密码', type: 'password', icon: 'lock'}
-			]
+			infos: {
+				username: '',
+				password: ''
+			}
 		}
 	},
 	methods: {
 		login () {
-			
+			this.$ajax.post('http://result.eolinker.com/rNJ9VKm854aa0a35ae4638e2071c22691b3bc309a1342ce?uri=/login', this.infos)
+				.then(response => {
+					console.log(response);
+				}).catch(error => {
+					console.log(error);
+				})
 		}
 	}
 }
@@ -44,6 +55,15 @@ export default {
     left: 50%;
     margin-top: 40px;
     transform: translate(-50%);
+}
+
+.info .van-field {
+	background: transparent;
+	color: #fff;
+}
+
+.info input {
+	background: transparent;
 }
 
 .info .info__btn {
@@ -71,5 +91,18 @@ export default {
 
 .info__tip .tip__register {
 	float: right;
+}
+
+input::-webkit-input-placeholder{
+	color:#fff;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+	color:#fff;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+	color:#fff
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+	color:#fff;
 }
 </style>

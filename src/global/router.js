@@ -8,9 +8,10 @@ import login from '../views/login/router'
 import search from '../views/search/router'
 import position from '../views/position/router'
 import register from '../views/register/router'
-import businessLogin from '../views/businessLogin/router'
+import businessRegister from '../views/businessRegister/router'
 import RetrievePwd from '../views/retrievePwd/router'
 import SellerHome from '../views/sellerHome/router'
+import AddType from '../views/addType/router'
 
 Vue.use(Router)
 export default new Router({
@@ -27,8 +28,9 @@ export default new Router({
     ...login,
     ...register,
     ...search,
-    ...businessLogin,
+    ...businessRegister,
     ...RetrievePwd,
-    ...SellerHome
+    ...SellerHome,
+    ...AddType
   ]
 })

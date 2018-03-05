@@ -23,6 +23,7 @@
     },
     mounted () {
       this.initPosition();
+      // this.getLocation();
     },
     methods: {
       initPosition () {
@@ -39,6 +40,20 @@
 
         const myCity = new BMap.LocalCity();
         myCity.get(getLoaction);
+      },
+      getLocation () {
+        let _this = this;
+        this.$ajax.get('https://api.map.baidu.com/location/ip?ak=tZE1am1BmgwHTyePKMjgrOGdjgskajL8')
+          .then(function (response) {
+            let res = eval('(' + response + ')');
+            _this.city = res.content.address;
+          }).catch(function (error) {
+            console.log(error);
+          })
+      },
+      removeSpace (str) {
+        let spaceReg = /\s|\xA0/g;
+        return str.replace(spaceReg, '');
       }
     }
 

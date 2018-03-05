@@ -1,13 +1,7 @@
 <template>
   <div class="info__item">
 		<label><sicon :name="icon" scale="3.6"></sicon></label>
-		<input 
-			:type="type" 
-			:placeholder="tip"
-			v-on:blur="sendDataToParent(name)" 
-			v-model="info"
-			class="item__input"
-		/>
+		<input :type="type" :placeholder="tip" class="item__input"/>
   </div>
 </template>
 
@@ -16,18 +10,7 @@ export default {
 	props: {
 		tip: String,
 		type: String,
-		name: String,
 		icon: String
-	},
-	data () {
-		return {
-			info: ''
-		}
-	},
-	methods: {
-		sendDataToParent: function (name) {
-			this.$emit('info', this.info)
-		}
 	}
 }
 </script>
@@ -50,5 +33,18 @@ export default {
 	font-size: 20px;
 	letter-spacing: 2px;
 	color: #fff;
+}
+
+input::-webkit-input-placeholder{
+	color:#fff;
+}
+input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+	color:#fff;
+}
+input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+	color:#fff
+}
+input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+	color:#fff;
 }
 </style>

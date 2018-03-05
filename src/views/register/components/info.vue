@@ -1,31 +1,24 @@
 <template>
   <div class="info">
-		<van-steps :active="active">
-			<van-step>输入手机号</van-step>
-			<van-step>输入验证码</van-step>
-			<van-step>设置密码</van-step>
-		</van-steps>
-		<div class="info__item" v-if="active === 0">
-			<InfoItem
-				:tip="tips[0].msg"
-				:icon="tips[0].icon"
-				:type="tips[0].type"
-			/>
-		</div>
-		<div class="info__item" v-else-if="active === 1">
-			<InfoItem
-				:tip="tips[1].msg"
-				:icon="tips[1].icon"
-				:type="tips[1].type"
-			/>
-		</div>
-		<div class="info__item" v-else>
-			<InfoItem
-				:tip="tips[2].msg"
-				:icon="tips[2].icon"
-				:type="tips[2].type"
-			/>
-		</div>
+
+		<!-- <van-field
+			v-model="infos.password"
+			label="用户名"
+			placeholder="请输入用户名"
+		/>
+
+		<van-field
+			v-model="infos.password"
+			label="密码"
+			placeholder="请输入用户名"
+		/>
+
+		<van-field
+			v-model="infos.password"
+			label="验证码"
+			placeholder="请输入验证码" -->
+		/>
+
 		<button class="info__btn" @click="next">下一步</button>
 		<div class="info__tip">
 		</div>
@@ -33,13 +26,10 @@
 </template>
 
 <script>
-import { Step, Steps } from 'vant';
-import InfoItem from './infoItem'
+import { Field } from 'vant'
 export default {
 	components: {
-		InfoItem,
-		[Step.name]: Step,
-		[Steps.name]: Steps
+		[Field.name]: Field
 	},
 	data () {
 		return {
@@ -47,8 +37,7 @@ export default {
 				{ msg: '请输入手机号码', type: 'text', icon: 'phone'},
 				{ msg: '请输入验证码', type: 'text', icon: 'identifyCode'},
 				{ msg: '请输入密码', type: 'password', icon: 'lock'}
-			],
-			active: 0
+			]
 		}
 	},
 	methods: {

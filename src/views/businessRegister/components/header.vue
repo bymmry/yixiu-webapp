@@ -3,7 +3,7 @@
 		<router-link to="/home">
 			<sicon name="back" scale="3"></sicon>
 		</router-link>
-		<p class="header__title">登录</p>
+		<p class="header__title">商家注册</p>
   </div>
 </template>
 

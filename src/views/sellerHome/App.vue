@@ -4,9 +4,16 @@
 			:sellerName="sellerName"
 		/>
 		<List/>
+
 		<div class="statistics">
 			<sicon name="pv" scale="5"></sicon>
 			<p>统计</p>
+			<sicon name="right" scale="3"></sicon>
+		</div>
+
+		<div class="statistics" >
+			<sicon name="type" scale="5"></sicon>
+			<p>分类添加</p>
 			<sicon name="right" scale="3"></sicon>
 		</div>
   </div>

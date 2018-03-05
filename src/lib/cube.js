@@ -13,6 +13,7 @@ import {
   ActionSheet,
   Scroll,
   Slide,
+  Select
   // IndexList,
 } from 'cube-ui'
 
@@ -26,5 +27,6 @@ export default {
     Vue.use(Toast)
     Vue.use(Dialog)
     Vue.use(ActionSheet)
+    Vue.use(Select)
   }
 }
