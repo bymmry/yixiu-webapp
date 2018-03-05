@@ -14,10 +14,10 @@
             <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/shopImg.png " alt="">
           </div>
           <div class="shopMainContent">
-            <p><span>营业时间：{{shopData.shopInfo.time}}</span></p>
-            <p><span>联系方式：{{shopData.shopInfo.phone}}</span></p>
-            <p><span>服务方式：{{shopData.shopInfo.server}}</span></p>
-            <p><span>店铺地址：{{shopData.shopInfo.address}}</span></p>
+            <p><span>营业时间：{{}}</span></p>
+            <p><span>联系方式：{{}}</span></p>
+            <p><span>服务方式：{{}}</span></p>
+            <p><span>店铺地址：{{}}</span></p>
           </div>
         </div>
       </div>
@@ -67,6 +67,7 @@
   import chooseColor from './shopDetails/chooseColor'
   import chooseProblem from './shopDetails/chooseProblem'
   import chooseInfos from './shopDetails/chooseInfos'
+  import { getShopData } from '../api'
 
   export default {
     name: 'shop-detail',
@@ -79,21 +80,6 @@
       chooseProblem,
       chooseInfos
     },
-    props: {
-      shopData: {
-        type: Object,
-        default: function() {
-          return {
-            shopInfo: {
-              "time": "每日8:00~23:00",
-              "phone": "18798767765",
-              "server": "上门自修，自行到店",
-              "address": ""
-            }
-          }
-        }
-      }
-    },
     data() {
       return {
         active: 0,
@@ -103,6 +89,22 @@
           color: "",
           problem: ""
         },
+      }
+    },
+    created() {
+      let shopId = this.$route.params.id;
+      if (!shopId) {
+        this.$router.push('/singer');
+        return
+      }
+      console.log(shopId);
+      if(shopId){
+        getShopData(shopId).then((res) => {
+          if(res.data.code === 200){
+            this.shopData = res.data.data;
+            console.log(this.shopData);
+          }
+        })
       }
     },
     methods: {
@@ -158,7 +160,7 @@
   .shopDetail{
     position: fixed;
     top: 0;
-    bottom: 9vh;
+    bottom: 8vh;
     width: 100%;
     z-index: 10;
     background-color: #fff;

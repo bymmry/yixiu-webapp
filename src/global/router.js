@@ -14,10 +14,11 @@ import SellerHome from '../views/sellerHome/router'
 
 Vue.use(Router)
 export default new Router({
+  base: '/webapp/',
   routes: [
     {
       path: '/',
-      redirect:'/home'
+      redirect:'/home?userInfo={avatarUrl="https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0"&city="Liangping"&country="China"&gender=1&language="zh_CN"&nickName="等到烟花清凉"&province="Chongqing"}&openid="oFosP5RQ-4BYlzddw8o5ON1ibctU"'
     },
     ...home,
     ...common,

@@ -20,8 +20,10 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
     <!-- Vant 标签页组件 -->
+
     <van-tabs :active="0" @disabled="onClickDisabled"  @click="handleTabClick" class="tabsBox">
       <van-tab v-for="(index,num) in 2" :disabled="index === 2" :key="num">
+
 
         <div slot="title" class="kindtitlebox" v-if="index===1">
           <van-icon name="question" />问答
@@ -35,7 +37,7 @@
 
       </van-tab>
     </van-tabs>
-    
+
   </div>
 </template>
 
@@ -117,3 +119,4 @@
   }
   
 </style>
+
