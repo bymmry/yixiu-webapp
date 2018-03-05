@@ -13,6 +13,13 @@ Vue.use(components)
 import lib from './lib'
 Vue.use(lib)
 
+//图片懒加载
+import VueLazyLoad from 'vue-lazyload'
+Vue.use(VueLazyLoad, {
+  error:'',
+  loading: './assets/img/loading.gif'
+})
+
 //移动端300毫秒延迟处理
 import FastClick from 'fastclick'
 FastClick.attach(document.body)

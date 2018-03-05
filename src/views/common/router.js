@@ -1,5 +1,4 @@
 //公共导航路由
-
 import orders from '../orders/App'
 import my from '../my/App'
 import find from '../find/App'
@@ -32,7 +31,7 @@ export default [{
     component: shopList,
     children: [
       {
-        path: "/shopList/1", //商家详情
+        path: ":id", //商家详情
         component: shopDetail
       }
     ],

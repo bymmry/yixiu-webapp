@@ -2,7 +2,7 @@
   <div>
     <!-- 导航栏 -->
     <van-nav-bar
-      
+
       left-text="返回"
       fixed
       left-arrow
@@ -21,7 +21,7 @@
     <div class="topblank"></div>
     <!-- Vant 标签页组件 -->
     <van-tabs :active="active" @disabled="onClickDisabled"  @click="handleTabClick">
-      <van-tab v-for="index in 2" :disabled="index === 2">
+      <van-tab v-for="(index, i) in 2" :key="i" :disabled="index === 2">
 
         <div slot="title" class="kindtitlebox" v-if="index===1">
           <van-icon name="question" />问答
@@ -35,7 +35,7 @@
 
       </van-tab>
     </van-tabs>
-    
+
   </div>
 </template>
 
@@ -111,5 +111,5 @@
   .kindtitlebox i{
     margin-right: 2vw;
   }
-  
+
 </style>
