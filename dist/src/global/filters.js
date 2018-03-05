@@ -3,6 +3,13 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _stringify = require("babel-runtime/core-js/json/stringify");
+
+var _stringify2 = _interopRequireDefault(_stringify);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var filters = {
   init: function init(val) {
     return 'filter init';
@@ -104,6 +111,23 @@ var filters = {
   unix2hhmm: function unix2hhmm(val) {
     return val;
     // return moment.unix(val).format('HH:mm')
+  },
+  urlDataTurnObj: function urlDataTurnObj(url) {
+    // 目前只支持   ...home?userInfo={avatarUrl="https....}这样的类型
+    // url是传进来的完整地址
+    // urlData 去除 } 
+    // origin 从第一个 { 开始 通过 & 分割  
+    var urlData = url.replace('}', '');
+    var origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
+    var userInfor = {};
+
+    for (var userData in origin) {
+      var originData = origin[userData].split("=");
+      userInfor[originData[0]] = originData[1].replace(/"/g, '');
+    }
+
+    //返回一个JSON字符串
+    return (0, _stringify2.default)(userInfor);
   }
 };
 exports.default = {
@@ -120,6 +144,7 @@ exports.default = {
     Vue.prototype.addClass = filters.addClass;
     Vue.prototype.hasClass = filters.hasClass;
     Vue.prototype.removeClass = filters.removeClass;
+    Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj;
   }
 };
 //# sourceMappingURL=filters.js.map
