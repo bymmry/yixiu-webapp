@@ -21,6 +21,10 @@
     name: 'App',
     components: {
       navigation
+    },
+    created() {
+      let userData = this.urlDataTurnObj(this.$route.path)
+      sessionStorage.setItem("userData", userData); 
     }
   }
 </script>
