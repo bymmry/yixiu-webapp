@@ -1,7 +1,7 @@
 <template>
   <div class="brand">
     <div class="stepsContent" ref="stepsContent">
-      <span data-isSelected="0" @click="selectBrand(index)" class="brand" v-for="(item, index) in mockData.brand">{{item.name}}</span>
+      <span data-isSelected="0" @click="selectBrand(index)" class="brand" v-for="(item, index) in brandData">{{item.name}}</span>
     </div>
     <van-button @click="nextStep" class="stepsButton" :disabled="nextStepButtonDisabled" bottom-action size="large">
       <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
@@ -11,6 +11,7 @@
 
 <script>
   import { Button } from 'vant';
+  import { getPhoneBrand } from "../../api";
   export default {
     name: 'choose-brand',
     components: {
@@ -20,24 +21,17 @@
       return {
         nextStepButtonDisabled: true,
         selectedBrand: "",
-        mockData: {
-          "brand": [
-            {"name": '苹果'},
-            {"name": '三星'},
-            {"name": '索尼'},
-            {"name": '小米'},
-            {"name": '华为'},
-            {"name": '魅族'},
-            {"name": '荣耀'},
-            {"name": '一加'},
-            {"name": '锤子'},
-            {"name": 'VIVO'},
-            {"name": 'OPPO'},
-            {"name": '金立'},
-            {"name": '诺基亚'},
-          ]
-        }
+        brandData: []
       }
+    },
+    created() {
+      getPhoneBrand().then((res) => {
+        if(res.data.code === 200){
+          this.brandData = res.data.data;
+        }
+      }, function (err) {
+        console.log(err);
+      })
     },
     methods: {
       selectBrand: function (index) {
@@ -51,13 +45,14 @@
           that.setTarget(target, isSelected);
           let nextInfo = that.isShowNextStep(stepsContent);
 
-          console.log(nextInfo);
-          that.selectedBrand = nextInfo.val;
+          that.selectedBrand = that.brandData[nextInfo.index];
           that.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
         }
 
       },
       nextStep: function () {
+        console.log("------------------------------------>nextStep()");
+        console.log(this.selectedBrand);
         this.$emit('returnBrand', this.selectedBrand);
       }
     }

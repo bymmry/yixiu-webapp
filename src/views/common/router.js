@@ -1,9 +1,8 @@
 //公共导航路由
-
 import orders from '../orders/App'
 import my from '../my/App'
 import find from '../find/App'
-import shopList from '../common/components/shopList';
+import toShop from '../common/components/toShop';
 import shopDetail from '../common/components/shopDetail';
 
 export default [{
@@ -28,11 +27,11 @@ export default [{
   }
 },
   {
-    path: '/shopList', //商店列表
-    component: shopList,
+    path: '/shop', //商店列表
+    component: toShop,
     children: [
       {
-        path: "/shopList/1", //商家详情
+        path: ":id", //商家详情
         component: shopDetail
       }
     ],

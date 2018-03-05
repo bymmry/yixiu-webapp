@@ -3,7 +3,7 @@
       <div class="proContent">
         <div class="problemSort">
           <ul ref="problemSort">
-            <li :class="{'selected': currentIndex === index}" @click="selectChildren" v-for="(item, index) in items">{{item.text}}</li>
+            <li :class="{'selected': currentIndex === index}" @click="selectChildren" v-for="(item, index) in items">{{item.name}}</li>
           </ul>
         </div>
         <div class="problemDetail" ref="problemDetail">
@@ -27,6 +27,7 @@
 
 <script>
   import { Button, TreeSelect } from 'vant';
+  import { getPhoneProblem } from '../../api';
   export default {
     name: 'choose-problem',
     components: {
@@ -43,29 +44,14 @@
       }
     },
     created() {
-      this.items = [
-        {
-          text: '电池电源',
-        },
-        {
-          text: '屏幕问题',
-        },
-        {
-          text: '摄像头问题'
-        },
-        {
-          text: '声音问题'
-        },
-        {
-          text: '按键问题'
-        },
-        {
-          text: '外壳问题'
-        },
-        {
-          text: '信号/有线/无线'
+      getPhoneProblem().then((res) => {
+        if(res.data.code === 200){
+          this.items = res.data.data;
+          console.log(this.items);
         }
-      ]
+      }, function (err) {
+        console.log(err);
+      });
       this.getProblem();
     },
     methods: {
@@ -84,6 +70,7 @@
         this.$emit("goBackPrevStep", true)
       },
       nextStep: function () {
+        console.log(this.selectedProblem);
         this.$emit('returnProblem', this.selectedProblem);
       },
       selectChildren: function (item) {
@@ -91,7 +78,7 @@
         let problemSort = this.$refs.problemSort;
         let problemSortLi = problemSort.getElementsByTagName("li");
         for(let i=0; i<problemSortLi.length; i++){
-          let tar = problemSortLi[i]
+          let tar = problemSortLi[i];
           if(this.hasClass(tar, 'selected')){
             this.removeClass(tar, "selected");
           }
@@ -112,8 +99,9 @@
         this.isOnlyOneSelected(target, 'span');
         this.setTarget(tar, isSelected);
         let nextInfo = this.isShowNextStep(target);
+        console.log(nextInfo);
 
-        this.selectedProblem = nextInfo.val;
+        this.selectedProblem = this.items[nextInfo.index].name;
         this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
 
       }

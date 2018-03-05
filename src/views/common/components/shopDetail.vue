@@ -4,20 +4,20 @@
       <div class="shopTitle">
         <div class="back" @click="back"><sicon name="back" scale="1.5"></sicon><span>返回</span></div>
         <div class="shopName">
-          <h2>翼修旗舰店</h2>
+          <h2>{{shopInfo.name}}</h2>
         </div>
         <div class="more"><sicon name="more" scale="1.5"></sicon></div>
       </div>
       <div class="shopDes">
         <div class="shopMain">
           <div class="shopMainImg">
-            <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/shopImg.png " alt="">
+            <img :src="shopInfo.cover" alt="">
           </div>
           <div class="shopMainContent">
-            <p><span>营业时间：{{shopData.shopInfo.time}}</span></p>
-            <p><span>联系方式：{{shopData.shopInfo.phone}}</span></p>
-            <p><span>服务方式：{{shopData.shopInfo.server}}</span></p>
-            <p><span>店铺地址：{{shopData.shopInfo.address}}</span></p>
+            <p><span>营业时间：每日{{shopInfo.businessHours[0]}}~{{shopInfo.businessHours[1]}}</span></p>
+            <p><span>联系方式：{{shopInfo.contactNumber}}</span></p>
+            <p><span>服务方式：{{shopInfo.serviceWay[0]}}、{{shopInfo.serviceWay[1]}}</span></p>
+            <p><span>店铺地址：</span></p>
           </div>
         </div>
       </div>
@@ -33,26 +33,26 @@
       <div class="stepsContent">
         <choose-brand :class="{'isShowStep': active !== 0}" v-on:returnBrand="getBrand"></choose-brand>
         <choose-model :class="{'isShowStep': active !== 1}"
-                      :brand="chooseInfo.brand"
-                      v-if="chooseInfo.brand"
+                      :brand="chooseInfo.brand.data"
+                      v-if="chooseInfo.brand.val"
                       v-on:goBackPrevStep="prevStep"
                       v-on:returnModel="getModel"
         ></choose-model>
         <choose-color :class="{'isShowStep': active !== 2}"
-                      :model="chooseInfo.model"
-                      v-if="chooseInfo.model"
+                      :model="chooseInfo.model.data"
+                      v-if="chooseInfo.model.val"
                       v-on:goBackPrevStep="prevStep"
                       v-on:returnColor="getColor"
         ></choose-color>
         <choose-problem :class="{'isShowStep': active !== 3}"
-                        :color="chooseInfo.color"
-                        v-if="chooseInfo.color"
+                        :color="chooseInfo.color.data"
+                        v-if="chooseInfo.color.val"
                         v-on:goBackPrevStep="prevStep"
                         v-on:returnProblem="getProblem"
         ></choose-problem>
         <choose-infos :class="{'isShowStep': active !== 4}"
                       :chooseData="chooseInfo"
-                      v-if="chooseInfo.problem"
+                      v-if="chooseInfo.problem.val"
                       v-on:goBackPrevStep="prevStep"
         ></choose-infos>
       </div>
@@ -67,6 +67,7 @@
   import chooseColor from './shopDetails/chooseColor'
   import chooseProblem from './shopDetails/chooseProblem'
   import chooseInfos from './shopDetails/chooseInfos'
+  import { getShopData } from '../api'
 
   export default {
     name: 'shop-detail',
@@ -79,30 +80,48 @@
       chooseProblem,
       chooseInfos
     },
-    props: {
-      shopData: {
-        type: Object,
-        default: function() {
-          return {
-            shopInfo: {
-              "time": "每日8:00~23:00",
-              "phone": "18798767765",
-              "server": "上门自修，自行到店",
-              "address": ""
-            }
-          }
-        }
-      }
-    },
     data() {
       return {
         active: 0,
         chooseInfo: {
-          brand: "",
-          model: "",
-          color: "",
-          problem: ""
+          brand: {
+            val: "",
+            data: {}
+          },
+          model: {
+            val: "",
+            data: {}
+          },
+          color: {
+            val: "",
+            data: {}
+          },
+          problem: {
+            val: "",
+            data: {}
+          }
         },
+        shopInfo: {}
+      }
+    },
+    created() {
+      let shopId = this.$route.params.id;
+      if (!shopId) {
+        this.$router.push('/home');
+        return
+      }
+      if(shopId){
+        getShopData(shopId).then((res) => {
+          if (!res.data.data._id) {
+            this.$router.push('/home');
+            return
+          }
+          if(res.data.code === 200){
+            this.shopInfo = res.data.data;
+          }
+        }, function (err) {
+          console.log(err);
+        })
       }
     },
     methods: {
@@ -111,25 +130,30 @@
       },
       getBrand: function (brand) {
         if(brand){
-          this.chooseInfo.brand = brand;
+          this.chooseInfo.brand.val = brand.name;
+          this.chooseInfo.brand.data = brand;
           this.nextStep();
         }
       },
       getModel: function (model) {
         if(model){
-          this.chooseInfo.model = model;
+          this.chooseInfo.model.val = model.name;
+          this.chooseInfo.model.data = model;
           this.nextStep();
         }
       },
       getColor: function (color) {
         if(color){
-          this.chooseInfo.color = color;
+          this.chooseInfo.color.val = color;
+          this.chooseInfo.color.data = color;
+
           this.nextStep();
         }
       },
       getProblem: function (problem) {
         if(problem){
-          this.chooseInfo.problem = problem;
+          this.chooseInfo.problem.val = problem;
+          this.chooseInfo.problem.data = problem;
           this.nextStep();
         }
       },
@@ -152,13 +176,12 @@
     transition: all 0.3s;
   }
   .slide-enter, .slide-leave-to{
-    transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0)
   }
-
   .shopDetail{
     position: fixed;
     top: 0;
-    bottom: 9vh;
+    bottom: 8vh;
     width: 100%;
     z-index: 10;
     background-color: #fff;

@@ -16,37 +16,19 @@
         <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span></li>
       </ul>
     </div>
-    <scroll :data="shopData" class="shopDes" ref="shopDes">
-      <div @click="selectShop" class="shopMain">
-        <div class="shopMainImg">
-          <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/shopImg.png " alt="">
-        </div>
-        <div class="shopMainContent">
-          <h3>翼修旗舰店</h3>
-          <p>
-            <span>评分4.9</span>
-            <span>修好189单</span>
-          </p>
-          <p>均价￥199</p>
-        </div>
-        <div class="shopMainOther">
-          <div class="more"><sicon name="more" scale="1.5"></sicon></div>
-          <div class="shopMainOtherInfo">
-            <span>45分钟 | 633米</span>
-          </div>
-          <div class="shopMainOtherType">
-            <span>上门服务</span>
-          </div>
-        </div>
-      </div>
-    </scroll>
-    <router-view></router-view>
+    <div @click="selectShop"
+         class="shopDes"
+         ref="shopDes">
+      <list-view @select="selectShop" :shopData="shopData"></list-view>
+    </div>
   </div>
 </template>
 
 <script>
   import { Actionsheet, Popup, Picker } from 'vant';
   import Scroll from '../base/scroll';
+  import { getShopList } from '../api';
+  import listView from "./listView"
 
   export default {
     name: 'shop-list',
@@ -54,16 +36,12 @@
       [Actionsheet.name]:Actionsheet,
       [Popup.name]: Popup,
       [Picker.name]: Picker,
-      Scroll
+      Scroll,
+      listView
     },
     data() {
       return {
-        shopData: [{
-          shopOne:{
-            id: 0,
-            name: "213"
-          }
-        }],
+        shopData: [],
         actions: [
           {
             name: '综合排序',
@@ -94,9 +72,13 @@
       }
     },
     created() {
-      this.$ajax.get('https://m.yixiutech.com/shop').then((res) => {
-        console.log(res);
-      })
+      getShopList().then((res) => {
+        if(res.data.code === 200){
+          this.shopData = res.data.data;
+        }
+      }, function (err) {
+        console.log(err);
+      });
     },
     methods: {
       chooseMainType: function (index) {
@@ -104,7 +86,6 @@
         if (index === 0){
           this.chooseType();
         }
-        console.log();
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -117,10 +98,17 @@
         this.nowColumnsType = item.name;
         this.isShowShopSort = !this.isShowShopSort;
       },
-      selectShop: function () {
-        this.$router.push({
-          path: `/shopList/1`
-        })
+      selectShop: function (shop) {
+        let shopData = shop;
+        let shopId = shop._id;
+        if(shopId){
+          this.$router.push({
+            path: `/shop/${shop._id}`,
+            params: {
+              id: shopId
+            }
+          })
+        }
       }
     }
   };
@@ -177,66 +165,5 @@
     color: #eea17a;
   }
 
-
-  .shopDes{
-    width: 100%;
-    /*height: 80vh;*/
-    height: auto;
-  }
-  .shopDes .shopMain{
-    width: auto;
-    height: 60px;
-    padding: 0 10px 20px 10px;
-    display: flex;
-  }
-  .shopDes .shopMain > div{
-    display: inline-block;
-  }
-  .shopDes .shopMain .shopMainImg{
-    flex: 1;
-    padding-right: 10px;
-  }
-  .shopDes .shopMain .shopMainImg img{
-    width: 100%;
-    height: 100%;
-  }
-  .shopDes .shopMain .shopMainContent{
-    flex: 1.5;
-    height: 100%;
-  }
-  .shopDes .shopMain .shopMainContent h3{
-    font-size: 15px;
-    height: 20px;
-    line-height: 20px;
-  }
-  .shopDes .shopMain .shopMainContent p, .shopDes .shopMain .shopMainContent p{
-    height: 20px;
-  }
-  .shopDes .shopMain .shopMainContent p, .shopDes .shopMain .shopMainContent span{
-    font-size: 12px;
-    line-height: 28px;
-    color: #575757;
-  }
-  .shopDes .shopMain .shopMainContent span{
-    margin-right: 10px;
-  }
-  .shopDes .shopMain .shopMainOther{
-    flex: 1;
-  }
-  .shopDes .shopMain .shopMainOther > div{
-    height: 20px;
-    font-size: 12px;
-    text-align: right;
-    color: #575757;
-  }
-  .shopDes .shopMain .shopMainOther > div.more{
-  }
-  .shopDes .shopMain .shopMainOther > div.shopMainOtherInfo span{
-    line-height: 28px;
-  }
-  .shopDes .shopMain .shopMainOther > div.shopMainOtherType span{
-    line-height: 28px;
-    color: #eea17a;
-  }
 
 </style>

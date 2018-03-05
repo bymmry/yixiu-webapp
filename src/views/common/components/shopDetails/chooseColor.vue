@@ -27,8 +27,7 @@
     },
     props: {
       model: {
-        type: String,
-        default: ""
+        type: Object
       }
     },
     data() {
@@ -40,13 +39,14 @@
     },
     created() {
       //  初始ajax请求数据
-      console.log("初始加载-------上一步数据：" + this.model);
-      this.getColor();
+      if(this.model.color){
+        this.getColor(this.model.color);
+      }
     },
     watch: {
       model: function (val) {
-        this.model = val;
-        this.getColor(val);
+        this.model.color = val.color;
+        this.getColor(val.color);
       }
     },
     methods: {
@@ -55,10 +55,8 @@
       },
       getColor: function (val) {
         if (val){
-          console.log("上一步数据："+val);
+          this.color = val;
         }
-        let color = ['黑色', '白色'];
-        this.color = color;
       },
       selectColor: function (item) {
         let tar = item.target;
@@ -69,10 +67,12 @@
         this.setTarget(tar, isSelected);
         let nextInfo = this.isShowNextStep(target);
 
-        this.selectedColor = nextInfo.val;
+        this.selectedColor = this.color[nextInfo.index];
         this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
       },
       nextStep: function () {
+        console.log("------------------------------------>nextStep()");
+        console.log(this.selectedColor);
         this.$emit('returnColor', this.selectedColor);
       }
     }
