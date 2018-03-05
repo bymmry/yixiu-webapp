@@ -2,10 +2,10 @@
     <div class="chooseInfos">
       <div class="information">
         <ul>
-          <li><span class="name">手机品牌</span><span class="value">{{chooseData.brand}}</span></li>
-          <li><span class="name">手机型号</span><span class="value">{{chooseData.model}}</span></li>
-          <li><span class="name">手机颜色</span><span class="value">{{chooseData.color}}</span></li>
-          <li><span class="name">维修选项</span><span class="value">{{chooseData.problem}}</span></li>
+          <li><span class="name">手机品牌</span><span class="value">{{chooseData.brand.val}}</span></li>
+          <li><span class="name">手机型号</span><span class="value">{{chooseData.model.val}}</span></li>
+          <li><span class="name">手机颜色</span><span class="value">{{chooseData.color.val}}</span></li>
+          <li><span class="name">维修选项</span><span class="value">{{chooseData.problem.val}}</span></li>
         </ul>
         <div class="coupon">
           <van-coupon-cell

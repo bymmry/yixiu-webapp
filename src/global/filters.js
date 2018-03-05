@@ -30,13 +30,14 @@ let filters = {
     let selectNum = 0;
     let data = {
       nextStepButtonDisabled:"",
-      val: ""
+      index: ""
     };
     for(let i=0; i<targets.length; i++){
+      let index = i;
       let isSelected = targets[i].getAttribute("data-isSelected");
       if(isSelected === "1"){
         selectNum++;
-        data.val = targets[i].innerText;
+        data.index = index;
       }
     }
 

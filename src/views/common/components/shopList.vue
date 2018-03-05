@@ -21,7 +21,6 @@
          ref="shopDes">
       <list-view @select="selectShop" :shopData="shopData"></list-view>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -79,7 +78,7 @@
         }
       }, function (err) {
         console.log(err);
-      })
+      });
     },
     methods: {
       chooseMainType: function (index) {
@@ -104,7 +103,7 @@
         let shopId = shop._id;
         if(shopId){
           this.$router.push({
-            path: `/shopList/${shop._id}`,
+            path: `/shop/${shop._id}`,
             params: {
               id: shopId
             }
@@ -166,66 +165,5 @@
     color: #eea17a;
   }
 
-
-  .shopDes{
-    width: 100%;
-    /*height: 80vh;*/
-    height: auto;
-  }
-  .shopDes .shopMain{
-    width: auto;
-    height: 60px;
-    padding: 0 10px 20px 10px;
-    display: flex;
-  }
-  .shopDes .shopMain > div{
-    display: inline-block;
-  }
-  .shopDes .shopMain .shopMainImg{
-    flex: 1;
-    padding-right: 10px;
-  }
-  .shopDes .shopMain .shopMainImg img{
-    width: 100%;
-    height: 100%;
-  }
-  .shopDes .shopMain .shopMainContent{
-    flex: 1.5;
-    height: 100%;
-  }
-  .shopDes .shopMain .shopMainContent h3{
-    font-size: 15px;
-    height: 20px;
-    line-height: 20px;
-  }
-  .shopDes .shopMain .shopMainContent p, .shopDes .shopMain .shopMainContent p{
-    height: 20px;
-  }
-  .shopDes .shopMain .shopMainContent p, .shopDes .shopMain .shopMainContent span{
-    font-size: 12px;
-    line-height: 28px;
-    color: #575757;
-  }
-  .shopDes .shopMain .shopMainContent span{
-    margin-right: 10px;
-  }
-  .shopDes .shopMain .shopMainOther{
-    flex: 1;
-  }
-  .shopDes .shopMain .shopMainOther > div{
-    height: 20px;
-    font-size: 12px;
-    text-align: right;
-    color: #575757;
-  }
-  .shopDes .shopMain .shopMainOther > div.more{
-  }
-  .shopDes .shopMain .shopMainOther > div.shopMainOtherInfo span{
-    line-height: 28px;
-  }
-  .shopDes .shopMain .shopMainOther > div.shopMainOtherType span{
-    line-height: 28px;
-    color: #eea17a;
-  }
 
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="model">
       <div class="modelList" ref="stepsContent">
-        <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model">{{item}}</span>
+        <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model">{{item.name}}</span>
       </div>
       <div class="stepButton">
         <div class="stepPrev">
@@ -20,6 +20,7 @@
 
 <script>
   import { Button } from 'vant';
+  import { getPhoneModel } from "../../api"
   export default {
     name: 'choose-model',
     components: {
@@ -34,30 +35,30 @@
     },
     props: {
       brand: {
-        type: String,
-        default: ""
+        type: Object
       }
     },
     created() {
-      //  初始ajax请求数据
-      console.log("初始加载-------上一步数据：" + this.brand);
-      this.getModel();
+      this.getModel(this.brand._id);
     },
     watch: {
       brand: function (val) {
         this.brand = val;
-        console.log("上一步数据：" + val);
-        //  ajax请求数据
-        this.getModel();
+        this.getModel(val._id);
       }
     },
     methods: {
       goBack: function () {
         this.$emit("goBackPrevStep", true)
       },
-      getModel: function () {
-        let theModel = ['iphone 4','iphone 4s','iphone 5','iphone 5s','iphone 6','iphone 6Plus','iphone 6s','iphone 6sPlus','iphone 7','iphone 7Plus','iphone 8','iphone 8 Plus','iphone x',]
-        this.model = theModel;
+      getModel: function (id) {
+        getPhoneModel(id).then((res) => {
+          if(res.data.code === 200){
+            this.model = res.data.data;
+          }
+        }, function (err) {
+          console.log(err);
+        })
       },
       selectModel: function (item) {
         let tar = item.target;
@@ -68,10 +69,12 @@
         this.setTarget(tar, isSelected);
         let nextInfo = this.isShowNextStep(target);
 
-        this.selectedModel = nextInfo.val;
+        this.selectedModel = this.model[nextInfo.index];
         this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
       },
       nextStep: function () {
+        console.log("------------------------------------>nextStep()");
+        console.log(this.selectedModel);
         this.$emit('returnModel', this.selectedModel);
       }
     }
