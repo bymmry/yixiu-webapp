@@ -100,6 +100,23 @@ let filters = {
   unix2hhmm(val) {
     return val
     // return moment.unix(val).format('HH:mm')
+  },
+  urlDataTurnObj(url){
+    // 目前只支持   ...home?userInfo={avatarUrl="https....}这样的类型
+    // url是传进来的完整地址
+    // urlData 去除 } 
+    // origin 从第一个 { 开始 通过 & 分割  
+    let urlData = url.replace('}', '');
+    let origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
+    let userInfor = {};
+
+    for(let userData in origin){
+      let originData = origin[userData].split("=")
+      userInfor[originData[0]] = originData[1].replace(/"/g, '');
+    }
+
+    //返回一个JSON字符串
+    return JSON.stringify(userInfor);
   }
 }
 export default {
@@ -116,5 +133,6 @@ export default {
     Vue.prototype.addClass = filters.addClass
     Vue.prototype.hasClass = filters.hasClass
     Vue.prototype.removeClass = filters.removeClass
+    Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj
   }
 }

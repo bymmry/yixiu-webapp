@@ -17,7 +17,7 @@
     <!-- 用户头像及登录注册 -->
     <div class="user-area">
       <div class="user-profile">
-        <img :src="userInfo.img">
+        <img :src="userInfo.avatarUrl">
       </div>
       <div class="usermessage" v-if="!loggedin">
         <router-link id="login" to="/login">登录</router-link>
@@ -25,7 +25,7 @@
         <router-link id="register" to="/register">注册</router-link>
       </div>
       <div class="usermessage" v-else>
-        {{ userInfo.id }}
+        {{ userInfo.nickName }}
       </div>
     </div>
     <!-- 个人中心-功能菜单 -->
@@ -56,8 +56,22 @@
         loggedin: false,    //是否已登录
         //用户信息
         userInfo:{   
-          img: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
-          id: "13368161676",
+          // avatarUrl  头像框   如果没有就有默认头像
+          // city       城市
+          // country    国家
+          // gender     性别   1是男 
+          // language   语言
+          // nickName   昵称
+          // openid     ID
+          // province   省份
+          avatarUrl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+          city: "",
+          country: "",
+          gender: "",
+          language: "",
+          nickName: "",
+          openid: "",
+          province: ""
         },
         //功能菜单列表
         catalogs:[    
@@ -163,6 +177,15 @@
             this.$router.push({ path: url })
           }
         }
+      }
+    },
+    created() {
+      let userData = sessionStorage.getItem("userData");
+      userData = JSON.parse(userData);
+      if (userData !== {}) {
+        console.log(userData)
+        this.userInfo = userData;
+        this.loggedin = true;
       }
     }
   }
