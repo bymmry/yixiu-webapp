@@ -2,11 +2,11 @@
   <div>
     <!-- 导航栏 -->
     <van-nav-bar
-
       left-text="返回"
       fixed
       left-arrow
       @click-left="prepage"
+      style="z-index:100"
     >
       <van-search
         v-model="searchvalue"
@@ -20,8 +20,10 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
     <!-- Vant 标签页组件 -->
-    <van-tabs :active="active" @disabled="onClickDisabled"  @click="handleTabClick">
-      <van-tab v-for="(index, i) in 2" :key="i" :disabled="index === 2">
+
+    <van-tabs :active="0" @disabled="onClickDisabled"  @click="handleTabClick" class="tabsBox">
+      <van-tab v-for="(index,num) in 2" :disabled="index === 2" :key="num">
+
 
         <div slot="title" class="kindtitlebox" v-if="index===1">
           <van-icon name="question" />问答
@@ -111,5 +113,10 @@
   .kindtitlebox i{
     margin-right: 2vw;
   }
-
+  .tabsBox .van-tabs__wrap{
+    position: fixed;
+    margin-top: 46px;
+  }
+  
 </style>
+
