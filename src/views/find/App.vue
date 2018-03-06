@@ -2,18 +2,25 @@
   <div>
     <!-- 导航栏 -->
     <van-nav-bar
-      left-text="返回"
       fixed
-      left-arrow
-      @click-left="prepage"
       style="z-index:100"
+      class="titleshadow"
     >
+      <div slot="left" @click="prepage" class="prepage">
+        <sicon name="find-leftArr" scale="1.7"></sicon>
+        返回
+      </div>
       <van-search
         v-model="searchvalue"
         @search="onSearch"
         slot="title"
         class="titleSearch"
+        show-action
       >
+      <div slot="action" @click="newQuestion" class="newQuestion">
+        <sicon name="newQuestion" scale="1.7"></sicon>
+        提问
+      </div>
       </van-search>
     </van-nav-bar>
 
@@ -89,18 +96,27 @@
       },
       async onSearch(){
         alert("搜索")
+      },
+      //发起新提问
+      newQuestion() {
+        this.onClickDisabled()
       }
     }
   }
 </script>
 
 <style scoped>
+  .titleshadow{
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    box-shadow:0vw -0.5vh 3vw #b6baba;
+  }
   .topblank{
     margin-top: 46px;
   }
   .titleSearch{
     float: right;
-    width: 80%;
+    width: 85vw;
     margin-top: 2px;
     background: transparent !important;
   }
@@ -117,6 +133,22 @@
     position: fixed;
     margin-top: 46px;
   }
-  
+  .newQuestion{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    width: 16vw;
+    padding-left: 2vw;
+    margin-right: -1vw;
+    color: rgb(98, 164, 255);
+  }
+  .prepage{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    width: 16vw;
+    color: rgb(98, 164, 255);
+    margin-left: -2vw;
+  }
 </style>
 

@@ -25,21 +25,27 @@
             title: "为什么安卓刘海屏都有一个极丑的下巴??",
             content: "所有人都说 iPhone X 丑，然后都出了一个比 iPhone X 更丑的刘海加下巴的设计手机，比如传闻中的华为 P20、一加6、Vivo X21都采用这样的设计。",
             reply: 613,
-            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg"
+            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg",
+            followhuman: 9683,
+            folloed: true,
           },
           {
             id: 2,
             title: "为什么安卓刘海屏都有一个极丑的下巴??",
             content: "所有人都说 iPhone X 丑，然后都出了一个比 iPhone X 更丑的刘海加下巴的设计手机，比如传闻中的华为 P20、一加6、Vivo X21都采用这样的设计。",
             reply: 613,
-            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg"
+            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg",
+            followhuman: 9683,
+            folloed: false,
           },
           {
             id: 3,
             title: "为什么安卓刘海屏都有一个极丑的下巴??",
             content: "所有人都说 iPhone X 丑，然后都出了一个比 iPhone X 更丑的刘海加下巴的设计手机，比如传闻中的华为 P20、一加6、Vivo X21都采用这样的设计。",
             reply: 613,
-            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg"
+            imgurl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/img1.jpg",
+            followhuman: 9683,
+            folloed: false,
           }
 
         ]
