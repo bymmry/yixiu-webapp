@@ -5,6 +5,10 @@
 import App from './App'
 import question from './children/question'
 import questiondetail from './pages/questiondetail'
+import answerdetail from './pages/answerdetail'
+import newquestion from './pages/newquestion'
+import newanswer from './pages/newanswer'
+import reply from './pages/reply'
 
 export default [{
   path: '/find',
@@ -23,5 +27,25 @@ export default [{
     name: "questiondetail",
     path: '/find/questiondetail/:question',   //问题详情
     component: questiondetail
+  },
+  {
+    name: "answerdetail",
+    path: '/find/answerdetail/:answer',   //回答详情
+    component: answerdetail
+  },
+  {
+    name: "newquestion",
+    path: '/find/newquestion',   //发起提问
+    component: newquestion
+  },
+  {
+    name: "newanswer",
+    path: '/find/newanswer',   //发起提问
+    component: newanswer
+  },
+  {
+    name: "reply",
+    path: '/find/reply/:id',   //发起提问
+    component: reply
   }
 ]

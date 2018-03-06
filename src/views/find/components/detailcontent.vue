@@ -94,7 +94,8 @@
       },
       //新回答
       async newAnswer() {
-        this.willcome ()
+        // this.willcome ()
+        this.$router.push({ path: "/find/newanswer"});
       }
     },
     created: function(){

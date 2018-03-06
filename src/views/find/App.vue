@@ -99,7 +99,8 @@
       },
       //发起新提问
       newQuestion() {
-        this.onClickDisabled()
+        this.$router.push({ path: "/find/newquestion"});
+        // this.onClickDisabled()
       }
     }
   }

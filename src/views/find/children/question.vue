@@ -1,9 +1,7 @@
 <template>
   <div class="question-container">
-    <!-- <router-link  :to="{path:'/find/questionDetail/',params:{question:question}}"> -->
-    <!-- <router-link :to="{path:'/hotel',params:{id:item.id}}"> -->
     <router-link v-for="question in questionData" :key="question.id" :to="{ name:'questiondetail', params: { question: question }}">
-      <questionBox  :question="question" @click="jumpDetail(question)"></questionBox>
+      <questionBox  :question="question"></questionBox>
     </router-link>
     
 
@@ -55,10 +53,7 @@
       questionBox
     },
     methods: {
-      jumpDetail(questionData){
-        console.log(questionData);
-        // this.$route.push({path:'/find/questionDetail',params:{question:questionData}});//类似post传参
-      }
+      
     }
   }
 </script>
