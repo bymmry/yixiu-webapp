@@ -32,9 +32,10 @@
           </van-button>
         </div>
         <div class="stepNext">
-          <van-button @click="nextStep" bottom-action>
-            <sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>
-          </van-button>
+          <sure-order :data="chooseData"></sure-order>
+          <!--<van-button @click="nextStep" bottom-action>-->
+            <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
+          <!--</van-button>-->
         </div>
       </div>
     </div>
@@ -42,6 +43,7 @@
 
 <script>
   import { CouponCell, CouponList, Popup, Toast, Button } from 'vant';
+  import sureOrder from "../sureOrder"
   const coupon = {
     available: 1,
     discount: 0,
@@ -86,16 +88,12 @@
       [CouponCell.name]: CouponCell,
       [CouponList.name]: CouponList,
       [Popup.name]: Popup,
-      [Toast.name]: Toast
+      [Toast.name]: Toast,
+      sureOrder
     },
     methods: {
       goBack: function () {
         this.$emit("goBackPrevStep", true)
-      },
-      nextStep: function () {
-      //  确认下单
-        Toast("确认下单");
-        console.log(this.chooseData);
       },
       onChange(index) {
         this.showList = false;

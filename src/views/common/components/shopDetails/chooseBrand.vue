@@ -26,8 +26,8 @@
     },
     created() {
       getPhoneBrand().then((res) => {
-        if(res.data.code === 200){
-          this.brandData = res.data.data;
+        if(res.code === 200){
+          this.brandData = res.data;
         }
       }, function (err) {
         console.log(err);
@@ -62,8 +62,9 @@
 <style scoped>
   .brand .stepsContent{
     width: auto;
-    height: auto;
+    height: 48vh;
     padding: 0 2vw;
+    overflow-y: scroll;
   }
   .brand .stepsContent span.brand{
     display: inline-block;

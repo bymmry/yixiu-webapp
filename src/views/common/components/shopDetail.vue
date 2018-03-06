@@ -112,12 +112,13 @@
       }
       if(shopId){
         getShopData(shopId).then((res) => {
-          if (!res.data.data._id) {
+          console.log(res);
+          if (!res.data._id) {
             this.$router.push('/home');
             return
           }
-          if(res.data.code === 200){
-            this.shopInfo = res.data.data;
+          if(res.code === 200){
+            this.shopInfo = res.data;
           }
         }, function (err) {
           console.log(err);

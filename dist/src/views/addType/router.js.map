@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/views/addType/router.js"],"names":["path","component"],"mappings":";;;;;;AAAA;;;;;;kBAEe,CAAC;AACdA,QAAM,UADQ;AAEdC;AAFc,CAAD,C","file":"router.js","sourcesContent":["import App from './App'\r\n\r\nexport default [{\r\n  path: '/addType',\r\n  component: App\r\n}]\r\n"]}

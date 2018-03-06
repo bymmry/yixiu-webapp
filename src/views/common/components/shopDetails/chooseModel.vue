@@ -53,8 +53,8 @@
       },
       getModel: function (id) {
         getPhoneModel(id).then((res) => {
-          if(res.data.code === 200){
-            this.model = res.data.data;
+          if(res.code === 200){
+            this.model = res.data;
           }
         }, function (err) {
           console.log(err);

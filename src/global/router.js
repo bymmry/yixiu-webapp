@@ -19,7 +19,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect:'/home?userInfo={avatarUrl="https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0"&city="Liangping"&country="China"&gender=1&language="zh_CN"&nickName="等到烟花清凉"&province="Chongqing"}&openid="oFosP5RQ-4BYlzddw8o5ON1ibctU"'
+      // redirect:'/home?userInfo={avatarUrl="https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0"&city="Liangping"&country="China"&gender=1&language="zh_CN"&nickName="等到烟花清凉"&province="Chongqing"}&openid="oFosP5RQ-4BYlzddw8o5ON1ibctU"'
+      redirect:'/home'
     },
     ...home,
     ...common,

@@ -45,8 +45,8 @@
     },
     created() {
       getPhoneProblem().then((res) => {
-        if(res.data.code === 200){
-          this.items = res.data.data;
+        if(res.code === 200){
+          this.items = res.data;
           console.log(this.items);
         }
       }, function (err) {

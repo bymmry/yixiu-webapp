@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../src/views/businessRegister/router.js"],"names":["path","component"],"mappings":";;;;;;AAAA;;;;;;kBAEe,CAAC;AACdA,QAAM,mBADQ;AAEdC;AAFc,CAAD,C","file":"router.js","sourcesContent":["import App from './App'\r\n\r\nexport default [{\r\n  path: '/businessRegister',\r\n  component: App\r\n}]\r\n"]}

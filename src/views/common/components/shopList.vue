@@ -73,8 +73,9 @@
     },
     created() {
       getShopList().then((res) => {
-        if(res.data.code === 200){
-          this.shopData = res.data.data;
+        console.log(res);
+        if(res.code === 200){
+          this.shopData = res.data;
         }
       }, function (err) {
         console.log(err);
