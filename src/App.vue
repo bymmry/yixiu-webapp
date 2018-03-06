@@ -24,6 +24,7 @@
     },
     created() {
       let userData = this.urlDataTurnObj(this.$route.path)
+      console.log(userData);
       sessionStorage.setItem("userData", userData); 
     }
   }

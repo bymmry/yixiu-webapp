@@ -23,7 +23,6 @@
     },
     mounted () {
       this.initPosition();
-      // this.getLocation();
     },
     methods: {
       initPosition () {
@@ -40,16 +39,20 @@
 
         const myCity = new BMap.LocalCity();
         myCity.get(getLoaction);
-      },
-      getLocation () {
-        let _this = this;
-        this.$ajax.get('https://api.map.baidu.com/location/ip?ak=tZE1am1BmgwHTyePKMjgrOGdjgskajL8')
-          .then(function (response) {
-            let res = eval('(' + response + ')');
-            _this.city = res.content.address;
-          }).catch(function (error) {
-            console.log(error);
-          })
+
+        let geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            localStorage.setItem('lng', r.point.lng);
+            localStorage.setItem('lat', r.point.lat);
+          }
+          else {
+            alert('failed'+this.getStatus());
+          }
+        },{enableHighAccuracy: true})
       },
       removeSpace (str) {
         let spaceReg = /\s|\xA0/g;

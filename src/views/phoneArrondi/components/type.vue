@@ -19,16 +19,14 @@
     },
     data () {
     	return {
-				data: [
-          
-        ]
+				data: []
 			}
     },
     mounted () {
       this.$ajax.get('https://m.yixiutech.com/category/plate/simple')
         .then(response => {
           console.log(response);
-          this.data = response.data
+          this.data = response.data.slice(0, 4)
         }).catch(error => {
           console.log(error)
         })
@@ -42,12 +40,10 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin-top: 20px;
 }
 
 .type {
     width: 90%;
-    border: 2px solid #eee;
     border-radius: 4px;
 		justify-content: space-between;
 }

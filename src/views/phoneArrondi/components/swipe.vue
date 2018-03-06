@@ -20,7 +20,6 @@
       this.$ajax.get('https://m.yixiutech.com/carousel')
         .then(response => {
           this.images = response.data
-          console.log(this.images)
         }).catch(error => {
           console.log(error);
         })

@@ -1,12 +1,12 @@
 <template>
 	<div class="hot">
-		<p class="hot__title">新用户专区</p>
+		<p class="hot__title">热门手机维修服务</p>
 		<div class="hot__content">
 			<type-item
 				v-for="(item, index) in data" 
 				:key="index" 
 				:name="item.name"
-				:icon="item.icon"
+				:icon="item.fe.icon"
 			/>
 		</div>
 	</div>
@@ -20,17 +20,16 @@
 		},
 		data () {
 			return {
-				data: [
-					{name: '电池电源', icon: 'hotBattery'}, 
-					{name: '屏幕问题', icon: 'hotScreen'}, 
-					{name: '摄像头问题', icon: 'hotCamera'}, 
-					{name: '声音问题', icon: 'hotSound'}, 
-					{name: '按键问题', icon: 'hotKeyBoard'}, 
-					{name: '外壳边框', icon: 'hotHull'}, 
-					{name: '信号|有线|无线', icon: 'hotWire'}, 
-					{name: '全部服务', icon: 'hotAll'}
-				]
+				data: []
 			}
+		},
+		mounted () {
+			this.$ajax.get('https://m.yixiutech.com/category/phoneRepair')
+				.then(response => {
+					this.data = response.data;
+				}).catch(error => {
+					console.log(error);
+				})
 		}
 	}
 </script>

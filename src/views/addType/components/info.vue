@@ -3,43 +3,125 @@
 		<div v-if="active === 0">
 			<p class="info__title">添加手机品牌</p>
 
-			<!-- <van-checkbox-group v-model="phoneRes" >
-				<van-cell-group>
-					<van-cell v-for="(item, index) in phone" :key="index">
-						<van-checkbox :name="item.name">{{ item.name }}</van-checkbox>
-					</van-cell>
-				</van-cell-group>
-			</van-checkbox-group> -->
-
 			<cube-select
-				v-model="phoneRes"
-				:options="phone"
+				v-model="phoneRes.name"
+				:options="phoneName"
 				@change="change"
+			/>
+
+			<van-field
+				v-model="phoneRes.desc"
+				label="描述"
+				placeholder="请输入品牌描述"
+			/>
+
+			<van-field
+				v-model="phoneRes.cover"
+				label="封面"
+				placeholder="请输入封面地址"
 			/>
 
 		</div>
 		<div v-if="active === 1">
 			<p class="info__title">添加手机型号</p>
 
-			<van-checkbox-group v-model="phoneModelRes" >
-				<van-cell-group>
-					<van-cell v-for="(item, index) in phoneModel" :key="index">
-						<van-checkbox :name="item">{{ item }}</van-checkbox>
-					</van-cell>
-				</van-cell-group>
-			</van-checkbox-group>
+			<cube-select
+				v-model="phoneModelRes"
+				:options="phoneModel"
+				@change="modelChange"
+			/>
+
+			<van-field
+				v-model="phoneModelRes.desc"
+				label="描述"
+				placeholder="请输入品牌描述"
+			/>
+
+			<van-field
+				v-model="phoneModelRes.cover"
+				label="封面"
+				placeholder="请输入封面地址"
+			/>
+
+			<p class="info__title">选择手机颜色</p>
+
+			<cube-select
+				v-model="phoneModelColorRes"
+				:options="phoneModelColor"
+				@change="colorChange"
+			/>
 
 		</div>
 		<div v-if="active === 2">
+			<p class="info__title">添加分类</p>
+
+			<p class="info__title">请选择分类类型</p>
+			<cube-select
+				v-model="category.type"
+				:options="categoryList"
+				@change="typeChange"
+			/>
+
+			<van-field
+				v-model="category.name"
+				label="分类名称"
+				placeholder="请输入分类名称"
+			/>
+
+			<van-field
+				v-model="category.cover"
+				label="封面图片链接"
+				placeholder="请输入分类封面图片信息"
+			/>
+
+			<van-field
+				v-model="category.desc"
+				label="分类描述"
+				placeholder="请输入分类描述"
+			/>
+
+			<van-field
+				v-model="category.shop"
+				label="所属商铺标识"
+				placeholder="请输入商铺标识"
+			/>
+
+			<van-field
+				v-model="service.name"
+				label="此分类的父级"
+				placeholder="请输入次分类的父级"
+			/>
+			
+
+		</div>
+		<div v-if="active === 3">
 			<p class="info__title">添加手机维修服务</p>
 
-			<van-checkbox-group v-model="serviceRes" >
-				<van-cell-group>
-					<van-cell v-for="(item, index) in service" :key="index">
-						<van-checkbox :name="item">{{ item }}</van-checkbox>
-					</van-cell>
-				</van-cell-group>
-			</van-checkbox-group>
+			<van-field
+				v-model="service.name"
+				label="服务名称"
+				placeholder="请输入服务名称"
+			/>
+
+			<van-field
+				v-model="service.price"
+				label="价格"
+				placeholder="请输入服务的价格"
+			/>
+
+			<van-field
+				v-model="service.cover"
+				label="封面链接"
+				placeholder="请输入服务封面链接"
+			/>
+
+			<van-field
+				v-model="service.desc"
+				label="服务描述"
+				placeholder="请输入服务描述"
+    		autosize
+			/>
+
 
 		</div>
 		
@@ -61,15 +143,39 @@ export default {
 	},
 	data () {
 		return {
-			active: 1,
-			phone: [],
-			alias: {},
-			phoneRes: '',
-			phoneModel: ['iPhone X', 'iPhone 8', 'iPhone 7', 'iPhone 6', 'iPhone SE'],
+			active: 0,
+			phoneName: [],
+			phoneInfo: [],
+			phoneRes: {
+				name: '',
+				alias: '',
+				phoneBrandId: '',
+				shop: '',
+				desc: '',
+				cover: ''
+			},
+			phoneModel: [],
+			phoneModelAlias: '',
+			phoneModelInfo: [],
+			phoneModelColor: [],
+			phoneModelColorRes: '',
 			phoneModelRes: [],
-			service: ['电池电源', '屏幕问题', '摄像头问题', '声音问题', '按键问题', '外壳问题', '信号|有线|无线'],
-			serviceRes: [],
-			manufacturer: ''
+			categoryList: ['平台板块', '维修服务', '普通商品'],
+			shop: '5a9e91a1a17f286baf0bf8a6',
+			manufacturer: '',
+			service: {
+				name: '',
+				price: '',
+				desc: ''
+			},
+			category: {
+				type: '',
+				name: '',
+				cover: '',
+				desc: '',
+				shop: '',
+				parent: ''
+			}
 		}
 	},
 	mounted () {
@@ -78,18 +184,28 @@ export default {
 			.then( response => {
 				let res = response.data;
 				res.map(item => {
-					_this.phone.push(item.name);
-					_this.alias.push(item.alias);
+					_this.phoneName.push(item.name);
+					_this.phoneInfo.push(item);
 				})
-				console.log(_this.phone)
 			}).catch( error => {
 				console.log(error)
 			})
 	},
 	methods: {
 		 change(value, index) {
-			this.phoneRes = { name: value, alias: this.alias[ index ] }
+			this.phoneRes = { name: value, alias: this.phoneInfo[ index ].alias, phoneBrandId: this.phoneInfo[ index ]._id, shop: this.shop };
+			this.manufacturer = this.phoneInfo[ index ]._id;
     },
+		modelChange (value, index) {
+			this.phoneModelRes = { name: value, alias: this.phoneModelInfo[ index ].alias, manufacturer: this.manufacturer, shop: this.shop };
+			this.phoneModelColor = this.phoneModelInfo[ index ].color;
+		},
+		typeChange (value, index) {
+
+		},
+		colorChange (value, index) {
+			this.phoneModelRes['color'] = value;
+		},
 		async next () {
 			this.submitByType();
 			this.active++;
@@ -97,17 +213,41 @@ export default {
 		submitByType () {
 			switch (this.active) {
 				case 0:
-					this.ajax('https://m.yixiutech.com/phone/manufacturer', this.phoneRes);
+					console.log(this.phoneRes);
+					this.post('https://m.yixiutech.com/phone/manufacturer', this.phoneRes);
+					this.get('https://m.yixiutech.com/phone/model/' + this.manufacturer, res => {
+						res.data.map(item => {
+							this.phoneModel.push(item.name);
+							this.phoneModelInfo.push(item);
+						})
+					})
 					break;
 				case 1:
-					this.ajax('https://m.yixiutech.com/phone/model', this.phoneModelRes);
+					console.log(this.phoneModelRes)
+					this.post('https://m.yixiutech.com/phone/model', this.phoneModelRes);
 					break;
 				case 2:
-					this.ajax('https://m.yixiutech.com/service', this.serviceRes);
+					console.log(this.catagory)
+					this.post('https://m.yixiutech.com/category', this.category);
+					break;
+				case 3: 
+					this.service['shop'] = this.shop;
+					this.service['catagory'] = 1;
+					console.log(this.service);
+					this.post('https://m.yixiutech.com/service', this.service);
 					break;
 			}
 		},
-		ajax (url, data) {
+		get (url, callback) {
+			this.$ajax.get(url, callback)
+				.then((response) => {
+					console.log(response)
+					callback(response);
+				}).catch((error) => {
+					console.log(error);
+				})
+		},
+		post (url, data) {
 			this.$ajax.post(url, data)
 				.then((response) => {
 					console.log(response)
