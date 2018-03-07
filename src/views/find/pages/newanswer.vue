@@ -1,25 +1,26 @@
 <template>
   <div class="answer-container">
-  <!--   <van-nav-bar
+    <van-nav-bar
       fixed
       style="z-index:100"
       class="titleshadow"
     >
-      <div slot="left" @click="prepage" class="prepage">
-        <sicon name="find-leftArr" scale="1.7"></sicon>
-        返回
+      <div slot="left" @click="close" class="close">
+        <sicon name="close" scale="1.4"></sicon>
       </div>
-      <div slot="title" class="detailTitle">{{ answerdetail.title }}</div>
+      <div slot="title" class="newTitle">回复</div>
+      <div slot="right" class="newBtn" @click="pushnewquestion">提交</div>
       </van-search>
     </van-nav-bar>
-     -->
-    <!-- 顶部留白 -->
-    <!-- <div class="topblank"></div> -->
+    
+    <topNav></topNav>
+    
+    <div class="questionarea">
+      <!-- <inputBox :placeholder="inputpla" @titleText="getTitle"></inputBox> -->
 
-    <!-- <div class="answercontent" v-html="answerdetail.content"> -->
-      <!-- {{  }} -->
-    <!-- </div> -->
-    回复
+      <textarea class="questionMessage" placeholder="你的回答" v-model="answer.content"></textarea>
+    </div>
+    
 
   </div>
 </template>
@@ -27,56 +28,63 @@
 <script>
   //vant
   import { NavBar } from 'vant';
+  import topNav from "../components/topNav"
+  // import inputBox from "../components/inputBox"
 
   export default {
     data(){
       return {
-        answerdetail:{}
+        inputpla:"请输入标题",
+        answer:{
+          content:"",
+          photo:[]
+        }
       }
     },
     components: {
+      topNav,
+      // inputBox,
       [NavBar.name]: NavBar,
     },
     methods: {
-      prepage(){
-        this.$router.back();
+      close(){
+        this.$router.go(-1)
+      },
+      getTitle(titletext){
+        this.answerdetail.title = titletext;
+      },
+      async pushnewquestion(){
+        console.log(this.answer)
       }
-    },
-    created:function(){
-      // this.answerdetail = this.$route.params.answer;
-      // console.log(this.answerdetail)
     }
   }
 </script>
 
 <style scoped>
-  .prepage{
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    width: 16vw;
-    color: rgb(98, 164, 255);
-    margin-left: -2vw;
+  .close{
+    color: #7d7d7d;
   }
-  .answer-container{
-    min-height: 100vh;
-    margin-bottom: 10vh;
+  .newTitle{
+    margin-left: -55vw;
+  }
+  .newBtn{
+    margin-left: 55vw;
+    color: #0086ff;
   }
   .titleshadow{
     -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
     -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
-  .detailTitle{
-    display: inline-block;
-    width: 60vw;
-    color: #646464;
-    white-space:nowrap; 
-    overflow: hidden;
-    text-overflow:ellipsis;
+  .questionarea{
+    padding: 5vh 3.9vw 0 3.9vw;
   }
-  .topblank{
-    margin-top: 46px;
+  .questionMessage{
+    margin-top: 3.6vh;
+    width: 100%;
+    min-height: 65vh;
+    border: 0;
+    resize: none;
   }
 
 </style>

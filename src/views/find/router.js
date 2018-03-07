@@ -25,12 +25,18 @@ export default [{
   {
     name: "questiondetail",
     path: '/find/questiondetail/:question',   //问题详情
-    component: questiondetail
+    component: questiondetail,
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     name: "answerdetail",
     path: '/find/answerdetail/:answerId',   //回答详情
-    component: answerdetail
+    component: answerdetail,
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     name: "newanswer",
@@ -39,7 +45,7 @@ export default [{
   },
   {
     name: "reply",
-    path: '/find/reply/:id',   //发起提问
+    path: '/find/reply/:id',   //回复
     component: reply
   }
 ]

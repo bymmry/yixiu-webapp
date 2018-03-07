@@ -91,6 +91,7 @@
         this.answerData[answer].title = this.questiondetail.title
         this.answerData[answer].father = this.questiondetail
       }
+      
       // console.log(this.$route.params)
     }
   }
