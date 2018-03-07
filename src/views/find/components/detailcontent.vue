@@ -207,9 +207,15 @@
     border-top: 0.2vw solid #e8e8e8;
   }
   .answerOption{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     width: 50%;
     padding: 3vh 0;
     text-align: center;
+  }
+  .answerOption i{
+    margin-right: 1vw;
   }
   .AOline{
     border-right: 0.2vw solid #e8e8e8;

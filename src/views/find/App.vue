@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="newquestion === false">
     <!-- 导航栏 -->
     <van-nav-bar
       fixed
@@ -24,11 +24,10 @@
       </van-search>
     </van-nav-bar>
 
-    <!-- 顶部留白 -->
-    <div class="topblank"></div>
+    <topNav></topNav>
     <!-- Vant 标签页组件 -->
 
-    <van-tabs :active="0" @disabled="onClickDisabled"  @click="handleTabClick" class="tabsBox">
+    <van-tabs :active="0" @disabled="willCome"  @click="handleTabClick" class="tabsBox">
       <van-tab v-for="(index,num) in 2" :disabled="index === 2" :key="num">
 
 
@@ -46,6 +45,9 @@
     </van-tabs>
 
   </div>
+  <div v-else>
+    <newquestion @close="newQuestion"></newquestion>
+  </div>
 </template>
 
 <script>
@@ -54,12 +56,14 @@
   import { Search } from 'vant';
   import { Tab, Tabs } from 'vant';
   import { Icon } from 'vant';
+  import newquestion from './components/newquestion'
+  import topNav from "./components/topNav"
 
   export default {
     data(){
       return {
+        newquestion:false,
         searchvalue:"",
-
       }
     },
     components: {
@@ -67,7 +71,9 @@
       [Search.name]: Search,
       [Icon.name]: Icon,
       [Tabs.name]: Tabs,
-      [Tab.name]: Tab
+      [Tab.name]: Tab,
+      newquestion,
+      topNav
     },
     methods: {
       //返回首页
@@ -75,14 +81,8 @@
         this.$router.push({ path: "/home"})
       },
       //点击不可使用
-      onClickDisabled() {
-        const toast = this.$createToast({
-          txt: '本功能即将到来',
-          type: 'error',
-          time: 1500
-        })
-        //使用show调出方法
-        toast.show()
+      willCome() {
+        this.functionunavailable()
       },
       //点击标签
       handleTabClick() {
@@ -97,10 +97,9 @@
       async onSearch(){
         alert("搜索")
       },
-      //发起新提问
+      //发起、关闭新提问
       newQuestion() {
-        this.$router.push({ path: "/find/newquestion"});
-        // this.onClickDisabled()
+        this.newquestion = !this.newquestion;
       }
     }
   }
@@ -111,9 +110,6 @@
     -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
     -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
-  }
-  .topblank{
-    margin-top: 46px;
   }
   .titleSearch{
     float: right;

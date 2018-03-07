@@ -13,8 +13,7 @@
       </van-search>
     </van-nav-bar>
     
-    <!-- 顶部留白 -->
-    <div class="topblank"></div>
+    <topNav></topNav>
 
     <div class="answercontent" v-html="answerdetail.content">
       <!-- {{  }} -->
@@ -28,15 +27,25 @@
 <script>
   //vant
   import { NavBar } from 'vant';
+  import topNav from "../components/topNav";
 
   export default {
     data(){
       return {
-        answerdetail:{}
+        answerdetail:{
+          id:11,
+          avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+          username:"青石先生",
+          imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
+          content:"<p>前女友：真是反了 谈恋爱你就想牵手 结婚后你难道还想上床？我：..............——————手动分割线————————评论...</p><img src='https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg'>",
+          replay:"128",
+          time:"1天前"
+        }
       }
     },
     components: {
       [NavBar.name]: NavBar,
+      topNav
     },
     methods: {
       prepage(){
@@ -47,8 +56,10 @@
       }
     },
     created:function(){
-      this.answerdetail = this.$route.params.answer;
-      console.log(this.answerdetail)
+
+      let answerId = this.$route.params.answerId
+      console.log(answerId)
+      //获取到id后交互得到具体的内容
     }
   }
 </script>
@@ -63,7 +74,7 @@
     margin-left: -2vw;
   }
   .answer-container{
-    min-height: 100vh;
+    min-height: 80vh;
     margin-bottom: 10vh;
   }
   .titleshadow{
@@ -79,8 +90,12 @@
     overflow: hidden;
     text-overflow:ellipsis;
   }
-  .topblank{
-    margin-top: 46px;
+  .answercontent{
+    padding: 3.2vh 3.2vw;
+    width: 93.6vw;
   }
-
+  .answercontent img{
+    display: inline-block;
+    max-width: 93.6vw;
+  }
 </style>

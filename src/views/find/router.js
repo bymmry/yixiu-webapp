@@ -6,7 +6,6 @@ import App from './App'
 import question from './children/question'
 import questiondetail from './pages/questiondetail'
 import answerdetail from './pages/answerdetail'
-import newquestion from './pages/newquestion'
 import newanswer from './pages/newanswer'
 import reply from './pages/reply'
 
@@ -30,13 +29,8 @@ export default [{
   },
   {
     name: "answerdetail",
-    path: '/find/answerdetail/:answer',   //回答详情
+    path: '/find/answerdetail/:answerId',   //回答详情
     component: answerdetail
-  },
-  {
-    name: "newquestion",
-    path: '/find/newquestion',   //发起提问
-    component: newquestion
   },
   {
     name: "newanswer",

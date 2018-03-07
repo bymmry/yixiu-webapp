@@ -182,7 +182,9 @@
     created() {
       let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
-      if (userData !== {}) {
+      console.log(userData)
+      
+      if (userData !== {} && userData !== null) {
         console.log(userData)
         this.userInfo = userData;
         this.loggedin = true;

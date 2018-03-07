@@ -39,7 +39,7 @@
     },
     methods: {
       prepage(){
-        this.$router.go(-1)
+        this.$router.back();
       }
     },
     created:function(){

@@ -14,14 +14,14 @@
       </van-search>
     </van-nav-bar>
 
-    <!-- 顶部留白 -->
-    <div class="topblank"></div>
+    <topNav></topNav>
+
     <!-- 问题部分 -->
     <detailContent :question="questiondetail"></detailContent>
     <div class="answerblank"></div>
     <!-- 回答部分 -->
-    <router-link v-for="answer in answerData" :key="answer.id" :to="{ name:'answerdetail', params: { answer: answer }}">
-      <answer :answer="answer"></answer>
+    <router-link v-for="answer in answerData" :key="answer.id" :to="{ name:'answerdetail', params: { answerId: answer.id }}">
+      <answerBox :answer="answer"></answerBox>
     </router-link>
 
   </div>
@@ -30,7 +30,8 @@
 <script>
   import { NavBar } from 'vant';
   import detailContent from "../components/detailContent";
-  import answer from "../components/answer";
+  import answerBox from "../components/answerBox";
+  import topNav from "../components/topNav";
 
   export default {
     data(){
@@ -39,7 +40,7 @@
         questiondetail: {},
         answerData:[
           {
-            id:1,
+            id:11,
             avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
             username:"青石先生",
             imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
@@ -48,7 +49,7 @@
             time:"1天前"
           },
           {
-            id:2,
+            id:12,
             avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
             username:"青石先生",
             imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
@@ -62,7 +63,8 @@
     components: {
       [NavBar.name]: NavBar,
       detailContent,
-      answer,
+      answerBox,
+      topNav,
     },
     methods: {
       //返回首页
@@ -87,6 +89,7 @@
       this.questiondetail = this.$route.params.question;
       for(let answer in this.answerData){
         this.answerData[answer].title = this.questiondetail.title
+        this.answerData[answer].father = this.questiondetail
       }
       // console.log(this.$route.params)
     }
@@ -119,9 +122,6 @@
     background: #ebebeb;
     min-height: 100vh;
     padding-bottom: 45px;
-  }
-  .topblank{
-    margin-top: 46px;
   }
   .titleSearch{
     float: right;
