@@ -24,8 +24,13 @@ var _shopDetail = require('../common/components/shopDetail');
 
 var _shopDetail2 = _interopRequireDefault(_shopDetail);
 
+var _shopList = require('../common/components/shopList');
+
+var _shopList2 = _interopRequireDefault(_shopList);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+//公共导航路由
 exports.default = [{
   path: '/orders',
   component: _App2.default,
@@ -46,6 +51,9 @@ exports.default = [{
   }
 }, {
   path: '/shop', //商店列表
+  component: _shopList2.default
+}, {
+  path: '/shop', //商店列表
   component: _toShop2.default,
   children: [{
     path: ":id", //商家详情
@@ -54,5 +62,5 @@ exports.default = [{
   meta: {
     keepAlive: true // 需要被缓存
   }
-}]; //公共导航路由
+}];
 //# sourceMappingURL=router.js.map

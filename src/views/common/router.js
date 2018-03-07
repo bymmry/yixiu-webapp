@@ -4,6 +4,7 @@ import my from '../my/App'
 import find from '../find/App'
 import toShop from '../common/components/toShop';
 import shopDetail from '../common/components/shopDetail';
+import shop from '../common/components/shopList';
 
 export default [{
   path: '/orders',
@@ -26,6 +27,10 @@ export default [{
     keepAlive: true // 需要被缓存
   }
 },
+  {
+    path: '/shop', //商店列表
+    component: shop,
+  },
   {
     path: '/shop', //商店列表
     component: toShop,
