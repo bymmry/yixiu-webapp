@@ -40,13 +40,14 @@
       listView
     },
     props: {
-      shopData: {
+      searchData: {
         type: Array,
         default: null
       },
     },
     data() {
       return {
+        shopData: [],
         actions: [
           {
             name: '综合排序',
@@ -78,9 +79,14 @@
     },
     created() {
       getShopList().then((res) => {
-        console.log(res);
         if(res.code === 200){
           this.shopData = res.data;
+          if (this.searchData === null){
+            console.log("searchData is null")
+          }else {
+            console.log(this.searchData);
+            this.shopData = this.searchData;
+          }
         }
       }, function (err) {
         console.log(err);
