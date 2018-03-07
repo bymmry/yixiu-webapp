@@ -64,6 +64,10 @@ var _router23 = require('../views/addType/router');
 
 var _router24 = _interopRequireDefault(_router23);
 
+var _router25 = require('../views/phoneArrondi/router');
+
+var _router26 = _interopRequireDefault(_router25);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vueRouter2.default);
@@ -73,6 +77,9 @@ exports.default = new _vueRouter2.default({
     path: '/',
     // redirect:'/home?userInfo={avatarUrl="https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0"&city="Liangping"&country="China"&gender=1&language="zh_CN"&nickName="等到烟花清凉"&province="Chongqing"}&openid="oFosP5RQ-4BYlzddw8o5ON1ibctU"'
     redirect: '/home'
-  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default), (0, _toConsumableArray3.default)(_router24.default))
+  }, {
+    path: "/pay",
+    redirect: '/orders'
+  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default), (0, _toConsumableArray3.default)(_router24.default), (0, _toConsumableArray3.default)(_router26.default))
 });
 //# sourceMappingURL=router.js.map

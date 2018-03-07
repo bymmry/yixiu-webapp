@@ -128,6 +128,15 @@ var filters = {
 
     //返回一个JSON字符串
     return (0, _stringify2.default)(userInfor);
+  },
+  functionunavailable: function functionunavailable() {
+    //功能不可用的提示
+    var toast = this.$createToast({
+      txt: '本功能即将到来',
+      type: 'error',
+      time: 1300
+    });
+    toast.show();
   }
 };
 exports.default = {
@@ -145,6 +154,7 @@ exports.default = {
     Vue.prototype.hasClass = filters.hasClass;
     Vue.prototype.removeClass = filters.removeClass;
     Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj;
+    Vue.prototype.functionunavailable = filters.functionunavailable;
   }
 };
 //# sourceMappingURL=filters.js.map

@@ -29,10 +29,21 @@
         }
       },
       _pay: function (data) {
+        let isWxMini;
         console.log(data);
-        wx.miniProgram.navigateTo({
-          url: "/pages/wxpay/wxpay"
-        });
+        let payInfo = {
+          data: "test"
+        };
+        isWxMini = window.__wxjs_environment === 'miniprogram'
+
+        if(isWxMini){
+          console.log(isWxMini);
+          let jumpUrl = encodeURIComponent(window.location);
+          let path = `/pages/wxpay/wxpay?payInfo=${JSON.stringify(payInfo)}&jumpUrl=${jumpUrl}`;
+          wx.miniProgram.navigateTo({
+            url: path
+          });
+        }
       }
     }
   };

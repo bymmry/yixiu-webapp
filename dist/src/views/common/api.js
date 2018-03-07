@@ -13,6 +13,7 @@ exports.getShopData = getShopData;
 exports.getPhoneBrand = getPhoneBrand;
 exports.getPhoneModel = getPhoneModel;
 exports.getPhoneProblem = getPhoneProblem;
+exports.getShopListSort = getShopListSort;
 
 var _ajax = require('../../lib/ajax');
 
@@ -71,6 +72,28 @@ function getPhoneModel(phoneId) {
 function getPhoneProblem() {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/category/phoneRepair').then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+//根据筛选条件获取商家列表
+function getShopListSort(data) {
+  var filter = {
+    score: 1, //评分
+    serviceFinishTime: 1, //完成时间/(速度)
+    serviceFinishCount: 1, //修好数量
+    price: 1, //均价
+    distance: 1, //距离
+    pv: 1, //浏览量
+    name: "", //商家名称
+    serviceName: "", //服务名称
+    point: {} //用户定位信息的经纬度
+  };
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/shop/filter', filter).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);

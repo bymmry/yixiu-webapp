@@ -27,7 +27,7 @@
 <script>
   import { Actionsheet, Popup, Picker } from 'vant';
   import Scroll from '../base/scroll';
-  import { getShopList } from '../api';
+  import { getShopList, getShopListSort } from '../api';
   import listView from "./listView"
 
   export default {
@@ -39,9 +39,14 @@
       Scroll,
       listView
     },
+    props: {
+      shopData: {
+        type: Array,
+        default: null
+      },
+    },
     data() {
       return {
-        shopData: [],
         actions: [
           {
             name: '综合排序',
@@ -84,6 +89,11 @@
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;
+
+        getShopListSort(index).then((res) => {
+          console.log(res);
+        });
+
         if (index === 0){
           this.chooseType();
         }
