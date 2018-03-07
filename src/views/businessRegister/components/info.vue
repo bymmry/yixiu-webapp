@@ -10,7 +10,7 @@
 		<p class="head">商铺封面</p>
 
 		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
-			<sicon name="camera" scale="10"></sicon>
+			<img :src="infos.cover" class="info__img" alt="">
 		</van-uploader>
 
 		<van-field
@@ -19,10 +19,20 @@
 			placeholder="请输入联系电话"
 		/>
 
+		<div class="info-item">
+			<p class="info-item__title">开始营业时间</p>
+			<p class="info-item__content">{{ startHour }}</p>
+		</div>
+		
 
-		<cube-button @click="startPicker">选择开始营业时间</cube-button>
+		<cube-button @click="start">选择开始营业时间</cube-button>
 
-		<cube-button @click="endPicker">选择结束营业时间</cube-button>
+		<div class="info-item">
+			<p class="info-item__title">结束营业时间</p>
+			<p class="info-item__content">{{ endHour }}</p>
+		</div>
+
+		<cube-button @click="finish">选择结束营业时间</cube-button>
 
 		<van-field
 			v-model="infos.serviceWay"
@@ -30,13 +40,7 @@
 			placeholder="请输入支持的服务方式，用逗号隔开"
 		/>
 
-		
-
-		<!-- <van-field
-			v-model="infos.contactNum"
-			label="联系电话"
-			placeholder="请输入联系电话"
-		/> -->
+		<div id="allmap"></div>
 		
 		<button class="info__btn" @click="register">注册</button>
   </div>
@@ -44,7 +48,7 @@
 
 <script>
 import InfoItem from './infoItem'
-import { Field, Uploader } from 'vant'
+import { Field, Uploader, Icon } from 'vant'
 import timeJson from '../data/data.json'
 export default {
 	mounted () {
@@ -53,9 +57,6 @@ export default {
       data: [this.time],
       onSelect: (selectedVal, selectedIndex, selectedText) => {
         this.startHour = `${ selectedVal[0] }:00`;
-      },
-      onCancel: () => {
-        
       }
 		})
 		this.endPicker = this.$createPicker({
@@ -65,51 +66,80 @@ export default {
 				this.endHour = `${ selectedVal[0] }:00`
 				this.infos.businessHours.push(this.startHour + ' - ' + this.endHour);
 				console.log(this.infos)
-      },
-      onCancel: () => {
-        
       }
 		})
+		this.initPosition();
 	},
 	components: {
 		[Field.name]: Field,
-		[Uploader.name]: Uploader
+		[Uploader.name]: Uploader,
+		[Icon.name]: Icon
 	},
 	data () {
 		return {
-			options: ['手机', '电脑', '家电'],
 			startHour: '',
 			endHour: '',
 			infos: {
 				name: '',
-				cover: '',
+				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',
 				contactNumber: '',
-				service: '',
+				serviceWay: '',
+				position: {
+					lng: '',
+					lat: ''
+				},
 				businessHours: []
 			},
-			time: timeJson,
-
+			time: timeJson
 		}
 	},
 	methods: {
 		async register () {
-			let res = this.$ajax.post('https://yixiu.natappvip.cc/shop', this.infos);
-			console.log(111);
-			console.log(res);
-				// .then(response => {
-				// 	console.log(response);
-				// }).catch(error => {
-				// 	console.log(error);
-				// })
+			let res = await this.$ajax.post('https://yixiu.natappvip.cc/shop', this.infos);
+			if (res.code == 4001) {
+				alert(res.errMsg);
+				return;
+			}
+			this.$router.push('/sellerHome');
 		},
 		onRead(file) {
 			this.infos.cover = file.content;
 		},
-		startPicker () {
-      this.startPicker.show()
+		start () {
+			this.startPicker.show()
 		},
-		endPicker () {
+		finish () {
 			this.endPicker.show()
+		},
+		initPosition () {
+			let map = new BMap.Map("allmap");
+			let point = new BMap.Point(116.331398,39.897445);
+			map.centerAndZoom(point,12);
+			let _this = this;
+
+			function getLoaction (res) {
+				let city = res.name;
+				map.setCenter(city);
+				_this.city = city;
+			}
+
+			const myCity = new BMap.LocalCity();
+			myCity.get(getLoaction);
+
+			let geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r){
+				if(this.getStatus() == BMAP_STATUS_SUCCESS){
+					var mk = new BMap.Marker(r.point);
+					map.addOverlay(mk);
+					map.panTo(r.point);
+					_this.infos.position.lng = r.point.lng;
+					_this.infos.position.lat = r.point.lat;
+					
+				}
+				else {
+					alert('failed'+this.getStatus());
+				}
+			},{enableHighAccuracy: true})
 		}
 	}
 }
@@ -122,6 +152,33 @@ export default {
     left: 50%;
     margin-top: 40px;
     transform: translate(-50%);
+}
+
+.info .info__img {
+	width: 100px;
+	height: 100px;
+}
+
+.info-item {
+	padding: 10px 15px;
+	display: flex;
+	color: #fff;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.info-item .info-item__content {
+	margin-left: 50px;
+}
+
+.cube-btn {
+	background: transparent;
+	border: 2px solid #fff;
+	border-radius: 5px;
+}
+
+.van-field__control {
+	background: transparent;
 }
 
 .info .head {

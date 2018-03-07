@@ -97,6 +97,13 @@ let filters = {
     return val
     // return moment.unix(val).format('YYYY-MM-DD HH:mm')
   },
+  prompt (txt, type) {
+    return this.$createToast({
+      txt: txt,
+      type: type,
+      time: 1300
+    })
+  },
   unix2hhmm(val) {
     return val
     // return moment.unix(val).format('HH:mm')
@@ -144,5 +151,6 @@ export default {
     Vue.prototype.removeClass = filters.removeClass
     Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj
     Vue.prototype.functionunavailable = filters.functionunavailable
+    Vue.prototype.prompt = filters.prompt
   }
 }

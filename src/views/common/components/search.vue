@@ -27,7 +27,8 @@
     methods: {
       async search () {
         if (this.content.name === '') return;
-        let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter', this.content)
+        let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter', this.content);
+        res.code == 200 ? this.$emit('sendShopList', res.data) : null;
       },
       contentChange () {
         this.content['serviceName'] = this.content['name']

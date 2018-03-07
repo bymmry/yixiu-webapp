@@ -1,8 +1,8 @@
 import {
   Style,
   Button,
-  // Checkbox,
-  // CheckboxGroup,
+  Checkbox,
+  CheckboxGroup,
   // Loading,
   // Tip,
   // Popup,
@@ -28,5 +28,7 @@ export default {
     Vue.use(Dialog)
     Vue.use(ActionSheet)
     Vue.use(Select)
+    Vue.use(Checkbox)
+    Vue.use(CheckboxGroup)
   }
 }

@@ -5,7 +5,6 @@ import common from '../views/common/router'
 import my from '../views/my/router'
 import find from '../views/find/router'
 import login from '../views/login/router'
-import search from '../views/search/router'
 import position from '../views/position/router'
 import register from '../views/register/router'
 import businessRegister from '../views/businessRegister/router'
@@ -34,7 +33,6 @@ export default new Router({
     ...position,
     ...login,
     ...register,
-    ...search,
     ...businessRegister,
     ...RetrievePwd,
     ...SellerHome,

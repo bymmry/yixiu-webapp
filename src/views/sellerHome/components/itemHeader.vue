@@ -1,15 +1,17 @@
 <template>
   <div class="header">
-		<router-link to="/home">
+		<router-link to="/sellerHome">
 			<sicon name="back" scale="3"></sicon>
 		</router-link>
-		<p class="header__title">完善信息</p>
+		<p class="header__title">{{ name }}</p>
   </div>
 </template>
 
 <script>
 export default {
-	
+	props: {
+		name: String
+	}
 }
 </script>
 
