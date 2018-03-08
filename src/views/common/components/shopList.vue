@@ -1,5 +1,6 @@
 <template>
   <div class="shopList">
+    <Search @sendShopList="sendShopList"  />
     <div class="shopTitle">
       <h3><sicon name="home" scale="1.6"></sicon><span>附近为维修店</span></h3>
     </div>
@@ -21,11 +22,13 @@
          ref="shopDes">
       <list-view @select="selectShop" :shopData="shopData"></list-view>
     </div>
+    <div class="space"></div>
   </div>
 </template>
 
 <script>
   import { Actionsheet, Popup, Picker } from 'vant';
+  import  Search from './search.vue';
   import Scroll from '../base/scroll';
   import { getShopList, getShopListSort } from '../api';
   import listView from "./listView"
@@ -37,7 +40,8 @@
       [Popup.name]: Popup,
       [Picker.name]: Picker,
       Scroll,
-      listView
+      listView,
+      Search
     },
     props: {
       searchData: {
@@ -126,6 +130,9 @@
             }
           })
         }
+      },
+      sendShopList (...list) {
+        this.shopData = list;
       }
     }
   };
@@ -182,5 +189,9 @@
     color: #eea17a;
   }
 
+  .space {
+    width: 100%;
+    height: 8vh;
+  }
 
 </style>

@@ -97,6 +97,13 @@ let filters = {
     return val
     // return moment.unix(val).format('YYYY-MM-DD HH:mm')
   },
+  prompt (txt, type) {
+    return this.$createToast({
+      txt: txt,
+      type: type,
+      time: 1300
+    })
+  },
   unix2hhmm(val) {
     return val
     // return moment.unix(val).format('HH:mm')
@@ -186,5 +193,6 @@ export default {
     Vue.prototype.copy = filters.copy
     Vue.prototype.emailReg = filters.emailReg
     Vue.prototype.mobileReg = filters.mobileReg
+    Vue.prototype.prompt = filters.prompt
   }
 }

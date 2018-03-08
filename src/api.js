@@ -10,6 +10,26 @@ class Api {
     })
     return promise
   }
+  static async getData (url) {
+    return new Promise((resolve, reject) => {
+      ajax(url)
+        .then((response) => {
+          resolve(response);
+        }).catch((error) => {
+          reject(error);
+        })
+    })
+  }
+  static async sendData (url, data) {
+    return new Promise((resolve, reject) => {
+      ajax.post(url, data)
+        .then(response => {
+          resolve(response);
+        }).catch(error => {
+          reject(error);
+        })
+    })
+  }
 }
 export default {
   install(Vue) {

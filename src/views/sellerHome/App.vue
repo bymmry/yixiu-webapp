@@ -5,46 +5,43 @@
 		/>
 		<List/>
 
-		<div class="statistics">
-			<sicon name="pv" scale="5"></sicon>
-			<p>统计</p>
-			<sicon name="right" scale="3"></sicon>
-		</div>
-
-		<div class="statistics" >
-			<sicon name="type" scale="5"></sicon>
-			<p>分类添加</p>
-			<sicon name="right" scale="3"></sicon>
-		</div>
+		 <Content v-for="(item, index) in content" :key="index"
+		 	:name="item.name"
+			:icon="item.icon"
+			:link="item.link"
+		 />
   </div>
 </template>
 
 <script>
 	import Header from './components/header.vue'
 	import List from './components/list.vue'
+	import Content from './components/content.vue'
   export default {
     components: {
 			Header,
-			List
+			List,
+			Content
 		},
 		data () {
 			return {
-				sellerName: '小姐姐家的店'
+				sellerName: '小姐姐家的店',
+				isRegister: true,
+				content: [
+					{ name: '统计', icon: 'pv', link: '/pv' },
+					{ name: '添加手机品牌', icon: 'pv', link: '/addBrand' },
+					{ name: '添加手机型号', icon: 'pv', link: '/addModel' },
+					{ name: '添加手机类型', icon: 'pv', link: '/addCatagory' },
+					{ name: '添加手机服务', icon: 'pv', link: '/addService' }
+				]
 			}
+		},
+		mounted () {
+			!this.isRegister && this.$router.push('/businessRegister');
 		}
   }
 </script>
 
 <style scoped>
-.statistics {
-	width: 96%;
-	display: flex;
-	align-items: center;
-	padding: 2%;
-	border-bottom: 2px solid #ffbd5c;
-}
 
-.statistics p {
-	flex: 1;
-}
 </style>

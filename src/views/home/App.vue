@@ -30,9 +30,6 @@
       Ticket,
       Activity,
       shopList
-    },
-    methods: {
-
     }
   }
 </script>

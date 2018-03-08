@@ -7,7 +7,7 @@
         <div id="allmap"></div>
       </div>
     </router-link>
-    <router-link class="header__search" to="/search">
+    <router-link class="header__search" to="/shop">
       <input type="text" class="header__input" placeholder="请输入想要搜索的内容"/>
     </router-link>
     <sicon name="more" scale="3.4" class="header__operate"></sicon>
