@@ -7,7 +7,7 @@
       @save="onSave"
       @delete="onDelete"
     />
-    <div class="deleteBtn" v-if="type==='edit'">
+    <div class="deleteBtn">
       <van-button type="danger" @click="popupChose">删除该地址</van-button>
     </div>
     <van-popup v-model="popupshow" class="popup">
