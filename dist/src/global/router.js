@@ -36,37 +36,33 @@ var _router9 = require('../views/login/router');
 
 var _router10 = _interopRequireDefault(_router9);
 
-var _router11 = require('../views/search/router');
+var _router11 = require('../views/position/router');
 
 var _router12 = _interopRequireDefault(_router11);
 
-var _router13 = require('../views/position/router');
+var _router13 = require('../views/register/router');
 
 var _router14 = _interopRequireDefault(_router13);
 
-var _router15 = require('../views/register/router');
+var _router15 = require('../views/businessRegister/router');
 
 var _router16 = _interopRequireDefault(_router15);
 
-var _router17 = require('../views/businessRegister/router');
+var _router17 = require('../views/retrievePwd/router');
 
 var _router18 = _interopRequireDefault(_router17);
 
-var _router19 = require('../views/retrievePwd/router');
+var _router19 = require('../views/sellerHome/router');
 
 var _router20 = _interopRequireDefault(_router19);
 
-var _router21 = require('../views/sellerHome/router');
+var _router21 = require('../views/addType/router');
 
 var _router22 = _interopRequireDefault(_router21);
 
-var _router23 = require('../views/addType/router');
+var _router23 = require('../views/phoneArrondi/router');
 
 var _router24 = _interopRequireDefault(_router23);
-
-var _router25 = require('../views/phoneArrondi/router');
-
-var _router26 = _interopRequireDefault(_router25);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -75,11 +71,11 @@ exports.default = new _vueRouter2.default({
   base: '/webapp/',
   routes: [{
     path: '/',
-    // redirect:'/home?userInfo={avatarUrl="https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0"&city="Liangping"&country="China"&gender=1&language="zh_CN"&nickName="等到烟花清凉"&province="Chongqing"}&openid="oFosP5RQ-4BYlzddw8o5ON1ibctU"'
-    redirect: '/home'
+    redirect: '/home?nickName=等到烟花清凉&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0&openid=oFosP5RQ-4BYlzddw8o5ON1ibctU'
+    // redirect:'/home'
   }, {
     path: "/pay",
     redirect: '/orders'
-  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default), (0, _toConsumableArray3.default)(_router24.default), (0, _toConsumableArray3.default)(_router26.default))
+  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default), (0, _toConsumableArray3.default)(_router24.default))
 });
 //# sourceMappingURL=router.js.map

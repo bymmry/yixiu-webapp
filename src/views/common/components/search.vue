@@ -8,9 +8,13 @@
 </template>
 
 <script>
+  import { Toast } from 'vant';
   export default {
     mounted () {
-      
+
+    },
+    components: {
+      [Toast.name]: Toast
     },
     data () {
       return {
@@ -27,8 +31,14 @@
     methods: {
       async search () {
         if (this.content.name === '') return;
+        Toast.loading({
+          // mask: true,
+          message: '加载中...'
+        });
+        // let res = await this.$api.sendData('https://m.yixiutech.com/shop/filter', this.content);
         let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter', this.content);
         res.code == 200 ? this.$emit('sendShopList', res.data) : null;
+        Toast.clear();
       },
       contentChange () {
         this.content['serviceName'] = this.content['name']

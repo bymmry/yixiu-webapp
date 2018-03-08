@@ -24,8 +24,13 @@
       navigation
     },
     created() {
-      let userData = this.urlDataTurnObj(this.$route.path)
+      // alert(window.location);
+      // alert(this.$route.path);
+      let userData = this.urlDataTurnObj(window.location.href);
+      // alert(userData);
 
+      console.log("onload--------------------------------------------------->");
+      console.log(userData);
       // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
       // console.log(userData)

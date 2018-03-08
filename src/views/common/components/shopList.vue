@@ -14,7 +14,22 @@
         </li>
         <li @click="chooseMainType(1)" :class="{'active': currentIndex===1}"><span>修的最好</span></li>
         <li @click="chooseMainType(2)" :class="{'active': currentIndex===2}"><span>距离最近</span></li>
-        <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span></li>
+        <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span>
+          <van-popup
+            v-model="showFilter"
+            position="right"
+            :close-on-click-overlay=false
+          >
+            <div class="filter">
+                <div><van-checkbox v-model="checked">评分最高</van-checkbox></div>
+                <div><van-checkbox v-model="checked">速度最快</van-checkbox></div>
+                <div><van-checkbox v-model="checked">修的最好</van-checkbox></div>
+                <div><van-checkbox v-model="checked">价格最低</van-checkbox></div>
+                <div><van-checkbox v-model="checked">距离最近</van-checkbox></div>
+                <div><van-checkbox v-model="checked">浏览量最高</van-checkbox></div>
+            </div>
+          </van-popup>
+        </li>
       </ul>
     </div>
     <div @click="selectShop"
@@ -27,7 +42,7 @@
 </template>
 
 <script>
-  import { Actionsheet, Popup, Picker } from 'vant';
+  import { Actionsheet, Popup, Picker, Checkbox, CheckboxGroup } from 'vant';
   import  Search from './search.vue';
   import Scroll from '../base/scroll';
   import { getShopList, getShopListSort } from '../api';
@@ -39,6 +54,8 @@
       [Actionsheet.name]:Actionsheet,
       [Popup.name]: Popup,
       [Picker.name]: Picker,
+      [Checkbox.name]: Checkbox,
+      [CheckboxGroup.name]: CheckboxGroup,
       Scroll,
       listView,
       Search
@@ -79,6 +96,8 @@
           itemHeight: 40,
           visibleItemCount: 4
         },
+        showFilter: false,
+        checked: true
       }
     },
     created() {
@@ -99,16 +118,16 @@
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;
+        console.log(index);
         if (index === 0){ //综合排序
           this.chooseType();
+        }else if(index ===3 ){ //筛选
+          this.filterShop();
         }else {
           getShopListSort(index).then((res) => {
             console.log(res);
           });
         }
-
-
-
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -137,8 +156,11 @@
           })
         }
       },
-      sendShopList (...list) {
+      sendShopList (list) {
         this.shopData = list;
+      },
+      filterShop: function () {
+        this.showFilter = !this.showFilter;
       }
     }
   };
@@ -198,6 +220,16 @@
   .space {
     width: 100%;
     height: 8vh;
+  }
+
+  .filter{
+    width: 300px;
+    background-color: #fff;
+    height: auto;
+  }
+  .filter ul, .filter ul li {
+    width: auto;
+    display: block;
   }
 
 </style>

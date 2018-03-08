@@ -44,15 +44,17 @@
       }
     },
     created() {
-      getPhoneProblem().then((res) => {
+      let shopId = this.$route.params.id;
+      getPhoneProblem(shopId).then((res) => {
         if(res.code === 200){
           this.items = res.data;
-          console.log(this.items);
+          console.log(res);
+
+          this.getProblem(res.data);
         }
       }, function (err) {
         console.log(err);
       });
-      this.getProblem();
     },
     methods: {
       getProblem: function () {

@@ -124,8 +124,9 @@ var filters = {
     // url是传进来的完整地址
     // urlData 去除 }
     // origin 从第一个 { 开始 通过 & 分割
-    var urlData = url.replace('}', '');
-    var origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
+    var urlData = decodeURIComponent(url);
+    console.log(urlData);
+    var origin = urlData.substr(urlData.indexOf('?') + 1).split('&');
     var userInfor = {};
 
     for (var userData in origin) {
@@ -149,9 +150,9 @@ var filters = {
     // 注册用户需要用到的参数
     var information = {
       name: data.nickName || 0, //用户名称
-      email: data.email || "", //邮箱
-      mobile: data.mobile || "", //手机号
-      password: data.password || "", //密码
+      email: data.email || '', //邮箱
+      mobile: data.mobile || '', //手机号
+      password: data.password || '', //密码
       isSys: data.isSys || false, //是否是系统管理员
       role: data.role || [], //如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
       wx: data, //微信信息:如openid,昵称和头像链接等等

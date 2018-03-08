@@ -1,7 +1,7 @@
 import ajaxLib from '../../lib/ajax';
 const ajax = ajaxLib.ajax;
-const url = 'https://m.yixiutech.com';
-// const url = "https://yixiu.natappvip.cc";
+// const url = 'https://m.yixiutech.com';
+const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 export function getShopList() {
@@ -48,15 +48,17 @@ export function getPhoneModel(phoneId) {
 }
 
 // 获取热门手机维修服务分类
-export function getPhoneProblem() {
+export function getPhoneProblem(data) {
   return new Promise((resolve, reject) => {
-    ajax.get(`${url}/category/phoneRepair`).then((res) => {
+    ajax.get(`${url}/category/shop/${data}`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);
     })
   })
 }
+
+// huoqu
 
 //根据筛选条件获取商家列表
 export function getShopListSort(data) {

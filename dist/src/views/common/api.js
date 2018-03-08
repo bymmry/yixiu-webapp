@@ -26,8 +26,8 @@ var _ajax2 = _interopRequireDefault(_ajax);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ajax = _ajax2.default.ajax;
-var url = 'https://m.yixiutech.com';
-// const url = "https://yixiu.natappvip.cc";
+// const url = 'https://m.yixiutech.com';
+var url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 function getShopList() {
@@ -74,15 +74,17 @@ function getPhoneModel(phoneId) {
 }
 
 // 获取热门手机维修服务分类
-function getPhoneProblem() {
+function getPhoneProblem(data) {
   return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/category/phoneRepair').then(function (res) {
+    ajax.get(url + '/category/shop/' + data).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);
     });
   });
 }
+
+// huoqu
 
 //根据筛选条件获取商家列表
 function getShopListSort(data) {

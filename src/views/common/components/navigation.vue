@@ -22,6 +22,8 @@
     left: 0;
     right: 0;
     height: 8vh;
+    min-height: 50px;
+    max-height: 60px;
     border-top: 1px solid #eee;
     box-shadow: 0 -1px 0 #eee;
     background-color: #fff;
