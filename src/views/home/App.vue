@@ -1,5 +1,6 @@
 <template>
   <div>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh"></van-pull-refresh>
     <HomeHeader></HomeHeader>
     <Swipe></Swipe>
     <Type></Type>
@@ -20,6 +21,7 @@
   import Ticket from './components/tickets.vue'
   import Activity from './components/activity.vue'
   import shopList from '../common/components/shopList'
+  import { PullRefresh } from 'vant'
   export default {
     components: {
       Nav,
@@ -29,7 +31,21 @@
       HotArea,
       Ticket,
       Activity,
-      shopList
+      shopList,
+      [PullRefresh.name]: PullRefresh
+    },
+    data () {
+      return {
+        isLoading: false
+      }
+    },
+    methods: {
+      onRefresh() {
+        setTimeout(() => {
+          this.prompt('刷新成功', 'success');
+          this.isLoading = false;
+        }, 500);
+      }
     }
   }
 </script>

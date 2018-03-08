@@ -17,13 +17,7 @@
 		},
 		methods: {
 			async receive () {
-				const toast = this.$createToast({
-					type: 'correct',
-          txt: '领取成功!'
-				})
-				toast.show();
-				let res = await this.$api.hello();
-				toast.hide();
+				this.functionunavailable();
 			}
 		}
 	}

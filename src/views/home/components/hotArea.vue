@@ -2,34 +2,32 @@
 	<div class="hot">
 		<p class="hot__title">热门手机维修服务</p>
 		<div class="hot__content">
-			<type-item
+			<hot-item
 				v-for="(item, index) in data" 
-				:key="index" 
+				:key="index"
 				:name="item.name"
 				:icon="item.fe.icon"
+				:service="item.name"
 			/>
 		</div>
 	</div>
 </template>
 
 <script>
-	import TypeItem from './typeItem.vue'
+	import HotItem from './hotItem.vue'
 	export default {
 		components: {
-			TypeItem
+			HotItem
 		},
 		data () {
 			return {
 				data: []
 			}
 		},
-		mounted () {
-			this.$ajax.get('https://m.yixiutech.com/category/phoneRepair')
-				.then(response => {
-					this.data = response.data;
-				}).catch(error => {
-					console.log(error);
-				})
+		async mounted () {
+			let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
+			console.log(res);
+			this.data = res.data;
 		}
 	}
 </script>

@@ -37,6 +37,15 @@
 			autosize
 		/>
 
+		<div class="info__name">
+			<p>手机品牌</p>
+			<cube-select
+				v-model="phoneInfo.name"
+				:options="phoneNames"
+				@change="phoneChange"
+			/>
+		</div>
+
 		<div class="info__name">店铺支持的手机型号</div>
 
 		<cube-checkbox-group v-model="service.support"  :options="supportList" >
@@ -44,6 +53,8 @@
 		</cube-checkbox-group>
 
 		<van-button size="large" @click="submit">确认添加</van-button>
+
+		<div class="space"></div>
 
 	</div>
 </template>
@@ -68,33 +79,33 @@ export default {
 				name: '',
 				price: '',
 				desc: '',
-				shop: '5a9fe2a27c67ee2f8c98c9d5',
+				shop: '5aa1137f4043b46a5b8f0694',
 				support: []
 			},
-			manufacturer: '5a9665bada3df52e9461430f',
+			manufacturer: '',
+			phoneNames: [],
+			phoneInfo: [],
 			category: [],
 			
 			supportList: []
 		}
 	},
 	async mounted () {
-		let res = await this.$api.getData('https://m.yixiutech.com/category/shop/'+ this.service.shop);
+		let res = await this.$api.getData('https://yixiu.natappvip.cc/category/shop/'+ this.service.shop);
+		console.log(res)
 		res.data.map(item => {
 			this.category.push(item.name);
 			this.categoryInfo.push(item);
 		})
-		
-
-		let msg = { shop: this.service.shop, manufacturer: this.manufacturer };
-		let supportRes = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop', msg);
-		supportRes.data.map(item => {
-			this.supportList.push(item.name);
+		let phone = await this.$api.getData('https://yixiu.natappvip.cc/phone/manufacturer/shop/' + this.service.shop);
+		phone.data.map(item => {
+			this.phoneInfo.push(item);
+			this.phoneNames.push(item.name);
 		})
-		console.log(this.supportList)
 	},
 	methods: {
 		async submit () {
-			let serviceRes = await this.$api.sendData('https://m.yixiutech.com/service', this.service);
+			let serviceRes = await this.$api.sendData('https://yixiu.natappvip.cc/service', this.service);
 			if (serviceRes.code == 4001) {
 				this.prompt(serviceRes.errMsg, 'error').show();
 				return;	
@@ -104,6 +115,17 @@ export default {
 		},
 		change (value, index) {
 			this.service['category'] = this.categoryInfo[ index ]._id;
+		},
+		async phoneChange (value, index) {
+			console.log(this.phoneInfo[index]._id);
+			this.manufacturer = this.phoneInfo[ index ]._id;
+			let msg = { shop: this.service.shop, manufacturer: this.manufacturer };
+			let supportRes = await this.$api.sendData('https://yixiu.natappvip.cc/phone/model/shop', msg);
+				supportRes.data.map(item => {
+					// this.supportList.push(item.name);
+				this.supportList.push( { label: item.name, value: item._id } );
+			})
+			console.log(this.supportList);
 		}
 	}
 }
@@ -129,5 +151,10 @@ export default {
 
 .info__name .cube-select {
 	width: 60%;
+}
+
+.space {
+	width: 100%;
+	height: 8vh;
 }
 </style>

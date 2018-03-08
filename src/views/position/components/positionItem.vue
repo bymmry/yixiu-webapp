@@ -12,7 +12,6 @@
     methods: {
       pitchOn: function (e) {
         let currentItem = e.target.innerHTML.trim();
-        
       }
     }
   }

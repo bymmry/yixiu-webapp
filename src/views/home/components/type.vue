@@ -24,14 +24,9 @@
         ]
 			}
     },
-    mounted () {
-      this.$ajax.get('https://m.yixiutech.com/category/plate/simple')
-        .then(response => {
-          console.log(response);
-          this.data = response.data
-        }).catch(error => {
-          console.log(error)
-        })
+    async mounted () {
+      let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
+      this.data = res.data;
     }
   }
 </script>

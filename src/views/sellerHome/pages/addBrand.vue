@@ -47,7 +47,7 @@ export default {
 				alias: '',
 				desc: '',
 				cover: '',
-				shop: '5a9fe2a27c67ee2f8c98c9d5'
+				shop: ' 5aa1137f4043b46a5b8f0694'
 			}
 		}
 	},

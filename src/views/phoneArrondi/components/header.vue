@@ -1,12 +1,14 @@
 <template>
   <div class="header">
-		<p>精品手机</p>
+		<p>{{ name }}</p>
   </div>
 </template>
 
 <script>
   export default {
-		
+		props: {
+			name: String
+		}
   }
 </script>
 

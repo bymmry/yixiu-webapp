@@ -16,14 +16,9 @@
       [SwipeItem.name]: SwipeItem,
       [Lazyload.name]: Lazyload
     },
-    mounted () {
-      this.$ajax.get('https://m.yixiutech.com/carousel')
-        .then(response => {
-          this.images = response.data
-          console.log(this.images)
-        }).catch(error => {
-          console.log(error);
-        })
+    async mounted () {
+      let res = await this.$api.getData('https://m.yixiutech.com/carousel');
+      this.images = res.data;
     },
     data () {
       return {

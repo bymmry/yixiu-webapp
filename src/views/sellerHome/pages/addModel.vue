@@ -12,14 +12,20 @@
 			/>
 		</div>
 
-		<div class="info__name">
+		<!-- <div class="info__name">
 			<p>型号名称</p>
 			<cube-select
 				v-model="model.name"
 				:options="phoneModel"
 				@change="modelChange"
 			/>
-		</div>
+		</div> -->
+
+		<van-field
+			v-model="model.name"
+			label="型号名称"
+			placeholder="请输入型号名称"
+		/>
 
 		<van-field
 			v-model="model.desc"
@@ -33,14 +39,21 @@
 			placeholder="请输入封面地址"
 		/>
 
-		<div class="info__name">
+		<!-- <div class="info__name">
 			<p>手机颜色</p>
 			<cube-select
-				v-model="model.color"
+				v-model="phoneModelColorRes"
 				:options="phoneModelColor"
 				@change="colorChange"
 			/>
-		</div>
+		</div> -->
+
+		<van-field
+			v-model="phoneModelColorRes"
+			label="手机颜色"
+			placeholder="请输入手机颜色"
+			@change="colorChange"
+		/>
 
 		<van-button size="large" @click="submit">确认添加</van-button>
 
@@ -57,7 +70,7 @@ export default {
 		ItemHeader
 	},
 	async mounted () {
-		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
+		let res = await this.$api.getData('https://yixiu.natappvip.cc/phone/manufacturer/shop/' + this.model.shop);
 		res.data.map(item => {
 			this.phoneName.push(item.name);
 			this.phoneInfo.push(item);
@@ -72,14 +85,15 @@ export default {
 			phoneModelAlias: '',
 			phoneModelInfo: [],
 			phoneModelColor: [],
+			phoneModelColorRes: '',
 			model: {
 				brandName: '',
 				name: '',
 				alias: '',
-				shop: '5a9fe2a27c67ee2f8c98c9d5',
+				shop: '5aa1137f4043b46a5b8f0694',
 				desc: '',
 				cover: '',
-				color: '',
+				color: [],
 				manufacturer: ''
 			}
 		}
@@ -87,7 +101,7 @@ export default {
 	methods: {
 		async nameChange(value, index) {
 			this.model['manufacturer'] = this.phoneInfo[ index ]._id;
-			let manufacturer = await this.$api.getData('https://m.yixiutech.com/phone/model/' + this.model['manufacturer']);
+			let manufacturer = await this.$api.getData('https://yixiu.natappvip.cc/phone/model/' + this.model['manufacturer']);
 			manufacturer.data.map(item => {
 				this.phoneModel.push(item.name);
 				this.phoneModelInfo.push(item);
@@ -98,10 +112,10 @@ export default {
 			this.phoneModelColor = this.phoneModelInfo[ index ].color;
 		},
 		colorChange (value) {
-
+			this.model.color.push(this.phoneModelColorRes);
 		},
 		async submit () {
-			let modelRes = await this.$api.sendData('https://m.yixiutech.com/phone/model', this.model);
+			let modelRes = await this.$api.sendData('https://yixiu.natappvip.cc/phone/model', this.model);
 			if (modelRes.code == 4001) {
 				this.prompt(modelRes.errMsg, 'error').show();
 				return;	

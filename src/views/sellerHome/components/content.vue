@@ -1,6 +1,6 @@
 <template>
 	<div class="type" :link="link" @click="skip">
-		<sicon :name="icon" scale="5"></sicon>
+		<sicon :name="icon" scale="4"></sicon>
 		<p>{{ name }}</p>
 		<sicon name="right" scale="3"></sicon>
 	</div>
@@ -32,5 +32,6 @@ export default {
 
 .type p {
 	flex: 1;
+	margin-left: 20px;
 }
 </style>

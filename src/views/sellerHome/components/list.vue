@@ -12,15 +12,17 @@
 		data () {
 			return {
 				modules: [
-					{ name: '待接单', num: 30 },
-					{ name: '维修中', num: 320 },
-					{ name: '已完成', num: 3000 },
-				]
+					{ name: '待接单', num: 30, },
+					{ name: '维修中', num: 320, state: 12 },
+					{ name: '已完成', num: 3000, state: 13 },
+				],
+				state: ''
 			}
 		},
 		methods: {
 			detail () {
-				console.log(123)
+				// console.log(this.$refs.item.state);
+				this.$router.push('/orderList/12')
 			}
 		}
   }

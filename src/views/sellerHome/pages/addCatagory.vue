@@ -57,7 +57,11 @@ export default {
 	},
 	data () {
 		return {
-			categoryList: ['平台板块', '维修服务', '普通商品'],
+			categoryList: [
+				{value: 'plate', text: '平台板块'},
+				{value: 'service', text: '维修服务'},
+				{value: 'goods', text: '普通商品'}
+			],
 			infoName: '添加手机分类',
 			category: {
 				type: '',
@@ -72,7 +76,7 @@ export default {
 
 		},
 		async submit () {
-			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
+			let categoryRes = await this.$api.sendData('https://yixiu.natappvip.cc/category', this.category);
 			if (categoryRes.code == 4001) {
 				this.prompt(categoryRes.errMsg, 'error').show();
 				return;	

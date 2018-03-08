@@ -1,6 +1,8 @@
 <template>
   <div class="phone">
-		<Header></Header>
+		<Header 
+			:name="name"
+		/>
 		<Swipe></Swipe>
 		<Type />
 		<Arrondi
@@ -34,7 +36,8 @@
 		data () {
 			return {
 				iosTitle: 'iPhone热卖',
-				androidTitle: 'Android热卖'
+				androidTitle: 'Android热卖',
+				name: '精品手机'
 			}
 		}
   }
