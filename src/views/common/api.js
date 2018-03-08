@@ -127,3 +127,49 @@ export function sureOrder(data) {
     })
   })
 }
+
+// 获取地址列表
+export function getaddressById(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/address/user/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+
+// 添加地址
+export function addAddress(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/address`, data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+
+// 更新地址
+export function editAddress(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/address/update`, data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 删除地址
+export function delAddress(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/address/delete/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

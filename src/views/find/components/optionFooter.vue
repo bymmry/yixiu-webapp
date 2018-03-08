@@ -1,8 +1,17 @@
 <template>
   <div class="newOption">
       <div class="optionBox">
-        <sicon name="find-unselect" scale="2.5"></sicon>
-        <sicon name="find-select" scale="2.5" color="#0086ff"></sicon>
+        <div class="addphotoBox">
+          <van-uploader :after-read="onRead" class="addphoto">
+            <sicon name="find-addphoto" scale="2.2"></sicon>
+          </van-uploader>
+        </div>
+        <div class="anonymousBox" @click="changeAnonymous">
+          <sicon name="find-unselect" scale="2.5" v-if="anonymous===false"></sicon>
+          <sicon name="find-select" scale="2.5" color="rgb(68, 219, 94)" v-else></sicon>
+          <div>匿名</div>
+        </div>
+
       </div>
       
       
@@ -10,12 +19,26 @@
 </template>
 
 <script>
-  
+  import { Uploader } from 'vant';
   export default {
+    data(){
+      return {
+        anonymous:false,  //匿名
+      }
+    },
     components: {
-      
+      [Uploader.name]: Uploader,
     },
     methods: {
+      //点击 上传图片
+      onRead(file) {
+        console.log(file);
+      },
+      //更改 是否匿名
+      changeAnonymous(){
+        this.anonymous = !this.anonymous;
+        this.$emit("changeanonymous",this.anonymous)
+      }
     }
   }
 </script>
@@ -36,6 +59,33 @@
     z-index: 100;
   }
   .optionBox{
-    width: 30vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .anonymousBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1.9vh 2vw;
+    border-radius: 3px;
+  }
+  .anonymous{
+    color: #0086ff
+  }
+  .addphotoBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+  }
+  .addphoto{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*width:40px; */
+    height: 100%;
   }
 </style>

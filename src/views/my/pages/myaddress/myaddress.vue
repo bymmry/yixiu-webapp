@@ -30,7 +30,7 @@
       />
     </van-pull-refresh>
 
-    <change-address v-if="ifchange" :old-add="oldAdd"></change-address>
+    <change-address v-if="ifchange" :old-add="oldAdd" :type="type" @addSuccess="addSuccess"></change-address>
     
     
   </div>
@@ -43,13 +43,35 @@
   import { AddressList } from 'vant';
   import { PullRefresh } from 'vant';
   import changeAddress from '../../components/changeaddress.vue'
+  import { getaddressById } from '../../../common/api'
 
   export default {
     data () {
       return {
         ifchange: false,  //是否修改
-        chosenAddressId: '1',   //默认地址
-        oldAdd: {},   //修改地址时传入的参数
+        chosenAddressId: "0",   //默认地址
+        //空白地址
+        blandAdd:{
+          name:"",  //联系人
+          tel:"",   //电话
+          province:"",  //省份
+          city:"",    //城市
+          county: "",  //区县
+          address_detail: "",  //详细地址
+          is_default:"" //是否为默认地址
+        },
+        //修改或者新加
+        type:"",
+        //修改地址时传入的参数
+        oldAdd: {
+          name:"",  //联系人
+          tel:"",   //电话
+          province:"",  //省份
+          city:"",    //城市
+          county: "",  //区县
+          address_detail: "",  //详细地址
+          is_default:"" //是否为默认地址
+        },   
         isLoading: false,   //是否刷新
         //地址名单
         list: [],
@@ -81,65 +103,59 @@
       //添加新的地址
       onAdd() {
         this.ifchange = true;
+        this.type = "new"
       },
       //编辑现有地址
       onEdit(item, index) {
+        this.type = "edit"
         this.oldAdd = this.copy(this.fullAddress[index])
-        console.log(this.oldAdd)
-        console.log(this.fullAddress[index])
+        // console.log(this.oldAdd)
+        // console.log(this.fullAddress[index])
         this.ifchange = true;
       },
       //取消编辑
       quite(){
         this.ifchange = false;
-        this.oldAdd = {};
+        this.oldAdd = this.copy(this.blandAdd);
       },
       //键入地址数据
       enterAddressList(data,index){
         let listData = {};
         listData.id = index;
-        listData.name = data.name;
-        listData.tel = data.tel;
-        listData.address = `${data.province} ${data.city} ${data.county} ${data.address_detail}`;
+        listData.name = data.contactName;
+        listData.tel = data.mobile;
+        listData.address = data.info;
         return listData
       },
       //获取地址数据
-      async getaddressData(){
-        let fade = [{
-          name:'文俊霖',  //收货人
-          tel:'13368161676',   //电话
-          province:'重庆市',  //省份
-          city:'重庆市',    //城市
-          county:'南岸区',  //区县
-          address_detail:'重庆邮电大学',  //详细地址
-          postal_code:'400000',   //邮政编码
-          is_default:true //是否为默认地址
-        },
-        {
-          name: '余鹏',  //收货人
-          tel:'18696835639',   //电话
-          province:'重庆市',  //省份
-          city:'重庆市',    //城市
-          county:'南岸区',  //区县
-          address_detail:'重庆邮电大学',  //详细地址
-          postal_code:'400000',   //邮政编码
-          is_default:false //是否为默认地址
-        }]
-        return fade
+      async getaddressData(id){
+        let addressData = await getaddressById(id)
+
+        return new Promise((resolve, reject) => {
+          resolve(addressData.data)
+        })
       },
       //地址数据处理
       async addressMessage(){
+        let userData = sessionStorage.getItem("userData");
+        userData = JSON.parse(userData);
+
         let listData = [];
-        let getedData = await this.getaddressData();
+        let getedData = await this.getaddressData(userData._id);
+
         this.fullAddress = getedData;
 
         for(let index in getedData){
           listData[index] = this.enterAddressList(getedData[index],index);
-          if (getedData[index].is_default === true) {
-            this.chosenAddressId = index;
-          }
         }
         this.list = listData;
+        console.log(this.fullAddress)
+      },
+      //地址更新成功
+      addSuccess() {
+        this.ifchange = false;
+        this.oldAdd = {};
+        this.addressMessage()
       }
     },
     created(){

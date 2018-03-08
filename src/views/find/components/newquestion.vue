@@ -20,13 +20,13 @@
 
       <!-- <textarea class="questionMessage" placeholder="添加问题的补充说明" v-model="answerdetail.content"></textarea> -->
       <p class="questiontitle">请在下面输入内容:</p>
-      <div contenteditable="true" class="questionMessage">
-        111
-        <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png" alt="">
-      </div>
+      <!-- <textareaBox @input="changeText" v-model='text'></textareaBox> -->
+      <!-- <div>{{text}}</div> -->
+      <textareaBox v-model='text'></textareaBox>
+
     </div>
     
-    <optionFooter></optionFooter>
+    <optionFooter @changeanonymous="changeanonymous"></optionFooter>
 
   </div>
 </template>
@@ -37,10 +37,14 @@
   import topNav from "./topNav"
   import inputBox from "./inputBox"
   import optionFooter from "./optionFooter"
+  import textareaBox from "./textareaBox"
 
   export default {
     data(){
       return {
+        comment:"这是一条评论",
+        text:'<img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png">',
+        anonymous: false,
         inputpla:"请输入标题",
         answerdetail:{
           title:"",
@@ -53,14 +57,23 @@
       topNav,
       inputBox,
       optionFooter,
+      textareaBox,
       [NavBar.name]: NavBar,
     },
     methods: {
       close(){
         this.$emit("close");
       },
+      //获取标题
       getTitle(titletext){
         this.answerdetail.title = titletext;
+      },
+      //获取是否匿名
+      changeanonymous(anonymous){
+        this.anonymous = anonymous;
+      },
+      changeText(res){
+
       },
       async pushnewquestion(){
         console.log(this.answerdetail)
@@ -91,25 +104,10 @@
   }
   .questiontitle{
     margin-top: 12px;
-    margin-bottom: 5px;
+    padding-bottom: 2.5px;
+    margin-bottom: 2.5px;
+    /*border-bottom: 1px solid #b6baba*/
   }
-  .questionMessage{
-    padding: 5px 4px;
-    min-height: 60vh;
-    font-size: 14px;
-    line-height: 16px;
-    border: 0.5px solid rgb(239, 190, 96);
-    border-radius: 2.5px;
-    resize: none;
-  }
-  .questionMessage:focus{
-    border: 0;
-  }
-  .questionMessage img{
-    /*display: block;
-    margin: 0 auto;*/
-    max-width: 100%;
-    max-height: 120px; 
-  }
+  
 
 </style>
