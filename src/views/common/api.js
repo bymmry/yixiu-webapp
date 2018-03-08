@@ -194,8 +194,6 @@ export function getQuestionList(data){
   });
 }
 
-
-
 // 回复问题
 export function replyQuestion(data){
   return new Promise((resolve, reject) => {
@@ -207,10 +205,54 @@ export function replyQuestion(data){
   });
 }
 
-// 通过ID查询
+// 通过ID查询个人问题
 export function getQuestionListById(id){
   return new Promise((resolve, reject) => {
     ajax.get(`${url}/question/user/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 通过ID查询问题详情
+export function getQuestionByQid(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/question/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 通过id查询问题的回复列表
+export function getQAListByQid(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/question/reply/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 修改问题信息
+export function updateQuestion(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/address/update/`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 给评论点赞
+export function likethis(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/question/reply/like/${id}`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);

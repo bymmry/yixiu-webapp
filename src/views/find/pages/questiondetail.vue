@@ -16,27 +16,33 @@
 
     <topNav></topNav>
 
-    <!-- 问题部分 -->
-    <detailContent :question="questiondetail"></detailContent>
-    <div class="answerblank"></div>
-    <!-- 回答部分 -->
-    <router-link v-for="answer in answerData" :key="answer.id" :to="{ path: '/find/answerdetail' }">
-      <answerBox :answer="answer"></answerBox>
-    </router-link>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <!-- 问题部分 -->
+      <detailContent :question="questiondetail"></detailContent>
+      <div class="answerblank"></div>
+      <!-- 回答部分 -->
+      <div v-for="answer in answerData" :key="answer.id" @click="jumpanswerDetail(answer)">
+        <answerBox :answer="answer"></answerBox>
+      </div>
+
+    </van-pull-refresh>
 
   </div>
 </template>
 
 <script>
-  import { NavBar } from 'vant';
+  import { NavBar, PullRefresh } from 'vant';
   import detailContent from "../components/detailContent";
   import answerBox from "../components/answerBox";
   import topNav from "../components/topNav";
+  import { getQuestionByQid, getQAListByQid } from '../../common/api'
 
   export default {
     data(){
       return {
-        isLoaded: false,
+        isLoading:false,
+        questionId:"",
+        getAnswerList: {},
         questiondetail: {},
         answerData:[
           {
@@ -53,11 +59,17 @@
     },
     components: {
       [NavBar.name]: NavBar,
+      [PullRefresh.name]: PullRefresh,
       detailContent,
       answerBox,
       topNav,
     },
     methods: {
+      //刷新
+      onRefresh(){
+        this.getQuestion(this.questionId);
+        this.getQAList(this.questionId);
+      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/find/question"})
@@ -72,27 +84,50 @@
         //使用show调出方法
         toast.show()
       },
-      async onSearch(){
-        alert("搜索")
+      //前往单个回答详情
+      jumpanswerDetail(answer){
+        console.log(answer)
+        this.$router.push({ path: "/find/answerdetail"})
+      },
+      //通过id查询问题详情
+      getQuestion(id) {
+        const toast = this.$createToast({
+          mask: true,
+          message: '加载中...'
+        })
+        toast.show();
+        getQuestionByQid(id)
+        .then(res => {
+          toast.hide();
+          this.isLoading = false;
+          this.questiondetail = res.data;
+        },(err => {
+          console.log(err);
+        }))
+      },
+      //通过id获取问题的回复列表
+      getQAList(id){
+        const toast = this.$createToast({
+          mask: true,
+          message: '加载中...'
+        })
+        toast.show();
+        getQAListByQid(id)
+        .then(res => {
+          toast.hide();
+          console.log(res)
+          // this.questiondetail = res.data;
+        },(err => {
+          console.log(err);
+        }))
       }
     },
     created:function(){
-      if (this.isLoaded==false) {
-        console.log(this.$route.params.question)
-        this.questiondetail = this.$route.params.question;
-        this.isLoaded = true;
-      }else{
-        console.log(ok);
-      }
-      
-      // console.log(this.questiondetail)
 
-      // for(let answer in this.answerData){
-      //   this.answerData[answer].title = this.questiondetail.title
-      //   this.answerData[answer].father = this.questiondetail
-      // }
-      
-      // console.log(this.$route.params)
+      this.questionId = sessionStorage.getItem("questionId")
+
+      this.getQuestion(this.questionId);
+      this.getQAList(this.questionId);
     }
   }
 </script>

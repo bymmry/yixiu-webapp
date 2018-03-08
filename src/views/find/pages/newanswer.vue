@@ -83,7 +83,7 @@
         }
       },
       pushnewAnswer(){
-        // console.log(this.answer)
+        console.log(this.answer)
         const toast = this.$createToast({
           time: 0,
           txt: '正在提交'

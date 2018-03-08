@@ -40,9 +40,7 @@
           <sicon name="find-talk" scale="2"></sicon>
           <div>270</div>
         </div>
-        
       </div>
-      
     </div>
     
 
@@ -53,6 +51,7 @@
   //vant
   import { NavBar } from 'vant';
   import topNav from "../components/topNav";
+  import { likethis } from '../../common/api'
 
   export default {
     data(){
@@ -83,7 +82,18 @@
       },
       //点击支持
       clickSupport(){
+
         this.functionunavailable();
+        /*
+        likethis(postdata)
+        .then(res => {
+          toast.hide();
+          this.questionData = res.data;
+          console.log(res.data)
+        },(err => {
+          console.log(err);
+        }))
+        */
       },
       //点击收藏
       clickCollect(){

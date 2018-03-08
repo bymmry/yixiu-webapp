@@ -33,6 +33,8 @@
   import { NavBar } from 'vant';
   import topNav from "../components/topNav"
   import replyBox from "../components/replyBox"
+  import { replyQuestion } from '../../common/api'
+
 
   export default {
     data(){
@@ -81,7 +83,17 @@
         this.replyplaceholder += name;
       },
       async pushnewreply(){
-        this.functionunavailable()
+        this.functionunavailable();
+        /*
+        replyQuestion(postdata)
+        .then(res => {
+          toast.hide();
+          this.questionData = res.data;
+          console.log(res.data)
+        },(err => {
+          console.log(err);
+        }))
+        */
       }
     },
     created(){

@@ -13,7 +13,7 @@
             <sicon name="find-talk" scale="2"></sicon>
             回复
           </div>
-          <div class="messageBtn">
+          <div class="messageBtn" @click="likethis">
             <sicon name="find-support" scale="1.7"></sicon>
             {{ reply.like }}
           </div>
@@ -29,6 +29,7 @@
   //vant
 
   import { Icon } from 'vant';
+  import { likethis } from '../../common/api'
   export default {
     data(){
       return {
@@ -43,6 +44,19 @@
     methods: {
       replyuser(){
         this.$emit("replyuser", this.reply.name)
+      },
+      likethis(){
+        this.functionunavailable();
+        /*
+        likethis(postdata)
+        .then(res => {
+          toast.hide();
+          this.questionData = res.data;
+          console.log(res.data)
+        },(err => {
+          console.log(err);
+        }))
+        */
       }
     },
     created: function(){
