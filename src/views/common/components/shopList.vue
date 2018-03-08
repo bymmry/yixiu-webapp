@@ -131,8 +131,9 @@
           })
         }
       },
-      sendShopList (...list) {
+      sendShopList (list) {
         this.shopData = list;
+        console.log(list);
       }
     }
   };
