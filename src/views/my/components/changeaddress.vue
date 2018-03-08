@@ -2,6 +2,7 @@
   <div>
     <van-address-edit
       :area-list="areaList"
+      :address-info="addressInfo"
       show-postal
       show-set-default
       show-search-result
@@ -20,6 +21,16 @@
     data() {
       return {
         areaList,
+        addressInfo:{
+          name:"",  //收货人
+          tel:"",   //电话
+          province:"",  //省份
+          city:"",    //城市
+          county:"",  //区县
+          address_detail:"",  //详细地址
+          postal_code:"",   //邮政编码
+          is_default:"" //是否为默认地址
+        }
       }
     },
     props: {
@@ -67,6 +78,9 @@
       onDelete() {
         alert('delete');
       }
+    },
+    created(){
+      this.addressInfo = this.oldAdd;
     }
   }
 </script>

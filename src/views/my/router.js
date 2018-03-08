@@ -11,9 +11,9 @@ export default [
 {
   path: '/my',
   component: my,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 },
 {
   path: '/my/information',

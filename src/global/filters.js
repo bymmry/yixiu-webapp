@@ -138,9 +138,9 @@ let filters = {
     // 注册用户需要用到的参数
     const information = {
       name: data.nickName || 0, //用户名称
-      email: data.email || "",//邮箱
-      mobile: data.mobile || "",//手机号
-      password: data.password || "",//密码
+      email: data.email || '',//邮箱
+      mobile: data.mobile || '',//手机号
+      password: data.password || '',//密码
       isSys: data.isSys || false,//是否是系统管理员
       role: data.role || [],//如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
       wx: data,//微信信息:如openid,昵称和头像链接等等
