@@ -24,7 +24,7 @@
         <div>|</div>
         <router-link id="register" to="/register">注册</router-link>
       </div>
-      <div class="usermessage" v-else>
+      <div class="usermessage username" v-else>
         {{ userInfo.name }}
       </div>
     </div>
@@ -49,7 +49,7 @@
   import { Button } from 'vant';
   import { NavBar } from 'vant';
   import { Cell, CellGroup } from 'vant';
-  import { reguser } from '../common/api'
+  import { reguser, getuserinforByopenId } from '../common/api'
 
   export default {
     data () {
@@ -174,30 +174,22 @@
           }
         }
       },
-      //调用注册接口
-      async reguser(Data){
-        let pushData = this.reguserinfo(Data)
-        // console.log(pushData);
-
-        //调用接口
-        reguser(pushData).then(res => {
-          //注册成功
-          // console.log(res)
-          
-          if (Data !== {} && Data !== null) {
-            this.userInfo = res.data;
-            this.loggedin = true;
-          }
+      //通过id查询信息
+      async getUserinfo(openid){
+        getuserinforByopenId(openid)
+        .then(res => {
+          this.userInfo = res.data
+          this.loggedin = true;
         },(err => {
-          console.log(err)
+          console.log(err);
         }))
-      }
+      },
     },
     created() {
       let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
 
-      this.reguser(userData);
+      this.getUserinfo(userData.wx.openid)
     }
   }
 </script>
@@ -251,5 +243,8 @@
     justify-content: space-between;
     min-width: 25vw;
     color: #42535e
+  }
+  .username{
+    justify-content:center;
   }
 </style>

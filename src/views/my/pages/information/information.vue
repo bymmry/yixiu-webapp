@@ -320,7 +320,7 @@
       },
       //获取用户信息
       async getUserinfo(userData){
-        getuserinforByopenId(userData.openid)
+        getuserinforByopenId(userData.wx.openid)
         .then(res => {
           this.userInfo.email = res.data.email || "";
           this.userInfo.mobile = res.data.mobile || "";

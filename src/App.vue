@@ -24,31 +24,21 @@
       navigation
     },
     created() {
+      //将url中的对象存储下来并转换成json对象
       let userData = this.urlDataTurnObj(this.$route.path)
-
-      // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
-      // console.log(userData)
+      //将url中的对象按照注册接口需要的参数赋值，保存到PushData
       let pushData = this.reguserinfo(userData)
-      // console.log(pushData)
-
+      //注册
       reguser(pushData).then(res => {
-        //注册成功
-        // console.log(res)
+        let user = JSON.stringify(res.data);
+        //将用户信息储存到userData中
+        sessionStorage.setItem("userData", user);
         
-        // if (Data !== {} && Data !== null) {
-        let userData2 = JSON.stringify(res.data);
-
-        console.log(res.data)
-          sessionStorage.setItem("userData", userData2);
-          console.log(sessionStorage.getItem("userData"))
-        // }
+        // console.log(sessionStorage.getItem("userData"))
       },(err => {
         console.log(err)
       }))
-
-      // console.log(userData);
-      // sessionStorage.setItem("userData", userData); 
     }
   }
 </script>

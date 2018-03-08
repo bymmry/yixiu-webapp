@@ -85,7 +85,7 @@ export function getShopListSort(data) {
   //通过openid查询用户信息
   export function getuserinforByopenId(openId){
     return new Promise((resolve, reject) => {
-      ajax.get(url + '/user/openid/' + openId).then((res) => {
+      ajax.get(url2 + '/user/openid/' + openId).then((res) => {
         resolve(res);
       }).then((err) => {
         reject(err);
@@ -96,7 +96,7 @@ export function getShopListSort(data) {
   //根据微信信息注册用户
   export function reguser(data){
     return new Promise((resolve, reject) => {
-      ajax.post(url + '/user/reg/', data).then((res) => {
+      ajax.post(url2 + '/user/reg/', data).then((res) => {
         resolve(res);
       }).then((err) => {
         reject(err);
@@ -107,7 +107,7 @@ export function getShopListSort(data) {
   //更新用户信息
   export function updateuserinfo(data){
     return new Promise((resolve, reject) => {
-      ajax.post(url + '/user/update', data).then((res) => {
+      ajax.post(url2 + '/user/update', data).then((res) => {
         resolve(res);
       }).then((err) => {
         reject(err);
