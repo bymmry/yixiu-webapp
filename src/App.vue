@@ -16,6 +16,7 @@
 
 <script>
   import navigation from './views/common/components/navigation';
+  import { reguser } from './views/common/api'
 
   export default {
     name: 'App',
@@ -24,8 +25,30 @@
     },
     created() {
       let userData = this.urlDataTurnObj(this.$route.path)
-      console.log(userData);
-      sessionStorage.setItem("userData", userData); 
+
+      // let userData = sessionStorage.getItem("userData");
+      userData = JSON.parse(userData);
+      // console.log(userData)
+      let pushData = this.reguserinfo(userData)
+      // console.log(pushData)
+
+      reguser(pushData).then(res => {
+        //注册成功
+        // console.log(res)
+        
+        // if (Data !== {} && Data !== null) {
+        let userData2 = JSON.stringify(res.data);
+
+        console.log(res.data)
+          sessionStorage.setItem("userData", userData2);
+          console.log(sessionStorage.getItem("userData"))
+        // }
+      },(err => {
+        console.log(err)
+      }))
+
+      // console.log(userData);
+      // sessionStorage.setItem("userData", userData); 
     }
   }
 </script>
