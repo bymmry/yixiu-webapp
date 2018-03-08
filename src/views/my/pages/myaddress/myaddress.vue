@@ -137,8 +137,7 @@
       },
       //地址数据处理
       async addressMessage(){
-        let userData = sessionStorage.getItem("userData");
-        userData = JSON.parse(userData);
+        let userData = this.getUserInfo();
 
         let listData = [];
         let getedData = await this.getaddressData(userData._id);

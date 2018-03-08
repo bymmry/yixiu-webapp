@@ -6,16 +6,16 @@
         {{ question.title }}
       </div>
       <div class="questionContent">
-        <img v-if="question.imgurl !== 0" :src="question.imgurl">
-        <div class="questionText" v-if="foldquestion != true">{{ question.content }}</div>
-        <div class="questionText2" v-else>{{ question.content }}</div>
+        <!-- <img v-if="question.imgurl !== 0" :src="question.imgurl"> -->
+        <div class="questionText" v-if="foldquestion != true" v-html="question.info"></div>
+        <div class="questionText2" v-else v-html="question.info"></div>
       </div>
       <div class="foldquestionBtn" v-if="foldquestion != true" @click="changefoldquestion">展开问题描述 v</div>
       <div class="foldquestionBtn" v-else @click="changefoldquestion">收起问题描述 Λ</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <div>{{ question.followhuman }} 人关注&nbsp;·&nbsp;</div>
-          <div>{{ question.reply }} 回复</div>
+          <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div>
+          <div>{{ question._v ? question._v : 0 }} 回复</div>
         </div>
         <van-button type="default" size="small" v-if="question.folloed === true" @click="followQ">
           <van-icon name="passed" class="questionfollwi"/>
@@ -60,21 +60,12 @@
       changefoldquestion () {
         this.foldquestion = !this.foldquestion;
       },
-      //用不了的功能都是这个提示
-      willcome () {
-        const toast = this.$createToast({
-          txt: '本功能即将到来',
-          type: 'error',
-          time: 1300
-        })
-        toast.show()
-      },
       //关注 or 取消关注 问题
       async followQ () {
         let result = await this.followQAjax();
         console.log(result)
         if (result === "no") {
-          this.willcome();
+          this.functionunavailable();
         }else {
           this.question.folloed = !this.question.folloed;
           if (this.question.folloed === true) {
@@ -90,12 +81,11 @@
       },
       //邀请问答
       async invitation() {
-        this.willcome ()
+        this.functionunavailable()
       },
       //新回答
       async newAnswer() {
-        // this.willcome ()
-        this.$router.push({ path: "/find/newanswer"});
+        this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
       }
     },
     created: function(){

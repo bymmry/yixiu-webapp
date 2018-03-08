@@ -145,8 +145,7 @@
       },
       async onSave(content) {
         // console.log(content);
-        let userData = sessionStorage.getItem("userData");
-        userData = JSON.parse(userData);
+        let userData = this.getUserInfo();
 
         let pushData = this.getPushAddressData(content,userData._id,this.type);
         console.log();

@@ -4,6 +4,7 @@
 // })
 import App from './App'
 import question from './children/question'
+import myquestion from './children/myquestion'
 import questiondetail from './pages/questiondetail'
 import answerdetail from './pages/answerdetail'
 import newanswer from './pages/newanswer'
@@ -16,6 +17,10 @@ export default [{
     {
       path: "/find/question", //问题列表
       component: question
+    },
+    {
+      path: "/find/myquestion", //问题列表
+      component: myquestion
     }
   ],
   // meta: {
@@ -24,23 +29,23 @@ export default [{
   },
   {
     name: "questiondetail",
-    path: '/find/questiondetail/:question',   //问题详情
+    path: '/find/questiondetail',   //问题详情
     component: questiondetail,
-    meta: {
-      keepAlive: true // 需要被缓存
-    }
+    // meta: {
+    //   keepAlive: true // 需要被缓存
+    // }
   },
   {
     name: "answerdetail",
-    path: '/find/answerdetail/:answerId',   //回答详情
+    path: '/find/answerdetail',   //回答详情
     component: answerdetail,
-    meta: {
-      keepAlive: true // 需要被缓存
-    }
+    // meta: {
+    //   keepAlive: true // 需要被缓存
+    // }
   },
   {
     name: "newanswer",
-    path: '/find/newanswer',   //发起提问
+    path: '/find/newanswer/:questionId',   //发起提问
     component: newanswer
   },
   {

@@ -20,7 +20,7 @@
     <detailContent :question="questiondetail"></detailContent>
     <div class="answerblank"></div>
     <!-- 回答部分 -->
-    <router-link v-for="answer in answerData" :key="answer.id" :to="{ name:'answerdetail', params: { answerId: answer.id }}">
+    <router-link v-for="answer in answerData" :key="answer.id" :to="{ path: '/find/answerdetail' }">
       <answerBox :answer="answer"></answerBox>
     </router-link>
 
@@ -36,7 +36,7 @@
   export default {
     data(){
       return {
-        searchvalue: "",
+        isLoaded: false,
         questiondetail: {},
         answerData:[
           {
@@ -45,15 +45,6 @@
             username:"青石先生",
             imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
             content:"前女友：真是反了 谈恋爱你就想牵手 结婚后你难道还想上床？我：..............——————手动分割线————————评论...",
-            replay:"128",
-            time:"1天前"
-          },
-          {
-            id:12,
-            avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
-            username:"青石先生",
-            imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
-            content:"前女友：真是反了 谈恋爱你就想牵手 结婚后你难道还想上床？我：..............——————手动分割线————————评论...<image src='https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg'>",
             replay:"128",
             time:"1天前"
           }
@@ -86,11 +77,20 @@
       }
     },
     created:function(){
-      this.questiondetail = this.$route.params.question;
-      for(let answer in this.answerData){
-        this.answerData[answer].title = this.questiondetail.title
-        this.answerData[answer].father = this.questiondetail
+      if (this.isLoaded==false) {
+        console.log(this.$route.params.question)
+        this.questiondetail = this.$route.params.question;
+        this.isLoaded = true;
+      }else{
+        console.log(ok);
       }
+      
+      // console.log(this.questiondetail)
+
+      // for(let answer in this.answerData){
+      //   this.answerData[answer].title = this.questiondetail.title
+      //   this.answerData[answer].father = this.questiondetail
+      // }
       
       // console.log(this.$route.params)
     }

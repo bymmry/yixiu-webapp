@@ -18,13 +18,14 @@
   export default {
     data(){
       return {
-        newTitle:"",
+        newTitle: this.value,
         writed: false,
         number:0,
       }
     },
     props: {
-      placeholder: String
+      placeholder: String,
+      value: String
     },
     watch:{
       newTitle: function(){

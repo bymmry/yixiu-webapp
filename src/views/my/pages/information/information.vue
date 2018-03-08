@@ -302,7 +302,7 @@
             const tip = this.$createToast({
               txt: '更新成功!',
               type: 'correct',
-              time: 1000
+              time: 1300
             })
             tip.show();
 
@@ -315,8 +315,7 @@
             // this.userInfo.sex = this.radio === "man" ? "男" : "女";
             // this.userInfo.birthday = this.newbir;
             //更新成功后修改状态还原到最初的情况
-            this.reMessage(type);
-
+            setTimeout(() => { this.reMessage(type); }, 1800);
           },(err => {
             const tip = this.$createToast({
               txt: '更新失败!',
@@ -342,8 +341,7 @@
       },
     },
     created() {
-      let userData = sessionStorage.getItem("userData");
-      userData = JSON.parse(userData);
+      let userData = this.getUserInfo();
 
       this.getUserinfo(userData);
     }

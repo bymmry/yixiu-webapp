@@ -162,11 +162,53 @@ export function editAddress(data){
     });
   });
 }
-
 // 删除地址
 export function delAddress(id){
   return new Promise((resolve, reject) => {
     ajax.get(`${url}/address/delete/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+// 发起问题
+export function addNewQuestion(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/question`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 根据筛选条件获取问题详情
+export function getQuestionList(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/question/filter`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 回复问题
+export function replyQuestion(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/question/reply`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 通过ID查询
+export function getQuestionListById(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/question/user/${id}`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);

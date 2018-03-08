@@ -27,8 +27,8 @@
     <topNav></topNav>
     <!-- Vant 标签页组件 -->
 
-    <van-tabs :active="0" @disabled="willCome"  @click="handleTabClick" class="tabsBox">
-      <van-tab v-for="(index,num) in 2" :disabled="index === 2" :key="num">
+    <van-tabs :active="0" @click="handleTabClick" class="tabsBox">
+      <van-tab v-for="(index,num) in 2" :key="num">
 
 
         <div slot="title" class="kindtitlebox" v-if="index===1">
@@ -36,7 +36,7 @@
         </div>
 
         <div slot="title" v-else class="kindtitlebox">
-          <van-icon name="close" />热榜
+          <van-icon name="contact" />我的
         </div>
 
         <router-view></router-view>
@@ -85,14 +85,14 @@
         this.functionunavailable()
       },
       //点击标签
-      handleTabClick() {
-        const toast = this.$createToast({
-          time: 0,
-          type: "loading"
-        })
-        toast.show();
-        this.$router.push({ path: "/find/question"});
-        toast.hide();
+      handleTabClick(index) {
+        console.log(index)
+        if (index===0) {
+          this.$router.push({ path: "/find/question"});
+        }else if(index===1){
+          this.$router.push({ path: "/find/myquestion"});
+        }
+
       },
       async onSearch(){
         alert("搜索")

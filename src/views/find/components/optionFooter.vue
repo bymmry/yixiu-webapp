@@ -1,10 +1,10 @@
 <template>
   <div class="newOption">
       <div class="optionBox">
-        <div class="addphotoBox">
-          <van-uploader :after-read="onRead" class="addphoto">
+        <div class="addphotoBox" @click="pushPhoto">
+          <!-- <van-uploader :after-read="onRead" class="addphoto"> -->
             <sicon name="find-addphoto" scale="2.2"></sicon>
-          </van-uploader>
+          <!-- </van-uploader> -->
         </div>
         <div class="anonymousBox" @click="changeAnonymous">
           <sicon name="find-unselect" scale="2.5" v-if="anonymous===false"></sicon>
@@ -30,15 +30,23 @@
       [Uploader.name]: Uploader,
     },
     methods: {
+      //上传照片不可用，可用的时候用onRead函数
+      pushPhoto(){
+        this.functionunavailable();
+      },
       //点击 上传图片
       onRead(file) {
         console.log(file);
       },
       //更改 是否匿名
       changeAnonymous(){
+        this.functionunavailable();
+        /*
         this.anonymous = !this.anonymous;
         this.$emit("changeanonymous",this.anonymous)
-      }
+        */
+      },
+
     }
   }
 </script>
@@ -53,7 +61,6 @@
     justify-content:flex-end;
     width: 94%;
     height: 27px;
-    border-top: 0.3vw solid #ebebeb;
     padding: 2vh 3vw 2vh 3vw;
     background: #fff;
     z-index: 100;
@@ -79,7 +86,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    
+    min-width: 40px;
   }
   .addphoto{
     display: flex;

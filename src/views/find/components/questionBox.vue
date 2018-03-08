@@ -7,12 +7,12 @@
       </div>
       <div class="questionTitle-hidden" v-if="overtitle">...</div>
       <div class="questionContent">
-        <img v-if="question.imgurl !== 0" :src="question.imgurl">
-        <div class="questionText">{{ question.content }}</div>
+        <!-- <img v-if="question.imgurl !== ''" :src="question.imgurl"> -->
+        <div class="questionText">{{ question.desc }}</div>
       </div>
       <div class="questionContent-hidden" v-if="overcontent">...</div>
       <div class="questionFooter">
-        <div>{{ question.reply }} 回复</div>
+        <div>{{ question._v ? question._v : 0 }} 回复</div>
         <div>点击查看更多</div>
       </div>
     </div>
@@ -46,7 +46,7 @@
       if (this.question.title.length>=40) {
         this.overtitle = true;
       }
-      if (this.question.content.length>=70) {
+      if (this.question.desc.length>=70) {
         this.overcontent = true;
       }
     }
@@ -57,7 +57,7 @@
   .questionBox-container{
     position: relative;
     max-height: 59vh;
-    min-height: 283px;
+    /*min-height: 283px;*/
     padding: 1.6vh 4vw 3.1vh 4vw;
     border-top: 0.1vh solid #e0deec;
     border-bottom: 0.1vh solid #e0deec;

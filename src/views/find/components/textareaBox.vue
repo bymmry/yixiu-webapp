@@ -56,6 +56,7 @@
     height: 100%;
     min-height: 60vh;
     font-size: 14px;
+    margin-top: 17px;
     line-height: 16px;
     overflow: auto;
     word-break: break-all;
@@ -63,6 +64,8 @@
     user-select: text;
     white-space: pre-wrap;
     text-align: left;
+    background: transparent;
+    z-index: 10;
     &[contenteditable=true]{
       user-modify: read-write-plaintext-only;
       &:empty:before {

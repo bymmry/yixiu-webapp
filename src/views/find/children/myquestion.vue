@@ -13,19 +13,12 @@
 <script>
   //vant
   import questionBox from '../components/questionBox.vue'
-  import { getQuestionList } from '../../common/api'
+  import { getQuestionListById } from '../../common/api'
 
   export default {
     data(){
       return {
-        gatQuestionData:{
-          tag: [],
-          title: "",
-          desc: "",
-          info: "",
-          limit: 10,
-          skip: 0
-        },
+        userId: "",
         questionData:[]
       }
     },
@@ -34,14 +27,14 @@
     },
     methods: {
       //获取列表
-      getquestionlist(postdata){
+      getQuestionList(postdata){
         const toast = this.$createToast({
           mask: true,
           message: '加载中...'
         })
         toast.show();
 
-        getQuestionList(postdata)
+        getQuestionListById(postdata)
         .then(res => {
           toast.hide();
           this.questionData = res.data;
@@ -52,7 +45,9 @@
       }
     },
     created() {
-      this.getquestionlist(this.gatQuestionData)
+      let userData = this.getUserInfo();
+      this.userId = userData._id;
+      this.getQuestionList(this.userId)
     }
   }
 </script>

@@ -186,8 +186,7 @@
       },
     },
     activated() {
-      let userData = sessionStorage.getItem("userData");
-      userData = JSON.parse(userData);
+      let userData = this.getUserInfo();
 
       this.getUserinfo(userData.wx.openid)
     }
