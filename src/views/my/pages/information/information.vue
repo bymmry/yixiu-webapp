@@ -327,7 +327,6 @@
           this.userInfo.name = res.data.name;
           this.id = res.data._id;
           this.newuserInfo = this.copy(this.userInfo);
-          console.log(res.data)
         },(err => {
           console.log(err);
         }))

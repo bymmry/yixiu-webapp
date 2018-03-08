@@ -185,7 +185,7 @@
         }))
       },
     },
-    created() {
+    activated() {
       let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
 
