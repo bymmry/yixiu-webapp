@@ -17,7 +17,7 @@
     <!-- 用户头像及登录注册 -->
     <div class="user-area">
       <div class="user-profile">
-        <img :src="userInfo.avatarUrl">
+        <img :src="userInfo.wx.avatarUrl">
       </div>
       <div class="usermessage" v-if="!loggedin">
         <router-link id="login" to="/login">登录</router-link>
@@ -25,7 +25,7 @@
         <router-link id="register" to="/register">注册</router-link>
       </div>
       <div class="usermessage" v-else>
-        {{ userInfo.nickName }}
+        {{ userInfo.name }}
       </div>
     </div>
     <!-- 个人中心-功能菜单 -->
@@ -49,6 +49,7 @@
   import { Button } from 'vant';
   import { NavBar } from 'vant';
   import { Cell, CellGroup } from 'vant';
+  import { reguser } from '../common/api'
 
   export default {
     data () {
@@ -56,22 +57,27 @@
         loggedin: false,    //是否已登录
         //用户信息
         userInfo:{   
-          // avatarUrl  头像框   如果没有就有默认头像
-          // city       城市
-          // country    国家
-          // gender     性别   1是男 
-          // language   语言
-          // nickName   昵称
-          // openid     ID
-          // province   省份
-          avatarUrl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
-          city: "",
-          country: "",
-          gender: "",
-          language: "",
-          nickName: "",
-          openid: "",
-          province: ""
+          // wx.avatarUrl  头像框   如果没有就有默认头像
+          // wx.city       城市
+          // wx.country    国家
+          // wx.gender     性别   1是男 
+          // wx.language   语言
+          // wx.nickName   昵称
+          // wx.openid     ID
+          // wx.province   省份
+          name: "",
+          mobile: 0,
+          email: "",
+          wx:{
+            avatarUrl: "https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+            city: "",
+            country: "",
+            gender: "",
+            language: "",
+            nickName: "",
+            openid: "",
+            province: ""
+          }
         },
         //功能菜单列表
         catalogs:[    
@@ -120,16 +126,6 @@
       [CellGroup.name]: CellGroup,
     },
     methods: {
-      //功能无法使用的提示
-      async toast_no() {
-        const toast = this.$createToast({
-          txt: '本功能即将到来',
-          type: 'error',
-          time: 1500
-        })
-        //使用show调出方法
-        toast.show()
-      },
       //登出
       async sign_out(){
         const toast = this.$createToast({
@@ -170,25 +166,38 @@
           toast.show()
         }else{
           if (url==="") {
-            this.toast_no();
+            this.functionunavailable();
           }else if(url==="logout"){
             this.sign_out();
           }else{
             this.$router.push({ path: url })
           }
         }
+      },
+      //调用注册接口
+      async reguser(Data){
+        let pushData = this.reguserinfo(Data)
+        // console.log(pushData);
+
+        //调用接口
+        reguser(pushData).then(res => {
+          //注册成功
+          // console.log(res)
+          
+          if (Data !== {} && Data !== null) {
+            this.userInfo = res.data;
+            this.loggedin = true;
+          }
+        },(err => {
+          console.log(err)
+        }))
       }
     },
     created() {
       let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
-      console.log(userData)
-      
-      if (userData !== {} && userData !== null) {
-        console.log(userData)
-        this.userInfo = userData;
-        this.loggedin = true;
-      }
+
+      this.reguser(userData);
     }
   }
 </script>

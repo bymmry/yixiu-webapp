@@ -1,6 +1,7 @@
 import ajaxLib from '../../lib/ajax';
 const ajax = ajaxLib.ajax;
 const url = "https://m.yixiutech.com";
+const url2 = "https://yixiu.natappvip.cc";
 
  //获取商家列表
  export function getShopList() {
@@ -81,3 +82,35 @@ export function getShopListSort(data) {
   })
 }
 
+  //通过openid查询用户信息
+  export function getuserinforByopenId(openId){
+    return new Promise((resolve, reject) => {
+      ajax.get(url + '/user/openid/' + openId).then((res) => {
+        resolve(res);
+      }).then((err) => {
+        reject(err);
+      });
+    });
+  }
+
+  //根据微信信息注册用户
+  export function reguser(data){
+    return new Promise((resolve, reject) => {
+      ajax.post(url + '/user/reg/', data).then((res) => {
+        resolve(res);
+      }).then((err) => {
+        reject(err);
+      });
+    });
+  }
+
+  //更新用户信息
+  export function updateuserinfo(data){
+    return new Promise((resolve, reject) => {
+      ajax.post(url + '/user/update', data).then((res) => {
+        resolve(res);
+      }).then((err) => {
+        reject(err);
+      });
+    });
+  }

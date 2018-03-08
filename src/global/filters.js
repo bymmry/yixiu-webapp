@@ -133,6 +133,44 @@ let filters = {
       time: 1300
     })
     toast.show()
+  },
+  reguserinfo(data){
+    // 注册用户需要用到的参数
+    const information = {
+      name: data.nickName || 0, //用户名称
+      email: data.email || "",//邮箱
+      mobile: data.mobile || "",//手机号
+      password: data.password || "",//密码
+      isSys: data.isSys || false,//是否是系统管理员
+      role: data.role || [],//如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
+      wx: data,//微信信息:如openid,昵称和头像链接等等
+      parent: data.parent || 0
+    }
+    if (information.parent === 0) {
+      delete information.parent
+    }
+
+    return information;
+  },
+  copy(obj){
+    //浅拷贝
+    var newobj = {};
+    for ( var attr in obj) {
+        newobj[attr] = obj[attr];
+    }
+    return newobj;
+  },
+  emailReg(str){
+    //邮箱验证
+    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    const result = reg.test(str);
+    return result
+  },
+  mobileReg(str){
+    //手机号验证
+    const reg = /^1\d{10}$/
+    const result = reg.test(str);
+    return result
   }
 }
 export default {
@@ -151,6 +189,10 @@ export default {
     Vue.prototype.removeClass = filters.removeClass
     Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj
     Vue.prototype.functionunavailable = filters.functionunavailable
+    Vue.prototype.reguserinfo = filters.reguserinfo
+    Vue.prototype.copy = filters.copy
+    Vue.prototype.emailReg = filters.emailReg
+    Vue.prototype.mobileReg = filters.mobileReg
     Vue.prototype.prompt = filters.prompt
   }
 }

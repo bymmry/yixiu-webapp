@@ -22,7 +22,7 @@
       <!-- 个人信息详细部分 -->
       <div class="myinfo-message" v-if="!changed">
         <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
-          <div class="myinfo-message-tag">{{ info.name }}</div>
+          <div class="myinfo-message-tag textright">{{ info.name }}</div>
           <div class="myinfo-message-data">{{ userInfo[info.tag] }}</div>
         </div>
       </div>
@@ -30,7 +30,9 @@
       <!-- 用户修改个人信息 -->
       <div class="myinfo-message" v-else>
         <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
-          <div class="myinfo-message-tag">{{ info.name }}</div>
+          <div class="myinfo-message-tag textright">{{ info.name }}</div>
+
+<!--      ID、生日、性别的判断  
           <div class="myinfo-message-data" v-if="info.name==='账号'">
             {{ userInfo[info.tag] }} 
             <van-tag class="myinfo-tag">不可更改</van-tag>
@@ -41,6 +43,12 @@
           <div class="myinfo-message-data myinfo-choseSex" v-else-if="info.name==='性别'">
             <van-radio name="man" v-model="radio" class="myinfo-choseSex-item">男</van-radio>
             <van-radio name="woman" v-model="radio">女</van-radio>
+          </div>
+ -->          
+
+          <!-- <div class="myinfo-message-data" v-else> -->
+          <div class="myinfo-message-data">
+            <input type="text" v-model="newuserInfo[info.tag]">
           </div>
         </div>
         <van-button class="changeBtn" type="primary" @click="changeInfo('info')">保存</van-button>
@@ -110,6 +118,7 @@
   import { Radio } from 'vant';
   import { Tag } from 'vant';
   import { PullRefresh } from 'vant';
+  import { getuserinforByopenId, updateuserinfo } from '../../../common/api'
 
   export default {
     data () {
@@ -130,28 +139,34 @@
             reNewPassword: null   //再次输入的新密码
           }
         ],
+        id: 0,
+        //更新时用于存储数据
+        newuserInfo:{  
+          email: "",
+          mobile: "",
+          name: "",
+        },
         //用户信息,可往下继续添加需要的内容
         userInfo:{  
-          id: "13368161676",
-          birthday: "1997-2-12",
-          sex: "男"
+          email: "",
+          mobile: "",
+          name: "",
         },
         //默认信息属性
         userInfoItem:[  
           {
-            tag: "id",
-            name: "账号"
+            tag: "name",
+            name: "昵称："
           },
           {
-            tag: "birthday",
-            name: "生日"
+            tag: "email",
+            name: "邮箱："
           },
           {
-            tag: "sex",
-            name: "性别"
-          }
+            tag: "mobile",
+            name: "手机号："
+          },
         ]
-
       }
     },
     components: {
@@ -183,7 +198,10 @@
           this.changedPassword = false;
         }else if(type==="info"){
           this.changed = false;
-          this.radio = this.userInfo.sex === "男"? "man" : "woman"
+          // this.radio = this.userInfo.sex === "男"? "man" : "woman"
+          for(let item in this.newuserInfo){
+            this.newuserInfo[item] = "";
+          }
         }
       },
       //修改生日
@@ -202,54 +220,124 @@
       },
       //更新
       async changeInfo(type){
-        const toast = this.$createToast({
-          time: 0,
-          txt: '正在更新'
-        })
-        toast.show();
-
-
-        //更新需要进行的操作
-        
-        //传递的新数据
-        const newData = {
-          id: this.userInfo.id,
-          birthday: this.newbir,
-          sex: this.radio === "man" ? "男" : "女"
+        let newData = {};
+        for(let val in this.newuserInfo){
+          if (this.newuserInfo[val] !== this.userInfo[val]) {
+            newData[val] = this.newuserInfo[val]
+          }
         }
-        
-        let res = 1
 
-        //
-        //
-
-        
-        toast.hide()
-        if (res) {
-          const tip = this.$createToast({
-            txt: '更新成功!',
-            type: 'correct',
-            time: 1000
-          })
-          toast.show()
-
-
-          //修改成功后的操作
-          
-          this.userInfo.sex = this.radio === "man" ? "男" : "女";
-          this.userInfo.birthday = this.newbir;
-          //更新成功后修改状态还原到最初的情况
-          this.reMessage(type);
-        }else {
-          const tip = this.$createToast({
-            txt: '更新失败!',
+        if (JSON.stringify(newData) === "{}") {
+          const toast = this.$createToast({
+            txt: '没有填写新的信息',
             type: 'fail',
-            time: 1000
+            time: 1300
           })
           toast.show()
+        }else{
+          //判断邮箱是否更改
+          if (newData.email) {
+            let rightEmail = this.emailReg(newData.email);
+            //判断邮箱格式是否正确
+            if(rightEmail == false){
+              const toast = this.$createToast({
+                txt: '邮箱格式不对!',
+                type: 'fail',
+                time: 1300
+              })
+              toast.show()
+              return ;
+            }
+          }
+          //判断手机号是否更改
+          if(newData.mobile){
+            let rightMobile = this.mobileReg(newData.mobile);
+            //判断手机号格式是否正确
+            if(rightMobile == false){
+              const toast = this.$createToast({
+                txt: '手机号格式不对!',
+                type: 'fail',
+                time: 1300
+              })
+              toast.show()
+              return ;
+            }
+          }
+          newData._id = this.id;
+          // newData.wx = {};
+          // newData.wx.openid = this.openid;
+          console.log(newData)
+
+          
+
+          /*  在用上生日和性别后 
+          const newData = {
+            id: this.userInfo.id,
+            birthday: this.newbir,
+            sex: this.radio === "man" ? "男" : "女"
+          }
+          */
+
+          const toast = this.$createToast({
+            time: 0,
+            txt: '正在更新'
+          })
+          toast.show();
+
+
+          //更新需要进行的操作
+          //传递的新数据
+          updateuserinfo(newData)
+          .then(res => {
+            toast.hide()
+            const tip = this.$createToast({
+              txt: '更新成功!',
+              type: 'correct',
+              time: 1000
+            })
+            tip.show();
+
+            this.userInfo = this.copy(this.newuserInfo);
+
+            console.log(res);
+            console.log(this.userInfo)
+            console.log(this.newuserInfo)
+
+            // this.userInfo.sex = this.radio === "man" ? "男" : "女";
+            // this.userInfo.birthday = this.newbir;
+            //更新成功后修改状态还原到最初的情况
+            this.reMessage(type);
+
+          },(err => {
+            const tip = this.$createToast({
+              txt: '更新失败!',
+              type: 'fail',
+              time: 1000
+            })
+            tip.show()
+          }))
         }
       },
-      
+      //获取用户信息
+      async getUserinfo(userData){
+        getuserinforByopenId(userData.openid)
+        .then(res => {
+          this.userInfo.email = res.data.email || "";
+          this.userInfo.mobile = res.data.mobile || "";
+          this.userInfo.name = res.data.name;
+          this.id = res.data._id;
+          this.newuserInfo = this.copy(this.userInfo);
+          console.log(res.data)
+        },(err => {
+          console.log(err);
+        }))
+      },
+    },
+    created() {
+      let userData = sessionStorage.getItem("userData");
+      userData = JSON.parse(userData);
+
+      this.getUserinfo(userData);
     }
   }
 </script>
@@ -302,8 +390,12 @@
     margin-bottom: 3vh;
   }
   .myinfo-message-tag{
+    min-width: 64px;
     margin-right: 3vw;
     color: #727272;
+  }
+  .textright{
+    text-align: right;
   }
   .myinfo-pass-margin{
     margin-bottom: 3vh;
@@ -311,6 +403,14 @@
   .myinfo-message-data{
     display: flex;
     color: #333;
+  }
+  .myinfo-message-data input{
+    padding-left: 1vw;
+    padding-bottom: 1vh;
+    border-bottom: 0.2vw solid #d1d1d1;
+  }
+  .myinfo-message-data input:focus{
+    border-bottom: 0.2px solid rgb(1, 135, 254);
   }
   .myinfo-tag{
     margin-left: 3vw;
