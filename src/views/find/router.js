@@ -9,6 +9,8 @@ import questiondetail from './pages/questiondetail'
 import answerdetail from './pages/answerdetail'
 import newanswer from './pages/newanswer'
 import reply from './pages/reply'
+import search from './pages/search'
+import changequestion from './components/changequestion'
 
 export default [{
   path: '/find',
@@ -49,8 +51,18 @@ export default [{
     component: newanswer
   },
   {
+    name: "changequestion",
+    path: '/find/changequestion/:oldquestion',   //发起提问
+    component: changequestion
+  },
+  {
     name: "reply",
     path: '/find/reply/:id',   //回复
     component: reply
+  },
+  {
+    name: "search",
+    path: '/find/search/:searchData',   //发起提问
+    component: search
   }
 ]

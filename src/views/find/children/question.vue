@@ -1,8 +1,10 @@
 <template>
   <div class="question-container">
-    <router-link v-for="question in questionData" :key="question.id" :to="{ path: '/find/questiondetail' }">
-      <questionBox  :question="question"></questionBox>
-    </router-link>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
+        <questionBox  :question="question"></questionBox>
+      </div>
+    </van-pull-refresh>
     
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
@@ -14,10 +16,12 @@
   //vant
   import questionBox from '../components/questionBox.vue'
   import { getQuestionList } from '../../common/api'
+  import { PullRefresh } from 'vant';
 
   export default {
     data(){
       return {
+        isLoading:false,
         gatQuestionData:{
           tag: [],
           title: "",
@@ -30,9 +34,14 @@
       }
     },
     components: {
-      questionBox
+      questionBox,
+      [PullRefresh.name]: PullRefresh,
     },
     methods: {
+      //刷新
+      onRefresh(){
+        this.getquestionlist(this.gatQuestionData);
+      },
       //获取列表
       getquestionlist(postdata){
         const toast = this.$createToast({
@@ -44,11 +53,17 @@
         getQuestionList(postdata)
         .then(res => {
           toast.hide();
+          this.isLoading = false;
           this.questionData = res.data;
-          console.log(res.data)
+          // console.log(res.data)
         },(err => {
           console.log(err);
         }))
+      },
+      //建立点击question的Storage 并跳转
+      createdQStorage(question){
+        sessionStorage.setItem("questionId", question._id);
+        this.$router.push({ path: "/find/questiondetail"})
       }
     },
     created() {
