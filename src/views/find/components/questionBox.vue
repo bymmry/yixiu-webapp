@@ -57,6 +57,7 @@
   .questionBox-container{
     position: relative;
     max-height: 59vh;
+    min-height: 283px;
     padding: 1.6vh 4vw 3.1vh 4vw;
     border-top: 0.1vh solid #e0deec;
     border-bottom: 0.1vh solid #e0deec;
@@ -79,6 +80,7 @@
   .questionContent img{
     display: block;
     max-height: 34.5vh;
+    min-height: 165.5px;
     max-width: 100%;
     margin:0 auto;
     margin-bottom: 1.5vh;

@@ -113,8 +113,8 @@ let filters = {
     // url是传进来的完整地址
     // urlData 去除 }
     // origin 从第一个 { 开始 通过 & 分割
-    let urlData = url.replace('}', '');
-    let origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
+    // let urlData = url.replace('}', '');
+    let origin = urlData.substr(urlData.indexOf('?') + 1).split('&');
     let userInfor = {};
 
     for(let userData in origin){
