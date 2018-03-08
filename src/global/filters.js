@@ -111,8 +111,8 @@ let filters = {
   urlDataTurnObj(url){
     // 目前只支持   ...home?userInfo={avatarUrl="https....}这样的类型
     // url是传进来的完整地址
-    // urlData 去除 } 
-    // origin 从第一个 { 开始 通过 & 分割  
+    // urlData 去除 }
+    // origin 从第一个 { 开始 通过 & 分割
     let urlData = url.replace('}', '');
     let origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
     let userInfor = {};
@@ -156,7 +156,7 @@ let filters = {
     //浅拷贝
     var newobj = {};
     for ( var attr in obj) {
-        newobj[attr] = obj[attr];
+      newobj[attr] = obj[attr];
     }
     return newobj;
   },
@@ -171,7 +171,17 @@ let filters = {
     const reg = /^1\d{10}$/
     const result = reg.test(str);
     return result
+  },
+  //获取用户信息
+  getUserInfo: function () {
+    let userInfoStr = sessionStorage.getItem("userData");
+    if(typeof userInfoStr === "string"){
+      return JSON.parse(userInfoStr);
+    }else {
+      alert("未获取到用户信息");
+    }
   }
+
 }
 export default {
   install(Vue) {
@@ -194,5 +204,6 @@ export default {
     Vue.prototype.emailReg = filters.emailReg
     Vue.prototype.mobileReg = filters.mobileReg
     Vue.prototype.prompt = filters.prompt
+    Vue.prototype.getUserInfo = filters.getUserInfo
   }
 }

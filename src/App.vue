@@ -10,7 +10,7 @@
     </router-view>
 
     <!--顶部导航-->
-   <navigation></navigation>
+    <navigation></navigation>
   </div>
 </template>
 
@@ -24,26 +24,37 @@
       navigation
     },
     created() {
-      //将url中的对象存储下来并转换成json对象
       let userData = this.urlDataTurnObj(this.$route.path)
+
+      // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
-      //将url中的对象按照注册接口需要的参数赋值，保存到PushData
+      // console.log(userData)
       let pushData = this.reguserinfo(userData)
-      //注册
+      // console.log(pushData)
+
       reguser(pushData).then(res => {
-        let user = JSON.stringify(res.data);
-        //将用户信息储存到userData中
-        sessionStorage.setItem("userData", user);
-        
-        // console.log(sessionStorage.getItem("userData"))
+        //注册成功
+        // console.log(res)
+
+        // if (Data !== {} && Data !== null) {
+        let userData2 = JSON.stringify(res.data);
+
+        console.log(res.data)
+        sessionStorage.setItem("userData", userData2);
+        console.log(sessionStorage.getItem("userData"))
+        // }
       },(err => {
         console.log(err)
       }))
+
+      // console.log(userData);
+      // sessionStorage.setItem("userData", userData);
     }
   }
 </script>
 
 <style>
-
-
+  #app{
+    height: 97%;
+  }
 </style>

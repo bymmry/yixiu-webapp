@@ -1,39 +1,48 @@
 <template>
-    <div class="orders">
-      <!--<router-link to="/shopList">商家测试</router-link>-->
-      <div class="header">
-        <the-header></the-header>
+  <div class="orders">
+    <!--<router-link to="/shopList">商家测试</router-link>-->
+    <div class="header">
+      <the-header></the-header>
+    </div>
+    <div class="ordersRow">
+      <div class="ordersTabs">
+        <ul>
+          <li @click="selectOrder(index)" v-for="(item, index) in ordersList">
+            <span :data-index="index" :class="{'active': currentIndex === index}">{{item.name}}</span>
+          </li>
+        </ul>
       </div>
-      <div class="ordersRow">
-        <div class="ordersTabs">
-          <ul>
-            <li @click="selectOrder" v-for="(item, index) in ordersList">
-              <span :data-index="index" :class="{'active': currentIndex === index}">{{item.name}}</span>
-            </li>
-          </ul>
-        </div>
-        <div class="ordersList">
-          <no-order v-if="!orderData.length"></no-order>
-          <order-item v-else></order-item>
-        </div>
+      <div class="ordersList">
+        <no-order v-if="!orderData.length"></no-order>
+        <order-item v-else :orders="orderData"></order-item>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
   import theHeader from '../common/base/theHeader';
   import noOrder from './components/noOrders';
   import orderItem from './components/ordersItem';
+  import { getOrderList } from './api';
+  import { Toast } from 'vant';
+
   export default {
     name: 'app',
     components: {
+      [Toast.name]: Toast,
       theHeader,
       noOrder,
       orderItem
     },
-    created() {
-    //  获取订单数据
-    //   this.getOrderData();
+    activated() {
+      console.log("activated");
+      let userInfo = this.getUserInfo();
+      let req = {
+        user: userInfo,
+        filter: ''
+      };
+      this.getOrderData(req);
     },
     data() {
       return {
@@ -64,13 +73,43 @@
       }
     },
     methods: {
-      selectOrder: function (item) {
-        this.currentIndex = Number(item.target.getAttribute("data-index"));
+      selectOrder: function (index) {
+        this.currentIndex = index;
+        let state = '';
+        switch (index){
+          case 1:
+            state = 10; //待付款
+            break;
+          case 2:
+            state = 11; //已付款
+            break;
+          case 3:
+            state = 12; //维修中
+            break;
+          case 4:
+            state = 13; //已完成
+        }
+        let userInfo = this.getUserInfo();
+        let req = {
+          user: userInfo,
+          filter: state
+        };
+        this.getOrderData(req);
       },
-      getOrderData() {
-        this.orderData = [{
-          name: "1"
-        }]
+      getOrderData(req) {
+        Toast.loading({
+          // mask: true,
+          message: '加载中...'
+        });
+        getOrderList(req).then(res => {
+          if (res.code === 200){
+            console.log(res);
+            this.orderData = res.data;
+            Toast.clear();
+          }
+        }, err => {
+          console.log(err);
+        });
       }
     }
   };

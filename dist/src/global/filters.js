@@ -108,6 +108,13 @@ var filters = {
     return val;
     // return moment.unix(val).format('YYYY-MM-DD HH:mm')
   },
+  prompt: function prompt(txt, type) {
+    return this.$createToast({
+      txt: txt,
+      type: type,
+      time: 1300
+    });
+  },
   unix2hhmm: function unix2hhmm(val) {
     return val;
     // return moment.unix(val).format('HH:mm')
@@ -115,8 +122,8 @@ var filters = {
   urlDataTurnObj: function urlDataTurnObj(url) {
     // 目前只支持   ...home?userInfo={avatarUrl="https....}这样的类型
     // url是传进来的完整地址
-    // urlData 去除 } 
-    // origin 从第一个 { 开始 通过 & 分割  
+    // urlData 去除 }
+    // origin 从第一个 { 开始 通过 & 分割
     var urlData = url.replace('}', '');
     var origin = urlData.substr(urlData.indexOf('{') + 1).split('&');
     var userInfor = {};
@@ -137,7 +144,56 @@ var filters = {
       time: 1300
     });
     toast.show();
+  },
+  reguserinfo: function reguserinfo(data) {
+    // 注册用户需要用到的参数
+    var information = {
+      name: data.nickName || 0, //用户名称
+      email: data.email || "", //邮箱
+      mobile: data.mobile || "", //手机号
+      password: data.password || "", //密码
+      isSys: data.isSys || false, //是否是系统管理员
+      role: data.role || [], //如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
+      wx: data, //微信信息:如openid,昵称和头像链接等等
+      parent: data.parent || 0
+    };
+    if (information.parent === 0) {
+      delete information.parent;
+    }
+
+    return information;
+  },
+  copy: function copy(obj) {
+    //浅拷贝
+    var newobj = {};
+    for (var attr in obj) {
+      newobj[attr] = obj[attr];
+    }
+    return newobj;
+  },
+  emailReg: function emailReg(str) {
+    //邮箱验证
+    var reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    var result = reg.test(str);
+    return result;
+  },
+  mobileReg: function mobileReg(str) {
+    //手机号验证
+    var reg = /^1\d{10}$/;
+    var result = reg.test(str);
+    return result;
+  },
+
+  //获取用户信息
+  getUserInfo: function getUserInfo() {
+    var userInfoStr = sessionStorage.getItem("userData");
+    if (typeof userInfoStr === "string") {
+      return JSON.parse(userInfoStr);
+    } else {
+      alert("未获取到用户信息");
+    }
   }
+
 };
 exports.default = {
   install: function install(Vue) {
@@ -155,6 +211,12 @@ exports.default = {
     Vue.prototype.removeClass = filters.removeClass;
     Vue.prototype.urlDataTurnObj = filters.urlDataTurnObj;
     Vue.prototype.functionunavailable = filters.functionunavailable;
+    Vue.prototype.reguserinfo = filters.reguserinfo;
+    Vue.prototype.copy = filters.copy;
+    Vue.prototype.emailReg = filters.emailReg;
+    Vue.prototype.mobileReg = filters.mobileReg;
+    Vue.prototype.prompt = filters.prompt;
+    Vue.prototype.getUserInfo = filters.getUserInfo;
   }
 };
 //# sourceMappingURL=filters.js.map

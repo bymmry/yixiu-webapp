@@ -14,6 +14,10 @@ exports.getPhoneBrand = getPhoneBrand;
 exports.getPhoneModel = getPhoneModel;
 exports.getPhoneProblem = getPhoneProblem;
 exports.getShopListSort = getShopListSort;
+exports.getuserinforByopenId = getuserinforByopenId;
+exports.reguser = reguser;
+exports.updateuserinfo = updateuserinfo;
+exports.sureOrder = sureOrder;
 
 var _ajax = require('../../lib/ajax');
 
@@ -22,7 +26,8 @@ var _ajax2 = _interopRequireDefault(_ajax);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ajax = _ajax2.default.ajax;
-var url = "https://m.yixiutech.com";
+var url = 'https://m.yixiutech.com';
+// const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 function getShopList() {
@@ -88,12 +93,56 @@ function getShopListSort(data) {
     price: 1, //均价
     distance: 1, //距离
     pv: 1, //浏览量
-    name: "", //商家名称
-    serviceName: "", //服务名称
+    name: '', //商家名称
+    serviceName: '', //服务名称
     point: {} //用户定位信息的经纬度
   };
   return new _promise2.default(function (resolve, reject) {
     ajax.post(url + '/shop/filter', filter).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+//通过openid查询用户信息
+function getuserinforByopenId(openId) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/user/openid/' + openId).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+//根据微信信息注册用户
+function reguser(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/user/reg/', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+//更新用户信息
+function updateuserinfo(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/user/update', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+//  确认下单
+function sureOrder(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/order/service', data).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);

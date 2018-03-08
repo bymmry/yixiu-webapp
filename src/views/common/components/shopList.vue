@@ -2,7 +2,7 @@
   <div class="shopList">
     <Search @sendShopList="sendShopList"  />
     <div class="shopTitle">
-      <h3><sicon name="home" scale="1.6"></sicon><span>附近为维修店</span></h3>
+      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
     </div>
     <div class="shopSort">
       <ul ref="shopSort">
@@ -99,14 +99,16 @@
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;
-
-        getShopListSort(index).then((res) => {
-          console.log(res);
-        });
-
-        if (index === 0){
+        if (index === 0){ //综合排序
           this.chooseType();
+        }else {
+          getShopListSort(index).then((res) => {
+            console.log(res);
+          });
         }
+
+
+
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -118,9 +120,13 @@
       chooseSort: function (item) {
         this.nowColumnsType = item.name;
         this.isShowShopSort = !this.isShowShopSort;
+
+        getShopListSort(this.nowColumnsType).then((res) => { //综合排序请求数据
+          console.log(res);
+        });
       },
       selectShop: function (shop) {
-        let shopData = shop;
+        console.log(shop);
         let shopId = shop._id;
         if(shopId){
           this.$router.push({
@@ -131,9 +137,8 @@
           })
         }
       },
-      sendShopList (list) {
+      sendShopList (...list) {
         this.shopData = list;
-        console.log(list);
       }
     }
   };
