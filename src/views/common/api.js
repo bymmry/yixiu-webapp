@@ -26,9 +26,10 @@ export function getShopData(shopId) {
 }
 
 //  获取手机品牌
-export function getPhoneBrand() {
+export function getPhoneBrand(shopid) {
   return new Promise((resolve, reject) => {
-    ajax.get(`${url}/phone/manufacturer`).then((res) => {
+    ajax.get(`${url}/phone/manufacturer/shop/${shopid}`).then((res) => {
+      // ajax.get(`${url}/phone/manufacturer`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);
@@ -36,10 +37,11 @@ export function getPhoneBrand() {
   })
 }
 
-// 根据品牌id获取该品牌支持的手机型号
-export function getPhoneModel(phoneId) {
+// 根据店铺id和品牌id获取店铺支持的手机型号
+export function getPhoneModel(req) {
   return new Promise((resolve, reject) => {
-    ajax.get(`${url}/phone/model/${phoneId}`).then((res) => {
+    ajax.post(`${url}/phone/model/shop`, req).then((res) => {
+      // ajax.get(`${url}/phone/model/${req.manufacturer}`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);
@@ -51,6 +53,7 @@ export function getPhoneModel(phoneId) {
 export function getPhoneProblem(data) {
   return new Promise((resolve, reject) => {
     ajax.get(`${url}/category/shop/${data}`).then((res) => {
+      // ajax.get(`${url}/category/phoneRepair`).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);
@@ -58,7 +61,16 @@ export function getPhoneProblem(data) {
   })
 }
 
-// huoqu
+// 根据商铺id和分类id以及手机型号 获取 某个商铺的某个分类下支持的某些手机型号 的具体维修服务
+export function getChildrenProblem(data) {
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/service/shop`, data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    })
+  })
+}
 
 //根据筛选条件获取商家列表
 export function getShopListSort(data) {
@@ -127,7 +139,6 @@ export function sureOrder(data) {
     })
   })
 }
-
 // 获取地址列表
 export function getaddressById(id){
   return new Promise((resolve, reject) => {
@@ -162,6 +173,7 @@ export function editAddress(data){
     });
   });
 }
+
 // 删除地址
 export function delAddress(id){
   return new Promise((resolve, reject) => {
@@ -172,6 +184,7 @@ export function delAddress(id){
     });
   });
 }
+
 // 发起问题
 export function addNewQuestion(data){
   return new Promise((resolve, reject) => {
@@ -193,6 +206,8 @@ export function getQuestionList(data){
     });
   });
 }
+
+
 
 // 回复问题
 export function replyQuestion(data){

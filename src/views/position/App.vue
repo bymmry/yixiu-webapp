@@ -1,7 +1,7 @@
 <template>
   <div class="position">
     <Header></Header>
-    <PositionItem 
+    <PositionItem
       v-for="(city, index) in citys"
       :key="index"
       :city="city"
@@ -28,8 +28,8 @@
 </script>
 
 <style scoped>
-.space {
-  width: 100%;
-  height: 8vh;
-}
+  .space {
+    width: 100%;
+    height: 8vh;
+  }
 </style>

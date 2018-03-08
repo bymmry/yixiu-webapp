@@ -29,7 +29,7 @@
           <van-step>选择问题</van-step>
           <van-step>下单</van-step>
         </van-steps>
-        </div>
+      </div>
       <div class="stepsContent">
         <choose-brand :class="{'isShowStep': active !== 0}" v-on:returnBrand="getBrand"></choose-brand>
         <choose-model :class="{'isShowStep': active !== 1}"
@@ -46,12 +46,16 @@
         ></choose-color>
         <choose-problem :class="{'isShowStep': active !== 3}"
                         :color="chooseInfo.color.data"
+                        :phoneModel="chooseInfo.model.data._id"
                         v-if="chooseInfo.color.val"
                         v-on:goBackPrevStep="prevStep"
                         v-on:returnProblem="getProblem"
         ></choose-problem>
         <choose-infos :class="{'isShowStep': active !== 4}"
                       :chooseData="chooseInfo"
+                      :TotalFee="TotalFee"
+                      :serverList="serverList"
+                      :serverId="serverId"
                       v-if="chooseInfo.problem.val"
                       v-on:goBackPrevStep="prevStep"
         ></choose-infos>
@@ -99,9 +103,24 @@
           problem: {
             val: "",
             data: {}
-          }
+          },
         },
-        shopInfo: {}
+        TotalFee: 0,
+        serverList: "",
+        serverId: "",
+        shopInfo: {},
+        lastChooseInfo: {}
+      }
+    },
+    watch: {
+      TotalFee: function (val) {
+        return val;
+      },
+      serverList: function (val) {
+        return val;
+      },
+      serverId: function (val) {
+        return val;
       }
     },
     created() {
@@ -153,8 +172,17 @@
       },
       getProblem: function (problem) {
         if(problem){
-          this.chooseInfo.problem.val = problem;
           this.chooseInfo.problem.data = problem;
+          this.chooseInfo.problem.val = problem.TotalFee;
+          this.TotalFee = problem.TotalFee;
+          let pro = problem.map(function (val) {
+            return val.name;
+          });
+          this.serverList = pro.join("/");
+          this.serverId = [];
+          this.serverId = problem.map(function (val) {
+            return val._id;
+          });
           this.nextStep();
         }
       },
@@ -167,6 +195,11 @@
       },
       nextStep: function () {
         this.active++;
+        if(this.active === 4){
+          console.log("last step");
+          console.log(this.chooseInfo);
+          this.lastChooseInfo = this.chooseInfo
+        }
       }
     }
   };

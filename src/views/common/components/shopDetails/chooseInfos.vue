@@ -1,44 +1,44 @@
 <template>
-    <div class="chooseInfos">
-      <div class="information">
-        <ul>
-          <li><span class="name">手机品牌</span><span class="value">{{chooseData.brand.val}}</span></li>
-          <li><span class="name">手机型号</span><span class="value">{{chooseData.model.val}}</span></li>
-          <li><span class="name">手机颜色</span><span class="value">{{chooseData.color.val}}</span></li>
-          <li><span class="name">维修选项</span><span class="value">{{chooseData.problem.val}}</span></li>
-        </ul>
-        <div class="coupon">
-          <van-coupon-cell
+  <div class="chooseInfos">
+    <div class="information">
+      <ul>
+        <li><span class="name">手机品牌</span><span class="value">{{chooseData.brand.val}}</span></li>
+        <li><span class="name">手机型号</span><span class="value">{{chooseData.model.val}}</span></li>
+        <li><span class="name">手机颜色</span><span class="value">{{chooseData.color.val}}</span></li>
+        <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
+      </ul>
+      <div class="coupon">
+        <van-coupon-cell
+          :coupons="coupons"
+          :chosen-coupon="chosenCoupon"
+          @click="showList = true"
+        />
+        <!-- 优惠券列表 -->
+        <van-popup v-model="showList" position="bottom">
+          <van-coupon-list
             :coupons="coupons"
             :chosen-coupon="chosenCoupon"
-            @click="showList = true"
+            :disabled-coupons="disabledCoupons"
+            @change="onChange"
+            @exchange="onExchange"
           />
-          <!-- 优惠券列表 -->
-          <van-popup v-model="showList" position="bottom">
-            <van-coupon-list
-              :coupons="coupons"
-              :chosen-coupon="chosenCoupon"
-              :disabled-coupons="disabledCoupons"
-              @change="onChange"
-              @exchange="onExchange"
-            />
-          </van-popup>
-        </div>
-      </div>
-      <div class="stepButton">
-        <div class="stepPrev">
-          <van-button @click="goBack" bottom-action>
-            <sicon name="back" scale="1.8"></sicon><span>上一步</span>
-          </van-button>
-        </div>
-        <div class="stepNext">
-          <sure-order :data="chooseData"></sure-order>
-          <!--<van-button @click="nextStep" bottom-action>-->
-            <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
-          <!--</van-button>-->
-        </div>
+        </van-popup>
       </div>
     </div>
+    <div class="stepButton">
+      <div class="stepPrev">
+        <van-button @click="goBack" bottom-action>
+          <sicon name="back" scale="1.8"></sicon><span>上一步</span>
+        </van-button>
+      </div>
+      <div class="stepNext">
+        <sure-order :data="chooseData" :TotalFee="TotalFee" :serverId="serverId"></sure-order>
+        <!--<van-button @click="nextStep" bottom-action>-->
+        <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
+        <!--</van-button>-->
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -54,7 +54,7 @@
     // name: '优惠券',
     start_at: 1489104000,
     end_at: 1514592000
-  }
+  };
   export default {
     name: 'choose-infos',
     data() {
@@ -63,24 +63,51 @@
         showList: false,
         chosenCoupon: -1,
         coupons: [coupon],
-        disabledCoupons: [coupon]
+        disabledCoupons: [coupon],
+        shopServer: []
       }
     },
     props: {
       chooseData: {
         type: Object,
         default: null
+      },
+      TotalFee: {
+        type: Number,
+        default: 0
+      },
+      serverList: {
+        type: String,
+        default: ""
+      },
+      serverId: {
+        type: Array,
+        default: function () {
+          return []
+        }
       }
     },
-    created() {
-      // this.coupon = coupon;
-    },
     mounted() {
-      console.log(this.chooseData)
+      console.log(this.chooseData);
+      let servers = this.chooseData.problem.data;
+      let pro = servers.map(function (val) {
+        return val.name;
+      });
+      let TotalFee = 0;
+      for(let i=0; i<servers.length; i++){
+        TotalFee += servers[i].price;
+      }
+      this.serverList = pro.join("/");
     },
     watch: {
-      chooseData: function (val) {
-        this.chooseData = val;
+      TotalFee: function (val) {
+        return val;
+      },
+      serverList: function (val) {
+        console.log(val);
+      },
+      serverId: function (val) {
+        return val;
       }
     },
     components: {

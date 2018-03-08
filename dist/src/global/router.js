@@ -56,13 +56,9 @@ var _router19 = require('../views/sellerHome/router');
 
 var _router20 = _interopRequireDefault(_router19);
 
-var _router21 = require('../views/addType/router');
+var _router21 = require('../views/phoneArrondi/router');
 
 var _router22 = _interopRequireDefault(_router21);
-
-var _router23 = require('../views/phoneArrondi/router');
-
-var _router24 = _interopRequireDefault(_router23);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -76,6 +72,6 @@ exports.default = new _vueRouter2.default({
   }, {
     path: "/pay",
     redirect: '/orders'
-  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default), (0, _toConsumableArray3.default)(_router24.default))
+  }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default))
 });
 //# sourceMappingURL=router.js.map

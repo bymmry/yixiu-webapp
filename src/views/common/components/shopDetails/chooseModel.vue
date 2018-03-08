@@ -1,21 +1,21 @@
 <template>
-    <div class="model">
-      <div class="modelList" ref="stepsContent">
-        <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model">{{item.name}}</span>
+  <div class="model">
+    <div class="modelList" ref="stepsContent">
+      <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model">{{item.name}}</span>
+    </div>
+    <div class="stepButton">
+      <div class="stepPrev">
+        <van-button @click="goBack" bottom-action>
+          <sicon name="back" scale="1.8"></sicon><span>上一步</span>
+        </van-button>
       </div>
-      <div class="stepButton">
-        <div class="stepPrev">
-          <van-button @click="goBack" bottom-action>
-            <sicon name="back" scale="1.8"></sicon><span>上一步</span>
-          </van-button>
-        </div>
-        <div class="stepNext">
-          <van-button @click="nextStep" bottom-action :disabled="nextStepButtonDisabled">
-            <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
-          </van-button>
-        </div>
+      <div class="stepNext">
+        <van-button @click="nextStep" bottom-action :disabled="nextStepButtonDisabled">
+          <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
+        </van-button>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -52,7 +52,12 @@
         this.$emit("goBackPrevStep", true)
       },
       getModel: function (id) {
-        getPhoneModel(id).then((res) => {
+        let shopId = this.$route.params.id;
+        let req = {
+          shop: shopId,//店铺id
+          manufacturer: id//手机品牌id
+        };
+        getPhoneModel(req).then((res) => {
           if(res.code === 200){
             this.model = res.data;
           }

@@ -1,38 +1,54 @@
 <template>
-    <div class="problem">
-      <div class="proContent">
-        <div class="problemSort">
-          <ul ref="problemSort">
-            <li :class="{'selected': currentIndex === index}" @click="selectChildren" v-for="(item, index) in items">{{item.name}}</li>
-          </ul>
-        </div>
-        <div class="problemDetail" ref="problemDetail">
-          <span @click="selectProblem" data-isSelected="0" v-for="item in itemsChildren">{{item.name}}</span>
-        </div>
+  <div class="problem">
+    <div class="readySelectedSpace">
+      <p class="readySelected">已选：<span v-if="item.name" v-for="item in selectedProblem">{{item.name}}</span></p>
+    </div>
+    <div class="proContent">
+      <div class="problemSort">
+        <ul ref="problemSort">
+          <li
+            :class="{'selected': currentIndex === index}"
+            :data-index="index"
+            :data-id="item._id"
+            @click="selectChildren"
+            v-for="(item, index) in items">{{item.name}}
+          </li>
+        </ul>
       </div>
-      <div class="stepButton">
-        <div class="stepPrev">
-          <van-button @click="goBack" bottom-action>
-            <sicon name="back" scale="1.8"></sicon><span>上一步</span>
-          </van-button>
-        </div>
-        <div class="stepNext">
-          <van-button @click="nextStep" bottom-action :disabled="nextStepButtonDisabled">
-            <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
-          </van-button>
-        </div>
+      <div :class="{'childShow': currentChildIndex === childIndex}" class="problemDetail" ref="problemDetail" v-for="(child, childIndex) in parent">
+          <span
+            @click="selectProblem"
+            :data-id="item._id"
+            :data-index="index"
+            data-isSelected="0"
+            v-for="(item, index) in parent[childIndex]">{{item.name}}&nbsp;￥{{item.price}}
+          </span>
       </div>
     </div>
+    <div class="stepButton">
+      <div class="stepPrev">
+        <van-button @click="goBack" bottom-action>
+          <sicon name="back" scale="1.8"></sicon><span>上一步</span>
+        </van-button>
+      </div>
+      <div class="stepNext">
+        <van-button @click="nextStep" bottom-action :disabled="nextStepButtonDisabled">
+          <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
+        </van-button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-  import { Button, TreeSelect } from 'vant';
-  import { getPhoneProblem } from '../../api';
+  import { Button, TreeSelect, Toast } from 'vant';
+  import { getPhoneProblem, getChildrenProblem } from '../../api';
   export default {
     name: 'choose-problem',
     components: {
       [Button.name]: Button,
-      [TreeSelect.name]: TreeSelect
+      [TreeSelect.name]: TreeSelect,
+      [Toast.name]: Toast
     },
     data() {
       return {
@@ -40,43 +56,49 @@
         items: [],
         itemsChildren: [],
         currentIndex: 0,
-        selectedProblem: ""
+        currentChildIndex: 0,
+        selectedProblem: [{
+          name: ""
+        }],
+        selectedServer: [],
+        parent: [[],[],[],[],[],[],[],[],[],[],[],[]]
+      }
+    },
+    props: {
+      phoneModel: {
+        type: String,
+        default: ""
       }
     },
     created() {
-      let shopId = this.$route.params.id;
-      getPhoneProblem(shopId).then((res) => {
-        if(res.code === 200){
-          this.items = res.data;
-          console.log(res);
-
-          this.getProblem(res.data);
-        }
-      }, function (err) {
-        console.log(err);
-      });
+      this.getPhoneProblem();
+    },
+    watch: {
+      phoneModel: function () {
+        this.getPhoneProblem();
+      }
     },
     methods: {
-      getProblem: function () {
-        let children = [
-          {
-            name: '问题1'
-          },{
-            name: '问题2'
-          },{
-            name: '问题3'
-          }];
-        this.itemsChildren = children;
+      getProblem: function (data) {
+        let index = 0; //首次加载
+        let req = {
+          shop: this.$route.params.id,//商铺id
+          category: data[index]._id,//分类id
+          phoneModel: this.phoneModel//手机型号id
+        };
+        this.getChildrenProblem(req, index);
       },
       goBack: function () {
         this.$emit("goBackPrevStep", true)
       },
       nextStep: function () {
-        console.log(this.selectedProblem);
-        this.$emit('returnProblem', this.selectedProblem);
+        this.getSelectedServer();
+        this.$emit('returnProblem', this.selectedServer);
       },
-      selectChildren: function (item) {
+      selectChildren: function (item) { //父列表选择
         let target = item.target;
+        let parentIndex = target.getAttribute("data-index");
+        this.currentChildIndex = Number(parentIndex);
         let problemSort = this.$refs.problemSort;
         let problemSortLi = problemSort.getElementsByTagName("li");
         for(let i=0; i<problemSortLi.length; i++){
@@ -86,26 +108,91 @@
           }
         }
         this.addClass(target, 'selected');
-        this.itemsChildren = [
-          {
-            name: '问题4'
-          },{
-            name: '问题5'
-          }];
+
+        let id = target.getAttribute("data-id");
+        let req = {
+          shop: this.$route.params.id,//商铺id
+          category: id,//分类id
+          phoneModel: this.phoneModel//手机型号id
+        };
+        this.getChildrenProblem(req, parentIndex);
+
+        console.log(this.parent);
+        console.log(this.selectedServer);
       },
-      selectProblem: function (item) {
+      selectProblem: function (item) { //子列表选择
         let tar = item.target;
         let isSelected = tar.getAttribute("data-isSelected");
-        let target = this.$refs.problemDetail;
+        let childIndex = tar.getAttribute("data-index");
 
-        this.isOnlyOneSelected(target, 'span');
         this.setTarget(tar, isSelected);
-        let nextInfo = this.isShowNextStep(target);
-        console.log(nextInfo);
 
-        this.selectedProblem = this.items[nextInfo.index].name;
-        this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
+        this.getSelectedServer();
 
+        if(this.selectedServer.length === 0){
+          this.nextStepButtonDisabled = true;
+        }else {
+          this.nextStepButtonDisabled = false;
+        }
+
+      },
+      getPhoneProblem: function () { //获取父元素列表
+        let shopId = this.$route.params.id;
+        getPhoneProblem(shopId).then((res) => {
+          if(res.code === 200){
+            this.items = res.data;
+            this.parent.length = this.items.length;
+            this.selectedServer.length = this.items.length;
+            this.getProblem(res.data);
+            console.log(this.parent);
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      },
+      getChildrenProblem: function (req, index) { // 获取子元素列表
+        Toast.loading({
+          // mask: true,
+          message: '加载中...'
+        });
+        getChildrenProblem(req).then(res => {
+          this.itemsChildren = res.data;
+          if(this.parent[index].length === 0){
+            this.parent[index] = this.itemsChildren;
+            console.log("------------------------------------------------------>");
+            console.log(this.parent);
+            Toast.clear();
+          }
+
+          Toast.clear();
+        }, err => {
+          console.log(err);
+        });
+      },
+      getSelectedServer: function () {
+        let that = this;
+        that.selectedServer = [];
+        let problemDetail = this.$refs.problemDetail;
+        if(problemDetail.length){
+          for(let i=0; i<problemDetail.length; i++){
+            let target = problemDetail[i];
+            let spans = target.getElementsByTagName("span");
+            for(let j=0; j<spans.length; j++){
+              let span = spans[j];
+              let isSelected = span.getAttribute("data-isSelected");
+              if(isSelected === "1"){
+                let id = span.getAttribute("data-id");
+                that.selectedServer.push(that.parent[i][j]);
+              }
+            }
+          }
+        }
+        this.selectedProblem = this.selectedServer;
+        let TotalFee = 0;
+        for(let i=0; i<this.selectedServer.length; i++){
+          TotalFee += this.selectedServer[i].price;
+        }
+        this.selectedServer.TotalFee = TotalFee;
       }
     }
   };
@@ -118,7 +205,7 @@
   }
   .problem .proContent{
     width: auto;
-    height: 48vh;
+    height: 45vh;
     display: flex;
   }
   .problem .proContent > div.problemSort{
@@ -137,6 +224,7 @@
     border-bottom: 1px solid #fd9153;
   }
   .problem .proContent > div.problemDetail{
+    display: none;
     flex: 5;
     padding: 10px 10px;
   }
@@ -179,4 +267,21 @@
     vertical-align: middle;
   }
 
+  .readySelectedSpace{
+    height: 20px;
+  }
+  p.readySelected{
+    padding-left: 10px;
+    font-size: 12px;
+  }
+  p.readySelected span{
+    color: #fd9153;
+    display: inline-block;
+    width: auto;
+    padding: 0 2px;
+  }
+  .problem .proContent > div.childShow{
+    display: block;
+    /*background-color: #eee;;*/
+  }
 </style>

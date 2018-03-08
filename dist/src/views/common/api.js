@@ -13,11 +13,20 @@ exports.getShopData = getShopData;
 exports.getPhoneBrand = getPhoneBrand;
 exports.getPhoneModel = getPhoneModel;
 exports.getPhoneProblem = getPhoneProblem;
+exports.getChildrenProblem = getChildrenProblem;
 exports.getShopListSort = getShopListSort;
 exports.getuserinforByopenId = getuserinforByopenId;
 exports.reguser = reguser;
 exports.updateuserinfo = updateuserinfo;
 exports.sureOrder = sureOrder;
+exports.getaddressById = getaddressById;
+exports.addAddress = addAddress;
+exports.editAddress = editAddress;
+exports.delAddress = delAddress;
+exports.addNewQuestion = addNewQuestion;
+exports.getQuestionList = getQuestionList;
+exports.replyQuestion = replyQuestion;
+exports.getQuestionListById = getQuestionListById;
 
 var _ajax = require('../../lib/ajax');
 
@@ -52,9 +61,10 @@ function getShopData(shopId) {
 }
 
 //  获取手机品牌
-function getPhoneBrand() {
+function getPhoneBrand(shopid) {
   return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/phone/manufacturer').then(function (res) {
+    ajax.get(url + '/phone/manufacturer/shop/' + shopid).then(function (res) {
+      // ajax.get(`${url}/phone/manufacturer`).then((res) => {
       resolve(res);
     }).then(function (err) {
       reject(err);
@@ -62,10 +72,11 @@ function getPhoneBrand() {
   });
 }
 
-// 根据品牌id获取该品牌支持的手机型号
-function getPhoneModel(phoneId) {
+// 根据店铺id和品牌id获取店铺支持的手机型号
+function getPhoneModel(req) {
   return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/phone/model/' + phoneId).then(function (res) {
+    ajax.post(url + '/phone/model/shop', req).then(function (res) {
+      // ajax.get(`${url}/phone/model/${req.manufacturer}`).then((res) => {
       resolve(res);
     }).then(function (err) {
       reject(err);
@@ -77,6 +88,7 @@ function getPhoneModel(phoneId) {
 function getPhoneProblem(data) {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/category/shop/' + data).then(function (res) {
+      // ajax.get(`${url}/category/phoneRepair`).then((res) => {
       resolve(res);
     }).then(function (err) {
       reject(err);
@@ -84,7 +96,16 @@ function getPhoneProblem(data) {
   });
 }
 
-// huoqu
+// 根据商铺id和分类id以及手机型号 获取 某个商铺的某个分类下支持的某些手机型号 的具体维修服务
+function getChildrenProblem(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/service/shop', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
 
 //根据筛选条件获取商家列表
 function getShopListSort(data) {
@@ -145,6 +166,93 @@ function updateuserinfo(data) {
 function sureOrder(data) {
   return new _promise2.default(function (resolve, reject) {
     ajax.post(url + '/order/service', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+// 获取地址列表
+function getaddressById(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/address/user/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 添加地址
+function addAddress(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/address', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 更新地址
+function editAddress(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/address/update', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 删除地址
+function delAddress(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/address/delete/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 发起问题
+function addNewQuestion(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/question', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 根据筛选条件获取问题详情
+function getQuestionList(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/question/filter', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 回复问题
+function replyQuestion(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/question/reply', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 通过ID查询
+function getQuestionListById(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/question/user/' + id).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);
