@@ -55,60 +55,69 @@
       </div>
     </div>
 
-    <div class="messageTag" v-if="!changed">
-      <div class="myinfo-title-container">
-        <div class="myinfo-title">密码修改</div>
-        <div class="myinfo-title-change" @click="changeMessage('pass')" v-if="!changedPassword">修改</div>
-        <div class="myinfo-title-change" @click="reMessage('pass')" v-else="changedPassword">取消</div>
-      </div>
-      <div class="row-line" v-if="changedPassword"></div>
-      <div class="myinfo-message" v-if="changedPassword">
-        <!-- 输入原密码 -->
-        <div>
-          <div class="myinfo-message-tag myinfo-pass-margin">
-            原密码： 
-            <van-tag 
-              v-if="password[0].oldPasswordHint === '密码错误'" 
-              type="danger" 
-              class="myinfo-tag"
-            >{{ password[0].oldPasswordHint }}</van-tag>
+<!-- 修改密码 -->
+  <!--
+      <div class="messageTag" v-if="!changed">
+        <div class="myinfo-title-container">
+          <div class="myinfo-title">密码修改</div>
+          <div class="myinfo-title-change" @click="changeMessage('pass')" v-if="!changedPassword">修改</div>
+          <div class="myinfo-title-change" @click="reMessage('pass')" v-else="changedPassword">取消</div>
+        </div>
+        <div class="row-line" v-if="changedPassword"></div>
+        <div class="myinfo-message" v-if="changedPassword">
+  -->
+          <!-- 输入原密码 -->
+  <!--
+          <div>
+            <div class="myinfo-message-tag myinfo-pass-margin">
+              原密码： 
+              <van-tag 
+                v-if="password[0].oldPasswordHint === '密码错误'" 
+                type="danger" 
+                class="myinfo-tag"
+              >{{ password[0].oldPasswordHint }}</van-tag>
+            </div>
+            <input 
+              class="myinfo-message-tag myinfo-pass-margin" 
+              type="password" 
+              placeholder="原密码" 
+              v-model="password[0].oldpassword"
+            >
           </div>
-          <input 
-            class="myinfo-message-tag myinfo-pass-margin" 
-            type="password" 
-            placeholder="原密码" 
-            v-model="password[0].oldpassword"
-          >
-        </div>
-
-        <!-- 输入新密码 -->
-        <div>
-          <div class="myinfo-message-tag myinfo-pass-margin">新密码：</div>
-          <input 
-            class="myinfo-message-tag myinfo-pass-margin" 
-            type="password" 
-            placeholder="新密码"
-            v-model="password[1].newPassword"
-          >
-        </div>
-
-        <!-- 再次输入新密码 -->
-        <div>
-          <div class="myinfo-message-tag myinfo-pass-margin">
-            再次输入新密码： 
-            <van-tag 
-              v-if="password[0].oldPasswordHint === '两次密码不相符'" 
-              type="danger" 
-              class="myinfo-tag"
-            >{{ password[1].reNewPasswordHint }}</van-tag>
+  -->
+          <!-- 输入新密码 -->
+  <!--
+          <div>
+            <div class="myinfo-message-tag myinfo-pass-margin">新密码：</div>
+            <input 
+              class="myinfo-message-tag myinfo-pass-margin" 
+              type="password" 
+              placeholder="新密码"
+              v-model="password[1].newPassword"
+            >
           </div>
-          <input type="password" placeholder="再次输入新密码" v-model="password[1].reNewPassword">
-        </div>
+  -->
+          <!-- 再次输入新密码 -->
+  <!--
+          <div>
+            <div class="myinfo-message-tag myinfo-pass-margin">
+              再次输入新密码： 
+              <van-tag 
+                v-if="password[0].oldPasswordHint === '两次密码不相符'" 
+                type="danger" 
+                class="myinfo-tag"
+              >{{ password[1].reNewPasswordHint }}</van-tag>
+            </div>
+            <input type="password" placeholder="再次输入新密码" v-model="password[1].reNewPassword">
+          </div>
 
-        <van-button class="changeBtn" type="primary" @click="changeInfo('info')" >保存</van-button>
-      </div>
+          <van-button class="changeBtn" type="primary" @click="changeInfo('info')" >保存</van-button>
+        </div>
+  -->
+
     </div>
   </div>
+
 </template>
 
 <script>
