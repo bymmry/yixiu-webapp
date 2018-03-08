@@ -21,12 +21,19 @@
             :close-on-click-overlay=false
           >
             <div class="filter">
-                <div><van-checkbox v-model="checked">评分最高</van-checkbox></div>
-                <div><van-checkbox v-model="checked">速度最快</van-checkbox></div>
-                <div><van-checkbox v-model="checked">修的最好</van-checkbox></div>
-                <div><van-checkbox v-model="checked">价格最低</van-checkbox></div>
-                <div><van-checkbox v-model="checked">距离最近</van-checkbox></div>
-                <div><van-checkbox v-model="checked">浏览量最高</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.score">评分最高</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.serviceFinishTime">速度最快</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.serviceFinishCount">修的最好</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.price">价格最低</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.distance">距离最近</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.pv">浏览量最高</van-checkbox></div>
+              <van-radio-group>
+                <van-cell-group @click.stop="chooseMainType()">
+                  <van-cell><van-radio v-model="radio" name="1">上门维修</van-radio></van-cell>
+                  <van-cell><van-radio v-model="radio" name="2">自行到店</van-radio></van-cell>
+                </van-cell-group>
+              </van-radio-group>
+              <van-button @click.stop="chooseMainType()" @click="sureFliter">确定</van-button>
             </div>
           </van-popup>
         </li>
@@ -42,7 +49,7 @@
 </template>
 
 <script>
-  import { Actionsheet, Popup, Picker, Checkbox, CheckboxGroup } from 'vant';
+  import { Toast, Actionsheet, Popup, Picker, Checkbox, CheckboxGroup, Button, Radio, Cell, CellGroup } from 'vant';
   import  Search from './search.vue';
   import Scroll from '../base/scroll';
   import { getShopList, getShopListSort } from '../api';
@@ -51,11 +58,16 @@
   export default {
     name: 'shop-list',
     components: {
+      [Toast.name]: Toast,
       [Actionsheet.name]:Actionsheet,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup,
+      [Button.name]: Button,
       [Popup.name]: Popup,
       [Picker.name]: Picker,
       [Checkbox.name]: Checkbox,
       [CheckboxGroup.name]: CheckboxGroup,
+      [Radio.name]: Radio,
       Scroll,
       listView,
       Search
@@ -97,13 +109,27 @@
           visibleItemCount: 4
         },
         showFilter: false,
-        checked: true
+        checked: true,
+        filterData: {
+          score: true, //评分
+          serviceFinishTime: true, //速度
+          serviceFinishCount: true, //修好数量
+          price: true, //价格
+          distance: true,//距离
+          pv: true,//浏览量
+        },
+        radio: 1
       }
     },
     created() {
+      Toast.loading({
+        // mask: true,
+        message: '加载中...'
+      });
       getShopList().then((res) => {
         if(res.code === 200){
           this.shopData = res.data;
+          Toast.clear();
           if (this.searchData === null){
             console.log("searchData is null")
           }else {
@@ -118,16 +144,51 @@
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;
-        console.log(index);
+        let score = 0;
+        let serviceFinishTime = 0;
+        let price = 0;
+        let serviceFinishCount = 0;
+        let distance = 0;
+        // let
         if (index === 0){ //综合排序
           this.chooseType();
+          score = 1;
+          serviceFinishTime = 1;
+          price = 1;
+          serviceFinishCount =1;
+          distance = 1;
         }else if(index ===3 ){ //筛选
           this.filterShop();
-        }else {
-          getShopListSort(index).then((res) => {
-            console.log(res);
-          });
+        }else if(index === 1){ //修的最好
+          serviceFinishCount = 1;
+        }else if(index === 2){ //julizuijin
+          distance = 1;
         }
+        let filterShop = {
+          score: score, //评分
+          serviceFinishTime: serviceFinishTime, //速度
+          serviceFinishCount: serviceFinishCount, //修好数量
+          price: price, //价格
+          distance: distance,//距离
+          pv: 1,//浏览量
+          name: "",//商家名称
+          categoryName: "",//服务分类名称
+          serviceName: "",//服务名称
+          position: {
+
+          },//用户定位信息的经纬度
+          limit: 10,//一次获取列表的条数,系统默认为10
+          skip: 0//跳过几个数据,系统默认为0
+        };
+        Toast.loading({
+          // mask: true,
+          message: '加载中...'
+        });
+        getShopListSort(filterShop).then((res) => {
+          console.log(res);
+          this.shopData = res.data;
+          Toast.clear();
+        });
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -160,7 +221,40 @@
         this.shopData = list;
       },
       filterShop: function () {
-        this.showFilter = !this.showFilter;
+        this.showFilter = true;
+      },
+      stopPropagation: function () {
+
+      },
+      sureFliter: function () {
+        this.showFilter = false;
+        let filterShop = {
+          score: BooleanToNum(this.filterData.score), //评分
+          serviceFinishTime: BooleanToNum(this.filterData.serviceFinishTime), //速度
+          serviceFinishCount: BooleanToNum(this.filterData.serviceFinishCount), //修好数量
+          price: BooleanToNum(this.filterData.price), //价格
+          distance: BooleanToNum(this.filterData.distance),//距离
+          pv: BooleanToNum(this.filterData.pv),//浏览量
+          name: "",//商家名称
+          categoryName: "",//服务分类名称
+          serviceName: "",//服务名称
+          position: {
+
+          },//用户定位信息的经纬度
+          limit: 10,//一次获取列表的条数,系统默认为10
+          skip: 0//跳过几个数据,系统默认为0
+        };
+
+        function BooleanToNum(bool) {
+          return bool ? 1 : 0;
+        }
+      },
+      getFilterData: function (req) {
+        getShopListSort(req).then(res => {
+          console.log(res);
+        }, err => {
+          console.log(err);
+        })
       }
     }
   };
@@ -223,13 +317,22 @@
   }
 
   .filter{
-    width: 300px;
+    width: 80vw;
     background-color: #fff;
     height: auto;
   }
-  .filter ul, .filter ul li {
+  .filter > div.list{
     width: auto;
-    display: block;
+    padding: 0 5vw;
+  }
+  .filter > div.button{
+    width: auto;
+  }
+  .filter button{
+    width: 60vw;
+    margin: 2vh 5vw;
+    background-color: #f85;
+    color: #fff;
   }
 
 </style>

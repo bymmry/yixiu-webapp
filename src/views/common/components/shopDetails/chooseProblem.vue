@@ -15,13 +15,13 @@
           </li>
         </ul>
       </div>
-      <div :class="{'childShow': currentChildIndex === childIndex}" class="problemDetail" ref="problemDetail" v-for="(child, childIndex) in parent">
+      <div :class="{'childShow': currentChildIndex === childIndex}" class="problemDetail" ref="problemDetail" v-for="(child, childIndex) in items.length">
           <span
             @click="selectProblem"
             :data-id="item._id"
             :data-index="index"
             data-isSelected="0"
-            v-for="(item, index) in parent[childIndex]">{{item.name}}&nbsp;￥{{item.price}}
+            v-for="(item, index) in parent[currentChildIndex]">{{item.name}}&nbsp;￥{{item.price}}
           </span>
       </div>
     </div>
@@ -61,7 +61,7 @@
           name: ""
         }],
         selectedServer: [],
-        parent: [[],[],[],[],[],[],[],[],[],[],[],[]]
+        parent: [],
       }
     },
     props: {
@@ -76,6 +76,9 @@
     watch: {
       phoneModel: function () {
         this.getPhoneProblem();
+      },
+      parent: function (val) {
+        return val;
       }
     },
     methods: {
@@ -116,9 +119,6 @@
           phoneModel: this.phoneModel//手机型号id
         };
         this.getChildrenProblem(req, parentIndex);
-
-        console.log(this.parent);
-        console.log(this.selectedServer);
       },
       selectProblem: function (item) { //子列表选择
         let tar = item.target;
@@ -141,7 +141,15 @@
         getPhoneProblem(shopId).then((res) => {
           if(res.code === 200){
             this.items = res.data;
-            this.parent.length = this.items.length;
+            if (this.parent.length === this.items.length){
+
+            }else {
+              for(let i=0; i<this.items.length; i++){
+                this.parent.push(new Array());
+              }
+            }
+
+            // this.parent.length = this.items.length;
             this.selectedServer.length = this.items.length;
             this.getProblem(res.data);
             console.log(this.parent);
@@ -151,20 +159,14 @@
         });
       },
       getChildrenProblem: function (req, index) { // 获取子元素列表
-        Toast.loading({
-          // mask: true,
-          message: '加载中...'
-        });
         getChildrenProblem(req).then(res => {
           this.itemsChildren = res.data;
           if(this.parent[index].length === 0){
             this.parent[index] = this.itemsChildren;
-            console.log("------------------------------------------------------>");
+            console.log("----------------------------------------------------------------------------------->");
             console.log(this.parent);
             Toast.clear();
           }
-
-          Toast.clear();
         }, err => {
           console.log(err);
         });
