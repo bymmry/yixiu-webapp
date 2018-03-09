@@ -25,21 +25,74 @@
         </div>
       </div>
     </div>
+    <div  class="loadMore">
+      <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
+      <p>{{moreText}}</p>
+    </div>
   </div>
 </template>
 
 <script>
+  import { Button } from 'vant';
+  import {getShopListSort} from '../api';
   export default {
     name: 'listView',
+    data() {
+      return {
+        showMore: false,
+        nowData: 0,
+        moreText: ""
+      }
+    },
     props: {
       shopData: {
         type: Array,
         default: []
+      },
+      reqData: {
+        type: Object,
+        default: function () {
+          return {}
+        }
       }
+    },
+    watch: {
+      shopData: function (val) {
+        if(val){
+          this.showMore = true;
+          this.moreText = "";
+        }
+      }
+    },
+    components: {
+      [Button.name]: Button
     },
     methods: {
       selectItem: function (item) {
         this.$emit("select", item);
+      },
+      loadMore: function () {
+        this.showMore = false;
+        this.nowData += this.shopData.length;
+        //ajax请求
+        console.log(this.reqData);
+        let more = {
+          skip: this.nowData
+        };
+        let req = Object.assign(this.reqData,more);
+        console.log(req);
+        getShopListSort(req).then(res => {
+          console.log(res.data);
+          if(res.data.length === 0){
+            this.moreText = "没有更多了"
+          }else {
+            this.shopData.concat(res.data);
+            console.log(this.shopData);
+            this.showMore = true;
+          }
+        }, err => {
+          console.log(err);
+        })
       }
     }
   };
@@ -102,4 +155,11 @@
     color: #eea17a;
   }
 
+  .loadMore{
+    width: auto;
+    text-align: center;
+  }
+  .loadMore button{
+    width: 60vw;
+  }
 </style>

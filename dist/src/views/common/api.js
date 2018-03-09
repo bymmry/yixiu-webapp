@@ -27,6 +27,11 @@ exports.addNewQuestion = addNewQuestion;
 exports.getQuestionList = getQuestionList;
 exports.replyQuestion = replyQuestion;
 exports.getQuestionListById = getQuestionListById;
+exports.getQuestionByQid = getQuestionByQid;
+exports.getQAListByQid = getQAListByQid;
+exports.updateQuestion = updateQuestion;
+exports.likethis = likethis;
+exports.adoptThis = adoptThis;
 
 var _ajax = require('../../lib/ajax');
 
@@ -35,8 +40,8 @@ var _ajax2 = _interopRequireDefault(_ajax);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ajax = _ajax2.default.ajax;
-// const url = 'https://m.yixiutech.com';
-var url = "https://yixiu.natappvip.cc";
+var url = 'https://m.yixiutech.com';
+// const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 function getShopList() {
@@ -248,4 +253,60 @@ function getQuestionListById(id) {
     });
   });
 }
+
+// 通过ID查询问题详情
+function getQuestionByQid(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/question/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 通过id查询问题的回复列表
+function getQAListByQid(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/question/reply/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 修改问题信息
+function updateQuestion(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/address/update/', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 给评论点赞
+function likethis(id) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.get(url + '/question/reply/like/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 采纳答案
+function adoptThis(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/question/adopt/', data).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
 //# sourceMappingURL=api.js.map

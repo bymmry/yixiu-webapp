@@ -42,7 +42,7 @@
     <div @click="selectShop"
          class="shopDes"
          ref="shopDes">
-      <list-view @select="selectShop" :shopData="shopData"></list-view>
+      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
     </div>
     <div class="space"></div>
   </div>
@@ -118,7 +118,8 @@
           distance: true,//距离
           pv: true,//浏览量
         },
-        radio: 1
+        radio: 1,
+        reqData: {},
       }
     },
     created() {
@@ -126,15 +127,24 @@
         // mask: true,
         message: '加载中...'
       });
-      getShopList().then((res) => {
-        if(res.code === 200){
-          this.shopData = res.data;
-          Toast.clear();
-          if (this.searchData === null){
-            console.log("searchData is null")
-          }else {
-            console.log(this.searchData);
-            this.shopData = this.searchData;
+      if (url.length === 2){
+        const categoryName = url[1];
+        console.log(categoryName);
+        let req = {
+          categoryName: categoryName
+        };
+        this.getShopList(req);
+      }else {
+        getShopList().then((res) => {
+          if(res.code === 200){
+            this.shopData = res.data;
+            Toast.clear();
+            if (this.searchData === null){
+              console.log("searchData is null")
+            }else {
+              console.log(this.searchData);
+              this.shopData = this.searchData;
+            }
           }
         }
       }, function (err) {
@@ -184,11 +194,7 @@
           // mask: true,
           message: '加载中...'
         });
-        getShopListSort(filterShop).then((res) => {
-          console.log(res);
-          this.shopData = res.data;
-          Toast.clear();
-        });
+        this.getShopList(filterShop);
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -201,9 +207,38 @@
         this.nowColumnsType = item.name;
         this.isShowShopSort = !this.isShowShopSort;
 
+/*
         getShopListSort(this.nowColumnsType).then((res) => { //综合排序请求数据
           console.log(res);
         });
+*/
+        let req = {};
+        switch (item.id){
+          case 0:
+            req = {
+              score: -1,//评分
+              serviceFinishTime: 1,//完成时间/(速度)
+              serviceFinishCount: 1,//修好数量
+              price: 1//均价
+            };
+            break;
+          case 1:
+            req = {
+              score: -1,//评分
+            };
+            break;
+          case 2:
+            req = {
+              serviceFinishTime: 1,//完成时间/(速度)
+            };
+            break;
+          case 3:
+            req = {
+              price: 1//均价
+            };
+            break;
+        }
+        this.getShopList(req);
       },
       selectShop: function (shop) {
         console.log(shop);
@@ -249,12 +284,29 @@
           return bool ? 1 : 0;
         }
       },
+/*
       getFilterData: function (req) {
         getShopListSort(req).then(res => {
           console.log(res);
         }, err => {
           console.log(err);
         })
+*/
+      getShopList: function (req) {
+        Toast.loading({
+          duration: 0,
+          message: '加载中...'
+        });
+        this.reqData = "";
+        this.reqData = req;
+        getShopListSort(req).then((res) => { //综合排序请求数据
+          console.log(res);
+          this.shopData = res.data;
+          Toast.clear();
+        }, err => {
+          console.log(err);
+        });
+        Toast.clear();
       }
     }
   };
