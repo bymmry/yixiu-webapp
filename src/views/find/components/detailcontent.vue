@@ -16,6 +16,7 @@
         <div class="questionFooterLeft">
           <!-- <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div> -->
           <div>{{ question.replyCount }} 回复</div>
+          <div class="money">赏金：{{ question.reward ? question.reward/100 : 0 }} 元 </div>
         </div>
         <div v-if="visitType==='my'">
           <van-button type="default" size="small" @click="changeQ">
@@ -221,5 +222,8 @@
   }
   .AOline{
     border-right: 0.2vw solid #e8e8e8;
+  }
+  .money{
+    margin-left: 7px;
   }
 </style>

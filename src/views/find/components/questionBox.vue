@@ -14,7 +14,7 @@
       <div class="questionFooter">
         <div class="questionFooterLeft">
           <div>回复：{{ question.replyCount }} 人</div>
-          <div>赏金：{{ question.reward ? question.reward : 0 }} 元</div>
+          <div>赏金：{{ question.reward ? question.reward/100 : 0 }} 元</div>
         </div>
         <div class="questionFooterRight">点击了解更多&nbsp;&nbsp;<sicon name="find-right" scale="3"></sicon></div>
       </div>
