@@ -106,7 +106,7 @@
     width: 100%;
     display: flex;
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
   }
   .color .stepButton > div{
     width: 100%;

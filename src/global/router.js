@@ -22,7 +22,7 @@ export default new Router({
       // redirect:'/home'
     },
     {
-      path: "/pay",
+      path: "/pay",//小程序返回路由
       redirect: '/orders'
     },
     ...home,

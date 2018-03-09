@@ -83,7 +83,7 @@
   }
   .brand .stepsButton{
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     border: none;
     border-radius: 3px;
   }

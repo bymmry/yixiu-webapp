@@ -87,23 +87,15 @@
       //点击标签
       handleTabClick(index) {
         console.log(index)
-        sessionStorage.setItem("visitType", "other");
         if (index===0) {
           this.$router.push({ path: "/find/question"});
-          // sessionStorage.setItem("visitType", "other");
         }else if(index===1){
-          // this.$router.push({ path: "/find/myquestion"});
-          sessionStorage.setItem("visitType", "my");
+          this.$router.push({ path: "/find/myquestion"});
         }
 
       },
       async onSearch(){
-        let tagSearch = {
-          title: this.searchvalue,
-          limit:10,
-          skip:0
-        }
-        this.$router.push({ name: "search", params:{searchData: tagSearch}})
+        alert("搜索")
       },
       //发起、关闭新提问
       newQuestion() {

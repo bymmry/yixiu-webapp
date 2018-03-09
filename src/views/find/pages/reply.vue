@@ -14,12 +14,12 @@
     
     <topNav></topNav>
 
-    <div class="replyTop">评论({{ answerData.comment }})</div>
+    <div class="replyTop">评论(270)</div>
 
     <replyBox v-for="reply in replyData" :key="reply.id" :reply="reply" @replyuser="replyuser"></replyBox>
     
     <div class="newreply">
-      <input class="replyInput" type="text" placeholder="添加评论" v-model="reply">
+      <input class="replyInput" type="text" :placeholder="replyplaceholder" v-model="reply">
       <div @click="pushnewreply"><sicon name="find-send" scale="2.3" color="#9c9c9c" ></sicon></div>
       
     </div>
@@ -33,34 +33,38 @@
   import { NavBar } from 'vant';
   import topNav from "../components/topNav"
   import replyBox from "../components/replyBox"
-  import { replyQuestion } from '../../common/api'
-  
-
 
   export default {
     data(){
       return {
+        replyplaceholder:"添加评论",
         reply:"",
         replyData:[
-          //{
-            // _id: "",   //该回复的id
-            // question: "",  //该问题的id
-            // content:"",    //回答的内容
-            // author:"",     //回答人的id
-            // adopt:false,   //该回答是否被采纳
-            // reply:[],    //该回答的子评论
-            // createdAt: 0  //创建时间  时间戳
-            // father:"",  问题的题目
-            // like:0      点赞数
-            // comment: 0   //子评论数，基于reply的长度
-          //}
-        ],
-        pushData:{
-          // content:'回复',
-          // question:'5aa16da5fffff6833c5cd76a',
-          // author:'5a9fdef96be1652f1a746b74'
-          // parent:'xxxx',//父级评论的标识_id(不传这个字段则为1级评论 传了则为二级评论)
-        }
+          {
+            id:1,
+            avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+            name:"鬼人再世",
+            content:"这图是咋凑起来的。。。",
+            time:"01-11",
+            like:"474"
+          },
+          {
+            id:2,
+            avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+            name:"死肥宅哦",
+            content:"一直以为第一个和第二个是同一个人",
+            time:"01-11",
+            like:"502"
+          },
+          {
+            id:3,
+            avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
+            name:"时光米U型",
+            content:"倚天屠龙记？",
+            time:"01-11",
+            like:"84"
+          },
+        ]
       }
     },
     components: {
@@ -70,60 +74,18 @@
     },
     methods: {
       close(){
-        // this.$router.go(-1);
-        this.$router.push({ path: "/find/questiondetail"})
+        this.$router.go(-1)
       },
-      replyuser(Arr){
-        this.reply = "回复：";
-        this.reply += Arr[0];
-        // this.pushData.parent = Arr[1]
-        // console.log(Arr)
+      replyuser(name){
+        this.replyplaceholder = "回复：";
+        this.replyplaceholder += name;
       },
-      //评论
       async pushnewreply(){
-        this.pushData.content = this.reply;
-        this.pushData.question = this.answerData.question;
-        let userData = this.getUserInfo();
-        this.pushData.author = userData._id;
-
-        const toast = this.$createToast({
-          mask: true,
-          message: '加载中...'
-        })
-        toast.show();
-        replyQuestion(this.pushData)
-        .then(res => {
-          toast.hide();
-          const tip = this.$createToast({
-            txt: '评论成功！',
-            type: 'success',
-            time: 1300
-          })
-          //使用show调出方法
-          tip.show();
-          
-          location.reload();
-        },(err => {
-          const tip = this.$createToast({
-            txt: '评论失败...',
-            type: 'fail',
-            time: 1300
-          })
-          //使用show调出方法
-          tip.show()
-          console.log(err);
-        }))
-      },
-      
+        this.functionunavailable()
+      }
     },
     created(){
-      let answerData = sessionStorage.getItem("answerData")
-      answerData = JSON.parse(answerData);
-      this.replyData = answerData.reply;
-      this.answerData = answerData;
-
-      // this.replyData = this.$route.params.answerData.reply;
-      // this.answerData = this.$route.params.answerData;
+      
     }
   }
 </script>

@@ -12,7 +12,7 @@
       </div>
       <div class="questionContent-hidden" v-if="overcontent">...</div>
       <div class="questionFooter">
-        <div>{{ question.replyCount }} 回复</div>
+        <div>{{ question._v ? question._v : 0 }} 回复</div>
         <div>点击查看更多</div>
       </div>
     </div>

@@ -15,9 +15,6 @@
 
 
   export default {
-    props:{
-      oldTag: Array
-    },
   	data(){
   		return {
   			tagArr: ["","","","","",""]
@@ -32,11 +29,7 @@
 
     },
     methods: {
-    },
-    created(){
-      this.tagArr = this.oldTag
     }
-    
   }
 </script>
 

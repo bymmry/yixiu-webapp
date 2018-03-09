@@ -9,8 +9,6 @@ import questiondetail from './pages/questiondetail'
 import answerdetail from './pages/answerdetail'
 import newanswer from './pages/newanswer'
 import reply from './pages/reply'
-import search from './pages/search'
-import changequestion from './components/changequestion'
 
 export default [{
   path: '/find',
@@ -39,7 +37,7 @@ export default [{
   },
   {
     name: "answerdetail",
-    path: '/find/answerdetail/:answerId',   //回答详情
+    path: '/find/answerdetail',   //回答详情
     component: answerdetail,
     // meta: {
     //   keepAlive: true // 需要被缓存
@@ -47,22 +45,12 @@ export default [{
   },
   {
     name: "newanswer",
-    path: '/find/newanswer/:answerData',   //发起提问
+    path: '/find/newanswer/:questionId',   //发起提问
     component: newanswer
   },
   {
-    name: "changequestion",
-    path: '/find/changequestion/:oldquestion',   //改变提问
-    component: changequestion
-  },
-  {
     name: "reply",
-    path: '/find/reply/',   //回复
+    path: '/find/reply/:id',   //回复
     component: reply
-  },
-  {
-    name: "search",
-    path: '/find/search/:searchData',   //发起提问
-    component: search
   }
 ]

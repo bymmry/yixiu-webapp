@@ -13,8 +13,10 @@
         </ul>
       </div>
       <div class="ordersList">
-        <no-order v-if="!orderData.length"></no-order>
-        <order-item v-else :orders="orderData"></order-item>
+        <van-pull-refresh class="ordersListRefresh" v-model="isLoading" @refresh="onRefresh">
+          <no-order v-if="!orderData.length"></no-order>
+          <order-item v-else :orders="orderData"></order-item>
+        </van-pull-refresh>
       </div>
     </div>
   </div>
@@ -25,22 +27,23 @@
   import noOrder from './components/noOrders';
   import orderItem from './components/ordersItem';
   import { getOrderList } from './api';
-  import { Toast } from 'vant';
+  import { Toast, PullRefresh } from 'vant';
 
   export default {
     name: 'app',
     components: {
       [Toast.name]: Toast,
+      [PullRefresh.name]: PullRefresh,
       theHeader,
       noOrder,
       orderItem
     },
     activated() {
       console.log("activated");
+      this.currentIndex = 0;
       let userInfo = this.getUserInfo();
       let req = {
-        user: userInfo,
-        filter: ''
+        user: userInfo
       };
       this.getOrderData(req);
     },
@@ -69,14 +72,20 @@
           },
         ],
         currentIndex: 0,
-        orderData: []
+        orderData: [],
+
+        isLoading: false
       }
     },
     methods: {
       selectOrder: function (index) {
         this.currentIndex = index;
-        let state = '';
+        let userInfo = this.getUserInfo();
+        let state = 0;
         switch (index){
+          case 0:
+            state = undefined;
+            break;
           case 1:
             state = 10; //待付款
             break;
@@ -89,7 +98,7 @@
           case 4:
             state = 13; //已完成
         }
-        let userInfo = this.getUserInfo();
+
         let req = {
           user: userInfo,
           filter: state
@@ -98,18 +107,52 @@
       },
       getOrderData(req) {
         Toast.loading({
-          // mask: true,
+          duration: 0,
           message: '加载中...'
         });
         getOrderList(req).then(res => {
           if (res.code === 200){
-            console.log(res);
             this.orderData = res.data;
+            this.$toast('刷新成功');
+            this.isLoading = false;
             Toast.clear();
+          }else {
+            Toast.loading({
+              message: '加载失败'
+            });
           }
         }, err => {
           console.log(err);
+          Toast.loading({
+            message: '加载失败'
+          });
         });
+      },
+      onRefresh() {
+        let userInfo = this.getUserInfo();
+        let filter = this.currentIndex;
+        switch (filter){
+          case 0:
+            filter = undefined;
+            break;
+          case 1:
+            filter = 10; //待付款
+            break;
+          case 2:
+            filter = 11; //已付款
+            break;
+          case 3:
+            filter = 12; //维修中
+            break;
+          case 4:
+            filter = 13; //已完成
+        }
+        let req = {
+          user: userInfo,
+          filter: filter
+        };
+        this.getOrderData(req);
+
       }
     }
   };
@@ -162,5 +205,8 @@
     overflow-y: scroll;
     background-color: #eee;
   }
-
+  .orders .ordersRow .ordersList> div{
+    height: 100%;
+    overflow-y: scroll;
+  }
 </style>

@@ -4,19 +4,19 @@
     <div class="questionBox-content">
       <div class="questionTitle">
         <div class="answerAvator">
-          <img :src="avator">
+          <img :src="answer.avator">
         </div>
-        {{ name }}
+        {{ answer.username }}
       </div>
       <div class="questionContent">
-        <!-- <img v-if="answer.imgurl !== 0" :src="answer.imgurl"> -->
+        <img v-if="answer.imgurl !== 0" :src="answer.imgurl">
         <div class="questionText">{{ answer.content }}</div>
       </div>
       <div class="questionContent-hidden" v-if="foldquestion == true">...</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <!-- <div>{{ answer.reply }} 评论&nbsp;·&nbsp;</div> -->
-          <div>{{ createdtime }}</div>
+          <div>{{ answer.replay }} 评论&nbsp;·&nbsp;</div>
+          <div>{{ answer.time }}前</div>
         </div>
         <div>点击查看详情</div>
       </div>
@@ -31,14 +31,9 @@
   //vant
 
   import { Icon } from 'vant';
-  import { getuserinforById } from '../../common/api';
-
   export default {
     data(){
       return {
-        avator:"",
-        name:"",
-        createdtime: "",
         foldquestion: true
       }
     },
@@ -49,28 +44,10 @@
       [Icon.name]: Icon,
     },
     methods: {
-      datestr(x,y) {
-        var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
-        return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
-      },
-      getusermessage(id){
-        getuserinforById(id)
-        .then(res => {
-          this.avator = res.data.wx.avatarUrl;
-          this.name = res.data.name;
-          // console.log(res);
-        },(err => {
-          console.log(err);
-        }))
-      }
+
     },
     created: function(){
-      // console.log(this.answer)
-      let Time = new Date();  
-      Time.setTime(this.answer.createdAt * 1000); 
-      this.createdtime = this.datestr(Time,"yyyy.MM.d");
-
-      this.getusermessage(this.answer.author);
+      console.log(this.answer)
     }
   }
 </script>

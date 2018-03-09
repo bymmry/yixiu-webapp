@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation">
+  <div class="navigation" v-if="isShowNav">
     <div class="routerBox">
       <router-link to="/home"><sicon name="home" scale="2.3"></sicon><br/><span>首页</span></router-link>
       <router-link to="/orders"><sicon name="orders" scale="2.3"></sicon><br/><span>订单</span></router-link>
@@ -10,9 +10,23 @@
 </template>
 
 <script>
-    export default {
-        name: 'navigation'
-    };
+  export default {
+    name: 'navigation',
+    data(){
+      return {
+        isShowNav:true
+      }
+    },
+    created(){
+      console.log(window.location.href);
+      const url = window.location.href;
+      const seller = url.split("#")[1].split("/")[1];
+      console.log(seller);
+      if(seller == "sellerHome"){
+        this.isShowNav = false;
+      }
+    }
+  };
 </script>
 
 <style scoped>
@@ -22,10 +36,11 @@
     left: 0;
     right: 0;
     height: 8vh;
+    z-index: 10;
     min-height: 50px;
     max-height: 60px;
     border-top: 1px solid #eee;
-    box-shadow: 0 -1px 0 #eee;
+    box-shadow: 0 -3px 5px #ddd;
     background-color: #fff;
   }
   .navigation .routerBox{
