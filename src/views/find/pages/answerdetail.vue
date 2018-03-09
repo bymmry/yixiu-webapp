@@ -38,6 +38,10 @@
         
       </div>
       <div class="otherBtn">
+        <div class="funcBtn" @click="clickAdopt" v-if="answerdetail.choseA === true">
+          <sicon name="find-adopt" scale="2"></sicon>
+          采纳
+        </div>
         <div class="funcBtn" @click="clickCollect">
           <sicon name="my-collect" scale="2"></sicon>
           收藏
@@ -49,6 +53,14 @@
       </div>
     </div>
     
+    <van-popup v-model="popupshow" class="popup">
+      <div class="popupTitle">确定采纳这个答案？</div>
+      <div class="popupBtn">
+        <van-button type="primary" @click="popupChoseNO">否</van-button>
+        <van-button type="danger" @click="popupChoseYES">是</van-button>
+      </div>
+      
+    </van-popup>
 
   </div>
 </template>
@@ -57,11 +69,14 @@
   //vant
   import { NavBar } from 'vant';
   import topNav from "../components/topNav";
-  import { likethis } from '../../common/api'
+  import { likethis,adoptThis  } from '../../common/api'
+  import { Button } from 'vant';
+  import { Popup } from 'vant';
 
   export default {
     data(){
       return {
+        popupshow: false,
         createdtime:"", //发表时间
         like:false,
         answerdetail:{
@@ -82,6 +97,8 @@
     },
     components: {
       [NavBar.name]: NavBar,
+      [Button.name]: Button,
+      [Popup.name]: Popup,
       topNav
     },
     methods: {
@@ -134,6 +151,50 @@
         var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
         return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
       },
+      //采纳答案
+      clickAdopt(){
+        this.popupshow = true;
+      },
+      //取消删除地址
+      popupChoseNO(){
+        this.popupshow = false;
+      },
+      //删除地址
+      popupChoseYES(){
+        const toast = this.$createToast({
+          time: 0,
+          txt: '正在采纳'
+        })
+        toast.show();
+        let choseData = {
+          question: this.answerdetail.question,  //问题的_id
+          _id: this.answerdetail._id   //回复数据的id
+        }
+        console.log(choseData)
+        adoptThis(choseData)
+        .then(res => {
+          toast.hide()
+          const tip = this.$createToast({
+            txt: '采纳成功!',
+            type: 'correct',
+            time: 1300
+          })
+          tip.show()
+          console.log(res)
+          setTimeout(() => {
+            this.$router.push({ path: "/find/questiondetail"})
+          },1600)
+          
+        },(err => {
+          console.log(err);
+          const tip = this.$createToast({
+            txt: '采纳失败!',
+            type: 'fail',
+            time: 1000
+          })
+          tip.show()
+        }))
+      },
     },
     created:function(){
       this.answerdetail = this.$route.params.answerData;
@@ -141,7 +202,8 @@
       Time.setTime(this.answerdetail.createdAt * 1000); 
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
 
-      this.answerdetail.comment = this.answerdetail.reply.length ? this.answerdetail.reply.length :0
+      this.answerdetail.comment = this.answerdetail.reply.length ? this.answerdetail.reply.length : 0;
+
       console.log(this.answerdetail)
     },
   }
@@ -157,8 +219,8 @@
     margin-left: -2vw;
   }
   .answer-container{
-    /*min-height: 80vh;*/
     margin-bottom: 10vh;
+    padding-top: 30px;
   }
   .titleshadow{
     -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
@@ -174,7 +236,7 @@
     text-overflow:ellipsis;
   }
   .answercontent{
-    padding: 3.2vh 3.2vw;
+    padding: 3.2vh 7.2vw;
     /*width: 93.6vw;*/
   }
   .answercontent >>> img{
@@ -188,7 +250,7 @@
     flex-direction: row;
     align-items:center;
     justify-content:center;
-    width: 100%;
+    width: 94%;
     height: 27px;
     border-top: 0.3vw solid #ebebeb;
     padding: 2vh 3vw 2vh 3vw;
@@ -197,7 +259,8 @@
   }
   .supportArea{
     display: flex;
-    justify-content:center;
+    /*justify-content:center;*/
+    padding-left: 10px;
     width: 50%;
   }
   .supportBtn{
@@ -239,8 +302,30 @@
   }
   .answerend{
     float: right;
-    margin-right: 10px;
+    margin-right: 14px;
     margin-top: 30px;
     font-size: 13px;
+  }
+  .popup{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    width: 80%;
+    height: 30%;
+  }
+  .popupBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .popupTitle{
+    margin-bottom: 3vh;
+  }
+  .popupBtn{
+    width: 80%;
+  }
+  .popupBtn button{
+    width: 40%;
   }
 </style>

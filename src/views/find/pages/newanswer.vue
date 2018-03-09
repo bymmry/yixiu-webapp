@@ -101,7 +101,7 @@
           })
           tip.show();
 
-          setTimeout(() => { this.close(); }, 1800);
+          setTimeout(() => { this.close(); }, 1600);
 
         },(err => {
           const tip = this.$createToast({

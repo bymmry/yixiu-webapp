@@ -18,7 +18,7 @@
 
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <!-- 问题部分 -->
-      <detailContent :question="questiondetail"></detailContent>
+      <detailContent :question="questiondetail" @type="canChose"></detailContent>
       <div class="answerblank"></div>
       <!-- 回答部分 -->
       <div v-for="answer in answerData" :key="answer.id" @click="jumpanswerDetail(answer)">
@@ -40,6 +40,7 @@
   export default {
     data(){
       return {
+        caniChose:false,
         isLoading:false,
         questionId:"",
         getAnswerList: {},
@@ -92,6 +93,10 @@
         let arr = this.questiondetail.reply ? this.questiondetail.reply : 0;
         answer.comment = arr.length ? arr.length : 0;
 
+        if(this.caniChose === true ){
+          answer.choseA = true;
+        }
+
         this.$router.push({ name: "answerdetail", params:{answerData: answer}})
       },
       //通过id查询问题详情
@@ -126,6 +131,10 @@
         },(err => {
           console.log(err);
         }))
+      },
+      //如果是从 我的选项 进来的，添加删除绑定
+      canChose(type){
+        this.caniChose = true;
       }
     },
     created:function(){
@@ -175,5 +184,27 @@
   }
   .answerblank{
     margin-top: 6vh;
+  }
+  .popup{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    width: 80%;
+    height: 30%;
+  }
+  .popupBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .popupTitle{
+    margin-bottom: 3vh;
+  }
+  .popupBtn{
+    width: 80%;
+  }
+  .popupBtn button{
+    width: 40%;
   }
 </style>

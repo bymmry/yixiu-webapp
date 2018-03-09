@@ -29,7 +29,12 @@
 
     </div>
 
-    <questionTagBox v-else @changeTag="changeTag"></questionTagBox>
+    <div class="extraOption" v-else>
+      <questionTagBox @changeTag="changeTag"></questionTagBox>
+
+      <questionmoney  @changeMoney="changeMoney"></questionmoney>
+    </div>
+    
     
     <optionFooter @changeanonymous="changeanonymous"></optionFooter>
 
@@ -44,6 +49,7 @@
   import optionFooter from "./optionFooter"
   import textareaBox from "./textareaBox"
   import questionTagBox from "./questionTagBox"
+  import questionmoney from "./questionmoney"
   import { addNewQuestion } from '../../common/api'
 
   export default {
@@ -58,7 +64,8 @@
           desc: "", //描述
           info: "",//详情
           tag: [],//问题的标签 (字符串数组)
-          author: ""   // 用户id
+          author: "",   // 用户id
+          reward: 0   //赏金
           // photo: []  //图片
         }
       }
@@ -69,6 +76,7 @@
       optionFooter,
       textareaBox,
       questionTagBox,
+      questionmoney,
       [NavBar.name]: NavBar,
     },
     methods: {
@@ -117,7 +125,8 @@
         if(!this.checkQuestion()){
           return 0;
         }
-        this.answerdetail.info = this.text;
+        let reg = /\s/g
+        this.answerdetail.info = this.text.replace(reg,"&nbsp;");
         this.answerdetail.desc = this.removeHTML(this.text);
         let userData = this.getUserInfo();
         this.answerdetail.author = userData._id;
@@ -127,6 +136,10 @@
       //添加Tag
       changeTag(tag){
         this.answerdetail.tag = tag;
+      },
+      //添加悬赏
+      changeMoney(money){
+        this.answerdetail.reward = money*100
       },
       //上一步
       pushnewquestionPre(){
@@ -141,6 +154,8 @@
         })
         toast.show();
 
+        console.log(this.answerdetail)
+        
         addNewQuestion(this.answerdetail)
         .then(res => {
           toast.hide();
@@ -152,7 +167,7 @@
           })
           tip.show();
 
-          setTimeout(() => { this.close(); }, 1800);
+          setTimeout(() => { this.close(); }, 1600);
 
           // console.log(res)
         },(err => {

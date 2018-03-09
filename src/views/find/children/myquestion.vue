@@ -1,11 +1,9 @@
 <template>
   <div class="question-container">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-
       <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
         <questionBox  :question="question"></questionBox>
       </div>
-      
     </van-pull-refresh>
     
 
@@ -19,7 +17,6 @@
   import questionBox from '../components/questionBox.vue'
   import { getQuestionListById } from '../../common/api'
   import { PullRefresh } from 'vant';
-  import { Waterfall } from 'vant';
 
   export default {
     data(){
@@ -32,7 +29,6 @@
     components: {
       questionBox,
       [PullRefresh.name]: PullRefresh,
-      [Waterfall.name]: Waterfall,
     },
     methods: {
       //刷新
