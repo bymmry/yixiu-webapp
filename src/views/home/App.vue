@@ -7,6 +7,9 @@
     <HotArea></HotArea>
     <Ticket></Ticket>
     <Activity></Activity>
+    <div class="shopTitle">
+      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+    </div>
     <shop-list></shop-list>
     <div class="space"></div>
   </div>
@@ -54,5 +57,23 @@
 .space {
   width: 100%;
   height: 8vh;
+}
+.shopTitle{
+  width: auto;
+  height: 5vh;
+}
+.shopTitle h3{
+  width: auto;
+  text-align: center;
+}
+.shopTitle h3 svg{
+  color: #eea17a;
+  margin-right: 2px;
+}
+.shopTitle h3 svg,  .shopList .shopTitle h3 span{
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 5vh;
+  font-size: 13px;
 }
 </style>

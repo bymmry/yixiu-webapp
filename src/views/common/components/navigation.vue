@@ -20,8 +20,7 @@
     created(){
       console.log(window.location.href);
       const url = window.location.href;
-      const seller = url.split("#")[1].split("/")[1];
-      console.log(seller);
+      const seller = url.split("#")[1].split("/")[1].split("?")[0];
       if(seller == "sellerHome"){
         this.isShowNav = false;
       }
