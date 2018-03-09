@@ -12,12 +12,6 @@
 		</div>
 
 		<van-field
-			v-model="phoneRes.name"
-			label="其他品牌"
-			placeholder="若没有你想要的品牌名称,请填写你想要的品牌名称"
-		/>
-
-		<van-field
 			v-model="phoneRes.desc"
 			label="描述"
 			placeholder="请输入品牌描述"
@@ -53,7 +47,7 @@ export default {
 				alias: '',
 				desc: '',
 				cover: '',
-				shop: '5aa27cf18d78c262b3f19937'
+				shop: ' 5aa1137f4043b46a5b8f0694'
 			}
 		}
 	},

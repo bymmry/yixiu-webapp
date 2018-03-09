@@ -76,7 +76,7 @@ export default {
 
 		},
 		async submit () {
-			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
+			let categoryRes = await this.$api.sendData('https://yixiu.natappvip.cc/category', this.category);
 			if (categoryRes.code == 4001) {
 				this.prompt(categoryRes.errMsg, 'error').show();
 				return;	

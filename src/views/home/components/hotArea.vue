@@ -25,7 +25,7 @@
 			}
 		},
 		async mounted () {
-			let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
+			let res = await this.$api.getData('https://yixiu.natappvip.cc/category/phoneRepair');
 			console.log(res);
 			this.data = res.data;
 		}

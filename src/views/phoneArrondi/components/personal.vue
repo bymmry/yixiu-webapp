@@ -1,15 +1,18 @@
 <template>
 	<div class="personal">
-		<img :src="src" alt="" srcset="" class="personal__img" />
+		<img :src="data.cover" alt="" srcset="" class="personal__img" />
 		<div class="personal__msg">
-			<p>我是大表哥</p>
-			<p><span>30分钟前来过</span> <span>发布于杭州</span> </p>
+			<p>{{ data.shop.name }}</p>
+			<p>电话: {{ data.shop.contactNumber }}</p>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	props: {
+		data: Object
+	},
   data () {
 		return {
 			src: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',

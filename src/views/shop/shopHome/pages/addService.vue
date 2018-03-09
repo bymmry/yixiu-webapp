@@ -79,7 +79,7 @@ export default {
 				name: '',
 				price: '',
 				desc: '',
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: '5aa1137f4043b46a5b8f0694',
 				support: []
 			},
 			manufacturer: '',
@@ -91,13 +91,13 @@ export default {
 		}
 	},
 	async mounted () {
-		let res = await this.$api.getData('https://m.yixiutech.com/category/shop/'+ this.service.shop);
+		let res = await this.$api.getData('https://yixiu.natappvip.cc/category/shop/'+ this.service.shop);
 		console.log(res)
 		res.data.map(item => {
 			this.category.push(item.name);
 			this.categoryInfo.push(item);
 		})
-		let phone = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.service.shop);
+		let phone = await this.$api.getData('https://yixiu.natappvip.cc/phone/manufacturer/shop/' + this.service.shop);
 		phone.data.map(item => {
 			this.phoneInfo.push(item);
 			this.phoneNames.push(item.name);
@@ -105,7 +105,7 @@ export default {
 	},
 	methods: {
 		async submit () {
-			let serviceRes = await this.$api.sendData('https://m.yixiutech.com/service', this.service);
+			let serviceRes = await this.$api.sendData('https://yixiu.natappvip.cc/service', this.service);
 			if (serviceRes.code == 4001) {
 				this.prompt(serviceRes.errMsg, 'error').show();
 				return;	
@@ -120,7 +120,7 @@ export default {
 			console.log(this.phoneInfo[index]._id);
 			this.manufacturer = this.phoneInfo[ index ]._id;
 			let msg = { shop: this.service.shop, manufacturer: this.manufacturer };
-			let supportRes = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop', msg);
+			let supportRes = await this.$api.sendData('https://yixiu.natappvip.cc/phone/model/shop', msg);
 				supportRes.data.map(item => {
 					// this.supportList.push(item.name);
 				this.supportList.push( { label: item.name, value: item._id } );

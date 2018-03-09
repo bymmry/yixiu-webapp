@@ -95,7 +95,7 @@ export default {
 	},
 	methods: {
 		async register () {
-			let res = await this.$ajax.post('https://m.yixiutech.com/shop', this.infos);
+			let res = await this.$ajax.post('https://yixiu.natappvip.cc/shop', this.infos);
 			if (res.code == 4001) {
 				alert(res.errMsg);
 				return;

@@ -47,11 +47,11 @@
 				disabled
 			/> -->
 
-			<!-- <van-field
+			<van-field
 				v-model="goods.cover"
 				label="宝贝封面"
 				placeholder="请输入宝贝封面链接"
-			/> -->
+			/>
 
 			<van-field
 				v-model="goods.desc"
@@ -91,7 +91,7 @@ export default {
 	},
 	async mounted () {
 		let data = { type: 'goods', shop: this.goods.shop }
-		let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', data);
+		let categoryRes = await this.$api.sendData('https://yixiu.natappvip.cc/category/shop', data);
 		categoryRes.data.map(item => {
 			this.categoryList.push({value: item._id, text: item.name});
 		})
@@ -104,7 +104,7 @@ export default {
 		return {
 			infoName: '发布宝贝',
 			goods: {
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: '5aa1137f4043b46a5b8f0694',
 				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg'
 			},
 			base: ['重庆'],
@@ -119,7 +119,7 @@ export default {
 
 		},
 		async submit () {
-			let goodRes = await this.$api.sendData('https://m.yixiutech.com/goods/shop', this.goods);
+			let goodRes = await this.$api.sendData('https://yixiu.natappvip.cc/goods/shop', this.goods);
 			if (goodRes.code == 4001) {
 				this.prompt(goodRes.errMsg, 'error').show();
 				return;	
@@ -128,7 +128,7 @@ export default {
 			this.$router.push('/sellerHome');
 		},
 		onRead (file, content) {
-			this.goods.cover = file.content;
+			console.log(file);
 		}
 	}
 }

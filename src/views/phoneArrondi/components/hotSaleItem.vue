@@ -1,5 +1,5 @@
 <template>
-	<div class="hotSale-item">
+	<div class="hotSale-item" @click="search">
 		<img :src="src" class="hotSale-item__img" alt="" srcset=""/>
 		<div class="hotSale-item__content">
 			<p>{{ name }}</p>
@@ -14,6 +14,11 @@ export default {
 		src: String,
 		name: String,
 		price: String
+	},
+	methods: {
+		search () {
+			this.$router.push('shop/' + this.name);
+		}
 	}
 }
 </script>
@@ -22,16 +27,27 @@ export default {
 .hotSale-item {
 	width: 46%;
 	height: 80px;
-	background: #eee;
+	box-shadow: 0 0 5px;
 	border-radius: 5px;
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
+	display: inline-block;
+	border: 1px solid #eee;
+	margin: 10px 5px;
 }
 
 .hotSale-item .hotSale-item__img {
-	width: 30%;
-	height: 60px;
+	width: 40%;
+	height: 80px;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.hotSale-item .hotSale-item__content {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.hotSale-item__content p:nth-child(1) {
+	font-size: 14px;
 }
 
 .hotSale-item__content p:nth-child(2) {

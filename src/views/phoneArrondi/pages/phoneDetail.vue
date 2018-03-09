@@ -3,11 +3,16 @@
 		<Header 
       :name="name"
     />
-    <Personal />
+    <Personal 
+      :data="data"
+    />
     
-    <Content />
+    <Content 
+      :data="data"
+    />
 
     <Footer />
+    <div class="space"></div>
 	</div>
 </template>
 
@@ -25,12 +30,21 @@ export default {
   },
   data () {
     return {
-      name: '手机详情'
+      name: '手机详情',
+      data: {},
     }
+  },
+  async mounted () {
+    let phoneId = location.href.split('/').pop();
+    let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
+    this.data = res.data;
   }
 }
 </script>
 
 <style scoped>
-
+.space {
+  width: 100%;
+  height: 8vh;
+}
 </style>

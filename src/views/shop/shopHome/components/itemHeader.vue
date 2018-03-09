@@ -1,6 +1,8 @@
 <template>
-  <div class="header"  @click="back">
-		<sicon name="back" scale="3"></sicon>
+  <div class="header">
+		<router-link to="/sellerHome">
+			<sicon name="back" scale="3"></sicon>
+		</router-link>
 		<p class="header__title">{{ name }}</p>
   </div>
 </template>
@@ -8,16 +10,7 @@
 <script>
 export default {
 	props: {
-		name: String,
-		route: String,
-		path: String
-	},
-	methods: {
-		back (e) {
-			if (e.target.classList.contains('svg-icon')) {
-				this.$router.go(-1);
-			}
-		}
+		name: String
 	}
 }
 </script>

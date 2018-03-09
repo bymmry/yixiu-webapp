@@ -122,35 +122,35 @@
         reqData: {},
       }
     },
-    created() {
-      Toast.loading({
-        // mask: true,
-        message: '加载中...'
-      });
-      if (url.length === 2){
-        const categoryName = url[1];
-        console.log(categoryName);
-        let req = {
-          categoryName: categoryName
-        };
-        this.getShopList(req);
-      }else {
-        getShopList().then((res) => {
-          if(res.code === 200){
-            this.shopData = res.data;
-            Toast.clear();
-            if (this.searchData === null){
-              console.log("searchData is null")
-            }else {
-              console.log(this.searchData);
-              this.shopData = this.searchData;
-            }
-          }
-        }
-      }, function (err) {
-        console.log(err);
-      });
-    },
+    // created() {
+    //   Toast.loading({
+    //     // mask: true,
+    //     message: '加载中...'
+    //   });
+    //   if (url.length === 2){
+    //     const categoryName = url[1];
+    //     console.log(categoryName);
+    //     let req = {
+    //       categoryName: categoryName
+    //     };
+    //     this.getShopList(req);
+    //   }else {
+    //     getShopList().then((res) => {
+    //       if(res.code === 200){
+    //         this.shopData = res.data;
+    //         Toast.clear();
+    //         if (this.searchData === null){
+    //           console.log("searchData is null")
+    //         }else {
+    //           console.log(this.searchData);
+    //           this.shopData = this.searchData;
+    //         }
+    //       }
+    //     }
+    //   }, function (err) {
+    //     console.log(err);
+    //   });
+    // },
     methods: {
       chooseMainType: function (index) {
         this.currentIndex = index;

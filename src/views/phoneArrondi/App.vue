@@ -7,9 +7,11 @@
 		<Type />
 		<Arrondi
 			:title="iosTitle"
+			:data="iphone"
 		/>
 		<Arrondi
 			:title="androidTitle"
+			:data="android"
 		/>
 		<HotSale></HotSale>
 		<Recommend/>
@@ -25,6 +27,16 @@
 	import Recommend from './components/recommend.vue'
 	import HotSale from './components/hotSale.vue'
   export default {
+		async mounted () {
+			let iphoneData= { goodsName: 'iphone', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
+			let iphoneRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', iphoneData);
+			this.iphone = iphoneRes.data;
+
+			let androidData = { goodsName: '三星', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
+			let androidRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', androidData);
+			this.android = androidRes.data;
+
+		},
     components: {
 			Header,
 			Swipe,
@@ -35,9 +47,11 @@
 		},
 		data () {
 			return {
-				iosTitle: 'iPhone热卖',
-				androidTitle: 'Android热卖',
-				name: '精品手机'
+				iosTitle: '二手iPhone直销店',
+				androidTitle: '二手Android直销店',
+				name: '精品手机',
+				iphone: [],
+				android: []
 			}
 		}
   }

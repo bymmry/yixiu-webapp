@@ -5,7 +5,7 @@
 				v-for="(item, index) in data" 
 				:key="index" 
 				:name="item.name"
-        :icon="item.fe.icon"
+        :icon="item.icon"
 				/>
     </div>
   </div>
@@ -19,17 +19,18 @@
     },
     data () {
     	return {
-				data: []
+				data: [
+          { name: '今日上新', icon: 'shangxin' },
+          { name: '手机评测', icon: 'pingce' },
+          { name: '配件商城', icon: 'shoujipejian' },
+          { name: 'ipad精选', icon: 'ipad' },
+          { name: '优惠券', icon: 'youhuiquan' }
+        ]
 			}
     },
-    mounted () {
-      this.$ajax.get('https://m.yixiutech.com/category/plate/simple')
-        .then(response => {
-          console.log(response);
-          this.data = response.data.slice(0, 4)
-        }).catch(error => {
-          console.log(error)
-        })
+    async mounted () {
+      // let res = await this.$ap.get('https://m.yixiutech.com/category/plate/simple');
+      // this.data = res.data.slice(0, 4);
     }
   }
 </script>

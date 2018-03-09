@@ -12,19 +12,19 @@
 			/>
 		</div>
 
-		<div class="info__name">
+		<!-- <div class="info__name">
 			<p>型号名称</p>
 			<cube-select
 				v-model="model.name"
 				:options="phoneModel"
 				@change="modelChange"
 			/>
-		</div>
+		</div> -->
 
 		<van-field
 			v-model="model.name"
-			label="其他型号"
-			placeholder="如果没有你想要的型号名,请填写你想要的型号名"
+			label="型号名称"
+			placeholder="请输入型号名称"
 		/>
 
 		<van-field
@@ -39,19 +39,19 @@
 			placeholder="请输入封面地址"
 		/>
 
-		<div class="info__name">
+		<!-- <div class="info__name">
 			<p>手机颜色</p>
 			<cube-select
 				v-model="phoneModelColorRes"
 				:options="phoneModelColor"
 				@change="colorChange"
 			/>
-		</div>
+		</div> -->
 
 		<van-field
 			v-model="phoneModelColorRes"
-			label="其他颜色"
-			placeholder="如果没有你想要的颜色,请填写颜色"
+			label="手机颜色"
+			placeholder="请输入手机颜色"
 			@change="colorChange"
 		/>
 
@@ -70,7 +70,7 @@ export default {
 		ItemHeader
 	},
 	async mounted () {
-		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.model.shop);
+		let res = await this.$api.getData('https://yixiu.natappvip.cc/phone/manufacturer/shop/' + this.model.shop);
 		res.data.map(item => {
 			this.phoneName.push(item.name);
 			this.phoneInfo.push(item);
@@ -90,7 +90,7 @@ export default {
 				brandName: '',
 				name: '',
 				alias: '',
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: '5aa1137f4043b46a5b8f0694',
 				desc: '',
 				cover: '',
 				color: [],
@@ -101,7 +101,7 @@ export default {
 	methods: {
 		async nameChange(value, index) {
 			this.model['manufacturer'] = this.phoneInfo[ index ]._id;
-			let manufacturer = await this.$api.getData('https://m.yixiutech.com/phone/model/' + this.model['manufacturer']);
+			let manufacturer = await this.$api.getData('https://yixiu.natappvip.cc/phone/model/' + this.model['manufacturer']);
 			manufacturer.data.map(item => {
 				this.phoneModel.push(item.name);
 				this.phoneModelInfo.push(item);
@@ -115,7 +115,7 @@ export default {
 			this.model.color.push(this.phoneModelColorRes);
 		},
 		async submit () {
-			let modelRes = await this.$api.sendData('https://m.yixiutech.com/phone/model', this.model);
+			let modelRes = await this.$api.sendData('https://yixiu.natappvip.cc/phone/model', this.model);
 			if (modelRes.code == 4001) {
 				this.prompt(modelRes.errMsg, 'error').show();
 				return;	
@@ -133,7 +133,7 @@ export default {
 	justify-content: flex-start;
 	align-items: center;
 	padding: 0 15px;
-	margin-top: 20px;
+	margin-top: 50px;
 	font-size: 14px;
 }
 

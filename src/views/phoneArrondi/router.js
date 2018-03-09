@@ -1,5 +1,6 @@
 import App from './App'
 import phoneDetail from './pages/phoneDetail.vue'
+import phoneList from './pages/phoneList.vue'
 
 export default [{
   path: '/phoneArrondi',
@@ -8,4 +9,8 @@ export default [{
 {
   path: '/phoneDetail/:id',
   component: phoneDetail
+}, 
+{
+  path: '/phoneList/:id',
+  component: phoneList
 }]

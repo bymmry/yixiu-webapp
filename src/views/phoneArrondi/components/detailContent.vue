@@ -1,9 +1,9 @@
 <template>
 	<div class="content">
-		<p class="content__price"><span>￥2799</span><span>￥3999</span></p>
+		<p class="content__name">{{ data.name }}</p>
+		<p class="content__price"><span>￥{{ data.price }}</span></p>
 		<div class="content__desc">
-			我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机
-			我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机我的手机
+			{{ data.detail }}
 		</div>
 		<div class="content__img">
 			<img v-for="(item, index) in imgList" :key="index" :src="item" class="img" alt="" />
@@ -13,12 +13,13 @@
 
 <script>
 export default {
+	props: {
+		data: Object
+	},
   data () {
 		return {
 			imgList: [
-				'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',
-				'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',
-				'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg'
+
 			]
 		}
 	}
@@ -32,6 +33,10 @@ export default {
 
 .content .content__price {
 	padding-bottom: 4%;
+}
+
+.content .content__name {
+	font-size: 28px;
 }
 
 .content__price span:nth-child(1) {
