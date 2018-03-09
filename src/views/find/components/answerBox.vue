@@ -1,5 +1,6 @@
 <template>
   <div class="questionBox-container">
+  <img v-if="answer.adopt === true" class="choseBg" src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/crown.png">
     <!-- 内容部分 -->
     <div class="questionBox-content">
       <div class="questionTitle">
@@ -48,6 +49,11 @@
     },
     created: function(){
       console.log(this.answer)
+      let Time = new Date();  
+      Time.setTime(this.answer.createdAt * 1000); 
+      this.createdtime = this.datestr(Time,"yyyy.MM.d");
+
+      this.getusermessage(this.answer.author);
     }
   }
 </script>
@@ -61,6 +67,14 @@
     border-bottom: 0.1vh solid #e0deec;
     margin-bottom: 1.6vh;
     background: #fff;
+    /*overflow: hidden;*/
+  }
+  .choseBg{
+    position: absolute;
+    right: 0vw;
+    top: 0vh;
+    width: 12vw;
+    height: 12vw;
   }
   .questionBox-content{
     position: relative;

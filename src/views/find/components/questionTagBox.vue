@@ -29,6 +29,10 @@
 
     },
     methods: {
+
+    },
+    created(){
+      this.tagArr = this.oldTag ? this.oldTag : this.tagArr
     }
   }
 </script>

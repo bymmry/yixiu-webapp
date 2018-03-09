@@ -86,11 +86,12 @@
       },
       //点击标签
       handleTabClick(index) {
-        console.log(index)
+        sessionStorage.setItem("visitType", "other");
         if (index===0) {
           this.$router.push({ path: "/find/question"});
         }else if(index===1){
           this.$router.push({ path: "/find/myquestion"});
+          sessionStorage.setItem("visitType", "my");
         }
 
       },
@@ -101,6 +102,9 @@
       newQuestion() {
         this.newquestion = !this.newquestion;
       }
+    },
+    created(){
+      sessionStorage.setItem("visitType", "other");
     }
   }
 </script>
@@ -122,6 +126,7 @@
     flex-direction: row;
     align-items:center;
     justify-content: center;
+    letter-spacing:2px;
   }
   .kindtitlebox i{
     margin-right: 2vw;

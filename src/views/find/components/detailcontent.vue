@@ -14,14 +14,22 @@
       <div class="foldquestionBtn" v-else @click="changefoldquestion">收起问题描述 Λ</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div>
-          <div>{{ question._v ? question._v : 0 }} 回复</div>
+          <!-- <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div> -->
+          <div>{{ question.replyCount }} 回复</div>
         </div>
-        <van-button type="default" size="small" v-if="question.folloed === true" @click="followQ">
-          <van-icon name="passed" class="questionfollwi"/>
-          已关注
-        </van-button>
-        <van-button type="primary" size="small" class="blueBtn" v-else @click="followQ">+&nbsp;关注问题</van-button>
+        <div v-if="visitType==='my'">
+          <van-button type="default" size="small" @click="changeQ">
+            <van-icon name="passed" class="questionfollwi"/>
+            修改问题
+          </van-button>
+        </div>
+        <div v-else>
+          <van-button type="default" size="small" v-if="question.folloed === true" @click="followQ">
+            <van-icon name="passed" class="questionfollwi"/>
+            已关注
+          </van-button>
+          <van-button type="primary" size="small" class="blueBtn" v-else @click="followQ">+&nbsp;关注问题</van-button>
+        </div>
       </div>
     </div>
     <div class="addAnswer">
@@ -89,7 +97,10 @@
       }
     },
     created: function(){
-      console.log(this.question)
+      this.visitType = sessionStorage.getItem("visitType");
+      if (this.visitType==="my") {
+        this.$emit("type",this.visitType)
+      }
     }
   }
 </script>
@@ -152,6 +163,7 @@
   .questionText{
     font-size: 4vw;
     line-height: 5.5vw;
+    max-height: 88px;
     color: #404040;
     white-space:nowrap; 
     overflow: hidden;

@@ -12,8 +12,11 @@
       </div>
       <div class="questionContent-hidden" v-if="overcontent">...</div>
       <div class="questionFooter">
-        <div>{{ question._v ? question._v : 0 }} 回复</div>
-        <div>点击查看更多</div>
+        <div class="questionFooterLeft">
+          <div>回复：{{ question.replyCount }} 人</div>
+          <div>赏金：{{ question.reward ? question.reward : 0 }} 元</div>
+        </div>
+        <div class="questionFooterRight">点击了解更多&nbsp;&nbsp;<sicon name="find-right" scale="3"></sicon></div>
       </div>
     </div>
     <!-- 底部的阴影 -->
@@ -43,6 +46,7 @@
     },
     created: function(){
       //判断标题是否过长
+      // console.log(this.question)
       if (this.question.title.length>=40) {
         this.overtitle = true;
       }
@@ -58,7 +62,7 @@
     position: relative;
     max-height: 59vh;
     /*min-height: 283px;*/
-    padding: 1.6vh 4vw 3.1vh 4vw;
+    padding: 1.6vh 4vw 1.1vh 4vw;
     border-top: 0.1vh solid #e0deec;
     border-bottom: 0.1vh solid #e0deec;
     margin-bottom: 1.6vh;
@@ -123,9 +127,24 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     margin-top: 2.8vh;
     margin-bottom: 2.9vh;
     font-size: 4vw;
     color: #919191;
+  }
+  .questionFooterLeft{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .questionFooterLeft :first-child{
+    margin-bottom: 5px;
+  }
+  .questionFooterRight{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 </style>

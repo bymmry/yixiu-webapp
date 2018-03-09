@@ -1,7 +1,7 @@
 import ajaxLib from '../../lib/ajax';
 const ajax = ajaxLib.ajax;
-// const url = 'https://m.yixiutech.com';
-const url = "https://yixiu.natappvip.cc";
+const url = 'https://m.yixiutech.com';
+// const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 export function getShopList() {
@@ -263,6 +263,18 @@ export function updateQuestion(data){
 export function likethis(id){
   return new Promise((resolve, reject) => {
     ajax.get(`${url}/question/reply/like/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+
+// 采纳答案
+export function adoptThis(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/question/adopt/`,data).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);

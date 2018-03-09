@@ -1,9 +1,16 @@
 <template>
   <div class="question-container">
-    <router-link v-for="question in questionData" :key="question.id" :to="{ path: '/find/questiondetail' }">
-      <questionBox  :question="question"></questionBox>
-    </router-link>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+
+        <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
+          <questionBox  :question="question"></questionBox>
+        </div>
+
+    </van-pull-refresh>
+
     
+    
+
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
 
@@ -14,6 +21,7 @@
   //vant
   import questionBox from '../components/questionBox.vue'
   import { getQuestionList } from '../../common/api'
+  import { PullRefresh  } from 'vant';
 
   export default {
     data(){
@@ -30,9 +38,16 @@
       }
     },
     components: {
-      questionBox
+      questionBox,
+      [PullRefresh.name]: PullRefresh,
     },
     methods: {
+      //刷新
+      onRefresh(){
+        this.gatQuestionData.limit = 10
+        this.gatQuestionData.skip = 0
+        this.getquestionlist(this.gatQuestionData);
+      },
       //获取列表
       getquestionlist(postdata){
         const toast = this.$createToast({
@@ -40,15 +55,20 @@
           message: '加载中...'
         })
         toast.show();
-
         getQuestionList(postdata)
         .then(res => {
           toast.hide();
-          this.questionData = res.data;
-          console.log(res.data)
+
+          this.isLoading = false;
+          this.questionData = res.data.concat(this.questionData);
         },(err => {
           console.log(err);
         }))
+      },
+      //建立点击question的Storage 并跳转
+      createdQStorage(question){
+        sessionStorage.setItem("questionId", question._id);
+        this.$router.push({ path: "/find/questiondetail"})
       }
     },
     created() {

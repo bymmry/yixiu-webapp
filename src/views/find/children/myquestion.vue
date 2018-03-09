@@ -1,9 +1,10 @@
 <template>
   <div class="question-container">
-    <router-link v-for="question in questionData" :key="question.id" :to="{ path: '/find/questiondetail' }">
-      <questionBox  :question="question"></questionBox>
-    </router-link>
-    
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
+        <questionBox  :question="question"></questionBox>
+      </div>
+    </van-pull-refresh>
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
 
@@ -14,6 +15,7 @@
   //vant
   import questionBox from '../components/questionBox.vue'
   import { getQuestionListById } from '../../common/api'
+  import { PullRefresh } from 'vant';
 
   export default {
     data(){
@@ -23,7 +25,8 @@
       }
     },
     components: {
-      questionBox
+      questionBox,
+      [PullRefresh.name]: PullRefresh,
     },
     methods: {
       //获取列表

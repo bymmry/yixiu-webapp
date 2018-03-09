@@ -16,13 +16,16 @@
 
     <topNav></topNav>
 
-    <!-- 问题部分 -->
-    <detailContent :question="questiondetail"></detailContent>
-    <div class="answerblank"></div>
-    <!-- 回答部分 -->
-    <router-link v-for="answer in answerData" :key="answer.id" :to="{ path: '/find/answerdetail' }">
-      <answerBox :answer="answer"></answerBox>
-    </router-link>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <!-- 问题部分 -->
+      <detailContent :question="questiondetail" @type="canChose"></detailContent>
+      <div class="answerblank"></div>
+      <!-- 回答部分 -->
+      <div v-for="answer in answerData" :key="answer.id" @click="jumpanswerDetail(answer)">
+        <answerBox :answer="answer"></answerBox>
+      </div>
+
+    </van-pull-refresh>
 
   </div>
 </template>
@@ -36,7 +39,10 @@
   export default {
     data(){
       return {
-        isLoaded: false,
+        caniChose:false,
+        isLoading:false,
+        questionId:"",
+        getAnswerList: {},
         questiondetail: {},
         answerData:[
           {
@@ -72,8 +78,55 @@
         //使用show调出方法
         toast.show()
       },
-      async onSearch(){
-        alert("搜索")
+      //前往单个回答详情
+      jumpanswerDetail(answer){
+        // console.log(answer)
+        answer.father = this.questiondetail.title;
+        let arr = this.questiondetail.reply ? this.questiondetail.reply : 0;
+        answer.comment = arr.length ? arr.length : 0;
+
+        if(this.caniChose === true ){
+          answer.choseA = true;
+        }
+
+        this.$router.push({ name: "answerdetail", params:{answerData: answer}})
+      },
+      //通过id查询问题详情
+      getQuestion(id) {
+        const toast = this.$createToast({
+          mask: true,
+          message: '加载中...'
+        })
+        toast.show();
+        getQuestionByQid(id)
+        .then(res => {
+          toast.hide();
+          this.isLoading = false;
+          this.questiondetail = res.data;
+        },(err => {
+          console.log(err);
+        }))
+      },
+      //通过id获取问题的回复列表
+      getQAList(id){
+        const toast = this.$createToast({
+          mask: true,
+          message: '加载中...'
+        })
+        toast.show();
+        getQAListByQid(id)
+        .then(res => {
+          toast.hide();
+          // console.log(res.data)
+          this.answerData = res.data;
+          console.log(this.answerData)
+        },(err => {
+          console.log(err);
+        }))
+      },
+      //如果是从 我的选项 进来的，添加删除绑定
+      canChose(type){
+        this.caniChose = true;
       }
     },
     created:function(){
@@ -132,5 +185,27 @@
   }
   .answerblank{
     margin-top: 6vh;
+  }
+  .popup{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    width: 80%;
+    height: 30%;
+  }
+  .popupBtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .popupTitle{
+    margin-bottom: 3vh;
+  }
+  .popupBtn{
+    width: 80%;
+  }
+  .popupBtn button{
+    width: 40%;
   }
 </style>
