@@ -86,13 +86,13 @@
       },
       //点击标签
       handleTabClick(index) {
-        // console.log(index)
+        console.log(index)
         sessionStorage.setItem("visitType", "other");
         if (index===0) {
           this.$router.push({ path: "/find/question"});
           // sessionStorage.setItem("visitType", "other");
         }else if(index===1){
-          this.$router.push({ path: "/find/myquestion"});
+          // this.$router.push({ path: "/find/myquestion"});
           sessionStorage.setItem("visitType", "my");
         }
 

@@ -1,9 +1,16 @@
 <template>
   <div class="question-container">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
-        <questionBox  :question="question"></questionBox>
-      </div>
+      <ul
+        v-waterfall-lower="loadMore"
+        waterfall-disabled="disabled"
+        waterfall-offset="400"
+      >
+        <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
+          <questionBox  :question="question"></questionBox>
+        </div>
+      </ul>
+
     </van-pull-refresh>
     
 
@@ -17,16 +24,17 @@
   import questionBox from '../components/questionBox.vue'
   import { getQuestionList } from '../../common/api'
   import { PullRefresh } from 'vant';
+  import { Waterfall } from 'vant';
 
   export default {
     data(){
       return {
         isLoading:false,
         gatQuestionData:{
-          tag: [],
-          title: "",
-          desc: "",
-          info: "",
+          // tag: [],
+          // title: "",
+          // desc: "",
+          // info: "",
           limit: 10,
           skip: 0
         },
@@ -36,6 +44,7 @@
     components: {
       questionBox,
       [PullRefresh.name]: PullRefresh,
+      [Waterfall.name]: Waterfall,
     },
     methods: {
       //刷新
@@ -54,7 +63,7 @@
         .then(res => {
           toast.hide();
           this.isLoading = false;
-          this.questionData = res.data;
+          this.questionData.push(res.data);
           // console.log(res.data)
         },(err => {
           console.log(err);
@@ -64,6 +73,10 @@
       createdQStorage(question){
         sessionStorage.setItem("questionId", question._id);
         this.$router.push({ path: "/find/questiondetail"})
+      },
+      loadMore(){
+        this.gatQuestionData.limit += 10;
+        this.gatQuestionData.skip += 10;
       }
     },
     created() {

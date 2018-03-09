@@ -1,10 +1,10 @@
 <template>
   <div class="replyBox-container">
     <div class="avator">
-      <img :src="reply.avator">
+      <img :src="avator">
     </div>
     <div class="message">
-      <div class="username">{{ reply.name }}</div>
+      <div class="username">{{ name }}</div>
       <div class="messagetext">{{ reply.content }}</div>
       <div class="messageFooter">
         <div class="messageTime">{{ reply.time }}</div>
@@ -12,10 +12,6 @@
           <div class="messageBtn" @click="replyuser">
             <sicon name="find-talk" scale="2"></sicon>
             回复
-          </div>
-          <div class="messageBtn" @click="likethis">
-            <sicon name="find-support" scale="1.7"></sicon>
-            {{ reply.like }}
           </div>
         </div>
       </div>
@@ -29,37 +25,45 @@
   //vant
 
   import { Icon } from 'vant';
-  import { likethis } from '../../common/api'
+  import { getuserinforById } from '../../common/api';
+  
+
   export default {
     data(){
       return {
+        avator:"",
+        name:""
       }
     },
     props:{
       reply: Object
     },
-    components: {
-
-    },
     methods: {
       replyuser(){
-        this.$emit("replyuser", this.reply.name)
-      },
-      likethis(){
-        this.functionunavailable();
-        /*
-        likethis(postdata)
+        this.$emit("replyuser", [this.name,this.reply._id]);
+      }, 
+      getusermessage(id){
+        getuserinforById(id)
         .then(res => {
-          toast.hide();
-          this.questionData = res.data;
-          console.log(res.data)
+          this.name = res.data.name
+          this.avator = res.data.wx.avatarUrl;
+          console.log(this.reply)
+          console.log(res)
         },(err => {
           console.log(err);
         }))
-        */
-      }
+      },
+      datestr(x,y) {
+        var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
+        return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
+      },
     },
-    created: function(){
+    created() {
+      this.getusermessage(this.reply.author)
+
+      let Time = new Date();  
+      Time.setTime(this.reply.updatedAt * 1000); 
+      this.reply.time = this.datestr(Time,"yyyy.MM.d");
     }
   }
 </script>

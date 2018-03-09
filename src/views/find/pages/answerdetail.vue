@@ -9,21 +9,27 @@
         <sicon name="find-leftArr" scale="1.7"></sicon>
         返回
       </div>
-      <div slot="title" class="detailTitle">{{ answerdetail.title }}</div>
+      <div slot="title" class="detailTitle">{{ answerdetail.father }}</div>
       </van-search>
     </van-nav-bar>
     
     <topNav></topNav>
 
     <div class="answercontent" v-html="answerdetail.content">
-      <!-- {{  }} -->
+    
     </div>
+
+    <div class="answerend">该文发表与&nbsp;--&nbsp;{{ createdtime }}</div>
 
     <div class="answerFooter">
       <div class="supportArea">
-        <div class="supportBtn" @click="clickSupport">
+        <div class="supportBtn" @click="clickSupport(answerdetail._id)" v-if="like===false">
           <sicon name="find-support" scale="1.7"></sicon>
-          200
+          {{ answerdetail.like }}
+        </div>
+        <div class="supportBtn liked" disabled v-else>
+          <sicon name="find-support" scale="1.7"></sicon>
+          {{ answerdetail.like }}
         </div>
         <div class="supportBtn" @click="clickUnSupport">
           <sicon name="find-unsupport" scale="1.7"></sicon>
@@ -38,7 +44,7 @@
         </div>
         <div class="funcBtn" @click="seereply">
           <sicon name="find-talk" scale="2"></sicon>
-          <div>270</div>
+          <div>{{ answerdetail.comment }}</div>
         </div>
       </div>
     </div>
@@ -56,15 +62,21 @@
   export default {
     data(){
       return {
+        createdtime:"", //发表时间
+        like:false,
         answerdetail:{
-          id:11,
-          avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
-          username:"青石先生",
-          imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
-          content:"<p>前女友：真是反了 谈恋爱你就想牵手 结婚后你难道还想上床？我：..............——————手动分割线————————评论...</p><img src='https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg'>",
-          replay:"128",
-          time:"1天前",
-          title: "为什么安卓刘海屏都有一个极丑的下巴??"
+          //{
+            // _id: "",   //该回复的id
+            // question: "",  //该问题的id
+            // content:"",    //回答的内容
+            // author:"",     //回答人的id
+            // adopt:false,   //该回答是否被采纳
+            // reply:[],    //该回答的子评论
+            // createdAt: 0  //创建时间  时间戳
+            // father:"",  问题的题目
+            // like:0      点赞数
+            // comment: 0   //子评论数，基于reply的长度
+          //}
         }
       }
     },
@@ -81,19 +93,27 @@
         this.functionunavailable();
       },
       //点击支持
-      clickSupport(){
-
-        this.functionunavailable();
-        /*
-        likethis(postdata)
+      clickSupport(id){
+        const toast = this.$createToast({
+          mask: true,
+          message: '加载中...'
+        })
+        toast.show();
+        likethis(id)
         .then(res => {
           toast.hide();
-          this.questionData = res.data;
-          console.log(res.data)
+          const tip = this.$createToast({
+            txt: 'you like it!',
+            type: 'success',
+            time: 1300
+          })
+          //使用show调出方法
+          tip.show()
+          this.like = true;
+          this.answerdetail.like += 1;
         },(err => {
           console.log(err);
         }))
-        */
       },
       //点击收藏
       clickCollect(){
@@ -101,14 +121,28 @@
       },
       //查看回复
       seereply(){
-        this.$router.push({ path: "/find/reply/1"});
-      }
+        let answerData = this.answerdetail;
+        answerData = JSON.stringify(answerData);
+        sessionStorage.setItem("answerData", answerData);
+
+        this.$router.push({ name: "reply" })
+
+        // this.$router.push({ name: "reply", params:{ answerData, answerData }})
+      },
+      //时间戳转换
+      datestr(x,y) {
+        var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
+        return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
+      },
     },
     created:function(){
-      
-      let answerId = this.$route.params.answerId
-      console.log(answerId)
-      //获取到id后交互得到具体的内容
+      this.answerdetail = this.$route.params.answerData;
+      let Time = new Date();  
+      Time.setTime(this.answerdetail.createdAt * 1000); 
+      this.createdtime = this.datestr(Time,"yyyy.MM.d");
+
+      this.answerdetail.comment = this.answerdetail.reply.length ? this.answerdetail.reply.length :0
+      console.log(this.answerdetail)
     },
   }
 </script>
@@ -123,7 +157,7 @@
     margin-left: -2vw;
   }
   .answer-container{
-    min-height: 80vh;
+    /*min-height: 80vh;*/
     margin-bottom: 10vh;
   }
   .titleshadow{
@@ -198,5 +232,15 @@
   }
   .funcBtn svg{
     margin-bottom: 0.6vh;
+  }
+  .liked{
+    background: #FF8264;
+    color: #fff;
+  }
+  .answerend{
+    float: right;
+    margin-right: 10px;
+    margin-top: 30px;
+    font-size: 13px;
   }
 </style>

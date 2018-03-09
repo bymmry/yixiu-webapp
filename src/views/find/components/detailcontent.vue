@@ -18,8 +18,8 @@
       <div class="foldquestionBtn" v-else @click="changefoldquestion">收起问题描述 Λ</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div>
-          <div>{{ question._v ? question._v : 0 }} 回复</div>
+          <!-- <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div> -->
+          <div>{{ question.replyCount }} 回复</div>
         </div>
         <div v-if="visitType==='other'">
           <van-button type="default" size="small" v-if="question.folloed === true" @click="followQ">
@@ -122,7 +122,7 @@
     },
     created: function(){
       this.visitType = sessionStorage.getItem("visitType")
-      console.log(this.question)
+      // console.log(this.question)
     }
   }
 </script>

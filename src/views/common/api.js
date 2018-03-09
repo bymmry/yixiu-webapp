@@ -93,6 +93,16 @@ export function getuserinforByopenId(openId){
     });
   });
 }
+//通过id查询用户信息
+export function getuserinforById(id){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/user/${id}`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
 
 //根据微信信息注册用户
 export function reguser(data){
