@@ -16,7 +16,6 @@ exports.getPhoneProblem = getPhoneProblem;
 exports.getChildrenProblem = getChildrenProblem;
 exports.getShopListSort = getShopListSort;
 exports.getuserinforByopenId = getuserinforByopenId;
-exports.getuserinforById = getuserinforById;
 exports.reguser = reguser;
 exports.updateuserinfo = updateuserinfo;
 exports.sureOrder = sureOrder;
@@ -28,10 +27,6 @@ exports.addNewQuestion = addNewQuestion;
 exports.getQuestionList = getQuestionList;
 exports.replyQuestion = replyQuestion;
 exports.getQuestionListById = getQuestionListById;
-exports.getQuestionByQid = getQuestionByQid;
-exports.getQAListByQid = getQAListByQid;
-exports.updateQuestion = updateQuestion;
-exports.likethis = likethis;
 
 var _ajax = require('../../lib/ajax');
 
@@ -127,16 +122,6 @@ function getShopListSort(data) {
 function getuserinforByopenId(openId) {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/user/openid/' + openId).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
-//通过id查询用户信息
-function getuserinforById(id) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/user/' + id).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);
@@ -253,54 +238,10 @@ function replyQuestion(data) {
   });
 }
 
-// 通过ID查询个人问题
+// 通过ID查询
 function getQuestionListById(id) {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/question/user/' + id).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
-
-// 通过ID查询问题详情
-function getQuestionByQid(id) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/question/' + id).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
-
-// 通过id查询问题的回复列表
-function getQAListByQid(id) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/question/reply/' + id).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
-
-// 修改问题信息
-function updateQuestion(data) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.post(url + '/address/update/', data).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
-
-// 给评论点赞
-function likethis(id) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/question/reply/like/' + id).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);

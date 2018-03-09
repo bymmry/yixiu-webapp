@@ -7,7 +7,6 @@
         </div>
 
     </van-pull-refresh>
-
     
     
 
@@ -26,11 +25,12 @@
   export default {
     data(){
       return {
+        isLoading:false,
         gatQuestionData:{
-          tag: [],
-          title: "",
-          desc: "",
-          info: "",
+          // tag: [],
+          // title: "",
+          // desc: "",
+          // info: "",
           limit: 10,
           skip: 0
         },
@@ -58,7 +58,6 @@
         getQuestionList(postdata)
         .then(res => {
           toast.hide();
-
           this.isLoading = false;
           this.questionData = res.data.concat(this.questionData);
         },(err => {

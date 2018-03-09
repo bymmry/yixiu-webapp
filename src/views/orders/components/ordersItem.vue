@@ -1,15 +1,11 @@
 <template>
   <div class="ordersItems">
-    <div class="ordersItem"  v-for="(item, index) in orders">
+    <div class="ordersItem"  v-for="item in orders">
       <div class="itemTitle">
-        <span class="shopName">{{item.shop.name}}</span>
+        <span class="shopName">111</span>
         <span class="orderState">{{state[item.state]}}</span>
       </div>
       <div class="orderContent">
-        <p>手机型号：<span>{{item.shop.contactNumber}}</span></p>
-        <p>卖家联系电话：<span>{{item.phoneModel.desc + " " + item.phoneModel.name}}</span></p>
-        <p>服务：<span>{{servers[index]}}</span></p>
-        <p>订单金额：<span>￥{{item.payment/100}}</span></p>
       </div>
     </div>
 
@@ -17,6 +13,7 @@
 </template>
 
 <script>
+
 
   export default {
     name: 'orders-item',
@@ -32,8 +29,7 @@
           100:'已取消',
           101:'已关闭',
           102:'退款中'
-        },
-        servers: []
+        }
       }
     },
     props: {
@@ -46,19 +42,6 @@
     },
     mounted() {
       console.log(this.orders);
-      let ser = this.orders.map(function (val) {
-        return val.service;
-      });
-      console.log(ser);
-      this.servers = ser.map(function (val) {
-        let res = "";
-        for(let i=0; i<val.length;i++){
-          res = res + val[i].name + "/";
-          console.log(val[i].name)
-        }
-        return res;
-      });
-      console.log(this.servers);
     }
   };
 </script>
@@ -92,17 +75,5 @@
   .ordersItems .itemTitle span.orderState{
     float: right;
     padding-right: 15px;
-    color: #f85;
-    font-weight: 700;
-  }
-  .orderContent p{
-    width: auto;
-    padding-left: 25px;
-    font-size: 14px;
-  }
-  .orderContent p span{
-    color: #fda674;
-    float: right;
-    margin-right: 15px;
   }
 </style>
