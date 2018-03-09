@@ -168,7 +168,7 @@
     width: 100%;
     display: flex;
     position: absolute;
-    bottom: 5px;
+    bottom: 0;
   }
   .chooseInfos .stepButton > div{
     width: 100%;

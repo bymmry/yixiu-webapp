@@ -16,7 +16,6 @@ exports.getPhoneProblem = getPhoneProblem;
 exports.getChildrenProblem = getChildrenProblem;
 exports.getShopListSort = getShopListSort;
 exports.getuserinforByopenId = getuserinforByopenId;
-exports.getuserinforById = getuserinforById;
 exports.reguser = reguser;
 exports.updateuserinfo = updateuserinfo;
 exports.sureOrder = sureOrder;
@@ -134,16 +133,6 @@ function getuserinforByopenId(openId) {
     });
   });
 }
-//通过id查询用户信息
-function getuserinforById(id) {
-  return new _promise2.default(function (resolve, reject) {
-    ajax.get(url + '/user/' + id).then(function (res) {
-      resolve(res);
-    }).then(function (err) {
-      reject(err);
-    });
-  });
-}
 
 //根据微信信息注册用户
 function reguser(data) {
@@ -254,7 +243,7 @@ function replyQuestion(data) {
   });
 }
 
-// 通过ID查询个人问题
+// 通过ID查询
 function getQuestionListById(id) {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/question/user/' + id).then(function (res) {
@@ -319,4 +308,5 @@ function adoptThis(data) {
     });
   });
 }
+
 //# sourceMappingURL=api.js.map

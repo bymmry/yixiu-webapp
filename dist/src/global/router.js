@@ -70,7 +70,7 @@ exports.default = new _vueRouter2.default({
     redirect: '/home?nickName=等到烟花清凉&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0&openid=oFosP5RQ-4BYlzddw8o5ON1ibctU'
     // redirect:'/home'
   }, {
-    path: "/pay", //小程序返回路由
+    path: "/pay",
     redirect: '/orders'
   }].concat((0, _toConsumableArray3.default)(_router2.default), (0, _toConsumableArray3.default)(_router4.default), (0, _toConsumableArray3.default)(_router6.default), (0, _toConsumableArray3.default)(_router8.default), (0, _toConsumableArray3.default)(_router12.default), (0, _toConsumableArray3.default)(_router10.default), (0, _toConsumableArray3.default)(_router14.default), (0, _toConsumableArray3.default)(_router16.default), (0, _toConsumableArray3.default)(_router18.default), (0, _toConsumableArray3.default)(_router20.default), (0, _toConsumableArray3.default)(_router22.default))
 });

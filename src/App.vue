@@ -60,6 +60,6 @@
 
 <style>
   #app{
-    /*height: 97%;*/
+    height: 97%;
   }
 </style>

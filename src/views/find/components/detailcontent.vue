@@ -2,6 +2,10 @@
   <div class="questionBox-container">
     <!-- 内容部分 -->
     <div class="questionBox-content">
+      <div class="tagBox">
+        <div v-for="tag in this.question.tag" @click="searchBytag(tag)" class="tag" v-if="tag.length != 0">{{tag}}</div>
+      </div>
+      
       <div class="questionTitle">
         {{ question.title }}
       </div>
@@ -16,7 +20,7 @@
         <div class="questionFooterLeft">
           <!-- <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div> -->
           <div>{{ question.replyCount }} 回复</div>
-          <div class="money">赏金：{{ question.reward ? question.reward/100 : 0 }} 元 </div>
+          <div class="money">赏金：{{ question.reward ? question.reward/100 : 0 }}元</div>
         </div>
         <div v-if="visitType==='my'">
           <van-button type="default" size="small" @click="changeQ">
@@ -31,6 +35,8 @@
           </van-button>
           <van-button type="primary" size="small" class="blueBtn" v-else @click="followQ">+&nbsp;关注问题</van-button>
         </div>
+        
+        
       </div>
     </div>
     <div class="addAnswer">
@@ -44,16 +50,17 @@
     <!-- 底部的阴影 -->
     <div class="questionBox-shadow"></div>
   </div>
-  
 </template>
 
 <script>
   //vant
   import { Button } from 'vant';
   import { Icon } from 'vant';
+  import changequestion from './changequestion'
   export default {
     data(){
       return {
+        visitType:"other",
         foldquestion: false,
       }
     },
@@ -63,6 +70,7 @@
     components: {
       [Button.name]: Button,
       [Icon.name]: Icon,
+      changequestion
     },
     methods: {
       //点击展开、折叠问题描述
@@ -88,6 +96,10 @@
       async followQAjax () {
         return "no";
       },
+      //修改问题
+      changeQ(){
+        this.$router.push({ name: "changequestion", params:{oldquestion: this.question}});
+      },
       //邀请问答
       async invitation() {
         this.functionunavailable()
@@ -95,6 +107,19 @@
       //新回答
       async newAnswer() {
         this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
+      },
+      //点击标签进行搜索
+      searchBytag(tag) {
+        // console.log(tag)
+        let tagSearch = {
+          tag:[tag],
+          // title:"",
+          // desc:"",
+          // info:"",
+          limit:10,
+          skip:0
+        }
+        this.$router.push({ name: "search", params:{searchData: tagSearch}})
       }
     },
     created: function(){
@@ -109,7 +134,7 @@
 <style scoped>
   .questionBox-container{
     position: relative;
-    padding: 3.6vh 0;
+    padding: 8.6px 0;
     padding-bottom: 0;
     border-top: 0.1vh solid #e0deec;
     border-bottom: 0.1vh solid #e0deec;
@@ -139,7 +164,7 @@
   .questionTitle{
     font-size: 5vw;
     line-height: 6vw;
-    margin-bottom: 2.6vh;
+    margin-bottom: 3.9vw;
     font-weight: 700;
     color: #1c1c1c;
   }
@@ -206,6 +231,7 @@
     justify-content: space-between;
     align-items: center;
     height: 10vh;
+    min-height: 48.6px;
     width: 100%;
     border-top: 0.2vw solid #e8e8e8;
   }
@@ -222,6 +248,19 @@
   }
   .AOline{
     border-right: 0.2vw solid #e8e8e8;
+  }
+  .tagBox{
+    display: flex;
+    flex-direction:row;
+    padding-bottom: 11.5px;
+  }
+  .tag{
+    padding: 6.7px 8px;
+    background: rgb(229, 242, 255);
+    border-radius: 10px;
+    color: #588D9C;
+    margin-right: 8px;
+    font-size: 4vw;
   }
   .money{
     margin-left: 7px;

@@ -15,7 +15,7 @@ export default {
 	},
 	methods: {
 		route () {
-			this.$router.push('/shop?' + this.service)
+			this.$router.push('/shop' + this.service)			
 		}
 	}
 }

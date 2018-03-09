@@ -31,10 +31,11 @@
 </template>
 
 <script>
-  import { NavBar } from 'vant';
+  import { NavBar, PullRefresh } from 'vant';
   import detailContent from "../components/detailContent";
   import answerBox from "../components/answerBox";
   import topNav from "../components/topNav";
+  import { getQuestionByQid, getQAListByQid } from '../../common/api'
 
   export default {
     data(){
@@ -45,25 +46,32 @@
         getAnswerList: {},
         questiondetail: {},
         answerData:[
-          {
-            id:11,
-            avator:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/Default-Profile.png",
-            username:"青石先生",
-            imgurl:"https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/beatch.jpg",
-            content:"前女友：真是反了 谈恋爱你就想牵手 结婚后你难道还想上床？我：..............——————手动分割线————————评论...",
-            replay:"128",
-            time:"1天前"
-          }
+          //{
+            // _id: "",   //该回复的id
+            // question: "",  //该问题的id
+            // content:"",    //回答的内容
+            // author:"",     //回答人的id
+            // adopt:false,   //该回答是否被采纳
+            // reply:[],    //该回答的子评论
+            // createdAt: 0,  //创建时间  时间戳
+            // like:0      点赞数
+          //}
         ]
       }
     },
     components: {
       [NavBar.name]: NavBar,
+      [PullRefresh.name]: PullRefresh,
       detailContent,
       answerBox,
       topNav,
     },
     methods: {
+      //刷新
+      onRefresh(){
+        this.getQuestion(this.questionId);
+        this.getQAList(this.questionId);
+      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/find/question"})
@@ -130,22 +138,13 @@
       }
     },
     created:function(){
-      if (this.isLoaded==false) {
-        console.log(this.$route.params.question)
-        this.questiondetail = this.$route.params.question;
-        this.isLoaded = true;
-      }else{
-        console.log(ok);
-      }
-      
-      // console.log(this.questiondetail)
 
-      // for(let answer in this.answerData){
-      //   this.answerData[answer].title = this.questiondetail.title
-      //   this.answerData[answer].father = this.questiondetail
-      // }
-      
-      // console.log(this.$route.params)
+      this.questionId = sessionStorage.getItem("questionId")
+      console.log(this.questionId);
+
+      this.getQuestion(this.questionId);
+      this.getQAList(this.questionId);
+
     }
   }
 </script>

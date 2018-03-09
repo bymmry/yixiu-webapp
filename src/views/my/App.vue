@@ -110,11 +110,6 @@
             name: "问题反馈",
             icon: "question",
             url: ""
-          },
-          {
-            name: "退出登录",
-            icon: "close",
-            url: "logout"
           }
         ]
       }
@@ -126,30 +121,6 @@
       [CellGroup.name]: CellGroup,
     },
     methods: {
-      //登出
-      async sign_out(){
-        const toast = this.$createToast({
-          time: 0,
-          txt: '正在退出'
-        })
-        toast.show();
-
-
-        //退出需要进行的操作
-        let res = 1
-
-
-
-        toast.hide()
-        if (res) {
-          const tip = this.$createToast({
-            txt: '您已退出!',
-            type: 'correct',
-            time: 1000
-          })
-          toast.show()
-        }
-      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/home"})
@@ -167,9 +138,7 @@
         }else{
           if (url==="") {
             this.functionunavailable();
-          }else if(url==="logout"){
-            this.sign_out();
-          }else{
+          }else {
             this.$router.push({ path: url })
           }
         }
