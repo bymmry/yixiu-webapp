@@ -32,6 +32,7 @@ exports.getQuestionByQid = getQuestionByQid;
 exports.getQAListByQid = getQAListByQid;
 exports.updateQuestion = updateQuestion;
 exports.likethis = likethis;
+exports.adoptThis = adoptThis;
 
 var _ajax = require('../../lib/ajax');
 
@@ -40,8 +41,8 @@ var _ajax2 = _interopRequireDefault(_ajax);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ajax = _ajax2.default.ajax;
-// const url = 'https://m.yixiutech.com';
-var url = "https://yixiu.natappvip.cc";
+var url = 'https://m.yixiutech.com';
+// const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 function getShopList() {
@@ -301,6 +302,17 @@ function updateQuestion(data) {
 function likethis(id) {
   return new _promise2.default(function (resolve, reject) {
     ajax.get(url + '/question/reply/like/' + id).then(function (res) {
+      resolve(res);
+    }).then(function (err) {
+      reject(err);
+    });
+  });
+}
+
+// 采纳答案
+function adoptThis(data) {
+  return new _promise2.default(function (resolve, reject) {
+    ajax.post(url + '/question/adopt/', data).then(function (res) {
       resolve(res);
     }).then(function (err) {
       reject(err);

@@ -39,7 +39,7 @@
     <div @click="selectShop"
          class="shopDes"
          ref="shopDes">
-      <list-view @select="selectShop" :shopData="shopData"></list-view>
+      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
     </div>
     <div class="space"></div>
   </div>
@@ -119,7 +119,8 @@
           distance: true,//距离
           pv: true,//浏览量
         },
-        radio: 1
+        radio: 1,
+        reqData: {},
       }
     },
     created() {
@@ -135,12 +136,7 @@
         let req = {
           categoryName: categoryName
         };
-        getShopListSort(req).then(res => {
-          this.shopData = res.data;
-          Toast.clear();
-        }, err => {
-          console.log(err);
-        })
+        this.getShopList(req);
       }else {
         getShopList().then((res) => {
           if(res.code === 200){
@@ -183,11 +179,7 @@
           duration: 0,
           message: '加载中...'
         });
-        getShopListSort(filterShop).then((res) => {
-          console.log(res);
-          this.shopData = res.data;
-          Toast.clear();
-        });
+        this.getShopList(filterShop);
       },
       chooseType: function () {
         if(this.isShowShopSort){
@@ -201,11 +193,10 @@
         this.nowColumnsType = item.name;
         this.isShowShopSort = !this.isShowShopSort;
         let req = {};
-        console.log(item);
         switch (item.id){
           case 0:
             req = {
-              score: 1,//评分
+              score: -1,//评分
               serviceFinishTime: 1,//完成时间/(速度)
               serviceFinishCount: 1,//修好数量
               price: 1//均价
@@ -227,11 +218,7 @@
             };
             break;
         }
-        console.log(req);
-        getShopListSort(req).then((res) => { //综合排序请求数据
-          console.log(res);
-          this.shopData = res.data;
-        });
+        this.getShopList(req);
       },
       selectShop: function (shop) {
         console.log(shop);
@@ -273,6 +260,22 @@
         function BooleanToNum(bool) {
           return bool ? 1: -1;
         }
+      },
+      getShopList: function (req) {
+        Toast.loading({
+          duration: 0,
+          message: '加载中...'
+        });
+        this.reqData = "";
+        this.reqData = req;
+        getShopListSort(req).then((res) => { //综合排序请求数据
+          console.log(res);
+          this.shopData = res.data;
+          Toast.clear();
+        }, err => {
+          console.log(err);
+        });
+        Toast.clear();
       }
     }
   };
