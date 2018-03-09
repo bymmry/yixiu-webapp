@@ -5,7 +5,6 @@
         <questionBox  :question="question"></questionBox>
       </div>
     </van-pull-refresh>
-    
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
 
@@ -21,7 +20,6 @@
   export default {
     data(){
       return {
-        isLoading:false,
         userId: "",
         questionData:[]
       }
@@ -31,10 +29,6 @@
       [PullRefresh.name]: PullRefresh,
     },
     methods: {
-      //刷新
-      onRefresh(){
-        this.getQuestionList(this.userId);
-      },
       //获取列表
       getQuestionList(postdata){
         const toast = this.$createToast({
@@ -46,17 +40,11 @@
         getQuestionListById(postdata)
         .then(res => {
           toast.hide();
-          this.isLoading = false;
           this.questionData = res.data;
-          // console.log(res.data)
+          console.log(res.data)
         },(err => {
           console.log(err);
         }))
-      },
-      //建立点击question的Storage
-      createdQStorage(question){
-        sessionStorage.setItem("questionId", question._id);
-        this.$router.push({ path: "/find/questiondetail"})
       }
     },
     created() {

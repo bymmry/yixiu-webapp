@@ -86,7 +86,6 @@
       },
       //点击标签
       handleTabClick(index) {
-        
         sessionStorage.setItem("visitType", "other");
         if (index===0) {
           this.$router.push({ path: "/find/question"});
@@ -97,12 +96,7 @@
 
       },
       async onSearch(){
-        let tagSearch = {
-          title: this.searchvalue,
-          limit:10,
-          skip:0
-        }
-        this.$router.push({ name: "search", params:{searchData: tagSearch}})
+        alert("搜索")
       },
       //发起、关闭新提问
       newQuestion() {
