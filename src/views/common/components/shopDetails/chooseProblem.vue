@@ -15,13 +15,20 @@
           </li>
         </ul>
       </div>
-      <div :class="{'childShow': currentChildIndex === childIndex}" class="problemDetail" ref="problemDetail" v-for="(child, childIndex) in items.length">
+      <div
+        :class="{'childShow': currentChildIndex === childIndex}"
+        class="problemDetail"
+        ref="problemDetail"
+        v-for="(child, childIndex) in items.length"
+        v-if="parent[childIndex].data.length"
+      >
           <span
             @click="selectProblem"
             :data-id="item._id"
             :data-index="index"
             data-isSelected="0"
-            v-for="(item, index) in parent[currentChildIndex]">{{item.name}}&nbsp;￥{{item.price}}
+            v-for="(item, index) in parent[childIndex].data"
+          >{{item.name}}&nbsp;￥{{item.price}}
           </span>
       </div>
     </div>
@@ -82,14 +89,51 @@
       }
     },
     methods: {
+      getPhoneProblem: function () { //获取父元素列表
+        let shopId = this.$route.params.id;
+        getPhoneProblem(shopId).then((res) => {
+          if(res.code === 200){
+            this.items = res.data;
+            if (this.parent.length === this.items.length){
+
+            }else {
+              for(let i=0; i<this.items.length; i++){
+                this.parent.push({type: i, data: {}});
+              }
+            }
+
+            // this.parent.length = this.items.length;
+            this.selectedServer.length = this.items.length;
+            console.log("step1--------------------->");
+            console.log(this.parent);
+            console.log(this.parent[0].data.length); //0
+            this.getProblem(res.data);
+          }
+        }, function (err) {
+          console.log(err);
+        });
+      },
       getProblem: function (data) {
-        let index = 0; //首次加载
         let req = {
           shop: this.$route.params.id,//商铺id
-          category: data[index]._id,//分类id
+          category: data[this.currentChildIndex]._id,//分类id
           phoneModel: this.phoneModel//手机型号id
         };
-        this.getChildrenProblem(req, index);
+        this.getChildrenProblem(req, this.currentChildIndex);
+      },
+      getChildrenProblem: function (req, index) { // 获取子元素列表
+        getChildrenProblem(req).then(res => {
+          this.itemsChildren = res.data;
+          // if(this.parent[index].length === 0){
+            this.parent[index].data = Object.assign(this.itemsChildren, this.parent[index].data);
+            console.log("step2------------------------------->");
+            console.log(this.parent);
+            console.log(this.parent[0].data.length); //1
+            Toast.clear();
+          // }
+        }, err => {
+          console.log(err);
+        });
       },
       goBack: function () {
         this.$emit("goBackPrevStep", true)
@@ -118,7 +162,7 @@
           category: id,//分类id
           phoneModel: this.phoneModel//手机型号id
         };
-        this.getChildrenProblem(req, parentIndex);
+        this.getChildrenProblem(req, this.currentChildIndex);
       },
       selectProblem: function (item) { //子列表选择
         let tar = item.target;
@@ -136,41 +180,7 @@
         }
 
       },
-      getPhoneProblem: function () { //获取父元素列表
-        let shopId = this.$route.params.id;
-        getPhoneProblem(shopId).then((res) => {
-          if(res.code === 200){
-            this.items = res.data;
-            if (this.parent.length === this.items.length){
 
-            }else {
-              for(let i=0; i<this.items.length; i++){
-                this.parent.push(new Array());
-              }
-            }
-
-            // this.parent.length = this.items.length;
-            this.selectedServer.length = this.items.length;
-            this.getProblem(res.data);
-            console.log(this.parent);
-          }
-        }, function (err) {
-          console.log(err);
-        });
-      },
-      getChildrenProblem: function (req, index) { // 获取子元素列表
-        getChildrenProblem(req).then(res => {
-          this.itemsChildren = res.data;
-          if(this.parent[index].length === 0){
-            this.parent[index] = this.itemsChildren;
-            console.log("----------------------------------------------------------------------------------->");
-            console.log(this.parent);
-            Toast.clear();
-          }
-        }, err => {
-          console.log(err);
-        });
-      },
       getSelectedServer: function () {
         let that = this;
         that.selectedServer = [];
@@ -184,11 +194,12 @@
               let isSelected = span.getAttribute("data-isSelected");
               if(isSelected === "1"){
                 let id = span.getAttribute("data-id");
-                that.selectedServer.push(that.parent[i][j]);
+                that.selectedServer.push(that.parent[i].data[j]);
               }
             }
           }
         }
+        console.log(this.selectedServer);
         this.selectedProblem = this.selectedServer;
         let TotalFee = 0;
         for(let i=0; i<this.selectedServer.length; i++){
@@ -248,7 +259,7 @@
     width: 100%;
     display: flex;
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
   }
   .problem .stepButton > div{
     width: 100%;

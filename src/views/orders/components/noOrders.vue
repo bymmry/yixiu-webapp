@@ -23,7 +23,7 @@
 <style scoped>
   .noOrders{
     width: auto;
-    height: 100%;
+    height: 78vh;
     background-color: #fff;
     color: #ccc;
     text-align: center;

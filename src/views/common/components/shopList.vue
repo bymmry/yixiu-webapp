@@ -27,12 +27,12 @@
               <div class="list"><van-checkbox v-model="filterData.price">价格最低</van-checkbox></div>
               <div class="list"><van-checkbox v-model="filterData.distance">距离最近</van-checkbox></div>
               <div class="list"><van-checkbox v-model="filterData.pv">浏览量最高</van-checkbox></div>
-              <van-radio-group>
+              <div>
                 <van-cell-group @click.stop="chooseMainType()">
                   <van-cell><van-radio v-model="radio" name="1">上门维修</van-radio></van-cell>
                   <van-cell><van-radio v-model="radio" name="2">自行到店</van-radio></van-cell>
                 </van-cell-group>
-              </van-radio-group>
+              </div>
               <van-button @click.stop="chooseMainType()" @click="sureFliter">确定</van-button>
             </div>
           </van-popup>
@@ -122,8 +122,11 @@
       }
     },
     created() {
+      console.log(window.location.href);
+      let url = decodeURIComponent(window.location.href);
+      console.log(url);
       Toast.loading({
-        // mask: true,
+        duration: 0,
         message: '加载中...'
       });
       getShopList().then((res) => {
@@ -159,6 +162,7 @@
           distance = 1;
         }else if(index ===3 ){ //筛选
           this.filterShop();
+          // return;
         }else if(index === 1){ //修的最好
           serviceFinishCount = 1;
         }else if(index === 2){ //julizuijin
@@ -181,7 +185,7 @@
           skip: 0//跳过几个数据,系统默认为0
         };
         Toast.loading({
-          // mask: true,
+          duration: 0,
           message: '加载中...'
         });
         getShopListSort(filterShop).then((res) => {

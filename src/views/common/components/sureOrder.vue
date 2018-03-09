@@ -35,6 +35,12 @@
         default: function () {
           return []
         }
+      },
+      shopId: {
+        type: Array,
+        default: function () {
+          return []
+        }
       }
     },
     watch: {
@@ -59,7 +65,7 @@
           // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
           phone: "18696835639",//联系电话
           // address: "",//联系人地址
-          // goods: [],//商品列表
+          // goods: this.shopId,//商品列表
           service: this.serverId,//服务列表
           phoneModel: this.data.model.data._id,//
           // card:[""],//优惠券列表
