@@ -20,6 +20,7 @@
         <div class="questionFooterLeft">
           <!-- <div>{{ question.followhuman ? question.followhuman : 0 }} 人关注&nbsp;·&nbsp;</div> -->
           <div>{{ question.replyCount }} 回复</div>
+          <div class="money">赏金：{{ question.reward ? question.reward/100 : 0 }}元</div>
         </div>
         <div v-if="visitType==='my'">
           <van-button type="default" size="small" @click="changeQ">
@@ -257,8 +258,11 @@
     padding: 6.7px 8px;
     background: rgb(229, 242, 255);
     border-radius: 10px;
-    color: #7f7f7f;
+    color: #588D9C;
     margin-right: 8px;
     font-size: 4vw;
+  }
+  .money{
+    margin-left: 7px;
   }
 </style>

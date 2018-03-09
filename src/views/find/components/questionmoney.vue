@@ -3,7 +3,7 @@
     <p class="questiontitle">
       请输入 
       <span style="color:#FF5722">悬赏金额</span> 
-      <van-tag plain type="danger">赏金将从积分中扣除</van-tag>
+      <van-tag plain type="danger">赏金将从钱包中扣除</van-tag>
     </p>
     <input type="text" placeholder="整数" v-model="money"><span style="font-size: 8vw;">元</span>
   </div>
