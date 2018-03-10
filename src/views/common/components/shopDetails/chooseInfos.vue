@@ -7,6 +7,23 @@
         <li><span class="name">手机颜色</span><span class="value">{{chooseData.color.val}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
       </ul>
+      <div id="input">
+        <van-field
+          label="手机号"
+          placeholder="请输入手机号"
+          type="number"
+          v-model="phoneNumber"
+          :error-message="errorMessage"
+        />
+        <van-field
+          label="留言"
+          type="textarea"
+          placeholder="请输入留言"
+          rows="1"
+          autosize
+          v-model="remack"
+        />
+      </div>
       <div class="coupon">
         <van-coupon-cell
           :coupons="coupons"
@@ -42,7 +59,7 @@
 </template>
 
 <script>
-  import { CouponCell, CouponList, Popup, Toast, Button } from 'vant';
+  import { CouponCell, CouponList, Popup, Toast, Button, Field } from 'vant';
   import sureOrder from "../sureOrder"
   const coupon = {
     available: 1,
@@ -67,7 +84,10 @@
         shopServer: [],
         sureOrderData: {},
         payment: 0,
-        TotalFee: 0
+        TotalFee: 0,
+        phoneNumber: "",
+        errorMessage: "",
+        remack: "" //备注
       }
     },
     props: {
@@ -111,12 +131,26 @@
         this.setOrderData();
         console.log(val);
       },
+      remack: function (val) {
+        this.setOrderData();
+        return val;
+      },
+      phoneNumber: function (val) {
+        let reg=/^1[345789]\d{9}$/ ;
+        if (reg.test(val)){
+          this.errorMessage = "";
+          this.setOrderData();
+        }else {
+          this.errorMessage = "手机号格式错误";
+        }
+      },
       serverId: function (val) {
         return val;
       }
     },
     components: {
       [Button.name]: Button,
+      [Field.name]: Field,
       [CouponCell.name]: CouponCell,
       [CouponList.name]: CouponList,
       [Popup.name]: Popup,
@@ -147,13 +181,13 @@
           user: userInfo._id,
           shop: shopId,
           // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
-          phone: "",//联系电话
+          phone: this.phoneNumber,//联系电话
           // address: "",//联系人地址
           // goods: this.shopId,//商品列表
           service: this.serverId,//服务列表
           phoneModel: this.chooseData.model.data._id,//
           // card:[""],//优惠券列表
-          remark: "",//备注
+          remark: this.remack,//备注
           paymentType: 0, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
           price: this.payment*100,//总金额(优惠前金额)
           payment: this.TotalFee*100//实付金额
@@ -218,4 +252,7 @@
   .chooseInfos .stepButton > div button span{
     vertical-align: middle;
   }
+  #input div div input{
+      text-align: right !important;
+    }
 </style>

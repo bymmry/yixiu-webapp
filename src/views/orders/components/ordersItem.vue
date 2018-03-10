@@ -46,8 +46,8 @@
     },
     watch: {
       orders: function (val) {
-        console.log(val);
         this.setData();
+        return val;
       }
     },
     methods: {
@@ -55,12 +55,10 @@
         let ser = this.orders.map(function (val) {
           return val.service;
         });
-        console.log(ser);
         this.servers = ser.map(function (val) {
           let res = "";
           for(let i=0; i<val.length;i++){
             res = res + val[i].name + "/";
-            console.log(val[i].name)
           }
           return res;
         });

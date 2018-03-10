@@ -56,4 +56,7 @@
   #app{
     /*height: 97%;*/
   }
+  .van-field__control{
+    text-align: right;
+  }
 </style>

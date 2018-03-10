@@ -57,7 +57,6 @@
         return val;
       },
       sureOrderData: function (val) {
-        console.log(val);
         return val;
       }
     },
