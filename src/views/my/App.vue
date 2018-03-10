@@ -94,7 +94,7 @@
           {
             name: "我的钱包",
             icon: "pending-payment",
-            url: ""
+            url: "my/mywallet"
           },
           {
             name: "我的收藏",
