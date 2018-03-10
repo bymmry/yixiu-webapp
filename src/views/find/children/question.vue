@@ -2,29 +2,29 @@
   <div class="question-container">
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 
-      <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
-        <questionBox  :question="question"></questionBox>
-      </div>
-
-      <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
-        获得更多信息
-        <div class="figerbox">
-          <!-- <sicon
-            name="find-figer"
-            scale="2"
-            class="figer"
-            v-for="index in figer"
-            v-if="figer[index] != true"
-          >
-          </sicon> -->
+        <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
+          <questionBox  :question="question"></questionBox>
         </div>
 
-      </div>
+        <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
+          获得更多信息
+          <div class="figerbox"> 
+            <!-- <sicon 
+              name="find-figer" 
+              scale="2" 
+              class="figer" 
+              v-for="index in figer" 
+              v-if="figer[index] != true"
+            >
+            </sicon> -->
+          </div>
+          
+        </div>
 
 
     </van-pull-refresh>
-
-
+    
+    
 
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
@@ -75,20 +75,20 @@
         })
         toast.show();
         getQuestionList(postdata)
-          .then(res => {
-            toast.hide();
-            this.isLoading = false;
-            if (res.data.length < 10 || !res.data.length) {
-              this.disabled = true;
-            }
-            if (type==="new") {
-              this.questionData = res.data
-            }else{
-              this.questionData = this.questionData.concat(res.data);
-            }
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          this.isLoading = false;
+          if (res.data.length < 10 || !res.data.length) {
+            this.disabled = true;
+          }
+          if (type==="new") {
+            this.questionData = res.data
+          }else{
+            this.questionData = this.questionData.concat(res.data);
+          }
+        },(err => {
+          console.log(err);
+        }))
       },
       //建立点击question的Storage 并跳转
       createdQStorage(question){
@@ -149,5 +149,5 @@
     flex-direction: column;
     align-items: center;
   }
-
+  
 </style>

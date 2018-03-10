@@ -5,7 +5,7 @@
       <div class="tagBox">
         <div v-for="tag in this.question.tag" @click="searchBytag(tag)" class="tag" v-if="tag.length != 0">{{tag}}</div>
       </div>
-
+      
       <div class="questionTitle">
         {{ question.title }}
       </div>
@@ -35,8 +35,8 @@
           </van-button>
           <van-button type="primary" size="small" class="blueBtn" v-else @click="followQ">+&nbsp;关注问题</van-button>
         </div>
-
-
+        
+        
       </div>
     </div>
     <div class="addAnswer">
@@ -150,8 +150,8 @@
     bottom: 1px;
     width: 100%;
     height: 1px;
-    -moz-box-shadow:0vw 1vh 4vw #b6baba;
-    -webkit-box-shadow:0vw 1vh 4vw #b6baba;
+    -moz-box-shadow:0vw 1vh 4vw #b6baba; 
+    -webkit-box-shadow:0vw 1vh 4vw #b6baba; 
     box-shadow:0vw 1vh 4vw #b6baba;
   }
   .questionContent img{
@@ -191,7 +191,7 @@
     line-height: 5.5vw;
     max-height: 88px;
     color: #404040;
-    white-space:nowrap;
+    white-space:nowrap; 
     overflow: hidden;
     text-overflow:ellipsis;
   }

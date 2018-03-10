@@ -6,11 +6,11 @@ export default [{
   path: '/phoneArrondi',
   component: App
 },
-  {
-    path: '/phoneDetail/:id',
-    component: phoneDetail
-  },
-  {
-    path: '/phoneList/:id',
-    component: phoneList
-  }]
+{
+  path: '/phoneDetail/:id',
+  component: phoneDetail
+}, 
+{
+  path: '/phoneList/:id',
+  component: phoneList
+}]

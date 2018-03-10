@@ -18,14 +18,14 @@
     props:{
       oldTag: Array
     },
-    data(){
-      return {
-        tagArr: ["","","","","",""]
-      }
-    },
-    watch: {
+  	data(){
+  		return {
+  			tagArr: ["","","","","",""]
+  		}
+  	},
+  	watch: {
       tagArr: function(){
-        this.$emit("changeTag",this.tagArr)
+      	this.$emit("changeTag",this.tagArr)
       }
     },
     components: {
@@ -36,16 +36,16 @@
     created(){
       this.tagArr = this.oldTag ? this.oldTag : this.tagArr
     }
-
+    
   }
 </script>
 
 <style scoped>
-  .questionTag{
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 10px;
-  }
+	.questionTag{
+		display: inline-block;
+		margin-top: 20px;
+		padding: 10px 10px;
+	}
   .questionTag input{
     width: 40%;
     margin-bottom: 15px;
@@ -57,23 +57,23 @@
     font-size: 5vw;
     letter-spacing: 0.2vw;
   }
-  .questionTag input::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #c0c0c0;
-  }
-  .questionTag input:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #c0c0c0;
-  }
-  .questionTag input::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #c0c0c0;
-  }
-  .questionTag input:-ms-input-placeholder {
-    /* Internet Explorer 10+ */
-    color: #c0c0c0;
+  .questionTag input::-webkit-input-placeholder {   
+    /* WebKit browsers */   
+    color: #c0c0c0;   
+  }   
+  .questionTag input:-moz-placeholder {   
+    /* Mozilla Firefox 4 to 18 */   
+    color: #c0c0c0;   
+  }   
+  .questionTag input::-moz-placeholder {   
+    /* Mozilla Firefox 19+ */   
+    color: #c0c0c0;   
+  }   
+  .questionTag input:-ms-input-placeholder {   
+    /* Internet Explorer 10+ */   
+    color: #c0c0c0;   
   }
   .questiontitle{
-    margin-bottom: 20px;
+  	margin-bottom: 20px;
   }
 </style>

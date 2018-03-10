@@ -47,14 +47,14 @@
         questiondetail: {},
         answerData:[
           //{
-          // _id: "",   //该回复的id
-          // question: "",  //该问题的id
-          // content:"",    //回答的内容
-          // author:"",     //回答人的id
-          // adopt:false,   //该回答是否被采纳
-          // reply:[],    //该回答的子评论
-          // createdAt: 0,  //创建时间  时间戳
-          // like:0      点赞数
+            // _id: "",   //该回复的id
+            // question: "",  //该问题的id
+            // content:"",    //回答的内容
+            // author:"",     //回答人的id
+            // adopt:false,   //该回答是否被采纳
+            // reply:[],    //该回答的子评论
+            // createdAt: 0,  //创建时间  时间戳
+            // like:0      点赞数
           //}
         ]
       }
@@ -107,13 +107,13 @@
         })
         toast.show();
         getQuestionByQid(id)
-          .then(res => {
-            toast.hide();
-            this.isLoading = false;
-            this.questiondetail = res.data;
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          this.isLoading = false;
+          this.questiondetail = res.data;
+        },(err => {
+          console.log(err);
+        }))
       },
       //通过id获取问题的回复列表
       getQAList(id){
@@ -123,14 +123,14 @@
         })
         toast.show();
         getQAListByQid(id)
-          .then(res => {
-            toast.hide();
-            // console.log(res.data)
-            this.answerData = res.data;
-            console.log(this.answerData)
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          // console.log(res.data)
+          this.answerData = res.data;
+          console.log(this.answerData)
+        },(err => {
+          console.log(err);
+        }))
       },
       //如果是从 我的选项 进来的，添加删除绑定
       canChose(type){
@@ -162,13 +162,13 @@
     display: inline-block;
     width: 60vw;
     color: #646464;
-    white-space:nowrap;
+    white-space:nowrap; 
     overflow: hidden;
     text-overflow:ellipsis;
   }
   .titleshadow{
-    -moz-box-shadow:0vw -0.5vh 3vw #b6baba;
-    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba;
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
   .questionDetail-container{

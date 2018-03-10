@@ -11,17 +11,17 @@
       <div slot="title" class="newTitle">评论</div>
       </van-search>
     </van-nav-bar>
-
+    
     <topNav></topNav>
 
     <div class="replyTop">评论({{ answerData.comment }})</div>
 
     <replyBox v-for="reply in replyData" :key="reply.id" :reply="reply" @replyuser="replyuser"></replyBox>
-
+    
     <div class="newreply">
       <input class="replyInput" type="text" placeholder="添加评论" v-model="reply">
       <div @click="pushnewreply"><sicon name="find-send" scale="2.3" color="#9c9c9c" ></sicon></div>
-
+      
     </div>
 
     <div class="replyTop"></div>
@@ -34,7 +34,7 @@
   import topNav from "../components/topNav"
   import replyBox from "../components/replyBox"
   import { replyQuestion } from '../../common/api'
-
+  
 
 
   export default {
@@ -43,16 +43,16 @@
         reply:"",
         replyData:[
           //{
-          // _id: "",   //该回复的id
-          // question: "",  //该问题的id
-          // content:"",    //回答的内容
-          // author:"",     //回答人的id
-          // adopt:false,   //该回答是否被采纳
-          // reply:[],    //该回答的子评论
-          // createdAt: 0  //创建时间  时间戳
-          // father:"",  问题的题目
-          // like:0      点赞数
-          // comment: 0   //子评论数，基于reply的长度
+            // _id: "",   //该回复的id
+            // question: "",  //该问题的id
+            // content:"",    //回答的内容
+            // author:"",     //回答人的id
+            // adopt:false,   //该回答是否被采纳
+            // reply:[],    //该回答的子评论
+            // createdAt: 0  //创建时间  时间戳
+            // father:"",  问题的题目
+            // like:0      点赞数
+            // comment: 0   //子评论数，基于reply的长度
           //}
         ],
         pushData:{
@@ -92,29 +92,29 @@
         })
         toast.show();
         replyQuestion(this.pushData)
-          .then(res => {
-            toast.hide();
-            const tip = this.$createToast({
-              txt: '评论成功！',
-              type: 'success',
-              time: 1300
-            })
-            //使用show调出方法
-            tip.show();
-
-            location.reload();
-          },(err => {
-            const tip = this.$createToast({
-              txt: '评论失败...',
-              type: 'fail',
-              time: 1300
-            })
-            //使用show调出方法
-            tip.show()
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          const tip = this.$createToast({
+            txt: '评论成功！',
+            type: 'success',
+            time: 1300
+          })
+          //使用show调出方法
+          tip.show();
+          
+          location.reload();
+        },(err => {
+          const tip = this.$createToast({
+            txt: '评论失败...',
+            type: 'fail',
+            time: 1300
+          })
+          //使用show调出方法
+          tip.show()
+          console.log(err);
+        }))
       },
-
+      
     },
     created(){
       let answerData = sessionStorage.getItem("answerData")
@@ -143,8 +143,8 @@
     color: #0086ff;
   }
   .titleshadow{
-    -moz-box-shadow:0vw -0.5vh 3vw #b6baba;
-    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba;
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
   .questionarea{
@@ -189,21 +189,21 @@
     font-weight: 700;
     letter-spacing: 0.2vw;
   }
-  .replyInput::-webkit-input-placeholder {
-    /* WebKit browsers */
-    color: #c0c0c0;
-  }
-  .replyInput:-moz-placeholder {
-    /* Mozilla Firefox 4 to 18 */
-    color: #c0c0c0;
-  }
-  .replyInput::-moz-placeholder {
-    /* Mozilla Firefox 19+ */
-    color: #c0c0c0;
-  }
-  .replyInput:-ms-input-placeholder {
-    /* Internet Explorer 10+ */
-    color: #c0c0c0;
+  .replyInput::-webkit-input-placeholder {   
+    /* WebKit browsers */   
+    color: #c0c0c0;   
+  }   
+  .replyInput:-moz-placeholder {   
+    /* Mozilla Firefox 4 to 18 */   
+    color: #c0c0c0;   
+  }   
+  .replyInput::-moz-placeholder {   
+    /* Mozilla Firefox 19+ */   
+    color: #c0c0c0;   
+  }   
+  .replyInput:-ms-input-placeholder {   
+    /* Internet Explorer 10+ */   
+    color: #c0c0c0;   
   }
 
   .newreply svg{

@@ -22,10 +22,11 @@ var url = 'https://m.yixiutech.com';
 
 //根据筛选条件获取订单列表
 function getOrderList(req) {
+  console.log(req);
   var order = {
     // shop:'', //店铺id
     user: req.user._id, //用户id
-    state: req.filter //订单状态
+    state: req.state //订单状态
   };
   return new _promise2.default(function (resolve, reject) {
     ajax.post(url + '/order/service/filter', order).then(function (res) {

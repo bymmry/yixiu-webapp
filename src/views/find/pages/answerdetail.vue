@@ -12,11 +12,11 @@
       <div slot="title" class="detailTitle">{{ answerdetail.father }}</div>
       </van-search>
     </van-nav-bar>
-
+    
     <topNav></topNav>
 
     <div class="answercontent" v-html="answerdetail.content">
-
+    
     </div>
 
     <div class="answerend">该文发表与&nbsp;--&nbsp;{{ createdtime }}</div>
@@ -35,7 +35,7 @@
           <sicon name="find-unsupport" scale="1.7"></sicon>
           0
         </div>
-
+        
       </div>
       <div class="otherBtn">
         <div class="funcBtn" @click="clickAdopt" v-if="answerdetail.choseA === true">
@@ -52,14 +52,14 @@
         </div>
       </div>
     </div>
-
+    
     <van-popup v-model="popupshow" class="popup">
       <div class="popupTitle">确定采纳这个答案？</div>
       <div class="popupBtn">
         <van-button type="primary" @click="popupChoseNO">否</van-button>
         <van-button type="danger" @click="popupChoseYES">是</van-button>
       </div>
-
+      
     </van-popup>
 
   </div>
@@ -81,16 +81,16 @@
         like:false,
         answerdetail:{
           //{
-          // _id: "",   //该回复的id
-          // question: "",  //该问题的id
-          // content:"",    //回答的内容
-          // author:"",     //回答人的id
-          // adopt:false,   //该回答是否被采纳
-          // reply:[],    //该回答的子评论
-          // createdAt: 0  //创建时间  时间戳
-          // father:"",  问题的题目
-          // like:0      点赞数
-          // comment: 0   //子评论数，基于reply的长度
+            // _id: "",   //该回复的id
+            // question: "",  //该问题的id
+            // content:"",    //回答的内容
+            // author:"",     //回答人的id
+            // adopt:false,   //该回答是否被采纳
+            // reply:[],    //该回答的子评论
+            // createdAt: 0  //创建时间  时间戳
+            // father:"",  问题的题目
+            // like:0      点赞数
+            // comment: 0   //子评论数，基于reply的长度
           //}
         }
       }
@@ -117,20 +117,20 @@
         })
         toast.show();
         likethis(id)
-          .then(res => {
-            toast.hide();
-            const tip = this.$createToast({
-              txt: 'you like it!',
-              type: 'success',
-              time: 1300
-            })
-            //使用show调出方法
-            tip.show()
-            this.like = true;
-            this.answerdetail.like += 1;
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          const tip = this.$createToast({
+            txt: 'you like it!',
+            type: 'success',
+            time: 1300
+          })
+          //使用show调出方法
+          tip.show()
+          this.like = true;
+          this.answerdetail.like += 1;
+        },(err => {
+          console.log(err);
+        }))
       },
       //点击收藏
       clickCollect(){
@@ -172,34 +172,34 @@
         }
         console.log(choseData)
         adoptThis(choseData)
-          .then(res => {
-            toast.hide()
-            const tip = this.$createToast({
-              txt: '采纳成功!',
-              type: 'correct',
-              time: 1300
-            })
-            tip.show()
-            console.log(res)
-            setTimeout(() => {
-              this.$router.push({ path: "/find/questiondetail"})
-            },1600)
-
-          },(err => {
-            console.log(err);
-            const tip = this.$createToast({
-              txt: '采纳失败!',
-              type: 'fail',
-              time: 1000
-            })
-            tip.show()
-          }))
+        .then(res => {
+          toast.hide()
+          const tip = this.$createToast({
+            txt: '采纳成功!',
+            type: 'correct',
+            time: 1300
+          })
+          tip.show()
+          console.log(res)
+          setTimeout(() => {
+            this.$router.push({ path: "/find/questiondetail"})
+          },1600)
+          
+        },(err => {
+          console.log(err);
+          const tip = this.$createToast({
+            txt: '采纳失败!',
+            type: 'fail',
+            time: 1000
+          })
+          tip.show()
+        }))
       },
     },
     created:function(){
       this.answerdetail = this.$route.params.answerData;
-      let Time = new Date();
-      Time.setTime(this.answerdetail.createdAt * 1000);
+      let Time = new Date();  
+      Time.setTime(this.answerdetail.createdAt * 1000); 
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
 
       this.answerdetail.comment = this.answerdetail.reply.length ? this.answerdetail.reply.length : 0;
@@ -223,15 +223,15 @@
     padding-top: 30px;
   }
   .titleshadow{
-    -moz-box-shadow:0vw -0.5vh 3vw #b6baba;
-    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba;
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
   .detailTitle{
     display: inline-block;
     width: 60vw;
     color: #646464;
-    white-space:nowrap;
+    white-space:nowrap; 
     overflow: hidden;
     text-overflow:ellipsis;
   }

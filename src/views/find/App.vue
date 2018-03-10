@@ -17,10 +17,10 @@
         class="titleSearch"
         show-action
       >
-        <div slot="action" @click="newQuestion" class="newQuestion">
-          <sicon name="newQuestion" scale="1.7"></sicon>
-          提问
-        </div>
+      <div slot="action" @click="newQuestion" class="newQuestion">
+        <sicon name="newQuestion" scale="1.7"></sicon>
+        提问
+      </div>
       </van-search>
     </van-nav-bar>
 
@@ -86,7 +86,7 @@
       },
       //点击标签
       handleTabClick(index) {
-
+        
         sessionStorage.setItem("visitType", "other");
         if (index===0) {
           this.$router.push({ path: "/find/question"});
@@ -117,8 +117,8 @@
 
 <style scoped>
   .titleshadow{
-    -moz-box-shadow:0vw -0.5vh 3vw #b6baba;
-    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba;
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
   .titleSearch{

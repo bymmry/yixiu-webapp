@@ -15,10 +15,10 @@
           </div>
         </div>
       </div>
-
+      
     </div>
   </div>
-
+  
 </template>
 
 <script>
@@ -26,7 +26,7 @@
 
   import { Icon } from 'vant';
   import { getuserinforById } from '../../common/api';
-
+  
 
   export default {
     data(){
@@ -41,17 +41,17 @@
     methods: {
       replyuser(){
         this.$emit("replyuser", [this.name,this.reply._id]);
-      },
+      }, 
       getusermessage(id){
         getuserinforById(id)
-          .then(res => {
-            this.name = res.data.name
-            this.avator = res.data.wx.avatarUrl;
-            console.log(this.reply)
-            console.log(res)
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          this.name = res.data.name
+          this.avator = res.data.wx.avatarUrl;
+          console.log(this.reply)
+          console.log(res)
+        },(err => {
+          console.log(err);
+        }))
       },
       datestr(x,y) {
         var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
@@ -61,8 +61,8 @@
     created() {
       this.getusermessage(this.reply.author)
 
-      let Time = new Date();
-      Time.setTime(this.reply.updatedAt * 1000);
+      let Time = new Date();  
+      Time.setTime(this.reply.updatedAt * 1000); 
       this.reply.time = this.datestr(Time,"yyyy.MM.d");
     }
   }
@@ -75,7 +75,7 @@
     min-height: 20vh;
     padding: 3vh 2vw 3vh 2.7vw;
     background: #fff;
-
+    
   }
   .avator{
     width: 11vw;
@@ -90,7 +90,7 @@
     height: 100%;
   }
   .message{
-    width: 88%;
+    width: 88%;  
     display: flex;
     flex-direction: column;
     border-bottom: 0.3vw solid #d1d1d1;

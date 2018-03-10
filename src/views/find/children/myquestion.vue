@@ -5,7 +5,7 @@
         <questionBox  :question="question"></questionBox>
       </div>
     </van-pull-refresh>
-
+    
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
 
@@ -44,14 +44,14 @@
         toast.show();
 
         getQuestionListById(postdata)
-          .then(res => {
-            toast.hide();
-            this.isLoading = false;
-            this.questionData = res.data;
-            // console.log(res.data)
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          toast.hide();
+          this.isLoading = false;
+          this.questionData = res.data;
+          // console.log(res.data)
+        },(err => {
+          console.log(err);
+        }))
       },
       //建立点击question的Storage
       createdQStorage(question){

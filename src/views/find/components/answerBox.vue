@@ -1,6 +1,6 @@
 <template>
   <div class="questionBox-container">
-    <img v-if="answer.adopt === true" class="choseBg" src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/crown.png">
+  <img v-if="answer.adopt === true" class="choseBg" src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/crown.png">
     <!-- 内容部分 -->
     <div class="questionBox-content">
       <div class="questionTitle">
@@ -25,7 +25,7 @@
     <!-- 底部的阴影 -->
     <div class="questionBox-shadow"></div>
   </div>
-
+  
 </template>
 
 <script>
@@ -56,19 +56,19 @@
       },
       getusermessage(id){
         getuserinforById(id)
-          .then(res => {
-            this.avator = res.data.wx.avatarUrl;
-            this.name = res.data.name;
-            // console.log(res);
-          },(err => {
-            console.log(err);
-          }))
+        .then(res => {
+          this.avator = res.data.wx.avatarUrl;
+          this.name = res.data.name;
+          // console.log(res);
+        },(err => {
+          console.log(err);
+        }))
       }
     },
     created: function(){
       console.log(this.answer)
-      let Time = new Date();
-      Time.setTime(this.answer.createdAt * 1000);
+      let Time = new Date();  
+      Time.setTime(this.answer.createdAt * 1000); 
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
 
       this.getusermessage(this.answer.author);
@@ -103,8 +103,8 @@
     bottom: 1px;
     width: 100%;
     height: 1px;
-    -moz-box-shadow:0vw 1vh 4vw #b6baba;
-    -webkit-box-shadow:0vw 1vh 4vw #b6baba;
+    -moz-box-shadow:0vw 1vh 4vw #b6baba; 
+    -webkit-box-shadow:0vw 1vh 4vw #b6baba; 
     box-shadow:0vw 1vh 4vw #b6baba;
   }
   .questionContent img{
