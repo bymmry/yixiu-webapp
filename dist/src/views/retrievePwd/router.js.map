@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../../src/views/retrievePwd/router.js"],"names":["path","component"],"mappings":";;;;;;AAAA;;;;;;kBAEe,CAAC;AACdA,QAAM,cADQ;AAEdC;AAFc,CAAD,C","file":"router.js","sourcesContent":["import App from './App'\r\n\r\nexport default [{\r\n  path: '/retrievePwd',\r\n  component: App\r\n}]\r\n"]}
