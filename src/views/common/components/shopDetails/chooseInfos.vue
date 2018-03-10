@@ -96,34 +96,19 @@
       }
       this.TotalFee = this.payment;
       this.serverList = pro.join("/");
+      this.setOrderData();
 
-      let shopId = this.$route.params.id;
-      let userInfo = this.getUserInfo();
-      this.sureOrderData = {
-        type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
-        user: userInfo._id,
-        shop: shopId,
-        // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
-        phone: "",//联系电话
-        // address: "",//联系人地址
-        // goods: this.shopId,//商品列表
-        service: this.serverId,//服务列表
-        phoneModel: this.chooseData.model.data._id,//
-        // card:[""],//优惠券列表
-        remark: "",//备注
-        paymentType: this.payment, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
-        // price: 1,//总金额(优惠前金额)
-        payment: this.TotalFee*100//实付金额
-      }
     },
     watch: {
       TotalFee: function (val) {
+        this.setOrderData();
         return val;
       },
       payment: function (val) {
         return val;
       },
       serverList: function (val) {
+        this.setOrderData();
         console.log(val);
       },
       serverId: function (val) {
@@ -146,8 +131,6 @@
         this.showList = false;
         this.chosenCoupon = index;
         if (index !== -1){
-          console.log("使用优惠券");
-          console.log(this.coupons[index]);
           this.TotalFee = this.payment - this.coupons[index].value/100;
         }else {
           this.TotalFee = this.payment;
@@ -155,7 +138,26 @@
       },
       onExchange(code) {
         this.coupons.push(this.coupon);
-        console.log(this.coupon);
+      },
+      setOrderData: function () {
+        let shopId = this.$route.params.id;
+        let userInfo = this.getUserInfo();
+        this.sureOrderData = {
+          type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
+          user: userInfo._id,
+          shop: shopId,
+          // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
+          phone: "",//联系电话
+          // address: "",//联系人地址
+          // goods: this.shopId,//商品列表
+          service: this.serverId,//服务列表
+          phoneModel: this.chooseData.model.data._id,//
+          // card:[""],//优惠券列表
+          remark: "",//备注
+          paymentType: 0, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
+          price: this.payment*100,//总金额(优惠前金额)
+          payment: this.TotalFee*100//实付金额
+        }
       }
     }
   };

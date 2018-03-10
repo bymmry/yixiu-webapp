@@ -63,9 +63,6 @@
     },
     methods: {
       sureOrder: function () {
-        let that = this;
-        let shopId = this.$route.params.id;
-        let userInfo = this.getUserInfo();
         let orderData = this.sureOrderData;
 
         console.log(orderData);
