@@ -7,7 +7,7 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
 
-    
+
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="countBox">
         <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/dribbble2.png" alt="">
@@ -22,7 +22,6 @@
 <script>
   import { PullRefresh } from 'vant';
   import { getuserinforByopenId } from '../../../common/api'
-
   export default {
     data () {
       return {
@@ -38,7 +37,6 @@
       prepage(){
         this.$router.push({ path: "/my" })
       },
-
       //更新
       async onRefresh(type){
         const toast = this.$createToast({
@@ -46,44 +44,40 @@
           txt: '正在更新'
         })
         toast.show();
-
-
         //更新需要进行的操作
         //传递的新数据
         getuserinforByopenId(this.userinfo.wx.openid)
-        .then(res => {
-          toast.hide()
-          const tip = this.$createToast({
-            txt: '更新成功!',
-            type: 'correct',
-            time: 1000
-          })
-          tip.show();
-          this.isLoading = false;
-          this.userinfo = res.data;
-
-        },(err => {
-          const tip = this.$createToast({
-            txt: '更新失败!',
-            type: 'fail',
-            time: 1000
-          })
-          tip.show()
-        }))
+          .then(res => {
+            toast.hide()
+            const tip = this.$createToast({
+              txt: '更新成功!',
+              type: 'correct',
+              time: 1000
+            })
+            tip.show();
+            this.isLoading = false;
+            this.userinfo = res.data;
+          },(err => {
+            const tip = this.$createToast({
+              txt: '更新失败!',
+              type: 'fail',
+              time: 1000
+            })
+            tip.show()
+          }))
       },
       //获取用户信息
       async getUserinfo(userData){
         getuserinforByopenId(userData.wx.openid)
-        .then(res => {
-          this.userinfo = res.data;
-        },(err => {
-          console.log(err);
-        }))
+          .then(res => {
+            this.userinfo = res.data;
+          },(err => {
+            console.log(err);
+          }))
       },
     },
     created() {
       let userData = this.getUserInfo();
-
       this.getUserinfo(userData);
     }
   }
@@ -93,11 +87,11 @@
   .myinfo-container{
     overflow: hidden;
     width: 100vw;
- }
+  }
   .navBox{
     position: fixed;
     top: 0;
-    padding-left: 10px; 
+    padding-left: 10px;
     width: 100vw;
     min-height: 73px;
     height: 15vh;
@@ -136,6 +130,4 @@
   .topblank{
     margin-top: 15vh;
   }
-
-
 </style>
