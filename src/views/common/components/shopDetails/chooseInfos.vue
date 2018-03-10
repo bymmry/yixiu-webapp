@@ -32,7 +32,7 @@
         </van-button>
       </div>
       <div class="stepNext">
-        <sure-order :data="chooseData" :TotalFee="TotalFee" :serverId="serverId"></sure-order>
+        <sure-order :sureOrderData="sureOrderData" :data="chooseData" :TotalFee="TotalFee" :serverId="serverId"></sure-order>
         <!--<van-button @click="nextStep" bottom-action>-->
         <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
         <!--</van-button>-->
@@ -64,17 +64,16 @@
         chosenCoupon: -1,
         coupons: [coupon],
         disabledCoupons: [coupon],
-        shopServer: []
+        shopServer: [],
+        sureOrderData: {},
+        payment: 0,
+        TotalFee: 0
       }
     },
     props: {
       chooseData: {
         type: Object,
         default: null
-      },
-      TotalFee: {
-        type: Number,
-        default: 0
       },
       serverList: {
         type: String,
@@ -88,19 +87,40 @@
       }
     },
     mounted() {
-      console.log(this.chooseData);
       let servers = this.chooseData.problem.data;
       let pro = servers.map(function (val) {
         return val.name;
       });
-      let TotalFee = 0;
       for(let i=0; i<servers.length; i++){
-        TotalFee += servers[i].price;
+        this.payment += servers[i].price;
       }
+      this.TotalFee = this.payment;
       this.serverList = pro.join("/");
+
+      let shopId = this.$route.params.id;
+      let userInfo = this.getUserInfo();
+      this.sureOrderData = {
+        type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
+        user: userInfo._id,
+        shop: shopId,
+        // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
+        phone: "",//联系电话
+        // address: "",//联系人地址
+        // goods: this.shopId,//商品列表
+        service: this.serverId,//服务列表
+        phoneModel: this.chooseData.model.data._id,//
+        // card:[""],//优惠券列表
+        remark: "",//备注
+        paymentType: this.payment, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
+        // price: 1,//总金额(优惠前金额)
+        payment: this.TotalFee*100//实付金额
+      }
     },
     watch: {
       TotalFee: function (val) {
+        return val;
+      },
+      payment: function (val) {
         return val;
       },
       serverList: function (val) {
@@ -125,9 +145,17 @@
       onChange(index) {
         this.showList = false;
         this.chosenCoupon = index;
+        if (index !== -1){
+          console.log("使用优惠券");
+          console.log(this.coupons[index]);
+          this.TotalFee = this.payment - this.coupons[index].value/100;
+        }else {
+          this.TotalFee = this.payment;
+        }
       },
       onExchange(code) {
         this.coupons.push(this.coupon);
+        console.log(this.coupon);
       }
     }
   };
