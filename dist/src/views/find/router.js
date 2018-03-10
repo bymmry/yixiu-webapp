@@ -32,6 +32,14 @@ var _reply = require('./pages/reply');
 
 var _reply2 = _interopRequireDefault(_reply);
 
+var _search = require('./pages/search');
+
+var _search2 = _interopRequireDefault(_search);
+
+var _changequestion = require('./components/changequestion');
+
+var _changequestion2 = _interopRequireDefault(_changequestion);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = [{
@@ -56,19 +64,27 @@ exports.default = [{
   // }
 }, {
   name: "answerdetail",
-  path: '/find/answerdetail', //回答详情
+  path: '/find/answerdetail/:answerId', //回答详情
   component: _answerdetail2.default
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }
 }, {
   name: "newanswer",
-  path: '/find/newanswer/:questionId', //发起提问
+  path: '/find/newanswer/:answerData', //发起提问
   component: _newanswer2.default
 }, {
+  name: "changequestion",
+  path: '/find/changequestion/:oldquestion', //改变提问
+  component: _changequestion2.default
+}, {
   name: "reply",
-  path: '/find/reply/:id', //回复
+  path: '/find/reply/', //回复
   component: _reply2.default
+}, {
+  name: "search",
+  path: '/find/search/:searchData', //发起提问
+  component: _search2.default
 }]; //按需加载方式
 // const App = () => ({
 //   component: import ('./App')

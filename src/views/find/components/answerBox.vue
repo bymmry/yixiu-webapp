@@ -1,23 +1,23 @@
 <template>
   <div class="questionBox-container">
-  <img v-if="answer.adopt === true" class="choseBg" src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/crown.png">
+    <img v-if="answer.adopt === true" class="choseBg" src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/crown.png">
     <!-- 内容部分 -->
     <div class="questionBox-content">
       <div class="questionTitle">
         <div class="answerAvator">
-          <img :src="answer.avator">
+          <img :src="avator">
         </div>
-        {{ answer.username }}
+        {{ name }}
       </div>
       <div class="questionContent">
-        <img v-if="answer.imgurl !== 0" :src="answer.imgurl">
+        <!-- <img v-if="answer.imgurl !== 0" :src="answer.imgurl"> -->
         <div class="questionText">{{ answer.content }}</div>
       </div>
       <div class="questionContent-hidden" v-if="foldquestion == true">...</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <div>{{ answer.replay }} 评论&nbsp;·&nbsp;</div>
-          <div>{{ answer.time }}前</div>
+          <!-- <div>{{ answer.reply }} 评论&nbsp;·&nbsp;</div> -->
+          <div>{{ createdtime }}</div>
         </div>
         <div>点击查看详情</div>
       </div>
@@ -25,16 +25,21 @@
     <!-- 底部的阴影 -->
     <div class="questionBox-shadow"></div>
   </div>
-  
+
 </template>
 
 <script>
   //vant
 
   import { Icon } from 'vant';
+  import { getuserinforById } from '../../common/api';
+
   export default {
     data(){
       return {
+        avator:"",
+        name:"",
+        createdtime: "",
         foldquestion: true
       }
     },
@@ -45,12 +50,25 @@
       [Icon.name]: Icon,
     },
     methods: {
-
+      datestr(x,y) {
+        var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
+        return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
+      },
+      getusermessage(id){
+        getuserinforById(id)
+          .then(res => {
+            this.avator = res.data.wx.avatarUrl;
+            this.name = res.data.name;
+            // console.log(res);
+          },(err => {
+            console.log(err);
+          }))
+      }
     },
     created: function(){
       console.log(this.answer)
-      let Time = new Date();  
-      Time.setTime(this.answer.createdAt * 1000); 
+      let Time = new Date();
+      Time.setTime(this.answer.createdAt * 1000);
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
 
       this.getusermessage(this.answer.author);
@@ -85,8 +103,8 @@
     bottom: 1px;
     width: 100%;
     height: 1px;
-    -moz-box-shadow:0vw 1vh 4vw #b6baba; 
-    -webkit-box-shadow:0vw 1vh 4vw #b6baba; 
+    -moz-box-shadow:0vw 1vh 4vw #b6baba;
+    -webkit-box-shadow:0vw 1vh 4vw #b6baba;
     box-shadow:0vw 1vh 4vw #b6baba;
   }
   .questionContent img{

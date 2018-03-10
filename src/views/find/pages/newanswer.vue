@@ -12,9 +12,9 @@
       <div slot="right" class="newBtn" @click="checknewAnswer">提交</div>
       </van-search>
     </van-nav-bar>
-    
+
     <topNav></topNav>
-    
+
     <div class="questionarea">
       <p class="questiontitle" v-if='text == ""'>请输入问题描述</p>
 
@@ -22,9 +22,9 @@
 
     </div>
 
-    
+
     <optionFooter @changeanonymous="changeanonymous"></optionFooter>
-    
+
 
   </div>
 </template>
@@ -45,7 +45,7 @@
         answer:{
           content: "",//内容字符串
           question: "",//此评论属于哪个问题的标识_id
-          parent: "", //父级评论的标识_id(不填则为1级评论 填了则为二级评论)
+          // parent: "", //父级评论的标识_id(不填则为1级评论 填了则为二级评论)
           author: "" //此评论属于哪个用户的标识_id(或者叫回复人,评论者)
         }
       }
@@ -83,7 +83,7 @@
         }
       },
       pushnewAnswer(){
-        // console.log(this.answer)
+        console.log(this.answer)
         const toast = this.$createToast({
           time: 0,
           txt: '正在提交'
@@ -91,26 +91,26 @@
         toast.show();
 
         replyQuestion(this.answer)
-        .then(res => {
-          toast.hide();
+          .then(res => {
+            toast.hide();
 
-          const tip = this.$createToast({
-            txt: '提交成功!',
-            type: 'correct',
-            time: 1300
-          })
-          tip.show();
+            const tip = this.$createToast({
+              txt: '提交成功!',
+              type: 'correct',
+              time: 1300
+            })
+            tip.show();
 
-          setTimeout(() => { this.close(); }, 1600);
+            setTimeout(() => { this.close(); }, 1600);
 
-        },(err => {
-          const tip = this.$createToast({
-            txt: '提交失败!',
-            type: 'fail',
-            time: 1000
-          })
-          console.log(err);
-        }))
+          },(err => {
+            const tip = this.$createToast({
+              txt: '提交失败!',
+              type: 'fail',
+              time: 1000
+            })
+            console.log(err);
+          }))
       }
     },
     created(){
@@ -132,8 +132,8 @@
     color: #0086ff;
   }
   .titleshadow{
-    -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
-    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba; 
+    -moz-box-shadow:0vw -0.5vh 3vw #b6baba;
+    -webkit-box-shadow:0vw -0.5vh 3vw #b6baba;
     box-shadow:0vw -0.5vh 3vw #b6baba;
   }
   .questionarea{

@@ -9,7 +9,7 @@
     />
     <!-- 顶部留白 -->
     <div class="topblank"></div>
-  
+
     <!-- 个人中心-信息 -->
     <!-- 顶部背景图 -->
     <div class="userbg"></div>
@@ -31,14 +31,14 @@
     <!-- 个人中心-功能菜单 -->
     <div class="user-menu">
       <van-cell-group>
-        <van-cell 
-          v-for="(catalog,index) in catalogs" 
+        <van-cell
+          v-for="(catalog,index) in catalogs"
           :key="index"
-          :title="catalog.name" 
-          :icon="catalog.icon" 
+          :title="catalog.name"
+          :icon="catalog.icon"
           is-link
           @click="changepage(catalog.url)"
-          />
+        />
       </van-cell-group>
     </div>
   </div>
@@ -56,11 +56,11 @@
       return {
         loggedin: false,    //是否已登录
         //用户信息
-        userInfo:{   
+        userInfo:{
           // wx.avatarUrl  头像框   如果没有就有默认头像
           // wx.city       城市
           // wx.country    国家
-          // wx.gender     性别   1是男 
+          // wx.gender     性别   1是男
           // wx.language   语言
           // wx.nickName   昵称
           // wx.openid     ID
@@ -80,7 +80,7 @@
           }
         },
         //功能菜单列表
-        catalogs:[    
+        catalogs:[
           {
             name: "优惠券",
             icon: "gold-coin",
@@ -110,11 +110,6 @@
             name: "问题反馈",
             icon: "question",
             url: ""
-          },
-          {
-            name: "退出登录",
-            icon: "close",
-            url: "logout"
           }
         ]
       }
@@ -126,30 +121,6 @@
       [CellGroup.name]: CellGroup,
     },
     methods: {
-      //登出
-      async sign_out(){
-        const toast = this.$createToast({
-          time: 0,
-          txt: '正在退出'
-        })
-        toast.show();
-
-
-        //退出需要进行的操作
-        let res = 1
-
-
-
-        toast.hide()
-        if (res) {
-          const tip = this.$createToast({
-            txt: '您已退出!',
-            type: 'correct',
-            time: 1000
-          })
-          toast.show()
-        }
-      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/home"})
@@ -167,9 +138,7 @@
         }else{
           if (url==="") {
             this.functionunavailable();
-          }else if(url==="logout"){
-            this.sign_out();
-          }else{
+          }else {
             this.$router.push({ path: url })
           }
         }
@@ -177,12 +146,12 @@
       //通过id查询信息
       async getUserinfo(openid){
         getuserinforByopenId(openid)
-        .then(res => {
-          this.userInfo = res.data
-          this.loggedin = true;
-        },(err => {
-          console.log(err);
-        }))
+          .then(res => {
+            this.userInfo = res.data
+            this.loggedin = true;
+          },(err => {
+            console.log(err);
+          }))
       },
     },
     activated() {
@@ -209,8 +178,8 @@
     height: 24vh;
     border: 0.1vw solid #e9e9e9;
     border-radius: 5px;
-    -moz-box-shadow:0vw 1vh 4vw #e9e9e9; 
-    -webkit-box-shadow:0vw 1vh 4vw #e9e9e9; 
+    -moz-box-shadow:0vw 1vh 4vw #e9e9e9;
+    -webkit-box-shadow:0vw 1vh 4vw #e9e9e9;
     box-shadow:0vw 1vh 4vw #e9e9e9;
     background: url(https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/lattice.jpg);
   }
@@ -227,8 +196,8 @@
     border-radius: 50%;
     border: 0.1vw solid #b6baba;
     margin-bottom: 2vh;
-    -moz-box-shadow:0vw 0.5vh 3vw #b6baba; 
-    -webkit-box-shadow:0vw 0.5vh 3vw #b6baba; 
+    -moz-box-shadow:0vw 0.5vh 3vw #b6baba;
+    -webkit-box-shadow:0vw 0.5vh 3vw #b6baba;
     box-shadow:0vw 0.5vh 3vw #b6baba;
     overflow: hidden;
   }
