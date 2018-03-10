@@ -20,12 +20,12 @@ var _myaddress = require('./pages/myaddress/myaddress');
 
 var _myaddress2 = _interopRequireDefault(_myaddress);
 
+var _mywallet = require('./pages/mywallet/mywallet');
+
+var _mywallet2 = _interopRequireDefault(_mywallet);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//按需加载方式
-// const App = () => ({
-//   component: import ('./App')
-// })
 exports.default = [{
   path: '/my',
   component: _App2.default
@@ -50,5 +50,14 @@ exports.default = [{
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }
-}];
+}, {
+  path: '/my/mywallet',
+  component: _mywallet2.default
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
+}]; //按需加载方式
+// const App = () => ({
+//   component: import ('./App')
+// })
 //# sourceMappingURL=router.js.map
