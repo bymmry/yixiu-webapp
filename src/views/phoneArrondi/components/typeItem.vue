@@ -24,7 +24,7 @@
 <style scoped>
 .type__item {
 	display: inline-block;
-	width: 20%;
+	width: 25%;
 	text-align: center;
 	font-size: 12px;
   color: #949191;

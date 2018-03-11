@@ -24,7 +24,7 @@
       if(seller == "sellerHome" || seller == "businessRegister" || seller == "addBrand" || seller == "addModel" || seller == "addCatagory" || seller == "addService" || seller == "publishPhone" || seller == "orderDetail") {
         this.isShowNav = false;
       }
-      if (url.indexOf('orderList')) {
+      if (url.indexOf('orderList') !== -1) {
         this.isShowNav = false;
       }
     }

@@ -44,7 +44,9 @@
         console.log(sessionStorage.getItem("userData"))
         // }
 
-        this.checkIsShop(userData);
+        if (location.href.indexOf('sellerHome') !== -1) {
+          this.checkIsShop(userData);
+        }
 
       },(err => {
         console.log(err)
@@ -54,13 +56,12 @@
     },
     methods: {
       async checkIsShop (userData) {
-        if (location.href.indexOf('sellerHome')) {
-          let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
-          localStorage.setItem('shopData', JSON.stringify(res.data));
-          if (res.code == 4004) {
-            this.$router.push('/businessRegister');
-            return;
-          }
+        let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
+        localStorage.setItem('shopData', JSON.stringify(res.data));
+        if (res.code == 4004) {
+          this.$router.push('/businessRegister');
+          return;
+        } else {
           this.$router.push('/sellerHome')
         }
       }

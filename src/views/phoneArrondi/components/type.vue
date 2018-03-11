@@ -22,7 +22,6 @@
 				data: [
           { name: '今日上新', icon: 'shangxin' },
           { name: '手机评测', icon: 'pingce' },
-          { name: '配件商城', icon: 'shoujipejian' },
           { name: 'ipad精选', icon: 'ipad' },
           { name: '优惠券', icon: 'youhuiquan' }
         ]
