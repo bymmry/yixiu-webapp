@@ -29,23 +29,16 @@
         let map = new BMap.Map("allmap");
         let point = new BMap.Point(116.331398,39.897445);
         map.centerAndZoom(point,12);
+
         let _this = this;
-
-        function getLoaction (res) {
-          let city = res.name;
-          map.setCenter(city);
-          _this.city = city;
-        }
-
-        const myCity = new BMap.LocalCity();
-        myCity.get(getLoaction);
-
+        
         let geolocation = new BMap.Geolocation();
         geolocation.getCurrentPosition(function(r){
           if(this.getStatus() == BMAP_STATUS_SUCCESS){
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);
             map.panTo(r.point);
+            _this.city = r.address.city;
             localStorage.setItem('lng', r.point.lng);
             localStorage.setItem('lat', r.point.lat);
           }

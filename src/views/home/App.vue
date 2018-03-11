@@ -1,17 +1,19 @@
 <template>
   <div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh"></van-pull-refresh>
-    <HomeHeader></HomeHeader>
-    <Swipe></Swipe>
-    <Type></Type>
-    <HotArea></HotArea>
-    <Ticket></Ticket>
-    <Activity></Activity>
-    <div class="shopTitle">
-      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
-    </div>
-    <shop-list></shop-list>
-    <div class="space"></div>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+      <HomeHeader></HomeHeader>
+      <Swipe></Swipe>
+      <Type></Type>
+      <HotArea></HotArea>
+      <Ticket></Ticket>
+      <Activity></Activity>
+      <div class="shopTitle">
+        <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+      </div>
+      <shop-list></shop-list>
+      <div class="space"></div>
+    </van-pull-refresh>
+    
   </div>
 </template>
 

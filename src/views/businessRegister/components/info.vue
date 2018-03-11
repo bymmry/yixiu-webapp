@@ -146,16 +146,8 @@ export default {
 			let map = new BMap.Map("allmap");
 			let point = new BMap.Point(116.331398,39.897445);
 			map.centerAndZoom(point,12);
+
 			let _this = this;
-
-			function getLoaction (res) {
-				let city = res.name;
-				map.setCenter(city);
-				_this.city = city;
-			}
-
-			const myCity = new BMap.LocalCity();
-			myCity.get(getLoaction);
 
 			let geolocation = new BMap.Geolocation();
 			geolocation.getCurrentPosition(function(r){
@@ -163,6 +155,7 @@ export default {
 					var mk = new BMap.Marker(r.point);
 					map.addOverlay(mk);
 					map.panTo(r.point);
+					_this.city = r.address.city;
 					_this.infos.position.lng = r.point.lng;
 					_this.infos.position.lat = r.point.lat;
 					
