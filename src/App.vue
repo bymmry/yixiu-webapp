@@ -16,15 +16,16 @@
 
 <script>
   import navigation from './views/common/components/navigation';
+  // import mainApp from './views/common/App';
+
   import { reguser } from './views/common/api'
   export default {
     name: 'App',
     components: {
-      navigation
+      navigation,
+      // mainApp
     },
     created() {
-      // alert(window.location);
-      // alert(this.$route.path);
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
       console.log("onload--------------------------------------------------->");
@@ -39,14 +40,16 @@
         // console.log(res)
         // if (Data !== {} && Data !== null) {
         let userData2 = JSON.stringify(res.data);
-        console.log(res.data)
+        console.log(res.data);
         sessionStorage.setItem("userData", userData2);
-        console.log(sessionStorage.getItem("userData"))
+        console.log(sessionStorage.getItem("userData"));
         // }
 
         if (location.href.indexOf('sellerHome') !== -1) {
           this.checkIsShop(userData);
         }
+
+        this.$router.push("/home");
 
       },(err => {
         console.log(err)
