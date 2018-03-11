@@ -7,7 +7,7 @@
       </div>
     </div>
     <h3>订单详情</h3>
-    <div class="information">
+    <div class="information" v-if="orderData.shop">
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
         <li><span class="name">商家电话</span><span class="value">{{orderData.shop.contactNumber}}</span></li>
@@ -19,23 +19,6 @@
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li><span class="name">订单总额</span><span class="value">{{orderData.payment/100}}</span></li>
       </ul>
-      <!--<div class="coupon">-->
-        <!--<van-coupon-cell-->
-          <!--:coupons="coupons"-->
-          <!--:chosen-coupon="chosenCoupon"-->
-          <!--@click="showList = true"-->
-        <!--/>-->
-        <!--&lt;!&ndash; 优惠券列表 &ndash;&gt;-->
-        <!--<van-popup v-model="showList" position="bottom">-->
-          <!--<van-coupon-list-->
-            <!--:coupons="coupons"-->
-            <!--:chosen-coupon="chosenCoupon"-->
-            <!--:disabled-coupons="disabledCoupons"-->
-            <!--@change="onChange"-->
-            <!--@exchange="onExchange"-->
-          <!--/>-->
-        <!--</van-popup>-->
-      <!--</div>-->
     </div>
     <div class="stepButton">
       <div class="stepPrev">
@@ -73,6 +56,7 @@
       let id = this.$route.params.id;
       console.log(id);
       getOrderDetail(id).then(res => {
+        console.log(res);
         this.orderData = res.data;
         let servers = this.orderData.service;
         let pro = servers.map(function (val) {
@@ -145,7 +129,7 @@
           paymentType: 0, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
           price: orderData.price,//总金额(优惠前金额)
           payment: orderData.payment//实付金额
-        }
+        };
         console.log(this.sureOrderData);
       }
     }
