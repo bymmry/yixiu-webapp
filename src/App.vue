@@ -26,9 +26,11 @@
       // mainApp
     },
     created() {
+      console.log("App onload--------------------------------------------------->");
+      // alert(window.location.href);
+      console.log(window.location.href);
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
-      console.log("onload--------------------------------------------------->");
       console.log(userData);
       // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
@@ -47,9 +49,11 @@
 
         if (location.href.indexOf('sellerHome') !== -1) {
           this.checkIsShop(userData);
+          console.log("sellerHome");
+        }else {
+          this.$router.push("/home");
         }
 
-        this.$router.push("/home");
 
       },(err => {
         console.log(err)
