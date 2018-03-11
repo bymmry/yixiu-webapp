@@ -13,8 +13,9 @@
       <div class="questionContent-hidden" v-if="overcontent">...</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <div>回复：{{ question.replyCount }} 人</div>
+          <div>回复：{{ question.replyCount }}</div>
           <div>赏金：{{ question.reward ? question.reward/100 : 0 }} 元</div>
+          <div>{{ createdtime }}</div>
         </div>
         <div class="questionFooterRight">点击了解更多&nbsp;&nbsp;<sicon name="find-right" scale="3"></sicon></div>
       </div>
@@ -31,6 +32,7 @@
   export default {
     data(){
       return {
+        createdtime: "",
         overtitle: false,   // 标题是否超过2行
         overcontent: false,   // 内容是否超过3行
       }
@@ -42,11 +44,19 @@
 
     },
     methods: {
-
+      datestr(x,y) {
+        var z ={y:x.getFullYear(),M:x.getMonth()+1,d:x.getDate(),h:x.getHours(),m:x.getMinutes(),s:x.getSeconds()};
+        return y.replace(/(y+|M+|d+|h+|m+|s+)/g,function(v) {return ((v.length>1?"0":"")+eval('z.'+v.slice(-1))).slice(-(v.length>2?v.length:2))});
+      }
     },
     created: function(){
       //判断标题是否过长
       // console.log(this.question)
+      let Time = new Date();  
+      Time.setTime(this.question.createdAt * 1000); 
+      this.createdtime = this.datestr(Time,"yyyy.MM.d");
+
+
       if (this.question.title.length>=40) {
         this.overtitle = true;
       }
@@ -128,7 +138,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: 2.8vh;
+    margin-top: 4vh;
     margin-bottom: 2.9vh;
     font-size: 4vw;
     color: #919191;
@@ -140,6 +150,9 @@
   }
   .questionFooterLeft :first-child{
     margin-bottom: 5px;
+  }
+  .questionFooterLeft :last-child{
+    margin-top: 5px;
   }
   .questionFooterRight{
     display: flex;

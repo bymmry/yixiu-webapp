@@ -65,6 +65,7 @@
         toast.show();
         getQuestionList(postdata)
         .then(res => {
+          console.log(res);
           toast.hide();
           this.isLoading = false;
           if (res.data.length < 10 || !res.data.length) {
