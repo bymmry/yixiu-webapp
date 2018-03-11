@@ -101,7 +101,7 @@ export default {
 	methods: {
 		async nameChange(value, index) {
 			this.model['manufacturer'] = this.phoneInfo[ index ]._id;
-			let manufacturer = await this.$api.getData('https://m.yixiutech.com/phone/model/' + this.model['manufacturer']);
+			let manufacturer = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop/', {shop: this.model.shop, manufacturer: this.model.manufacturer});
 			manufacturer.data.map(item => {
 				this.phoneModel.push(item.name);
 				this.phoneModelInfo.push(item);
