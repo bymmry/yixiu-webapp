@@ -201,6 +201,8 @@
   .chooseInfos .information{
     width: auto;
     height: auto;
+    max-height: 45vh;
+    overflow-y: scroll;
   }
   .chooseInfos .information ul{
     width: 100%;

@@ -11,6 +11,7 @@ import businessRegister from '../views/businessRegister/router'
 import RetrievePwd from '../views/retrievePwd/router'
 import SellerHome from '../views/sellerHome/router'
 import phoneArrondi from '../views/phoneArrondi/router'
+import orders from '../views/orders/router'
 
 Vue.use(Router)
 export default new Router({
@@ -35,6 +36,7 @@ export default new Router({
     ...businessRegister,
     ...RetrievePwd,
     ...SellerHome,
-    ...phoneArrondi
+    ...phoneArrondi,
+    ...orders
   ]
 })

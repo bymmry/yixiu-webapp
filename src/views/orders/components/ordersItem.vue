@@ -1,6 +1,6 @@
 <template>
   <div class="ordersItems">
-    <div class="ordersItem"  v-for="(item, index) in orders">
+    <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders">
       <div class="itemTitle">
         <span class="shopName">{{item.shop.name}}</span>
         <span class="orderState">{{state[item.state]}}</span>
@@ -12,12 +12,11 @@
         <p>订单金额：<span>￥{{item.payment/100}}</span></p>
       </div>
     </div>
-
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-
   export default {
     name: 'orders-item',
     data() {
@@ -33,7 +32,8 @@
           101:'已关闭',
           102:'退款中'
         },
-        servers: []
+        servers: [],
+        rePayData: {}
       }
     },
     props: {
@@ -50,6 +50,9 @@
         return val;
       }
     },
+    mounted() {
+      this.setData();
+    },
     methods: {
       setData: function () {
         let ser = this.orders.map(function (val) {
@@ -62,6 +65,17 @@
           }
           return res;
         });
+
+      },
+      rePay: function (index) {
+        console.log(this.orders[index]);
+        this.rePayData = this.orders[index];
+        this.$router.push({
+          path: `/toOrders/${this.rePayData._id}`,
+          params: {
+            id: this.rePayData
+          }
+        })
       }
     }
   };
@@ -108,5 +122,15 @@
     color: #fda674;
     float: right;
     margin-right: 15px;
+  }
+  .repay{
+    position: fixed;
+    bottom: 8vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+
+    background-color: #fff;
   }
 </style>
