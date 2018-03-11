@@ -53,7 +53,7 @@ export default {
 				alias: '',
 				desc: '',
 				cover: '',
-				shop: '5aa27cf18d78c262b3f19937'
+				shop: JSON.parse(localStorage.getItem('shopData'))._id
 			}
 		}
 	},
@@ -75,7 +75,7 @@ export default {
 				this.prompt(phoneRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt(phoneRes.data, 'success').show();
+			this.prompt('添加成功', 'success').show();
 			this.$router.push('/sellerHome');
 		}
 	}

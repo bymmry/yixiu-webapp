@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend-item">
+  <div class="recommend-item" @click="search(name)">
 		<img :src="src" alt="" class="recommend-item__img" srcset="" />
 		<p class="recommend-item__name">{{ name }}</p>
 		<p class="recommend-item__standard">{{ standard }}</p>
@@ -14,6 +14,11 @@
 			name: String,
 			price: String,
 			standard: String
+		},
+		methods: {
+			search (name) {
+				this.$router.push('/shop?' + name)
+			}
 		}
   }
 </script>

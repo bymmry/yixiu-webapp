@@ -4,6 +4,7 @@
 		<van-field
 			v-model="infos.name"
 			label="商铺名称"
+			class="item"
 			placeholder="请输入商铺名称"
 		/>
 
@@ -34,15 +35,34 @@
 
 		<cube-button @click="finish">选择结束营业时间</cube-button>
 
+		<div class="condition" v-for="(item, index) in infos.promotion" :key="index">
+			<van-field
+				v-model="item.condition"
+				class="full-cut"
+				label="满减条件"
+				placeholder="满减条件"
+			/>
+
+			<van-field
+				v-model="item.denomination"
+				class="full-cut"
+				label="满减额度"
+				placeholder="满减额度"
+			/>
+		</div>
+
+		<cube-button @click="add">添加满减条件</cube-button>
+
 		<van-field
-			v-model="infos.serviceWay"
+			v-model="serviceWay"
 			label="服务方式"
-			placeholder="请输入支持的服务方式，用逗号隔开"
+			placeholder="请输入支持的服务方式，用中文逗号隔开"
+			@blur="serviceBlur"
 		/>
 
 		<div id="allmap"></div>
-		
-		<button class="info__btn" @click="register">注册</button>
+
+		<cube-button @click="register">注册</cube-button>
   </div>
 </template>
 
@@ -79,28 +99,39 @@ export default {
 		return {
 			startHour: '',
 			endHour: '',
+			serviceWay: '',
 			infos: {
 				name: '',
 				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',
 				contactNumber: '',
-				serviceWay: '',
+				serviceWay: [],
 				position: {
 					lng: '',
 					lat: ''
 				},
-				businessHours: []
+				businessHours: [],
+				promotion: [
+					{condition: '', denomination: ''}
+				],
+				ownerOpenid: JSON.parse(sessionStorage.getItem('userData')).wx.openid
 			},
-			time: timeJson
+			time: timeJson,
+			money: ''
 		}
 	},
 	methods: {
+		serviceBlur () {
+			this.infos.serviceWay = this.serviceWay.split('，');
+		},
+		add () {
+			this.infos.promotion.push({condition: '', denomination: ''});
+		},
 		async register () {
 			let res = await this.$ajax.post('https://m.yixiutech.com/shop', this.infos);
 			if (res.code == 4001) {
 				alert(res.errMsg);
 				return;
 			}
-			this.$router.push('/sellerHome');
 		},
 		onRead(file) {
 			this.infos.cover = file.content;
@@ -153,6 +184,15 @@ export default {
     margin-top: 40px;
     transform: translate(-50%);
 }
+.condition {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.full-cut {
+	width: 48%;
+}
 
 .info .info__img {
 	width: 100px;
@@ -175,6 +215,7 @@ export default {
 	background: transparent;
 	border: 2px solid #fff;
 	border-radius: 5px;
+	margin: 10px 0;
 }
 
 .van-field__control {

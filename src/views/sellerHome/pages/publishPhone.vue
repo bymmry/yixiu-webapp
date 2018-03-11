@@ -97,14 +97,14 @@ export default {
 		})
 
 		// let data = { shop: this.goods.shop, category: '5aa0e4b26834c2566635e10b', phoneModel: '5aa0e3434e16d955dc6e4fd4' }
-		// let res = await this.$api.sendData('https://yixiu.natappvip.cc/service/shop', data);
+		// let res = await this.$api.sendData('https://m.yixiutech.com/service/shop', data);
 		// console.log(res);
 	},
   data () {
 		return {
 			infoName: '发布宝贝',
 			goods: {
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg'
 			},
 			base: ['重庆'],

@@ -14,18 +14,14 @@
 
 <script>
 	import RecommendItem from './recommendItem.vue'
+	import data from '../data/hot.json'
   export default {
 		components: {
 			RecommendItem
 		},
 		data () {
 			return {
-				data: [
-					{ name: 'iPhone X', standard: '32G 黑', price: '1650', src: 'https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0' },
-					{ name: 'iPhone X', standard: '32G 黑', price: '1650', src: 'https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0' },
-					{ name: 'iPhone X', standard: '32G 黑', price: '1650', src: 'https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0' },
-					{ name: 'iPhone X', standard: '32G 黑', price: '1650', src: 'https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0' }
-				]
+				data: data[0].data
 			}
 		}
   }

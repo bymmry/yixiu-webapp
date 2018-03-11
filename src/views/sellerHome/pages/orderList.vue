@@ -1,38 +1,45 @@
 <template>
   <div class="order">
 		<item-header :name="infoName" />
-		
+		<div class="blank" v-if="data.length == 0">
+			<sicon name="order" scale="30"></sicon>
+			<h1>该订单列表为空~~</h1>
+		</div>
+		<order-item v-for="(item, index) in data" :key="index" 
+			:data="item"
+		/>
 	</div>
 </template>
 
 <script>
 import ItemHeader from '../components/itemHeader'
-// {
-	//       //店铺id和用户id至少填一个,但是不能同时填
-	//       shop:"5a9ff811d79f455630d24287",//店铺id
-	//       user:"5a9ff811d79f455630d24287",//用户id
-	//       state:10,//订单状态
-	//       limit:10,//一次取列表的条数
-	//       skip:0//跳过skip条数据
-// }
+import OrderItem from '../components/orderItem'
+
 export default {
   components: {
-		ItemHeader
+		ItemHeader,
+		OrderItem
 	},
 	data () {
 		return {
 			infoName: '订单列表',
-			state: ''
+			state: '',
+			data: []
 		}
 	},
 	async mounted () {
 		this.state = location.href.split('/').pop();
-		let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: Number(this.state), limit: 10 }
+		let data = { shop: JSON.parse(localStorage.getItem('shopData'))._id, state: Number(this.state), limit: 10 }
 		let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', data);
+		this.data = res.data;
 	}
 }
 </script>
 
 <style scoped>
-
+.blank {
+	text-align: center;
+	font-size: 20px;
+	color: #515151;
+}
 </style>

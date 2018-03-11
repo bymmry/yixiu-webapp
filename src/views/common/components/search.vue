@@ -35,8 +35,8 @@
           // mask: true,
           message: '加载中...'
         });
-        // let res = await this.$api.sendData('https://m.yixiutech.com/shop/filter', this.content);
-        let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter', this.content);
+        let res = await this.$api.sendData('https://m.yixiutech.com/shop/filter', this.content);
+        // let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter', this.content);
         res.code == 200 ? this.$emit('sendShopList', res.data) : null;
         Toast.clear();
       },

@@ -43,16 +43,32 @@
         sessionStorage.setItem("userData", userData2);
         console.log(sessionStorage.getItem("userData"))
         // }
+
+        this.checkIsShop(userData);
+
       },(err => {
         console.log(err)
       }))
       // console.log(userData);
       // sessionStorage.setItem("userData", userData);
+    },
+    methods: {
+      async checkIsShop (userData) {
+        if (location.href.indexOf('sellerHome')) {
+          let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
+          localStorage.setItem('shopData', JSON.stringify(res.data));
+          if (res.code == 4004) {
+            this.$router.push('/businessRegister');
+            return;
+          }
+          this.$router.push('/sellerHome')
+        }
+      }
     }
   }
 </script>
 
-<style>
+<style scoped>
   #app{
     /*height: 97%;*/
   }

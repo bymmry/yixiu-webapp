@@ -1,6 +1,6 @@
 <template>
   <ul class="list">
-		<li class="list__item" v-for="(item, index) in modules" :key="index" @click="detail">
+		<li class="list__item" v-for="(item, index) in modules" :key="index" @click="detail(index)">
 			<p class="item__name">{{item.name}}</p>
 			<p class="item__num">{{item.num}}</p>
 		</li>
@@ -12,18 +12,27 @@
 		data () {
 			return {
 				modules: [
-					{ name: '待接单', num: 30, },
-					{ name: '维修中', num: 320, state: 12 },
-					{ name: '已完成', num: 3000, state: 13 },
+					{ name: '待接单', num: 0, state: 10},
+					{ name: '维修中', num: 0, state: 12 },
+					{ name: '已完成', num: 0, state: 13 },
+					{ name: '浏览量', num: 0, state: 0 }
 				],
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				state: ''
 			}
 		},
 		methods: {
-			detail () {
-				// console.log(this.$refs.item.state);
-				this.$router.push('/orderList/12')
+			detail (index) {
+				if (this.modules[ index ].state == 0 ) return;
+				this.$router.push('/orderList/' + this.modules[ index ].state);
 			}
+		},
+		async mounted () {
+			this.modules.slice(0, 3).map( async item => {
+				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
+				item.num = res.data.length;
+			})
+			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
 		}
   }
 </script>

@@ -11,7 +11,9 @@
       :data="data"
     />
 
-    <Footer />
+    <Footer 
+      :sureOrderData="sureOrderData"
+    />
     <div class="space"></div>
 	</div>
 </template>
@@ -32,12 +34,24 @@ export default {
     return {
       name: '手机详情',
       data: {},
+      sureOrderData: {}
     }
   },
   async mounted () {
     let phoneId = location.href.split('/').pop();
     let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
     this.data = res.data;
+    this.sureOrderData = {
+      type: 2,
+			user: this.getUserInfo()._id,
+			shop: this.data.shop._id,
+			phone: "",
+			reamrk: "",
+			goods: [this.data._id],
+			paymentType: 0,
+			price: this.data.price,
+			payment: this.data.price
+		}
   }
 }
 </script>
@@ -45,6 +59,14 @@ export default {
 <style scoped>
 .space {
   width: 100%;
+  height: 8vh;
+}
+
+.van-goods-action {
+  height: 8vh;
+}
+
+.van-hairline {
   height: 8vh;
 }
 </style>

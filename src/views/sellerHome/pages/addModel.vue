@@ -90,7 +90,7 @@ export default {
 				brandName: '',
 				name: '',
 				alias: '',
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				desc: '',
 				cover: '',
 				color: [],

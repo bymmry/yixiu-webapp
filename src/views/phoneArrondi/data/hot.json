@@ -1,26 +1,26 @@
 [
     { "name": "苹果", "data": [
-        { "name": "iPhone X", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "iphone 8 Plus", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "iphone 7", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "iphone 6s", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
+        { "name": "iPhoneX", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "iphone8 Plus", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "iphone7", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "iphone6s", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
     ]},
     { "name": "华为", "data": [
         { "name": "华为P10", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
         { "name": "华为P9", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "华为7 PLUS", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "华为 Mate 10", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
+        { "name": "华为7PLUS", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "华为Mate10", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
     ]},
     { "name": "三星", "data": [
-        { "name": "Galaxy S8", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "Galaxy Note8", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "GalaxyS8", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "GalaxyNote8", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
         { "name": "三星W2017", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "Galaxy S7", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
+        { "name": "GalaxyS7", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
     ]},
     { "name": "小米", "data": [
         { "name": "小米6", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "小米 5X", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "小米 MIX2", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
-        { "name": "小米5 Plus", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
+        { "name": "小米5X", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "小米MIX2", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" },
+        { "name": "小米5Plus", "price": "5620" , "src": "https://paimgcdn.baidu.com/B24DB760B27E4279?src=https://ss2.bdstatic.com/8_V1bjqh_Q23odCf/dsp-image/144801233.jpg&rz=urar_2_968_600&v=0" }
     ]}
 ]

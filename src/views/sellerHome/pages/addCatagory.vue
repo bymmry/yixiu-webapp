@@ -30,12 +30,6 @@
 		/>
 
 		<van-field
-			v-model="category.shop"
-			label="所属商铺标识"
-			placeholder="请输入商铺标识"
-		/>
-
-		<van-field
 			v-model="category.parent"
 			label="此分类的父级"
 			placeholder="请输入次分类的父级"
@@ -67,7 +61,8 @@ export default {
 				type: '',
 				name: '',
 				cover: '',
-				desc: ''
+				desc: '',
+				shop: JSON.parse(localStorage.getItem('shopData'))._id
 			}
 		}
 	},

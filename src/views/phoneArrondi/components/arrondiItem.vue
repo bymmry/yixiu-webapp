@@ -21,6 +21,7 @@
 		methods: {
 			async route () {
 				let res = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'goods', shop: this.shop});
+				console.log(res);
 				this.$router.push('/phoneList/' + res.data[0]._id + '&' + this.shop);
 			}
 		}

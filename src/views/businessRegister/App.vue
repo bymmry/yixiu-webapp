@@ -17,11 +17,15 @@
 </script>
 
 <style scoped>
+body {
+  color: #000;
+}
+
 .login {
   width: 100%;
-  height: 100%;
+  height: 140%;
   background: url('./log-bg.jpg') center center no-repeat;
-  background-size: 100% 100%;
+  background-size: auto auto;
   position: relative;
 }
 </style>

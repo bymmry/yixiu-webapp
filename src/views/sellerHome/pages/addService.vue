@@ -79,7 +79,7 @@ export default {
 				name: '',
 				price: '',
 				desc: '',
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				support: []
 			},
 			manufacturer: '',
@@ -117,7 +117,6 @@ export default {
 			this.service['category'] = this.categoryInfo[ index ]._id;
 		},
 		async phoneChange (value, index) {
-			console.log(this.phoneInfo[index]._id);
 			this.manufacturer = this.phoneInfo[ index ]._id;
 			let msg = { shop: this.service.shop, manufacturer: this.manufacturer };
 			let supportRes = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop', msg);
@@ -125,7 +124,6 @@ export default {
 					// this.supportList.push(item.name);
 				this.supportList.push( { label: item.name, value: item._id } );
 			})
-			console.log(this.supportList);
 		}
 	}
 }
