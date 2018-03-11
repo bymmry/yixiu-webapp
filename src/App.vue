@@ -80,7 +80,7 @@
   #app{
     /*height: 97%;*/
   }
-  .van-field__control{
+  .van-field input, .van-field textarea{
     text-align: right;
   }
 </style>
