@@ -7,18 +7,7 @@
         </div>
 
         <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
-          获得更多信息
-          <div class="figerbox"> 
-            <!-- <sicon 
-              name="find-figer" 
-              scale="2" 
-              class="figer" 
-              v-for="index in figer" 
-              v-if="figer[index] != true"
-            >
-            </sicon> -->
-          </div>
-          
+          点击获得更多信息
         </div>
 
 

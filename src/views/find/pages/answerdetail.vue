@@ -170,21 +170,28 @@
           question: this.answerdetail.question,  //问题的_id
           _id: this.answerdetail._id   //回复数据的id
         }
-        console.log(choseData)
+        // console.log(choseData)
         adoptThis(choseData)
         .then(res => {
           toast.hide()
-          const tip = this.$createToast({
-            txt: '采纳成功!',
-            type: 'correct',
-            time: 1300
-          })
-          tip.show()
-          console.log(res)
-          setTimeout(() => {
-            this.$router.push({ path: "/find/questiondetail"})
-          },1600)
-          
+          if (res.errMsg=="问题已经采纳过回复,请勿重复采纳") {
+            const tip = this.$createToast({
+              txt: '一个问题只能采纳一个回答！',
+              type: 'fail',
+              time: 1300
+            })
+            tip.show()
+          }else{
+            const tip = this.$createToast({
+              txt: '采纳成功!',
+              type: 'correct',
+              time: 1300
+            })
+            tip.show()
+            setTimeout(() => {
+              this.$router.push({ path: "/find/questiondetail"})
+            },1600)
+          }          
         },(err => {
           console.log(err);
           const tip = this.$createToast({
