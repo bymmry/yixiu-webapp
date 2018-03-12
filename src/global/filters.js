@@ -179,7 +179,7 @@ let filters = {
     if(typeof userInfoStr === "string"){
       return JSON.parse(userInfoStr);
     }else {
-      alert("未获取到用户信息");
+      alert("未获取到用户信息,请登录后再试");
     }
   }
   //

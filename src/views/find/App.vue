@@ -106,7 +106,10 @@
       },
       //发起、关闭新提问
       newQuestion() {
-        this.newquestion = !this.newquestion;
+        let userData = this.getUserInfo();
+        if (userData) {
+          this.newquestion = !this.newquestion;
+        }
       }
     },
     created(){
