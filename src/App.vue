@@ -27,7 +27,7 @@
     },
     created() {
       console.log("App onload--------------------------------------------------->");
-      // alert(window.location.href);
+      alert(window.location.href);
       console.log(window.location.href);
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
