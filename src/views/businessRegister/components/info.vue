@@ -127,7 +127,12 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let res = await this.$ajax.post('https://m.yixiutech.com/shop', this.infos);
+			toast.hide();
 			if (res.code == 4001) {
 				alert(res.errMsg);
 				return;

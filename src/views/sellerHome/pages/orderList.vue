@@ -30,7 +30,12 @@ export default {
 	async mounted () {
 		this.state = location.href.split('/').pop();
 		let data = { shop: JSON.parse(localStorage.getItem('shopData'))._id, state: Number(this.state), limit: 10 }
+		const toast = this.$createToast({
+			message: '加载中...'
+		})
+		toast.show();
 		let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', data);
+		toast.hide();
 		this.data = res.data;
 	}
 }

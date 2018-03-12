@@ -71,7 +71,12 @@ export default {
 
 		},
 		async submit () {
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
+			toast.hide();
 			if (categoryRes.code == 4001) {
 				this.prompt(categoryRes.errMsg, 'error').show();
 				return;	

@@ -124,7 +124,7 @@ export default {
 				this.prompt(goodRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt(goodRes.data, 'success').show();
+			this.prompt('发布成功', 'success').show();
 			this.$router.push('/sellerHome');
 		},
 		onRead (file, content) {

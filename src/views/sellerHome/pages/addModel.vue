@@ -70,7 +70,12 @@ export default {
 		ItemHeader
 	},
 	async mounted () {
+		const toast = this.$createToast({
+          message: '加载中...'
+		})
+		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.model.shop);
+		toast.hide();
 		res.data.map(item => {
 			this.phoneName.push(item.name);
 			this.phoneInfo.push(item);
@@ -101,7 +106,12 @@ export default {
 	methods: {
 		async nameChange(value, index) {
 			this.model['manufacturer'] = this.phoneInfo[ index ]._id;
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let manufacturer = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop/', {shop: this.model.shop, manufacturer: this.model.manufacturer});
+			toast.hide();
 			manufacturer.data.map(item => {
 				this.phoneModel.push(item.name);
 				this.phoneModelInfo.push(item);
@@ -115,7 +125,12 @@ export default {
 			this.model.color.push(this.phoneModelColorRes);
 		},
 		async submit () {
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let modelRes = await this.$api.sendData('https://m.yixiutech.com/phone/model', this.model);
+			toast.hide();
 			if (modelRes.code == 4001) {
 				this.prompt(modelRes.errMsg, 'error').show();
 				return;	

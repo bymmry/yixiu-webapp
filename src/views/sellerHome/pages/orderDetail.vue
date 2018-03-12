@@ -45,7 +45,12 @@ export default {
 	methods: {
 		async takeOrder () {
 			let data = { _id: this.details._id, state: 12 }
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/order/update', data);
+			toast.hide();
 			if (res.code == 200) {
 				this.prompt('接单成功', 'success').show();
 				this.$router.go(-1)
@@ -53,7 +58,12 @@ export default {
 		},
 		async finish () {
 			let data = { _id: this.details._id, state: 13 }
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/order/update', data);
+			toast.hide();
 			if (res.code == 200) {
 				this.prompt('接单成功', 'success').show();
 				this.$router.go(-1)
