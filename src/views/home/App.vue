@@ -46,6 +46,7 @@
       }
     },
     create() {
+      alert(window.location.href);
       let userData = this.urlDataTurnObj(window.location.href);
       console.log(userData);
       // let userData = sessionStorage.getItem("userData");
