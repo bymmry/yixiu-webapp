@@ -106,7 +106,11 @@
       },
       //新回答
       async newAnswer() {
-        this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
+        let userData = this.getUserInfo();
+        if (userData) {
+          this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
+        }
+        
       },
       //点击标签进行搜索
       searchBytag(tag) {
