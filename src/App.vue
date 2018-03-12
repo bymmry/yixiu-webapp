@@ -27,7 +27,7 @@
     },
     created() {
       console.log("App onload--------------------------------------------------->");
-      alert(window.location.href);
+      // alert(window.location.href);  
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
         console.log("sellerHome");
@@ -57,7 +57,12 @@
           this.checkIsShop(userData);
           console.log("sellerHome");
         }else {
-          this.$router.push("/home");
+          if(userData.avatarUrl == "payReturn"){
+            this.$router.push("/pay");
+            console.log("go to pay");
+          }else{
+            this.$router.push("/home");
+          }
         }
 
 
