@@ -12,6 +12,7 @@ import RetrievePwd from '../views/retrievePwd/router'
 import SellerHome from '../views/sellerHome/router'
 import phoneArrondi from '../views/phoneArrondi/router'
 import orders from '../views/orders/router'
+// import App from '../App';
 
 Vue.use(Router)
 export default new Router({
@@ -20,7 +21,8 @@ export default new Router({
     {
       path: '/',
       // redirect:'/home?nickName=等到烟花清凉&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0&openid=oFosP5RQ-4BYlzddw8o5ON1ibctU'
-      redirect:'/home'
+      // redirect:'/',
+      // component: App
     },
     {
       path: "/pay",
