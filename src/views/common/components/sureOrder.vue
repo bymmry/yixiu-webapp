@@ -89,7 +89,6 @@
         console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
-        alert(isWxMini);
         if(isWxMini){
           console.log(isWxMini);
           let jumpUrl = encodeURIComponent(window.location.origin);
