@@ -27,7 +27,7 @@
     },
     created() {
       console.log("App onload--------------------------------------------------->");
-      // alert(window.location.href);
+      alert(window.location.href);
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
         console.log("sellerHome");
