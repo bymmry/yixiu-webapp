@@ -27,7 +27,6 @@
   import Activity from './components/activity.vue'
   import shopList from '../common/components/shopList'
   import { PullRefresh } from 'vant'
-  import {reguser} from '../common/api'
   export default {
     components: {
       Nav,
@@ -44,34 +43,6 @@
       return {
         isLoading: false
       }
-    },
-    create() {
-      alert(window.location.href);
-      let userData = this.urlDataTurnObj(window.location.href);
-      console.log(userData);
-      // let userData = sessionStorage.getItem("userData");
-      userData = JSON.parse(userData);
-      // console.log(userData)
-      let pushData = this.reguserinfo(userData);
-      reguser(pushData).then(res => {
-        //注册成功
-        // console.log(res)
-        // if (Data !== {} && Data !== null) {
-        let userData2 = JSON.stringify(res.data);
-        console.log(res.data);
-        sessionStorage.setItem("userData", userData2);
-        console.log(sessionStorage.getItem("userData"));
-        // }
-
-        if (location.href.indexOf('sellerHome') !== -1) {
-          this.checkIsShop(userData);
-          console.log("sellerHome");
-        }else {
-          this.$router.push("/home");
-        }
-      },(err => {
-        console.log(err)
-      }))
     },
     methods: {
       onRefresh() {

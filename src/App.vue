@@ -27,15 +27,21 @@
     },
     created() {
       console.log("App onload--------------------------------------------------->");
-      // alert(window.location.href);
+      alert(window.location.href);
       console.log(window.location.href);
+      if (location.href.indexOf('sellerHome') !== -1) {
+        this.checkIsShop(userData);
+        console.log("sellerHome");
+      }else {
+        this.$router.push("/home");
+      }
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
       console.log(userData);
       // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
-      // console.log(userData)
-      let pushData = this.reguserinfo(userData)
+      console.log(userData)
+      let pushData = this.reguserinfo(userData);
       // console.log(pushData)
       reguser(pushData).then(res => {
         //注册成功
@@ -47,6 +53,7 @@
         console.log(sessionStorage.getItem("userData"));
         // }
 
+        console.log(location.href.indexOf('sellerHome'));
         if (location.href.indexOf('sellerHome') !== -1) {
           this.checkIsShop(userData);
           console.log("sellerHome");
