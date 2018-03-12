@@ -100,6 +100,16 @@
           alert("非小程序环境");
         }
       }
+    },
+    beforeRouteUpdate (to, from, next) {
+      console.log('路由发生改变，很有可能是小程序的支付成功回调')
+      let payResult = to.query.payResult
+      if (payResult) { // 小程序支付成功
+        if (payResult === '1') {
+          this.$router.push("/pay");
+        }
+      }
+      next()
     }
   };
 </script>
