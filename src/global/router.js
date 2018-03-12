@@ -18,12 +18,12 @@ Vue.use(Router)
 export default new Router({
   base: '/webapp/',
   routes: [
-    // {
-    //   path: '/',
-    //   // redirect:'/home?nickName=等到烟花清凉&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0&openid=oFosP5RQ-4BYlzddw8o5ON1ibctU'
-    //   // redirect:'/',
-    //   // component: App
-    // },
+    {
+      path: '/',
+      // redirect:'/home?nickName=等到烟花清凉&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/tLZAsMgyw4pvRYuuN2RKHDpDY12HMen3AibRegfoQNguQJjrdKqAJfdaIMgf76NJ6L7lpuViaAxdh2Z5NA69Eoiag/0&openid=oFosP5RQ-4BYlzddw8o5ON1ibctU'
+      // redirect:'/',
+      // component: App
+    },
     {
       path: "/pay",
       redirect: '/orders'
