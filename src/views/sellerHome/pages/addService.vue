@@ -91,6 +91,10 @@ export default {
 		}
 	},
 	async mounted () {
+		const toast = this.$createToast({
+			message: '加载中...'
+		})
+		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/category/shop/'+ this.service.shop);
 		console.log(res)
 		res.data.map(item => {
@@ -98,6 +102,7 @@ export default {
 			this.categoryInfo.push(item);
 		})
 		let phone = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.service.shop);
+		toast.hide();
 		phone.data.map(item => {
 			this.phoneInfo.push(item);
 			this.phoneNames.push(item.name);
@@ -105,7 +110,12 @@ export default {
 	},
 	methods: {
 		async submit () {
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let serviceRes = await this.$api.sendData('https://m.yixiutech.com/service', this.service);
+			toast.hide();
 			if (serviceRes.code == 4001) {
 				this.prompt(serviceRes.errMsg, 'error').show();
 				return;	
@@ -119,8 +129,13 @@ export default {
 		async phoneChange (value, index) {
 			this.manufacturer = this.phoneInfo[ index ]._id;
 			let msg = { shop: this.service.shop, manufacturer: this.manufacturer };
+			const toast = this.$createToast({
+				message: '加载中...'
+			})
+			toast.show();
 			let supportRes = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop', msg);
-				supportRes.data.map(item => {
+			toast.hide();
+			supportRes.data.map(item => {
 					// this.supportList.push(item.name);
 				this.supportList.push( { label: item.name, value: item._id } );
 			})

@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { Field, Button } from 'vant'
+import { Field, Button, Toast } from 'vant'
 import ItemHeader from '../components/itemHeader'
 export default {
   components: {
@@ -58,7 +58,12 @@ export default {
 		}
 	},
 	async mounted () {
+		const toast = this.$createToast({
+          message: '加载中...'
+		})
+		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
+		toast.hide();
 		res.data.map(item => {
 			this.phoneName.push(item.name);
 			this.phoneInfo.push(item);
