@@ -73,7 +73,7 @@
           // on confirm
           console.log(orderData);
           sureOrder(orderData).then((res) => {
-            // console.log(this.data);
+            console.log(res);
             if(res.code == 200){
               // console.log(this.data);
               this._pay(orderData, res.data);

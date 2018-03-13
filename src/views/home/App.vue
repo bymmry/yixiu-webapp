@@ -42,21 +42,8 @@
     data () {
       return {
         isLoading: false,
-        paySuccess: 0
-      }
-    },
-    activated(){
-      // alert(window.location.href);  
-     
-      let userData = this.urlDataTurnObj(window.location.href);
-      // alert(userData);
-      // let userData = sessionStorage.getItem("userData");
-      console.log(userData);
-      userData = JSON.parse(userData);
-      let paySuccess = userData.paySuccess;
-      this.paySuccess = 0;
-      if(paySuccess == 1){
-        this.$router.push("/pay");
+        sessionPaySuccess: 0,
+        activate: true
       }
     },
     methods: {
