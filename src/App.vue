@@ -40,8 +40,7 @@
       // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
       console.log(userData);
-      sessionStorage.setItem("paySuccess", userData.paySuccess);
-      alert("App paySuccess：" + userData.paySuccess);
+      // alert("App paySuccess：" + userData.paySuccess);
       let pushData = this.reguserinfo(userData);
       // console.log(pushData)
       reguser(pushData).then(res => {

@@ -41,16 +41,17 @@
     },
     data () {
       return {
-        isLoading: false
+        isLoading: false,
+        sessionPaySuccess: 0
       }
     },
-    activated(){
+    created(){
       // alert(window.location.href);  
      
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
       let sessionUserData = sessionStorage.getItem("userData");
-      let sessionPaySuccess = sessionStorage.getItem("paySuccess");
+      let sessionPaySuccess = this.sessionPaySuccess;
       // console.log(userData);
       userData = JSON.parse(userData);
 
@@ -58,13 +59,13 @@
       console.log("------------------------------------------------------------------------------");
       console.log("sessionPaySuccess:" + sessionPaySuccess);
       console.log("paySuccess:" + paySuccess);
-      alert("sessionPaySuccess:" + sessionPaySuccess);
-      alert("paySuccess:" + paySuccess);
+      // alert("sessionPaySuccess:" + sessionPaySuccess);
+      // alert("paySuccess:" + paySuccess);
       if(paySuccess != sessionPaySuccess){
         this.$router.push("/pay");
-        sessionStorage.setItem("paySuccess", paySuccess);
-      }else {
-        sessionStorage.setItem("paySuccess", 0);
+        this.sessionPaySuccess = 1;
+      }else{
+        this.sessionPaySuccess = 0;
       }
     },
     methods: {
