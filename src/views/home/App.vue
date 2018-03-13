@@ -41,8 +41,7 @@
     },
     data () {
       return {
-        isLoading: false,
-        paySuccess: 0
+        isLoading: false
       }
     },
     activated(){
@@ -50,13 +49,17 @@
      
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
-      // let userData = sessionStorage.getItem("userData");
-      console.log(userData);
+      let sessionUserData = sessionStorage.getItem("userData");
+      let sessionPaySuccess = sessionStorage.getItem("paySuccess");
+      // console.log(userData);
       userData = JSON.parse(userData);
+
       let paySuccess = userData.paySuccess;
-      this.paySuccess = 0;
-      if(paySuccess == 1){
+      if(paySuccess != sessionPaySuccess){
         this.$router.push("/pay");
+        sessionStorage.setItem("paySuccess", paySuccess);
+      }else {
+        sessionStorage.setItem("paySuccess", 0);
       }
     },
     methods: {
