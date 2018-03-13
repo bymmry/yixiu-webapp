@@ -19,6 +19,21 @@ export function getOrderList(req) {
   });
 }
 
+export function getMoreOrderList(req) {
+  let order = {
+    // shop:'', //店铺id
+    user: req.user._id, //用户id
+    state: req.filter,//订单状态
+    skip: req.skip
+  };
+  return new Promise((resolve, reject) => {
+    ajax.post(url + '/order/service/filter', order).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
 
 // 根据id查询订单详情
 export function getOrderDetail(id) {

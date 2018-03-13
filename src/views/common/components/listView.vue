@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div  class="loadMore">
+    <div class="loadMore">
       <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
       <p>{{moreText}}</p>
     </div>
@@ -86,8 +86,7 @@
           if(res.data.length === 0){
             this.moreText = "没有更多了"
           }else {
-            this.shopData.concat(res.data);
-            console.log(this.shopData);
+            this.shopData.push(...res.data);
             this.showMore = true;
           }
         }, err => {
