@@ -3,12 +3,13 @@
     <Search @sendShopList="sendShopList"  />
     <div class="shopSort">
       <ul ref="shopSort">
-        <li @click="chooseMainType(0)" ref="shopSortItem" :class="{'active': currentIndex===0}"><span>{{nowColumnsType}}<sicon name="choose" scale="2"></sicon></span>
+        <!-- <li @click="chooseMainType(0)" ref="shopSortItem" :class="{'active': currentIndex===0}"><span>{{nowColumnsType}}<sicon name="choose" scale="2"></sicon></span>
           <van-actionsheet v-model="isShowShopSort"
                            :actions="actions"
                            :close-on-click-overlay="isOverlayClose"
                            cancel-text="取消" />
-        </li>
+        </li> -->
+        <li @click="chooseMainType(0)" :class="{'active': currentIndex===0}"><span>综合排序</span></li>
         <li @click="chooseMainType(1)" :class="{'active': currentIndex===1}"><span>修的最好</span></li>
         <li @click="chooseMainType(2)" :class="{'active': currentIndex===2}"><span>距离最近</span></li>
         <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span>
@@ -161,8 +162,8 @@
         let filterShop = {};
         this.currentIndex = index;
         if (index === 0){ //综合排序
-          this.chooseType();
-          return;
+          // this.chooseType();
+          // return;
         }else if(index ===3 ){ //筛选
           this.filterShop();
           return;
@@ -190,6 +191,7 @@
 
       },
       chooseSort: function (item) {
+        console.log(item);
         this.nowColumnsType = item.name;
         this.isShowShopSort = !this.isShowShopSort;
         let req = {};
@@ -275,7 +277,7 @@
         }, err => {
           console.log(err);
         });
-        Toast.clear();
+        // Toast.clear();
       }
     }
   };
