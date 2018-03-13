@@ -138,6 +138,7 @@ let filters = {
     // 注册用户需要用到的参数
     const information = {
       name: data.nickName || '翼修用户', //用户名称
+      paySuccess: data.paySuccess || 0,
       email: data.email || '',//邮箱
       mobile: data.mobile || '',//手机号
       password: data.password || '',//密码

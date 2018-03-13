@@ -45,13 +45,16 @@
       }
     },
     activated(){
-      alert(window.location.href);  
+      // alert(window.location.href);  
      
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
       console.log(userData);
       // let userData = sessionStorage.getItem("userData");
       userData = JSON.parse(userData);
+      if(userData.paySuccess == 1){
+        this.$router.push("/pay")
+      }
     },
     methods: {
       onRefresh() {
