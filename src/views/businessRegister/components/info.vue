@@ -8,6 +8,35 @@
 			placeholder="请输入商铺名称"
 		/>
 
+		<p class="head">身份证正面</p>
+
+		<!-- <cube-upload
+			action="//jsonplaceholder.typicode.com/photos/"
+			@files-added="filesAdded" 
+		/> -->
+
+		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg" result-type="//jsonplaceholder.typicode.com/photos/">
+			<img :src="infos.ID1" class="info__img" alt="">
+		</van-uploader>
+
+		<p class="head">身份证背面</p>
+
+		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
+			<img :src="infos.ID2" class="info__img" alt="">
+		</van-uploader>
+
+		<p class="head">营业执照</p>
+
+		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
+			<img :src="infos.License" class="info__img" alt="">
+		</van-uploader>
+
+		<p class="head">商户证书</p>
+
+		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
+			<img :src="infos.certificate" class="info__img" alt="">
+		</van-uploader>
+
 		<p class="head">商铺封面</p>
 
 		<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
@@ -102,7 +131,7 @@ export default {
 			serviceWay: '',
 			infos: {
 				name: '',
-				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg',
+				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 				contactNumber: '',
 				serviceWay: [],
 				position: {
@@ -123,6 +152,15 @@ export default {
 		serviceBlur () {
 			this.infos.serviceWay = this.serviceWay.split('，');
 		},
+		filesAdded(files) {
+      const maxSize = 1 * 1024 * 1024 // 1M
+      for (let k in files) {
+        const file = files[k]
+        if (file.size > maxSize) {
+          file.ignore = true
+        }
+			}
+		},
 		add () {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
@@ -139,6 +177,7 @@ export default {
 			}
 		},
 		onRead(file) {
+			console.log(file);
 			this.infos.cover = file.content;
 		},
 		start () {
@@ -194,7 +233,7 @@ export default {
 
 .info .info__img {
 	width: 100px;
-	height: 100px;
+	height: 80px;
 }
 
 .info-item {

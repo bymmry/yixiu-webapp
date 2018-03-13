@@ -26,20 +26,21 @@
       // mainApp
     },
     created() {
-      console.log("App onload--------------------------------------------------->");
+      // console.log("App onload--------------------------------------------------->");
+      let userData = this.urlDataTurnObj(window.location.href);
+      userData = JSON.parse(userData);
       // alert(window.location.href);  
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
-        console.log("sellerHome");
       }else {
         this.$router.push("/home");
       }
-      let userData = this.urlDataTurnObj(window.location.href);
+      
       // alert(userData);
-      console.log(userData);
+      // console.log(userData);
       // let userData = sessionStorage.getItem("userData");
-      userData = JSON.parse(userData);
-      console.log(userData)
+      
+      // console.log(userData)
       let pushData = this.reguserinfo(userData);
       // console.log(pushData)
       reguser(pushData).then(res => {
@@ -47,18 +48,10 @@
         // console.log(res)
         // if (Data !== {} && Data !== null) {
         let userData2 = JSON.stringify(res.data);
-        console.log(res.data);
+        // console.log(res.data);
         sessionStorage.setItem("userData", userData2);
-        console.log(sessionStorage.getItem("userData"));
+        // console.log(sessionStorage.getItem("userData"));
         // }
-
-        console.log(location.href.indexOf('sellerHome'));
-        if (location.href.indexOf('sellerHome') !== -1) {
-          this.checkIsShop(userData);
-          console.log("sellerHome");
-        }else {
-          this.$router.push("/home");
-        }
 
 
       },(err => {
@@ -70,11 +63,11 @@
     methods: {
       async checkIsShop (userData) {
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
-        localStorage.setItem('shopData', JSON.stringify(res.data));
         if (res.code == 4004) {
           this.$router.push('/businessRegister');
           return;
         } else {
+          localStorage.setItem('shopData', JSON.stringify(res.data));
           this.$router.push('/sellerHome')
         }
       }

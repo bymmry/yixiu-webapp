@@ -13,7 +13,8 @@ import {
   ActionSheet,
   Scroll,
   Slide,
-  Select
+  Select,
+  Upload
   // IndexList,
 } from 'cube-ui'
 
@@ -30,5 +31,6 @@ export default {
     Vue.use(Select)
     Vue.use(Checkbox)
     Vue.use(CheckboxGroup)
+    Vue.use(Upload)
   }
 }

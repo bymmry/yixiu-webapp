@@ -24,8 +24,8 @@ body {
 .login {
   width: 100%;
   height: 140%;
-  background: url('./log-bg.jpg') center center no-repeat;
-  background-size: auto auto;
+  background: url('https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/log-bg.jpg') center center no-repeat;
+  background-size: auto 140%;
   position: relative;
 }
 </style>
