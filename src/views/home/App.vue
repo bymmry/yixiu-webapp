@@ -55,6 +55,11 @@
       userData = JSON.parse(userData);
 
       let paySuccess = userData.paySuccess;
+      console.log("------------------------------------------------------------------------------");
+      console.log("sessionPaySuccess:" + sessionPaySuccess);
+      console.log("paySuccess:" + paySuccess);
+      alert("sessionPaySuccess:" + sessionPaySuccess);
+      alert("paySuccess:" + paySuccess);
       if(paySuccess != sessionPaySuccess){
         this.$router.push("/pay");
         sessionStorage.setItem("paySuccess", paySuccess);
