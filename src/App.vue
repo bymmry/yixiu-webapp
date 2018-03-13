@@ -57,12 +57,7 @@
           this.checkIsShop(userData);
           console.log("sellerHome");
         }else {
-          if(userData.avatarUrl == "payReturn"){
-            this.$router.push("/pay");
-            console.log("go to pay");
-          }else{
-            this.$router.push("/home");
-          }
+          this.$router.push("/home");
         }
 
 

@@ -41,7 +41,8 @@
     },
     data () {
       return {
-        isLoading: false
+        isLoading: false,
+        paySuccess: 0
       }
     },
     activated(){
@@ -52,8 +53,10 @@
       // let userData = sessionStorage.getItem("userData");
       console.log(userData);
       userData = JSON.parse(userData);
-      if(userData.paySuccess == 1){
-        this.$router.push("/pay")
+      let paySuccess = userData.paySuccess;
+      this.paySuccess = 0;
+      if(paySuccess == 1){
+        this.$router.push("/pay");
       }
     },
     methods: {
