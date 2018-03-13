@@ -41,6 +41,7 @@
       // let userData = sessionStorage.getItem("userData");
       // userData = JSON.parse(userData);
       console.log(userData);
+      alert("openid:" + userData.openid);
       // alert("App paySuccess：" + userData.paySuccess);
       let pushData = this.reguserinfo(userData);
       // console.log(pushData)
