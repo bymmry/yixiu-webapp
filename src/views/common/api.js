@@ -281,3 +281,25 @@ export function adoptThis(data){
     });
   });
 }
+
+// 发生验证短信
+export function sendmessage(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/sms/send`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 验证手机号和验证码
+export function validatemessage(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/sms/validate`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

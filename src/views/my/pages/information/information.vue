@@ -50,8 +50,23 @@
           <div class="myinfo-message-data">
             <input type="text" v-model="newuserInfo[info.tag]">
           </div>
+
         </div>
-        <van-button class="changeBtn" type="primary" @click="changeInfo('info')">保存</van-button>
+        <div class="bindphoneOK" v-if="bindOK">绑定成功</div>
+        <van-button size="small" :disabled="LoadinggetMessaga" @click="getmessage" class="getmessageBtn">{{ getMessaga }}</van-button>
+
+        <div v-if="bindphoneShow">
+          <div class="myinfo-message-item">
+            <div class="myinfo-message-tag textright">验证码：</div>
+            <div class="myinfo-message-data">
+              <input type="text" v-model="Etag">
+            </div>
+            <div class="bindphoneErr" v-if="errCode">验证码错误</div>
+          </div>
+          <van-button size="small" @click="bindphone" type="primary" class="getmessageBtn">绑定手机号</van-button>
+        </div>
+        
+        <van-button class="changeBtn" type="primary" @click="changeInfo('info')" :disabled="updataBtnShop">保存</van-button>
       </div>
     </div>
 
@@ -127,11 +142,19 @@
   import { Radio } from 'vant';
   import { Tag } from 'vant';
   import { PullRefresh } from 'vant';
-  import { getuserinforByopenId, updateuserinfo } from '../../../common/api'
+  import { getuserinforByopenId, updateuserinfo, sendmessage, validatemessage } from '../../../common/api'
 
   export default {
     data () {
       return {
+        errCode:false,
+        bindOK:false,
+        bindphoneShow: false,
+        LoadinggetMessaga: false,
+        theTime:60,
+        getMessaga: "点击获得手机验证码",
+        updataBtnShop: true ,
+        Etag:"",
         changed: false, //是否正在修改信息
         changedPassword: false, //是否正在修改密码
         radio: "",  //心性别选择
@@ -190,6 +213,63 @@
       //导航栏 前往个人中心
       prepage(){
         this.$router.push({ path: "/my" })
+      },
+      //绑定手机号
+      bindphone(){
+        if (!this.Etag) {
+          alert("请输入验证码");
+        }else{
+          let a = {
+            mobile: this.newuserInfo.mobile,
+            code:this.Etag
+          }
+          validatemessage(a)
+          .then(res => {
+            console.log(res);
+            if (res.errMsg=="验证码错误") {
+              this.errCode = true;
+            }else if(res.data=="验证成功"){
+              this.bindphoneShow = false;
+              this.errCode = false;
+              this.bindOK = true;
+              this.updataBtnShop = false;
+            }
+            
+          },(err => {
+            console.log(err);
+          }))
+        }
+      },
+      //获取短信
+      getmessage(){
+        if (!this.newuserInfo.mobile) {
+          alert("手机号不能为空");
+        }else if(this.mobileReg(this.newuserInfo.mobile)==false){
+          alert("请输入正确的手机号");
+        }else{
+          let a = {
+            mobile: this.newuserInfo.mobile
+          }
+          sendmessage(a)
+          .then(res => {
+            this.bindOK = false;
+            this.bindphoneShow = true;
+            this.LoadinggetMessaga = true;
+            this.getMessaga = `${this.theTime}秒后重新发送`
+            let inter = setInterval(() => {
+              this.theTime -= 1;
+              this.getMessaga = `${this.theTime}秒后重新发送`
+              if (this.theTime == 0) {
+                this.getMessaga = "重新获取验证码";
+                this.LoadinggetMessaga = false;
+                clearInterval(inter)
+                this.theTime = 60;
+              }
+            },1000);
+          },(err => {
+            console.log(err);
+          }))
+        }
       },
       //修改个人信息、密码
       async changeMessage(type){
@@ -385,12 +465,14 @@
     margin-bottom: 4vh;
     background: #ecebeb;
   }
-
+  
   .myinfo-message{
+    position: relative;
     display: flex;
     flex-direction: column;
   }
   .myinfo-message-item{
+    position: relative;
     display: flex;
     flex-direction: row;
     margin-bottom: 3vh;
@@ -407,16 +489,38 @@
     margin-bottom: 3vh;
   }
   .myinfo-message-data{
+    min-width: 70%;
     display: flex;
     color: #333;
   }
   .myinfo-message-data input{
+    min-width: 80%;
     padding-left: 1vw;
     padding-bottom: 1vh;
     border-bottom: 0.2vw solid #d1d1d1;
   }
   .myinfo-message-data input:focus{
     border-bottom: 0.2px solid rgb(1, 135, 254);
+  }
+  .getmessageBtn{
+    width: 40vw;
+    margin-left: 45vw;
+    margin-bottom: 3vh;
+  }
+  .bindphoneOK{
+    position: absolute;
+    top: 8.3em;
+    right: 3em;
+    margin-left: 3vw;
+    color: #FF5F5F;
+    font-size: 3vw;
+  }
+  .bindphoneErr{
+    position: absolute;
+    right: 3em;
+    margin-left: 3vw;
+    color: #FF5F5F;
+    font-size: 3vw;
   }
   .myinfo-tag{
     margin-left: 3vw;
