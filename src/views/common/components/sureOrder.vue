@@ -73,9 +73,10 @@
           // on confirm
           console.log(orderData);
           sureOrder(orderData).then((res) => {
-            console.log(res);
-            if(this.data){
-              this._pay(this.data, orderData, res.data);
+            // console.log(this.data);
+            if(res.code == 200){
+              // console.log(this.data);
+              this._pay(orderData, res.data);
             }
           });
         }).catch(() => {
@@ -84,9 +85,9 @@
         });
 
       },
-      _pay: function (data, payInfo, res) {
+      _pay: function (payInfo, res) {
         let isWxMini;
-        console.log(data);
+        // console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
         if(isWxMini){
@@ -100,16 +101,6 @@
           alert("非小程序环境");
         }
       }
-    },
-    beforeRouteUpdate (to, from, next) {
-      console.log('路由发生改变，很有可能是小程序的支付成功回调')
-      let payResult = to.query.payResult
-      if (payResult) { // 小程序支付成功
-        if (payResult === '1') {
-          this.$router.push("/pay");
-        }
-      }
-      next()
     }
   };
 </script>

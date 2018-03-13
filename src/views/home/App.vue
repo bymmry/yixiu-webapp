@@ -49,8 +49,8 @@
      
       let userData = this.urlDataTurnObj(window.location.href);
       // alert(userData);
-      console.log(userData);
       // let userData = sessionStorage.getItem("userData");
+      console.log(userData);
       userData = JSON.parse(userData);
       if(userData.paySuccess == 1){
         this.$router.push("/pay")
