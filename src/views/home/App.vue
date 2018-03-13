@@ -42,31 +42,35 @@
     data () {
       return {
         isLoading: false,
-        sessionPaySuccess: 0
+        sessionPaySuccess: 0,
+        activate: true
       }
     },
-    created(){
+    activated(){
       // alert(window.location.href);  
-     
-      let userData = this.urlDataTurnObj(window.location.href);
-      // alert(userData);
-      let sessionUserData = sessionStorage.getItem("userData");
-      let sessionPaySuccess = this.sessionPaySuccess;
-      // console.log(userData);
-      userData = JSON.parse(userData);
+      if(this.activate){
+        this.activate = false;
+        let userData = this.urlDataTurnObj(window.location.href);
+        // alert(userData);
+        let sessionUserData = sessionStorage.getItem("userData");
+        let sessionPaySuccess = this.sessionPaySuccess;
+        // console.log(userData);
+        userData = JSON.parse(userData);
 
-      let paySuccess = userData.paySuccess;
-      console.log("------------------------------------------------------------------------------");
-      console.log("sessionPaySuccess:" + sessionPaySuccess);
-      console.log("paySuccess:" + paySuccess);
-      // alert("sessionPaySuccess:" + sessionPaySuccess);
-      // alert("paySuccess:" + paySuccess);
-      if(paySuccess != sessionPaySuccess){
-        this.$router.push("/pay");
-        this.sessionPaySuccess = 1;
-      }else{
-        this.sessionPaySuccess = 0;
+        let paySuccess = userData.paySuccess;
+        console.log("------------------------------------------------------------------------------");
+        console.log("sessionPaySuccess:" + sessionPaySuccess);
+        console.log("paySuccess:" + paySuccess);
+        alert("sessionPaySuccess:" + sessionPaySuccess);
+        alert("paySuccess:" + paySuccess);
+        if(paySuccess != sessionPaySuccess){
+          this.$router.push("/pay");
+          this.sessionPaySuccess = 1;
+        }else{
+          this.sessionPaySuccess = 0;
+        }
       }
+      
     },
     methods: {
       onRefresh() {
