@@ -44,6 +44,15 @@
         isLoading: false
       }
     },
+    activated(){
+      alert(window.location.href);  
+     
+      let userData = this.urlDataTurnObj(window.location.href);
+      // alert(userData);
+      console.log(userData);
+      // let userData = sessionStorage.getItem("userData");
+      userData = JSON.parse(userData);
+    },
     methods: {
       onRefresh() {
         setTimeout(() => {
