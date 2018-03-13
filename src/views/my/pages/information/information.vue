@@ -247,11 +247,13 @@
         }else if(this.mobileReg(this.newuserInfo.mobile)==false){
           alert("请输入正确的手机号");
         }else{
+          this.Etag = "";
           let a = {
             mobile: this.newuserInfo.mobile
           }
           sendmessage(a)
           .then(res => {
+            console.log(res)
             this.bindOK = false;
             this.bindphoneShow = true;
             this.LoadinggetMessaga = true;
