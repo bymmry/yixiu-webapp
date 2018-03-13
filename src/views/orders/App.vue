@@ -111,6 +111,7 @@
           message: '加载中...'
         });
         getOrderList(req).then(res => {
+          console.log(res);
           if (res.code === 200){
             this.orderData = res.data;
             this.$toast('刷新成功');

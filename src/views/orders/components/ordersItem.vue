@@ -9,6 +9,7 @@
         <p>卖家联系电话：<span>{{item.shop.contactNumber}}</span></p>
         <p>手机型号：<span>{{item.phoneModel.desc + " " + item.phoneModel.name}}</span></p>
         <p>服务：<span>{{servers[index]}}</span></p>
+        <p>下单时间：<span>{{dates[index]}}</span></p>
         <p>订单金额：<span>￥{{item.payment/100}}</span></p>
       </div>
     </div>
@@ -17,6 +18,13 @@
 </template>
 
 <script>
+  Date.prototype.toLocaleString = function() {
+    let Minutes = this.getMinutes();
+    if(Minutes < 10){
+      Minutes = "0" + Minutes;
+    }
+    return this.getFullYear() + "/" + (this.getMonth() + 1) + "/" + this.getDate() + " " + this.getHours() + ":" + Minutes    
+  };
   export default {
     name: 'orders-item',
     data() {
@@ -33,7 +41,8 @@
           102:'退款中'
         },
         servers: [],
-        rePayData: {}
+        rePayData: {},
+        dates:[]
       }
     },
     props: {
@@ -65,6 +74,11 @@
           }
           return res;
         });
+        this.dates = this.orders.map(function (val) {
+          let unixTimestamp = new Date( val.createdAt*1000 );
+          let commonTime = unixTimestamp.toLocaleString();
+          return commonTime;
+        });
 
       },
       rePay: function (index) {
@@ -89,7 +103,7 @@
   .ordersItems .ordersItem{
     width: auto;
     margin-bottom: 10px;
-    height: 121px;
+    height: 141px;
     background-color: #fff;
   }
   .ordersItems .itemTitle{
