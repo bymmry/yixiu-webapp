@@ -18,6 +18,11 @@
           <order-item v-else :orders="orderData"></order-item>
         </van-pull-refresh>
       </div>
+
+      <div class="loadMore">
+        <van-button v-if="orderData.length" v-show="showMore" @click="loadMore">点击加载更多</van-button>
+        <p>{{moreText}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -26,14 +31,15 @@
   import theHeader from '../common/base/theHeader';
   import noOrder from './components/noOrders';
   import orderItem from './components/ordersItem';
-  import { getOrderList } from './api';
-  import { Toast, PullRefresh } from 'vant';
+  import { getOrderList, getMoreOrderList } from './api';
+  import { Toast, PullRefresh, Button } from 'vant';
 
   export default {
     name: 'app',
     components: {
       [Toast.name]: Toast,
       [PullRefresh.name]: PullRefresh,
+      [Button.name]: Button,
       theHeader,
       noOrder,
       orderItem
@@ -74,7 +80,12 @@
         currentIndex: 0,
         orderData: [],
 
-        isLoading: false
+        isLoading: false,
+
+        showMore: true,
+        moreText: "",
+        nowData: 0,
+        state: undefined,
       }
     },
     methods: {
@@ -99,6 +110,7 @@
             state = 13; //已完成
         }
 
+        this.state = state;
         let req = {
           user: userInfo,
           filter: state
@@ -113,6 +125,8 @@
         getOrderList(req).then(res => {
           console.log(res);
           if (res.code === 200){
+            this.moreText = "";
+            this.showMore = true;
             this.orderData = res.data;
             this.$toast('刷新成功');
             this.isLoading = false;
@@ -154,6 +168,32 @@
         };
         this.getOrderData(req);
 
+      },
+      loadMore: function() {
+        let userInfo = this.getUserInfo();
+        this.showMore = false;
+        this.nowData += this.orderData.length;
+        //ajax请求
+        let more = {
+          skip: this.nowData
+        };
+        let reqData = {
+          user: userInfo,
+          filter: this.state
+        }
+        let req = Object.assign(reqData,more);
+        console.log(req);
+        getMoreOrderList(req).then(res => {
+          console.log(res.data);
+          if(res.data.length === 0){
+            this.moreText = "没有更多了"
+          }else {
+            this.orderData.push(...res.data);
+            this.showMore = true;
+          }
+        }, err => {
+          console.log(err);
+        })
       }
     }
   };
@@ -202,12 +242,22 @@
     width: auto;
     padding-top: 2px;
     margin-top: 3px;
-    height: 78vh;
+    height: 70vh;
     overflow-y: scroll;
     background-color: #eee;
   }
   .orders .ordersRow .ordersList> div{
     height: 100%;
     overflow-y: scroll;
+  }
+  .loadMore{
+    width: auto;
+    height: 8vh;
+    text-align: center;
+    background-color: #eee;
+  }
+  .loadMore button{
+    width: 60vw;
+    border: 1px solid #fff;  
   }
 </style>

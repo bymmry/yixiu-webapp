@@ -13,6 +13,10 @@
         <p>订单金额：<span>￥{{item.payment/100}}</span></p>
       </div>
     </div>
+    <div class="loadMore">
+      <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
+      <p>{{moreText}}</p>
+    </div>
     <router-view></router-view>
   </div>
 </template>
@@ -25,10 +29,16 @@
     }
     return this.getFullYear() + "/" + (this.getMonth() + 1) + "/" + this.getDate() + " " + this.getHours() + ":" + Minutes    
   };
+  import { Button } from 'vant';
+  import {getMoreOrderList} from '../api.js';
+  
   export default {
     name: 'orders-item',
     data() {
       return {
+        showMore: false,
+        moreText: "",
+        nowData: 0,
         state: {
           10:'待付款',
           11:'已付款',
@@ -45,6 +55,9 @@
         dates:[]
       }
     },
+    components: {
+      [Button.name]: Button
+    },
     props: {
       orders: {
         type: Array,
@@ -53,9 +66,13 @@
         }
       }
     },
+
     watch: {
       orders: function (val) {
         this.setData();
+        if (val.length > 10){
+          this.showMore = true;
+        }
         return val;
       }
     },
@@ -77,6 +94,7 @@
         this.dates = this.orders.map(function (val) {
           let unixTimestamp = new Date( val.createdAt*1000 );
           let commonTime = unixTimestamp.toLocaleString();
+          console.log(commonTime);
           return commonTime;
         });
 
@@ -89,6 +107,28 @@
           params: {
             id: this.rePayData
           }
+        })
+      },
+      loadMore: function() {
+        this.showMore = false;
+        this.nowData += this.orders.length;
+        //ajax请求
+        console.log(this.reqData);
+        let more = {
+          skip: this.nowData
+        };
+        let req = Object.assign(this.reqData,more);
+        console.log(req);
+        getMoreOrderList(req).then(res => {
+          console.log(res.data);
+          if(res.data.length === 0){
+            this.moreText = "没有更多了"
+          }else {
+            this.orders.push(...res.data);
+            this.showMore = true;
+          }
+        }, err => {
+          console.log(err);
         })
       }
     }
@@ -146,5 +186,14 @@
     z-index: 5;
 
     background-color: #fff;
+  }
+  .loadMore{
+    width: auto;
+    height: auto;
+    text-align: center;
+  }
+  .loadMore button{
+    width: 60vw;
+    border: 1px solid #fff;  
   }
 </style>
