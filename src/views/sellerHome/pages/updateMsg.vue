@@ -1,5 +1,8 @@
 <template>
   <div class="info">
+		<item-header 
+			:infoName="infoName"
+		/>
 
 		<van-field
 			v-model="infos.name"
@@ -51,6 +54,12 @@
 			<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
 			<img class="upload__show" :src="infos.cover" alt="" />
 		</div>
+
+		<van-field
+			v-model="infos.qualificationState"
+			label="审核状态"
+			disabled
+		/>
 
 		<van-field
 			v-model="infos.contactNumber"
@@ -106,16 +115,15 @@
 
 		<div id="allmap"></div>
 
-		<cube-button @click="register">注册</cube-button>
+		<cube-button @click="register">更新</cube-button>
   </div>
 </template>
 
 <script>
-import InfoItem from './infoItem'
 import { Field, Uploader, Icon } from 'vant'
 import timeJson from '../data/data.json'
 export default {
-	mounted () {
+	async mounted () {
 		this.startPicker = this.$createPicker({
       title: '选择开始营业时间',
       data: [this.time],
@@ -132,6 +140,23 @@ export default {
       }
 		})
 		this.initPosition();
+		
+		let userData = JSON.parse(sessionStorage.getItem('userData'));
+		console.log(userData);
+
+		const toast = this.$createToast({
+			message: '加载中...'
+		})
+		toast.show();
+		let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/user', { openid: userData.wx.openid })
+		toast.hide();
+		if (res.code == 200) {
+			this.infos = res.data;
+			let businessHours = this.infos.businessHours[0].split('-');
+			this.startHour = businessHours[0].trim();
+			this.endHour = businessHours[1].trim();
+			this.serviceWay  = this.infos.serviceWay.join('，');
+		}
 	},
 	components: {
 		[Field.name]: Field,
@@ -140,6 +165,7 @@ export default {
 	},
 	data () {
 		return {
+			infoName: '更新店铺信息',
 			startHour: '',
 			endHour: '',
 			serviceWay: '',
@@ -229,12 +255,11 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
-			// console.log(this.infos);
 			const toast = this.$createToast({
 				message: '加载中...'
 			})
 			toast.show();
-			let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop', this.infos);
+			let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/update', this.infos);
 			toast.hide();
 			if (res.code == 4001) {
 				alert(res.errMsg);
@@ -272,15 +297,13 @@ export default {
 		}
 	}
 }
+
 </script>
 
 <style scoped>
 .info {
-    width: 100%;
-    position: absolute;
-    left: 50%;
-    margin-top: 40px;
-    transform: translate(-50%);
+	width: 100%;
+	background-image: linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%);
 }
 .condition {
 	display: flex;

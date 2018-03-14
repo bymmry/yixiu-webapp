@@ -65,9 +65,9 @@
     methods: {
       async checkIsShop (userData) {
         console.log(userData);
-        let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: 'oFosP5Uq0wD3hyAmO07jSLMylTwk'});
+        let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
         if (res.code == 4004) {
-          this.$router.push('/businessRegister');
+          this.$router.push('/enterRules');
           return;
         }
         localStorage.setItem('shopData', JSON.stringify(res.data));

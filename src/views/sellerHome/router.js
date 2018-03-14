@@ -6,6 +6,8 @@ import addService from './pages/addService.vue'
 import orderList from './pages/orderList.vue'
 import publishPhone from './pages/publishPhone.vue'
 import orderDetail from './pages/orderDetail.vue'
+import updateMsg from './pages/updateMsg.vue'
+
 
 export default [{
   path: '/sellerHome',
@@ -42,4 +44,8 @@ export default [{
 {
   path: '/orderDetail',
   component: orderDetail
+},
+{
+  path: '/updateMsg',
+  component: updateMsg
 }]
