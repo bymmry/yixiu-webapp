@@ -16,7 +16,7 @@
           <div class="shopMainContent">
             <p><span>营业时间：每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
             <p><span>联系方式：{{shopInfo.contactNumber}}</span></p>
-            <p><span>服务方式：{{shopInfo.serviceWay[0]}}、{{shopInfo.serviceWay[1]}}</span></p>
+            <p><span>服务方式：{{shopInfo.serviceWay[0]}} {{shopInfo.serviceWay[1]}}</span></p>
             <p><span>店铺地址：</span></p>
           </div>
         </div>
@@ -56,6 +56,7 @@
                       :TotalFee="TotalFee"
                       :serverList="serverList"
                       :serverId="serverId"
+                      :serviceWay="shopInfo.serviceWay"
                       v-if="chooseInfo.problem.val"
                       v-on:goBackPrevStep="prevStep"
         ></choose-infos>
