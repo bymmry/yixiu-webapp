@@ -31,7 +31,7 @@
         <li>
           <span class="name">预约时间</span>
           <span class="value">
-            <input type="datetime" v-model="time" />
+            <cube-button @click="showTimePicker">请选择时间:{{time}}</cube-button>
           </span>
         </li>
       </ul>
@@ -118,6 +118,7 @@
         indexId: 0,
         serWay: 1,
         time: "",
+        timeNum: "",
         remack: "" //备注
       }
     },
@@ -220,7 +221,6 @@
         this.setOrderData();
       },
       setOrderData: function () {
-        let d = new Date();
         let shopId = this.$route.params.id;
         let userInfo = this.getUserInfo();
         this.sureOrderData = {
@@ -231,7 +231,7 @@
           phone: this.phoneNumber,//联系电话
           // address: "",//联系人地址
           // goods: this.shopId,//商品列表
-          appointment: d.setTime(this.time),
+          appointment: this.timeNum,
           service: this.serverId,//服务列表
           phoneModel: this.chooseData.model.data._id,//
           // card:[""],//优惠券列表
@@ -240,6 +240,35 @@
           price: this.payment*100,//总金额(优惠前金额)
           payment: this.TotalFee*100//实付金额
         }
+      },
+      showTimePicker: function(){
+        const d = new Date();
+        const time = d.valueOf() + 1 * 60 * 60 * 1000;
+        const timePicker = this.$createTimePicker({
+          showNow: true,
+          minuteStep: 10,
+          delay: 15,
+          day: {
+            len: 5,
+            filter: ['今天', '明天', '后天'],
+            format: 'M月d日'
+          },
+          onSelect: (selectedTime, selectedText) => {
+            this.timeNum = selectedTime;
+            this.time = selectedText;
+            this.setOrderData();
+          },
+          onCancel: () => {
+            this.$createToast({
+              type: 'correct',
+              txt: 'Picker canceled',
+              time: 1000
+            }).show()
+          }
+        })
+
+        timePicker.setTime(time)
+        timePicker.show()
       }
     }
   };
@@ -285,7 +314,13 @@
     float: right;
     color: red;
   }
-   .chooseInfos .information ul li span.value select{
+  .chooseInfos .information ul li span.value button{
+    height: 40px;
+    background-color: #fff;
+    color: #000;
+    font-size: 13px;
+  }
+  .chooseInfos .information ul li span.value select{
     border: none;
    }
 
