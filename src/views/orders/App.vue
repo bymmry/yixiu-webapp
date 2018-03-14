@@ -15,14 +15,13 @@
       <div class="ordersList">
         <van-pull-refresh class="ordersListRefresh" v-model="isLoading" @refresh="onRefresh">
           <no-order v-if="!orderData.length"></no-order>
-          <order-item v-else :orders="orderData"></order-item>
+          <order-item v-else :orders="orderData" :states="state"></order-item>
         </van-pull-refresh>
       </div>
-
-      <div class="loadMore">
+      <!-- <div class="loadMore">
         <van-button v-if="orderData.length" v-show="showMore" @click="loadMore">点击加载更多</van-button>
         <p>{{moreText}}</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -189,7 +188,7 @@
             this.moreText = "没有更多了"
           }else {
             this.orderData.push(...res.data);
-            this.showMore = true;
+            // this.showMore = true;
           }
         }, err => {
           console.log(err);
@@ -242,7 +241,7 @@
     width: auto;
     padding-top: 2px;
     margin-top: 3px;
-    height: 70vh;
+    height: 78vh;
     overflow-y: scroll;
     background-color: #eee;
   }
