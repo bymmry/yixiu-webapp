@@ -1,7 +1,7 @@
 <template>
   <div class="sureOrder">
     <van-button @click="sureOrder" bottom-action>
-      <sicon name="nextStep" scale="1.8"></sicon><span>立即付款{{this.TotalFee}}</span>
+      <sicon name="nextStep" scale="1.8"></sicon><span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
   </div>
 </template>
