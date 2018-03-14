@@ -11,11 +11,52 @@
 			</div>
 		</div>
 		<div class="service">
-			<p><span>手机型号 : </span>{{ details.phoneModel.name }}</p>
-			<p><span>描述: </span>{{ details.phoneModel.desc }}</p>
-			<p><span>颜色: </span>{{ details.phoneModel.color[0] }}</p>
-			<p><span>维修服务: </span>{{ details.service[0].name }}</p>
-			<p><span>需要维修的地方: </span>{{ details.service[0].desc }}</p>
+			<van-field
+				v-model="details.phoneModel.name"
+				label="手机型号"
+				disabled
+			/>
+
+			<van-field
+				v-model="details.phoneModel.desc"
+				label="描述"
+				disabled
+			/>
+
+			<van-field
+				v-model="details.phoneModel.color[0]"
+				label="手机颜色"
+				disabled
+			/>
+
+			<van-field
+				v-model="details.service[0].name"
+				label="维修服务"
+				disabled
+			/>
+
+			<van-field
+				v-model="details.service[0].desc"
+				label="维修详情"
+				disabled
+			/>
+
+			<div v-show="details.state == 12">
+				<van-field
+					v-model="details.trackingNumber"
+					label="快递单号"
+				/>
+
+				<div class="info">
+					<p>快递公司</p>
+					<cube-select
+						v-model="details.trackingCom"
+						:options="trackingComSec" 
+					/>
+				</div>
+
+			</div>
+
 		</div>
 		<div v-if="details.state == 10">
 			<button class="footer" @click="takeOrder">接单</button>
@@ -28,18 +69,25 @@
 
 <script>
 import ItemHeader from '../components/itemHeader'
+import { Field } from 'vant'
 export default {
 	components: {
-		ItemHeader
+		ItemHeader,
+		[Field.name]: Field
 	},
-  mounted () {
+  async mounted () {
 		this.details = JSON.parse(localStorage.getItem('detail'));
-		console.log()
+
+		let res = await this.$api.getData('https://m.yixiutech.com/tracking/com');
+		res.data.map(item => {
+			this.trackingComSec.push({ text: item.com, value: item.no })
+		})
 	},
 	data () {
 		return {
 			details: {},
-			infoName: '订单详情 '
+			infoName: '订单详情',
+			trackingComSec: []
 		}
 	},
 	methods: {
@@ -107,5 +155,22 @@ export default {
 	position: fixed;
 	bottom: 0;
 	z-index: 10;
+}
+
+.info {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 15px;
+	margin-top: 20px;
+	font-size: 14px;
+}
+
+.info p {
+	width: 90px;
+}
+
+.info .cube-select {
+	width: 60%;
 }
 </style>

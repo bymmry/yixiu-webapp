@@ -1,18 +1,20 @@
 <template>
   <div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <HomeHeader></HomeHeader>
+    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-show="!location">
+      <HomeHeader :city="city"></HomeHeader>
       <Swipe></Swipe>
       <Type></Type>
       <HotArea></HotArea>
       <Ticket></Ticket>
       <Activity></Activity>
-      <div class="shopTitle">
+      <div class="shopTitle" v-on:linkLocation="show">
         <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
       </div>
       <shop-list></shop-list>
       <div class="space"></div>
     </van-pull-refresh>
+
+    <location />
 
   </div>
 </template>
@@ -27,6 +29,7 @@
   import Activity from './components/activity.vue'
   import shopList from '../common/components/shopList'
   import { PullRefresh } from 'vant'
+  import location from './pages/location.vue'
   export default {
     components: {
       Nav,
@@ -37,14 +40,20 @@
       Ticket,
       Activity,
       shopList,
+      location,
       [PullRefresh.name]: PullRefresh
     },
     data () {
       return {
         isLoading: false,
         sessionPaySuccess: 0,
-        activate: true
+        activate: true,
+        location: false,
+        city: ''
       }
+    },
+    mounted () {
+      this.initPosition();
     },
     methods: {
       onRefresh() {
@@ -52,6 +61,31 @@
           this.prompt('刷新成功', 'success');
           this.isLoading = false;
         }, 500);
+      },
+      show() {
+        alert()
+      },
+      initPosition () {
+        let map = new BMap.Map("allmap");
+        let point = new BMap.Point(116.331398,39.897445);
+        map.centerAndZoom(point,12);
+
+        let _this = this;
+        
+        let geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(r){
+          if(this.getStatus() == BMAP_STATUS_SUCCESS){
+            var mk = new BMap.Marker(r.point);
+            map.addOverlay(mk);
+            map.panTo(r.point);
+            _this.city = r.address.city;
+            localStorage.setItem('lng', r.point.lng);
+            localStorage.setItem('lat', r.point.lat);
+          }
+          else {
+            alert('failed'+this.getStatus());
+          }
+        },{enableHighAccuracy: true})
       }
     }
   }

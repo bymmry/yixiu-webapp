@@ -1,12 +1,10 @@
 <template>
   <div class="header">
-    <router-link to="/position">
-      <div class="header__pos">
-        <span class="pos__name">{{city}}</span>
-        <sicon name="position" scale="2" class="pos__icon"></sicon>
-        <div id="allmap"></div>
-      </div>
-    </router-link>
+    <div class="header__pos" @click="emit">
+      <span class="pos__name">{{ city }}</span>
+      <sicon name="position" scale="2" class="pos__icon"></sicon>
+      <div id="allmap"></div>
+    </div>
     <router-link class="header__search" to="/shop">
       <input type="text" class="header__input" placeholder="请输入想要搜索的内容"/>
     </router-link>
@@ -16,40 +14,24 @@
 
 <script>
   export default {
+    props: {
+      city: String
+    },
     data () {
       return {
-        city: ''
+        // city: ''
       }
     },
     mounted () {
-      this.initPosition();
+      // this.initPosition();
     },
     methods: {
-      initPosition () {
-        let map = new BMap.Map("allmap");
-        let point = new BMap.Point(116.331398,39.897445);
-        map.centerAndZoom(point,12);
-
-        let _this = this;
-        
-        let geolocation = new BMap.Geolocation();
-        geolocation.getCurrentPosition(function(r){
-          if(this.getStatus() == BMAP_STATUS_SUCCESS){
-            var mk = new BMap.Marker(r.point);
-            map.addOverlay(mk);
-            map.panTo(r.point);
-            _this.city = r.address.city;
-            localStorage.setItem('lng', r.point.lng);
-            localStorage.setItem('lat', r.point.lat);
-          }
-          else {
-            alert('failed'+this.getStatus());
-          }
-        },{enableHighAccuracy: true})
-      },
       removeSpace (str) {
         let spaceReg = /\s|\xA0/g;
         return str.replace(spaceReg, '');
+      },
+      emit () {
+        this.$emit('linkLocation', true);
       }
     }
 

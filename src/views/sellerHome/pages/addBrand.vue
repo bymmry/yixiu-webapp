@@ -53,7 +53,8 @@ export default {
 				alias: '',
 				desc: '',
 				cover: '',
-				shop: JSON.parse(localStorage.getItem('shopData'))._id
+				shop: '5aa27cf18d78c262b3f19937',
+				// shop: JSON.parse(localStorage.getItem('shopData'))._id
 			}
 		}
 	},
