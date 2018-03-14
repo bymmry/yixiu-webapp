@@ -107,6 +107,11 @@
             url: "my/myaddress"
           },
           {
+            name: "快递查询",
+            icon: "logistics",
+            url: "my/myexpress"
+          },
+          {
             name: "问题反馈",
             icon: "question",
             url: ""

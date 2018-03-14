@@ -2,12 +2,40 @@
   <div class="chooseInfos">
     <div class="information">
       <ul>
-        <li><span class="name">手机品牌</span><span class="value">{{chooseData.brand.val}}</span></li>
-        <li><span class="name">手机型号</span><span class="value">{{chooseData.model.val}}</span></li>
-        <li><span class="name">手机颜色</span><span class="value">{{chooseData.color.val}}</span></li>
+        <li>
+          <span class="name">手机信息</span>
+          <span class="value">{{chooseData.brand.val}} {{chooseData.model.val}} {{chooseData.color.val}}</span>
+        </li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
+        <li>
+          <span class="name">手机号</span>
+          <span class="value">
+            <input placeholder="请输入手机号" v-model="phoneNumber" />
+          </span>
+          <span class="errorMessage">{{errorMessage}}</span>
+        </li>
+        <li>
+          <span class="name">留言</span>
+          <span class="value">
+            <input placeholder="请输入留言" v-model="remack" />
+          </span>
+        </li>
+        <li>
+          <span class="name">服务方式</span>
+          <span class="value">
+            <select v-on:change="selectServiceWay" v-model="indexId" name="serviceWay">
+              <option v-for="(ser, i) in serviceWay" :value="i+1">{{ser}}</option>
+            </select>
+          </span>
+        </li>
+        <li>
+          <span class="name">预约时间</span>
+          <span class="value">
+            <input type="datetime" v-model="time" />
+          </span>
+        </li>
       </ul>
-      <div id="input">
+      <!-- <div id="input">
         <van-field
           label="手机号"
           placeholder="请输入手机号"
@@ -23,7 +51,7 @@
           autosize
           v-model="remack"
         />
-      </div>
+      </div> -->
       <div class="coupon">
         <van-coupon-cell
           :coupons="coupons"
@@ -87,6 +115,9 @@
         TotalFee: 0,
         phoneNumber: "",
         errorMessage: "",
+        indexId: 0,
+        serWay: 1,
+        time: "",
         remack: "" //备注
       }
     },
@@ -104,9 +135,16 @@
         default: function () {
           return []
         }
+      },
+      serviceWay: {
+        type: Array,
+        default: function () {
+          return []
+        }
       }
     },
     mounted() {
+      this.theServiceWay = this.serviceWay[0];
       let servers = this.chooseData.problem.data;
       let pro = servers.map(function (val) {
         return val.name;
@@ -146,6 +184,10 @@
       },
       serverId: function (val) {
         return val;
+      },
+      time: function(val){
+        console.log(val);
+        this.setOrderData();
       }
     },
     components: {
@@ -173,17 +215,23 @@
       onExchange(code) {
         this.coupons.push(this.coupon);
       },
+      selectServiceWay: function() {
+        this.serWay = this.indexId;
+        this.setOrderData();
+      },
       setOrderData: function () {
+        let d = new Date();
         let shopId = this.$route.params.id;
         let userInfo = this.getUserInfo();
         this.sureOrderData = {
           type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
           user: userInfo._id,
           shop: shopId,
-          // serviceWay: "1",//服务方式 1.上门服务 2.自行到店
+          serviceWay: this.serWay,//服务方式 1.上门服务 2.自行到店
           phone: this.phoneNumber,//联系电话
           // address: "",//联系人地址
           // goods: this.shopId,//商品列表
+          appointment: d.setTime(this.time),
           service: this.serverId,//服务列表
           phoneModel: this.chooseData.model.data._id,//
           // card:[""],//优惠券列表
@@ -228,7 +276,18 @@
   .chooseInfos .information ul li span.value{
     float: right;
   }
-
+  .chooseInfos .information ul li span.value input{
+    text-align: right;
+  }
+  .chooseInfos .information ul li span.errorMessage{
+    position: relative;
+    /*top: 20px;*/
+    float: right;
+    color: red;
+  }
+   .chooseInfos .information ul li span.value select{
+    border: none;
+   }
 
   .chooseInfos .stepButton{
     width: 100%;
