@@ -11,7 +11,7 @@
         <h3>{{item.name}}</h3>
         <p>
           <span>评分{{item.score}}</span>
-          <span>修好{{item.serviceFinishCount}}单</span>
+          <span>成交{{item.serviceFinishCount}}单</span>
         </p>
         <p>均价￥{{item.price}}</p>
       </div>
