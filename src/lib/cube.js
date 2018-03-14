@@ -8,7 +8,7 @@ import {
   // Popup,
   Toast,
   Picker,
-  // TimePicker,
+  TimePicker,
   Dialog,
   ActionSheet,
   Scroll,
@@ -32,5 +32,6 @@ export default {
     Vue.use(Checkbox)
     Vue.use(CheckboxGroup)
     Vue.use(Upload)
+    Vue.use(TimePicker)
   }
 }

@@ -64,13 +64,18 @@
         default: function () {
           return []
         }
+      },
+      states: {
+        type: Number,
+        default: undefined
       }
     },
 
     watch: {
       orders: function (val) {
         this.setData();
-        if (val.length > 10){
+        this.moreText = "";
+        if (val.length >= 10){
           this.showMore = true;
         }
         return val;
@@ -110,14 +115,18 @@
         })
       },
       loadMore: function() {
+        let userInfo = this.getUserInfo();
         this.showMore = false;
         this.nowData += this.orders.length;
         //ajax请求
-        console.log(this.reqData);
         let more = {
           skip: this.nowData
         };
-        let req = Object.assign(this.reqData,more);
+        let reqData = {
+          user: userInfo,
+          filter: this.states
+        }
+        let req = Object.assign(reqData,more);
         console.log(req);
         getMoreOrderList(req).then(res => {
           console.log(res.data);
@@ -189,7 +198,7 @@
   }
   .loadMore{
     width: auto;
-    height: auto;
+    height: 8vh;
     text-align: center;
   }
   .loadMore button{
