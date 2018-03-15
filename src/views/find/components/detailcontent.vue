@@ -102,15 +102,46 @@
       },
       //邀请问答
       async invitation() {
-        this.functionunavailable()
+        if (this.question.state === 0) {
+          const toast = this.$createToast({
+            txt: '审核通过后才可使用',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else if (this.question.state === 3) {
+          const toast = this.$createToast({
+            txt: '问题已关闭',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else{
+          this.functionunavailable()
+        }
       },
       //新回答
       async newAnswer() {
-        let userData = this.getUserInfo();
-        if (userData) {
-          this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
+        // if (this.question.state === 0) {
+        //   const toast = this.$createToast({
+        //     txt: '审核通过后才可使用',
+        //     type: 'error',
+        //     time: 1300
+        //   })
+        //   toast.show()
+        // }else if (this.question.state === 3) {
+        //   const toast = this.$createToast({
+        //     txt: '问题已关闭',
+        //     type: 'error',
+        //     time: 1300
+        //   })
+        //   toast.show()
+        // }else{
+          let userData = this.getUserInfo();
+          if (userData) {
+            this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
+          // }
         }
-        
       },
       //点击标签进行搜索
       searchBytag(tag) {
@@ -127,6 +158,7 @@
       }
     },
     created: function(){
+      console.log(this.question);
       this.visitType = sessionStorage.getItem("visitType");
       if (this.visitType==="my") {
         this.$emit("type",this.visitType)
@@ -203,6 +235,13 @@
     font-size: 4vw;
     line-height: 5.5vw;
     color: #404040;
+  }
+  .questionText >>> img,
+  .questionText2 >>> img{
+    max-width: 100%;
+    max-height: 60vh;
+    display: block;
+    margin: 0 auto;
   }
   .foldquestionBtn{
     display: inline-block;

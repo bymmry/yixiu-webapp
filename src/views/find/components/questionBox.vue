@@ -8,7 +8,7 @@
       <div class="questionTitle-hidden" v-if="overtitle">...</div>
       <div class="questionContent">
         <!-- <img v-if="question.imgurl !== ''" :src="question.imgurl"> -->
-        <div class="questionText">{{ question.desc }}</div>
+        <div class="questionText" v-html="question.desc"></div>
       </div>
       <div class="questionContent-hidden" v-if="overcontent">...</div>
       <div class="questionFooter">
@@ -17,7 +17,11 @@
           <div>赏金：{{ question.reward ? question.reward/100 : 0 }} 元</div>
           <div>{{ createdtime }}</div>
         </div>
-        <div class="questionFooterRight">点击了解更多&nbsp;&nbsp;<sicon name="find-right" scale="3"></sicon></div>
+        <div>
+          <div class="questionFooterRight">点击了解更多&nbsp;&nbsp;<sicon name="find-right" scale="3"></sicon></div>
+          <div v-if="questionType === 'my'" :class="stateStyle[question.state]">{{ stateText[question.state] }}</div>
+        </div>
+        
       </div>
     </div>
     <!-- 底部的阴影 -->
@@ -32,12 +36,25 @@
   export default {
     data(){
       return {
+        stateText:{
+          0:"待审核",
+          1:"已审核",
+          2:"已采纳",
+          3:"已关闭"
+        },
+        stateStyle:{
+          0:"Qwait",
+          1:"Qpass",
+          2:"Qchosed",
+          3:"Qclose"
+        },
         createdtime: "",
         overtitle: false,   // 标题是否超过2行
         overcontent: false,   // 内容是否超过3行
       }
     },
     props: {
+      questionType: String,  //传入的question类型 我的和全部
       question: Object //传入的单个提问块
     },
     components: {
@@ -55,6 +72,8 @@
       let Time = new Date();  
       Time.setTime(this.question.createdAt * 1000); 
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
+
+      let stateText
 
 
       if (this.question.title.length>=40) {
@@ -127,11 +146,17 @@
     z-index: 100;
   }
   .questionText{
-    max-height: 16.5vw;
+    max-height: 40vw;
     font-size: 4vw;
     line-height: 5.5vw;
     color: #404040;
     overflow: hidden;
+  }
+  .questionText >>> img{
+    max-height: 8.9em;
+    margin: 0 auto;
+    max-width: 100%;
+    display: block;
   }
   .questionFooter{
     display: flex;
@@ -159,5 +184,21 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+  }
+  .Qwait{
+    text-align: right;
+    color: #FA9E05;
+  }
+  .Qpass{
+    text-align: right;
+    color: #4EF037;
+  }
+  .Qchosed{
+    text-align: right;
+    color: #00B7C2;
+  }
+  .Qclose{
+    text-align: right;
+    /*color: #FA9E05;*/
   }
 </style>

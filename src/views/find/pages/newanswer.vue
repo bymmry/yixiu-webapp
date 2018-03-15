@@ -23,7 +23,7 @@
     </div>
 
 
-    <optionFooter @changeanonymous="changeanonymous"></optionFooter>
+    <optionFooter @changeanonymous="changeanonymous" @addnewphoto="addnewphoto"></optionFooter>
 
 
   </div>
@@ -61,6 +61,10 @@
       changeanonymous(anonymous){
         this.anonymous = anonymous;
       },
+      //添加图片
+      addnewphoto(url){
+        this.text = this.text.concat(`<img src='${url}'>`)
+      },
       close(){
         this.$router.go(-1)
       },
@@ -75,7 +79,16 @@
           })
           toast.show();
         }else {
-          this.answer.content = this.text;
+          //替换<img src 字符
+          let reg = /<img src/g
+          this.answer.content = this.text.replace(reg,"i-m-g");
+          //去空格
+          let reg2 = /\s/g
+          this.answer.content = this.answer.content.replace(reg2,"&nbsp;");
+          // //替换回<img src 字符
+          let reg3 = /i-m-g/g
+          this.answer.content = this.answer.content.replace(reg3,"<img src");
+
           this.answer.question = this.questionId;
           let userData = this.getUserInfo();
           this.answer.author = userData._id
@@ -101,6 +114,8 @@
             })
             tip.show();
 
+            console.log(res)
+
             setTimeout(() => { this.close(); }, 1600);
 
           },(err => {
@@ -111,7 +126,8 @@
             })
             console.log(err);
           }))
-      }
+      },
+
     },
     created(){
       this.questionId = this.$route.params.questionId;

@@ -3,7 +3,7 @@
     <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
 
         <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
-          <questionBox  :question="question"></questionBox>
+          <questionBox  :question="question" :questionType="questionType"></questionBox>
         </div>
 
         <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
@@ -33,6 +33,7 @@
   export default {
     data(){
       return {
+        questionType:"all",
         disabled:false,
         isLoading:false,
         gatQuestionData:{
@@ -68,7 +69,7 @@
         toast.show();
         getQuestionList(postdata)
         .then(res => {
-          console.log(res);
+          // console.log(res);
           toast.hide();
           this.isLoading = false;
           if (res.data.length < 10 || !res.data.length) {

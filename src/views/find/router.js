@@ -33,9 +33,9 @@ export default [{
     name: "questiondetail",
     path: '/find/questiondetail',   //问题详情
     component: questiondetail,
-    meta: {
-      keepAlive: true // 需要被缓存
-    }
+    // meta: {
+    //   keepAlive: true // 需要被缓存
+    // }
   },
   {
     name: "answerdetail",

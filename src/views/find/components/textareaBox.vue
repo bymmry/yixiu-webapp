@@ -49,7 +49,7 @@
 <style scoped>
   .edit-div >>> img{
     max-width: 100%;
-    max-height: 120px; 
+    max-height: 40vh; 
   }
   .edit-div {
     width: 100%;
