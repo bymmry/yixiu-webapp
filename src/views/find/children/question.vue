@@ -41,6 +41,7 @@
           // title: "",
           // desc: "",
           // info: "",
+          state: [1,2],
           limit: 10,
           skip: 0
         },
@@ -76,15 +77,9 @@
             this.disabled = true;
           }
           if (type==="new") {
-            for(let index in res.data){
-              if (res.data[index].state==1 || res.data[index].state==2) {
-                this.questionData = res.data
-              }
-            }
+            this.questionData = res.data
           }else{
-            if (res.data[index].state==1 || res.data[index].state==2) {
-              this.questionData = this.questionData.concat(res.data);
-            }
+            this.questionData = this.questionData.concat(res.data);
           }
         },(err => {
           console.log(err);

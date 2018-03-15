@@ -151,6 +151,7 @@
           // title:"",
           // desc:"",
           // info:"",
+          state: [1,2],
           limit:10,
           skip:0
         }
