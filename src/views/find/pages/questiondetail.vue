@@ -139,6 +139,9 @@
     },
     created:function(){
 
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+
       this.questionId = sessionStorage.getItem("questionId")
       console.log(this.questionId);
 

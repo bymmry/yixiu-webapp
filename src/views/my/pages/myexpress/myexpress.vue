@@ -1,90 +1,95 @@
 <template>
   <div class="myinfo-container">
-    <div class="navBox">
-      <div @click="prepage" class="prepageBox"><sicon name="find-leftArr" scale="1.2"></sicon>&nbsp;返回</div>
-      <div class="navtitle">我的钱包</div>
-    </div>
+    <van-nav-bar
+      title="物流查询"
+      left-text="返回"
+      fixed
+      left-arrow
+      @click-left="prepage"
+    />
     <!-- 顶部留白 -->
     <div class="topblank"></div>
 
-    
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-      <div class="countBox">
-        <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/dribbble2.png" alt="">
-        <div class="money">{{userinfo.points/100}} 元</div>
-      </div>
-    </van-pull-refresh>
+    <van-field v-model="name" label="快递公司" placeholder="" class="orderinput" @click="showChose" />
+    <van-field v-model="order" label="快递单号" placeholder="请输入快递单号" class="orderinput"/>
+
+    <van-button type="primary" class="findBtn" @click="toexpressDetai">查询</van-button>
+
+    <van-popup v-model="show" position="bottom">
+      <van-picker
+        show-toolbar
+        :title="'选择公司'"
+        :columns="columns"
+        @cancel="onCancel"
+        @confirm="onConfirm"
+      />
+    </van-popup>
 
   </div>
 
 </template>
 
 <script>
-  import { PullRefresh } from 'vant';
-  import { getuserinforByopenId } from '../../../common/api'
+  import { Button } from 'vant';
+  import { Field } from 'vant';
+  import { NavBar } from 'vant';
+  import { Popup } from 'vant';
+  import { Picker } from 'vant';
+  import { gettracking } from '../../../common/api'
 
   export default {
     data () {
       return {
-        isLoading:false,
-        userinfo:{}
+        show:false,
+        name:"",
+        order:"",
+        columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+        newcolumns:[],
       }
     },
     components: {
-      [PullRefresh.name]: PullRefresh,
+      [NavBar.name]: NavBar,
+      [Field.name]: Field,
+      [Popup.name]: Popup,
+      [Picker.name]: Picker,
+      [Button.name]: Button,
     },
     methods: {
       //导航栏 前往个人中心
       prepage(){
         this.$router.push({ path: "/my" })
       },
-
-      //更新
-      async onRefresh(type){
-        const toast = this.$createToast({
-          time: 0,
-          txt: '正在更新'
-        })
-        toast.show();
-
-
-        //更新需要进行的操作
-        //传递的新数据
-        getuserinforByopenId(this.userinfo.wx.openid)
-        .then(res => {
-          toast.hide()
-          const tip = this.$createToast({
-            txt: '更新成功!',
-            type: 'correct',
-            time: 1000
-          })
-          tip.show();
-          this.isLoading = false;
-          this.userinfo = res.data;
-
-        },(err => {
-          const tip = this.$createToast({
-            txt: '更新失败!',
-            type: 'fail',
-            time: 1000
-          })
-          tip.show()
-        }))
+      //显示选择快递公司
+      showChose(){
+        this.show = true;
+        this.getexpress();
+      },
+      onCancel(){
+        this.show = false;
+      },
+      //选择一个后
+      onConfirm(picker, value, index) {
+        this.name = picker;
+        this.show = false;
+      },
+      toexpressDetai(){
+        this.$router.push({ path: "/expressDetails" })
       },
       //获取用户信息
-      async getUserinfo(userData){
-        getuserinforByopenId(userData.wx.openid)
+      getexpress(){
+        gettracking()
         .then(res => {
-          this.userinfo = res.data;
+          for(let index in res.data){
+            this.newcolumns[index] = res.data[index].com
+          }
+          this.columns = this.newcolumns
         },(err => {
           console.log(err);
         }))
       },
     },
     created() {
-      let userData = this.getUserInfo();
-
-      this.getUserinfo(userData);
+      
     }
   }
 </script>
@@ -93,49 +98,17 @@
   .myinfo-container{
     overflow: hidden;
     width: 100vw;
- }
-  .navBox{
-    position: fixed;
-    top: 0;
-    padding-left: 10px; 
-    width: 100vw;
-    min-height: 73px;
-    height: 15vh;
-    margin-left: -3vw;
-    display: flex;
-    flex-direction:row;
-    align-items: center;
-    border-bottom: 1px solid #ebebeb;
-    color: #FCFCFC;
-    font-size: 4vw;
-    background-image: linear-gradient(to right, #434343 0%, black 100%);
   }
-  .navtitle{
-    margin-left: 22vw;
-  }
-  .prepageBox{
-    height: 54px;
-    line-height: 54px;
-    width: 17vw;
-    text-align: center;
-  }
-  .countBox{
-    padding-top: 10vh;
-    height: 70vh;
-    text-align: center;
-  }
-  .countBox img{
-    width: 166px;
-    height: 233.3px;
-  }
-  .money{
-    color:#3c6b7a;
-    font-size: 6vw;
-    margin-top: -30px;
+  .orderinput{
+    border-bottom: 1px solid rgb(244, 244, 244);
   }
   .topblank{
     margin-top: 15vh;
   }
-
+  .findBtn{
+    width: 90vw;
+    margin-left: 5vw;
+    margin-top: 5vh;
+  }
 
 </style>

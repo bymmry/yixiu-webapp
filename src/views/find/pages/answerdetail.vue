@@ -204,6 +204,9 @@
       },
     },
     created:function(){
+      document.body.scrollTop = 0
+      document.documentElement.scrollTop = 0
+      
       this.answerdetail = this.$route.params.answerData;
       let Time = new Date();  
       Time.setTime(this.answerdetail.createdAt * 1000); 

@@ -303,3 +303,14 @@ export function validatemessage(data){
     });
   });
 }
+
+// 获取快递公司名称
+export function gettracking(){
+  return new Promise((resolve, reject) => {
+    ajax.get(`${url}/tracking/com`,).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

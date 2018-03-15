@@ -4,6 +4,7 @@ import home from '../views/home/router'
 import common from '../views/common/router'
 import my from '../views/my/router'
 import find from '../views/find/router'
+import expressDetails from '../views/expressDetails/router'
 import login from '../views/login/router'
 import position from '../views/position/router'
 import register from '../views/register/router'
@@ -40,6 +41,7 @@ export default new Router({
     ...RetrievePwd,
     ...SellerHome,
     ...phoneArrondi,
-    ...orders
+    ...orders,
+    ...expressDetails
   ]
 })

@@ -25,25 +25,25 @@ export default [{
       component: myquestion
     }
   ],
-  // meta: {
-  //   keepAlive: true // 需要被缓存
-  // }
+  meta: {
+    keepAlive: true // 需要被缓存
+  }
 },
   {
     name: "questiondetail",
     path: '/find/questiondetail',   //问题详情
     component: questiondetail,
-    // meta: {
-    //   keepAlive: true // 需要被缓存
-    // }
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     name: "answerdetail",
     path: '/find/answerdetail/:answerId',   //回答详情
     component: answerdetail,
-    // meta: {
-    //   keepAlive: true // 需要被缓存
-    // }
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     name: "newanswer",

@@ -1,6 +1,6 @@
 <template>
   <div class="question-container">
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
 
         <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
           <questionBox  :question="question"></questionBox>
@@ -9,9 +9,12 @@
         <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
           点击获得更多信息
         </div>
+        <div class="getMoeMessage"  v-else>
+          已无更多信息
+        </div>
 
 
-    </van-pull-refresh>
+    <!-- </van-pull-refresh> -->
     
     
 

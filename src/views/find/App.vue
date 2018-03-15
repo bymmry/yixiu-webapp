@@ -31,7 +31,7 @@
       <van-tab v-for="(index,num) in 2" :key="num">
 
 
-        <div slot="title" class="kindtitlebox" v-if="index===1">
+        <div slot="title" class="kindtitlebox" v-if="index===1" @click="clickKind">
           <van-icon name="question" />问答
         </div>
 
@@ -76,6 +76,10 @@
       topNav
     },
     methods: {
+      clickKind(){
+        history.go(0) 
+        // this.$router.push({ path: "/find/question"})
+      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/home"})

@@ -1,10 +1,10 @@
 <template>
   <div class="question-container">
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+    <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
       <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
         <questionBox  :question="question"></questionBox>
       </div>
-    </van-pull-refresh>
+    <!-- </van-pull-refresh> -->
     
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
