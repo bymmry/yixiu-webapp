@@ -12,9 +12,7 @@
     methods: {
       pitchOn: function (e) {
         let currentItem = e.target.innerHTML.trim();
-        localStorage.setItem('city', currentItem);
-        this.$router.push('/home');
-        this.$router.go(0);
+        this.$emit('changeCity', currentItem);
       }
     }
   }
