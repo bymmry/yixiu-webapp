@@ -158,8 +158,8 @@
       }
     },
     created(){
-      document.body.scrollTop = 0
-      document.documentElement.scrollTop = 0
+      // document.body.scrollTop = 0
+      // document.documentElement.scrollTop = 0
       this.addressMessage();
     }
   }
@@ -167,9 +167,11 @@
 
 <style scoped>
   .myadd-container{
-    padding: 0.3vh 0vw 5vh 0vw;
+    /*padding: 0.3vh 0vw 5vh 0vw;*/
     margin-bottom: 70px;
     background: #fff;
+    overflow: hidden;
+    width: 100vw;
   }
   .topblank{
     margin-top: 45.6px;
@@ -179,7 +181,7 @@
     padding-bottom: 0;
   }
   .myadd-minh{
-    min-height: 80vh;
+    /*min-height: 80vh;*/
   }
   
 </style>

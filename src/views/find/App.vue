@@ -77,7 +77,7 @@
     },
     methods: {
       clickKind(){
-        history.go(0) 
+        // history.go(0) 
         // this.$router.push({ path: "/find/question"})
       },
       //返回首页
