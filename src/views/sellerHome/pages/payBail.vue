@@ -35,7 +35,7 @@ export default {
 		  console.log(this);
 		  let payInfo = {
 			  shopId:this.shopId,
-			  totalFee: this.totalFee
+			  totalFee: this.totalFee*100
 		  }
           this._pay(payInfo);
         }).catch(() => {
