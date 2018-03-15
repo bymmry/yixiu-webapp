@@ -1,11 +1,11 @@
 <template>
   <div class="position">
     <Header></Header>
-    <PositionItem
-      v-for="(city, index) in citys"
-      :key="index"
-      :city="city"
-    />
+
+    <p class="position__item" @click="pitchOn" v-for="(city, index) in citys" :key="index">
+      {{city}}
+    </p>
+
     <div class="space"></div>
   </div>
 </template>
@@ -23,6 +23,12 @@
       return {
         citys: city
       }
+    },
+    methods: {
+      pitchOn: function (e) {
+        let currentItem = e.target.innerHTML.trim();
+        this.$emit('changeCity', currentItem);
+      }
     }
   }
 </script>
@@ -32,4 +38,11 @@
     width: 100%;
     height: 8vh;
   }
+
+.position__item {
+  padding: 5%; 
+  width: 90%;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+}
 </style>

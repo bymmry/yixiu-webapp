@@ -1,20 +1,21 @@
 <template>
   <div>
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-show="!location">
-      <HomeHeader :city="city"></HomeHeader>
+      <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
       <Swipe></Swipe>
       <Type></Type>
       <HotArea></HotArea>
       <Ticket></Ticket>
       <Activity></Activity>
-      <div class="shopTitle" v-on:linkLocation="show">
+      <div class="shopTitle">
         <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
       </div>
       <shop-list></shop-list>
       <div class="space"></div>
+      <div id="allmap"></div>
     </van-pull-refresh>
 
-    <location />
+    <location v-on:changeCity="changeCity" v-show="location"/>
 
   </div>
 </template>
@@ -62,8 +63,12 @@
           this.isLoading = false;
         }, 500);
       },
-      show() {
-        alert()
+      changeCity (data) {
+        this.city = data;
+        this.location = !this.location;
+      },
+      showMsg (data) {
+        this.location = !this.location;
       },
       initPosition () {
         let map = new BMap.Map("allmap");

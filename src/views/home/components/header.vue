@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="header__pos" @click="emit">
+    <div class="header__pos" @click="sendMsg">
       <span class="pos__name">{{ city }}</span>
       <sicon name="position" scale="2" class="pos__icon"></sicon>
       <div id="allmap"></div>
@@ -30,8 +30,8 @@
         let spaceReg = /\s|\xA0/g;
         return str.replace(spaceReg, '');
       },
-      emit () {
-        this.$emit('linkLocation', true);
+      sendMsg () {
+        this.$emit('listenToChild', true);
       }
     }
 
