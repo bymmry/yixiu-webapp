@@ -122,25 +122,25 @@
       },
       //新回答
       async newAnswer() {
-        // if (this.question.state === 0) {
-        //   const toast = this.$createToast({
-        //     txt: '审核通过后才可使用',
-        //     type: 'error',
-        //     time: 1300
-        //   })
-        //   toast.show()
-        // }else if (this.question.state === 3) {
-        //   const toast = this.$createToast({
-        //     txt: '问题已关闭',
-        //     type: 'error',
-        //     time: 1300
-        //   })
-        //   toast.show()
-        // }else{
+        if (this.question.state === 0) {
+          const toast = this.$createToast({
+            txt: '审核通过后才可使用',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else if (this.question.state === 3) {
+          const toast = this.$createToast({
+            txt: '问题已关闭',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else{
           let userData = this.getUserInfo();
           if (userData) {
             this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
-          // }
+          }
         }
       },
       //点击标签进行搜索

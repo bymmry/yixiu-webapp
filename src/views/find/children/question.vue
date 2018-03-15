@@ -69,16 +69,22 @@
         toast.show();
         getQuestionList(postdata)
         .then(res => {
-          // console.log(res);
+          console.log(res);
           toast.hide();
           this.isLoading = false;
           if (res.data.length < 10 || !res.data.length) {
             this.disabled = true;
           }
           if (type==="new") {
-            this.questionData = res.data
+            for(let index in res.data){
+              if (res.data[index].state==1 || res.data[index].state==2) {
+                this.questionData = res.data
+              }
+            }
           }else{
-            this.questionData = this.questionData.concat(res.data);
+            if (res.data[index].state==1 || res.data[index].state==2) {
+              this.questionData = this.questionData.concat(res.data);
+            }
           }
         },(err => {
           console.log(err);
