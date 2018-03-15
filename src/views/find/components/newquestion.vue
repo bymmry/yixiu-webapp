@@ -36,7 +36,8 @@
     </div>
     
     
-    <optionFooter @changeanonymous="changeanonymous"></optionFooter>
+    <optionFooter @changeanonymous="changeanonymous" @addnewphoto="addnewphoto" v-if="inNext === false"></optionFooter>
+    <div v-else class="footerStyle"></div>
 
   </div>
 </template>
@@ -59,6 +60,7 @@
         text:'',  //存储输入的文本
         anonymous: false,
         inputpla:"请输入标题",
+        descphoto:"", 
         answerdetail:{
           title: "", //标题
           desc: "", //描述
@@ -90,6 +92,13 @@
       //获取是否匿名
       changeanonymous(anonymous){
         this.anonymous = anonymous;
+      },
+      //添加图片
+      addnewphoto(url){
+        this.text = this.text.concat(`<img src='${url}'>`)
+        if (this.descphoto==="") {
+          this.descphoto = `<img src='${url}'>`
+        }
       },
       //文本检查
       checkQuestion(){
@@ -125,8 +134,16 @@
         if(!this.checkQuestion()){
           return 0;
         }
-        let reg = /\s/g
-        this.answerdetail.info = this.text.replace(reg,"&nbsp;");
+        //替换<img src 字符
+        let reg = /<img src/g
+        this.answerdetail.info = this.text.replace(reg,"i-m-g");
+        //去空格
+        let reg2 = /\s/g
+        this.answerdetail.info = this.answerdetail.info.replace(reg2,"&nbsp;");
+        // //替换回<img src 字符
+        let reg3 = /i-m-g/g
+        this.answerdetail.info = this.answerdetail.info.replace(reg3,"<img src");
+
         this.answerdetail.desc = this.removeHTML(this.text);
         let userData = this.getUserInfo();
         this.answerdetail.author = userData._id;
@@ -148,6 +165,7 @@
       },
       //提交
       pushnewquestion(){
+        this.answerdetail.desc = this.descphoto.concat(this.answerdetail.desc)
         const toast = this.$createToast({
           time: 0,
           txt: '正在提交'
@@ -210,6 +228,7 @@
     position: relative;
     padding: 5vh 3.9vw 0 3.9vw;
     padding-top: 24px;
+    height: 60vh;
   }
   .questiontitle{
     position: absolute;
@@ -219,5 +238,17 @@
     color: #c0c0c0;
     z-index: -1;
   }
-
+  .footerStyle{
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content:flex-end;
+    width: 94%;
+    height: 27px;
+    padding: 2vh 3vw 2vh 3vw;
+    background: #fff;
+    z-index: 100;
+  }
 </style>

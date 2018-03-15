@@ -59,7 +59,8 @@
           info: "",//详情
           tag: [],//问题的标签 (字符串数组)
           author: "",   // 用户id
-          _id: 0  //问题id
+          _id: 0,  //问题id
+          state: 0
           // photo: []  //图片
         }
       }
@@ -174,6 +175,7 @@
       this.answerdetail.title = oldquestion.title;
       this.answerdetail.tag = oldquestion.tag;
       this.answerdetail._id = oldquestion._id;
+      this.answerdetail.state = oldquestion.state
     }
   }
 </script>

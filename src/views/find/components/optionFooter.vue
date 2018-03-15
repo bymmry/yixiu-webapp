@@ -1,10 +1,10 @@
 <template>
   <div class="newOption">
       <div class="optionBox">
-        <div class="addphotoBox" @click="pushPhoto">
-          <!-- <van-uploader :after-read="onRead" class="addphoto"> -->
+        <div class="addphotoBox">
+          <van-uploader :after-read="onRead" class="addphoto">
             <sicon name="find-addphoto" scale="2.2"></sicon>
-          <!-- </van-uploader> -->
+          </van-uploader>
         </div>
         <div class="anonymousBox" @click="changeAnonymous">
           <sicon name="find-unselect" scale="2.5" v-if="anonymous===false"></sicon>
@@ -20,6 +20,8 @@
 
 <script>
   import { Uploader } from 'vant';
+  import axios from 'axios'
+
   export default {
     data(){
       return {
@@ -30,21 +32,26 @@
       [Uploader.name]: Uploader,
     },
     methods: {
-      //上传照片不可用，可用的时候用onRead函数
-      pushPhoto(){
-        this.functionunavailable();
-      },
       //点击 上传图片
       onRead(file) {
-        console.log(file);
+        let fd = new FormData();
+        
+        fd.append('file', file.file);
+
+        let config = {
+          headers: {'Content-Type': 'multipart/form-data'}
+        }
+        axios.post('https://yixiu.natappvip.cc/upload', fd, config)
+        .then(res => {
+          this.$emit("addnewphoto", res.data.data);
+          console.log(res.data.data);
+        })
       },
       //更改 是否匿名
       changeAnonymous(){
         this.functionunavailable();
-        /*
-        this.anonymous = !this.anonymous;
-        this.$emit("changeanonymous",this.anonymous)
-        */
+        // this.anonymous = !this.anonymous;
+        // this.$emit("changeanonymous",this.anonymous)
       },
 
     }

@@ -2,7 +2,7 @@
   <div class="question-container">
     <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
       <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
-        <questionBox  :question="question"></questionBox>
+        <questionBox  :question="question" :questionType="questionType"></questionBox>
       </div>
     <!-- </van-pull-refresh> -->
     
@@ -21,6 +21,7 @@
   export default {
     data(){
       return {
+        questionType:"my",
         isLoading:false,
         userId: "",
         questionData:[]
@@ -48,7 +49,7 @@
           toast.hide();
           this.isLoading = false;
           this.questionData = res.data;
-          // console.log(res.data)
+          console.log(res.data)
         },(err => {
           console.log(err);
         }))

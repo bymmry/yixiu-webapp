@@ -7,6 +7,7 @@ import orderList from './pages/orderList.vue'
 import publishPhone from './pages/publishPhone.vue'
 import orderDetail from './pages/orderDetail.vue'
 import updateMsg from './pages/updateMsg.vue'
+import payBail from './pages/payBail.vue'
 
 
 export default [{
@@ -48,4 +49,8 @@ export default [{
 {
   path: '/updateMsg',
   component: updateMsg
-}]
+},
+{
+  path: '/payBail',
+  component: payBail
+},]

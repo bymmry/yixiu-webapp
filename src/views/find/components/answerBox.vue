@@ -11,7 +11,7 @@
       </div>
       <div class="questionContent">
         <!-- <img v-if="answer.imgurl !== 0" :src="answer.imgurl"> -->
-        <div class="questionText">{{ answer.content }}</div>
+        <div class="questionText" v-html="answer.content"></div>
       </div>
       <div class="questionContent-hidden" v-if="foldquestion == true">...</div>
       <div class="questionFooter">
@@ -146,11 +146,17 @@
     z-index: 100;
   }
   .questionText{
-    max-height: 16.5vw;
+    max-height: 40vw;
     font-size: 4vw;
     line-height: 5.5vw;
     color: #404040;
     overflow: hidden;
+  }
+  .questionText >>> img{
+    max-width: 80%;
+    max-height: 120px;
+    display: block;
+    margin: 0 auto;
   }
   .questionFooter{
     display: flex;

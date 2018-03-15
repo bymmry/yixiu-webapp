@@ -3,7 +3,7 @@
     <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
 
         <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
-          <questionBox  :question="question"></questionBox>
+          <questionBox  :question="question" :questionType="questionType"></questionBox>
         </div>
 
         <div class="getMoeMessage" @click="addNewmessage" v-if="!disabled">
@@ -33,6 +33,7 @@
   export default {
     data(){
       return {
+        questionType:"all",
         disabled:false,
         isLoading:false,
         gatQuestionData:{
@@ -40,6 +41,7 @@
           // title: "",
           // desc: "",
           // info: "",
+          state: [1,2],
           limit: 10,
           skip: 0
         },

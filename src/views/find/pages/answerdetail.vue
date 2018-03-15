@@ -230,7 +230,8 @@
   }
   .answer-container{
     margin-bottom: 10vh;
-    padding-top: 30px;
+    /*padding-top: 30px;*/
+    padding-bottom: 15vh;
   }
   .titleshadow{
     -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 
@@ -251,7 +252,9 @@
   }
   .answercontent >>> img{
     display: block;
-    max-width: 93.6vw;
+    max-width: 80%;
+    max-height: 60vh;
+    margin: 15px auto;
   }
   .answerFooter{
     position: fixed;

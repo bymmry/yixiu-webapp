@@ -24,7 +24,7 @@
       
     </div>
 
-    <div class="replyTop"></div>
+    <!-- <div class="replyTop"></div> -->
   </div>
 </template>
 
@@ -101,8 +101,8 @@
           })
           //使用show调出方法
           tip.show();
-          
-          location.reload();
+          // this.$router.go(-1);
+          // location.reload();
         },(err => {
           const tip = this.$createToast({
             txt: '评论失败...',
@@ -119,6 +119,8 @@
     created(){
       let answerData = sessionStorage.getItem("answerData")
       answerData = JSON.parse(answerData);
+      console.log(answerData)
+      this.pushData.parent = answerData._id;
       this.replyData = answerData.reply;
       this.answerData = answerData;
 

@@ -103,6 +103,7 @@
       async onSearch(){
         let tagSearch = {
           title: this.searchvalue,
+          state: [1,2],
           limit:10,
           skip:0
         }
