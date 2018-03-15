@@ -29,11 +29,11 @@
   export default {
 		async mounted () {
 			let iphoneData= { goodsName: 'iphone', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
-			let iphoneRes = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter/', iphoneData);
+			let iphoneRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', iphoneData);
 			this.iphone = iphoneRes.data;
 
 			let androidData = { goodsName: '三星', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
-			let androidRes = await this.$api.sendData('https://yixiu.natappvip.cc/shop/filter/', androidData);
+			let androidRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', androidData);
 			this.android = androidRes.data;
 
 		},

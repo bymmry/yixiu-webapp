@@ -104,8 +104,8 @@ export default {
 		return {
 			infoName: '发布宝贝',
 			goods: {
-				// shop: JSON.parse(localStorage.getItem('shopData'))._id,
-				shop: '5aa27cf18d78c262b3f19937',
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
+				// shop: '5aa27cf18d78c262b3f19937',
 				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg'
 			},
 			base: ['重庆'],

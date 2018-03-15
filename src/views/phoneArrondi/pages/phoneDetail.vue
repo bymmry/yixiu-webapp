@@ -38,8 +38,13 @@ export default {
     }
   },
   async mounted () {
+    const toast = this.$createToast({
+          message: '加载中...'
+		})
+		toast.show();
     let phoneId = location.href.split('/').pop();
     let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
+    toast.hide();
     this.data = res.data;
     this.sureOrderData = {
       type: 2,
@@ -51,7 +56,8 @@ export default {
 			paymentType: 0,
 			price: this.data.price,
 			payment: this.data.price
-		}
+    }
+    console.log(this.sureOrderData)
   }
 }
 </script>
