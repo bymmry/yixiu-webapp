@@ -41,9 +41,9 @@ export default [{
     name: "answerdetail",
     path: '/find/answerdetail/:answerId',   //回答详情
     component: answerdetail,
-    meta: {
-      keepAlive: true // 需要被缓存
-    }
+    // meta: {
+    //   keepAlive: true // 需要被缓存
+    // }
   },
   {
     name: "newanswer",

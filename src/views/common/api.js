@@ -251,7 +251,7 @@ export function getQAListByQid(id){
 // 修改问题信息
 export function updateQuestion(data){
   return new Promise((resolve, reject) => {
-    ajax.post(`${url}/address/update/`,data).then((res) => {
+    ajax.post(`${url}/question/update`,data).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);

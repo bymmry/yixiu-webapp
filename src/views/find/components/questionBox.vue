@@ -1,6 +1,9 @@
 <template>
   <div class="questionBox-container">
     <!-- 内容部分 -->
+    <div v-if="question.state==2" class="find-haschosed">
+      <sicon name="find-haschosed" scale="4"></sicon>
+    </div>
     <div class="questionBox-content">
       <div class="questionTitle">
         {{ question.title }}
@@ -38,7 +41,7 @@
       return {
         stateText:{
           0:"待审核",
-          1:"已审核",
+          1:"正常",
           2:"已采纳",
           3:"已关闭"
         },
@@ -200,5 +203,10 @@
   .Qclose{
     text-align: right;
     /*color: #FA9E05;*/
+  }
+  .find-haschosed{
+    position: absolute;
+    right: 5vw;
+    color: #00B7C2
   }
 </style>

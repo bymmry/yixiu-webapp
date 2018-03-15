@@ -43,7 +43,10 @@
       <div class="answerOption AOline" @click="invitation">
         <van-icon name="contact" />邀请问答
       </div>
-      <div class="answerOption" @click="newAnswer">
+      <div class="answerOption" @click="closeQ" v-if="visitType==='my'">
+        <van-icon name="edit" />关闭问题
+      </div>
+      <div class="answerOption" @click="newAnswer" v-else>
         <van-icon name="edit" />添加回答
       </div>
     </div>
@@ -54,12 +57,13 @@
 
 <script>
   //vant
-  import { Button } from 'vant';
-  import { Icon } from 'vant';
+  import { Dialog,Button,Icon } from 'vant';
   import changequestion from './changequestion'
+  import { updateQuestion } from '../../common/api';
   export default {
     data(){
       return {
+        show:false,
         visitType:"other",
         foldquestion: false,
       }
@@ -70,7 +74,8 @@
     components: {
       [Button.name]: Button,
       [Icon.name]: Icon,
-      changequestion
+      [Dialog.name]: Dialog,
+      changequestion,
     },
     methods: {
       //点击展开、折叠问题描述
@@ -98,7 +103,16 @@
       },
       //修改问题
       changeQ(){
-        this.$router.push({ name: "changequestion", params:{oldquestion: this.question}});
+        if (this.question.state === 2) {
+          const toast = this.$createToast({
+            txt: '采纳答案后无法修改',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else{
+          this.$router.push({ name: "changequestion", params:{oldquestion: this.question}});
+        }
       },
       //邀请问答
       async invitation() {
@@ -142,6 +156,47 @@
             this.$router.push({ name: "newanswer", params:{questionId: this.question._id}});
           }
         }
+      },
+      //
+      closeQ(){
+        if (this.question.state === 3) {
+          const toast = this.$createToast({
+            txt: '该问题已被关闭',
+            type: 'error',
+            time: 1300
+          })
+          toast.show()
+        }else{
+          Dialog.confirm({
+            title: '确定要关闭该问题吗',
+          }).then(() => {
+            let closeQues = {
+              state: 3,
+              author: this.question.author._id,
+              _id: this.question._id
+            }
+            updateQuestion(closeQues)
+            .then(res => {
+              const toast = this.$createToast({
+                txt: '该问题已被关闭',
+                type: 'error',
+                time: 1300
+              })
+              toast.show()
+              this.question.state = 3
+            },(err => {
+              console.log(err);
+            }))
+          }).catch(() => {
+            // on cancel
+          });
+        }
+      },
+      onConfirm(){
+
+      },
+      onCancel(){
+
       },
       //点击标签进行搜索
       searchBytag(tag) {
