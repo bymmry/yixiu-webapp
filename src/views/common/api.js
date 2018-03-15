@@ -307,7 +307,28 @@ export function validatemessage(data){
 // 获取快递公司名称
 export function gettracking(){
   return new Promise((resolve, reject) => {
-    ajax.get(`${url}/tracking/com`,).then((res) => {
+    ajax.get(`${url}/tracking/com`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+export function fadegettracking(){
+  return new Promise((resolve, reject) => {
+    ajax.get(`http://v.juhe.cn/exp/com?key=268ee42cfc7431abe5b06211e410c163`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}
+
+// 获取快递信息
+export function getemail(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/tracking`,data).then((res) => {
       resolve(res);
     }).then((err) => {
       reject(err);

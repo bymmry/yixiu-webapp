@@ -35,13 +35,14 @@
   import { NavBar } from 'vant';
   import { Popup } from 'vant';
   import { Picker } from 'vant';
-  import { gettracking } from '../../../common/api'
+  import { gettracking,fadegettracking } from '../../../common/api'
 
   export default {
     data () {
       return {
         show:false,
         name:"",
+        com:"",
         order:"",
         columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
         newcolumns:[],
@@ -73,16 +74,54 @@
         this.show = false;
       },
       toexpressDetai(){
-        this.$router.push({ path: "/expressDetails" })
+        if (this.order==="") {
+          const toast = this.$createToast({
+            txt: '请先填入订单号',
+            type: 'error',
+            time: 1500
+          })
+          //使用show调出方法
+          toast.show()
+        }else if(this.name===""){
+          const toast = this.$createToast({
+            txt: '请选择快递公司',
+            type: 'error',
+            time: 1500
+          })
+          //使用show调出方法
+          toast.show()
+        }else{
+          for(let ind in this.newcolumns){
+            if (this.name === this.newcolumns[index].com) {
+              this.com = this.newcolumns[index].no;
+              break;
+            }
+          }
+          // let finddata = {
+          //   com:this.com,
+          //   no:this.order
+          // }
+          let finddata = {
+            com: "tt",
+            no: "668336262917"
+          }
+
+          this.$router.push({ name: "expressDetails" ,params: { finddata: finddata }})
+        }
       },
       //获取用户信息
       getexpress(){
         gettracking()
+        // fadegettracking()
         .then(res => {
-          for(let index in res.data){
-            this.newcolumns[index] = res.data[index].com
+          console.log(res);
+          this.newcolumns = res.data;
+          for(let index in this.newcolumns){
+            this.columns[index] = this.newcolumns[index].com
           }
-          this.columns = this.newcolumns
+          // console.log(this.newcolumns);
+          // this.columns = this.newcolumns
+          // console.log(this.columns);
         },(err => {
           console.log(err);
         }))
