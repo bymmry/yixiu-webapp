@@ -1,19 +1,23 @@
 <template>
   <div>
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-show="!location">
+    <div class="header">
       <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
+    </div>
+    <!-- <div class="homeContent"> -->
+    <van-pull-refresh class="homeContent" v-model="isLoading" @refresh="onRefresh" v-show="!location">
       <Swipe></Swipe>
-      <Type></Type>
-      <HotArea></HotArea>
-      <Ticket></Ticket>
-      <Activity></Activity>
-      <div class="shopTitle">
-        <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
-      </div>
-      <shop-list></shop-list>
-      <div class="space"></div>
-      <div id="allmap"></div>
     </van-pull-refresh>
+
+    <Type></Type>
+    <HotArea></HotArea>
+    <Ticket></Ticket>
+    <Activity></Activity>
+    <div class="shopTitle">
+      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+    </div>
+    <shop-list></shop-list>
+    <div class="space"></div>
+    <div id="allmap"></div>
 
     <location v-on:changeCity="changeCity" v-show="location"/>
 
@@ -59,7 +63,7 @@
     methods: {
       onRefresh() {
         setTimeout(() => {
-          this.prompt('刷新成功', 'success');
+          this.prompt('刷新成功', 'success').show();
           this.isLoading = false;
         }, 500);
       },
@@ -97,6 +101,16 @@
 </script>
 
 <style scoped>
+  .header{
+    width: 100%;
+    position: fixed;
+    z-index: 99;
+    top: 0;
+    height: auto;
+  }
+  .homeContent{
+    padding-top: 50px;
+  }
   .space {
     width: 100%;
     height: 8vh;

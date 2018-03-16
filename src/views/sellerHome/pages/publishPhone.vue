@@ -2,10 +2,6 @@
 	<div class="info">
 		<item-header :name="infoName" />
 
-			<van-uploader :after-read="onRead" accept="image/gif, image/jpeg">
-				<img :src="goods.cover" class="info__img" alt="">
-			</van-uploader>
-
 			<van-field
 				v-model="goods.name"
 				label="商品名称"
@@ -65,6 +61,17 @@
 				placeholder="请输入宝贝详情"
 			/>
 
+			<div class="info__name">
+				<p>商品图片</p>
+			</div>
+			<cube-upload
+				action="https://m.yixiutech.com/upload"
+				:simultaneous-uploads="1"
+				@files-added="filesAdded"
+				@file-removed="fileRemove"
+				@file-success="fileSuccess"
+			/>
+
 			<!-- <div class="info__name">
 				<p>发货地</p>
 				<cube-select
@@ -95,10 +102,6 @@ export default {
 		categoryRes.data.map(item => {
 			this.categoryList.push({value: item._id, text: item.name});
 		})
-
-		// let data = { shop: this.goods.shop, category: '5aa0e4b26834c2566635e10b', phoneModel: '5aa0e3434e16d955dc6e4fd4' }
-		// let res = await this.$api.sendData('https://m.yixiutech.com/service/shop', data);
-		// console.log(res);
 	},
   data () {
 		return {
@@ -113,8 +116,23 @@ export default {
 		}
 	},
 	methods: {
+		fileSuccess (data) {
+			this.goods.cover = data.response.cover;
+		},
+		fileRemove () {
+
+		},
 		baseChange (value, index) {
 			
+		},
+		filesAdded(files) {
+			const maxSize = 1 * 1024 * 1024
+			for (let k in files) {
+				const file = files[k]
+				if (file.size > maxSize) {
+					file.ignore = true
+				}
+			};
 		},
 		categoryChange (value, index) {
 
@@ -159,6 +177,10 @@ export default {
 .info .info__img {
 	width: 100px;
 	height: 100px;
+}
+
+.cube-upload-def {
+	width: 90%;
 }
 
 .van-button {
