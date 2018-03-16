@@ -6,7 +6,7 @@
         <span>返回</span>
       </div>
     </div>
-    <h3>订单详情</h3>
+    <h3>订单详情<span v-if="orderData.state == 100">（订单已取消）</span></h3>
     <div class="information" v-if="orderData.goods.length == 0">
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
@@ -36,19 +36,20 @@
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li><span class="name">订单总额</span><span class="value">{{orderData.payment}}</span></li>
+        <li v-if="orderData.state != 100"><span class="name">物流信息</span><span class="value"><input class="logistics" type="button" value="点击查询"></span></li>
       </ul>
     </div>
     <div class="stepButton">
       <div class="stepPrev">
-        <van-button @click="cancelOrder" bottom-action>
+        <van-button v-if="orderData.state == 10" @click="cancelOrder" bottom-action>
           <sicon name="cancel" scale="1.8"></sicon><span>取消该订单</span>
         </van-button>
+        <van-button v-else @click="goBack" bottom-action>
+          <sicon name="back" scale="1.8"></sicon><span>返回</span>
+        </van-button>
       </div>
-      <div class="stepNext">
+      <div class="stepNext" v-if="orderData.state != 100">
         <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment"></sure-order>
-        <!--<van-button @click="nextStep" bottom-action>-->
-        <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
-        <!--</van-button>-->
       </div>
     </div>
   </div>
@@ -235,7 +236,12 @@
   .chooseInfos .information ul li span.value{
     float: right;
   }
-
+  .chooseInfos .information ul li span.value input.logistics{
+    padding: 0 15px;
+    background-color: #f85;
+    color: #fff;
+    border-radius: 5px;
+  }
 
   .chooseInfos .stepButton{
     width: 100%;
