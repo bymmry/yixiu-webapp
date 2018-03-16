@@ -1,7 +1,7 @@
 <template>
   <div class="edit-div"
      v-html="innerText"
-     :contenteditable="canEdit"
+     :contenteditable="true"
      @focus="isLocked = true"
      @blur="isLocked = false"
      @input="changeText">
@@ -66,6 +66,7 @@
     text-align: left;
     background: transparent;
     z-index: 10;
+    -webkit-user-select:auto;
     &[contenteditable=true]{
       user-modify: read-write-plaintext-only;
       &:empty:before {
