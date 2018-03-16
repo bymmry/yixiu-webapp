@@ -294,6 +294,7 @@ export default {
 		background: #eee;
     transform: translate(-50%);
 		text-align: center;
+		overflow: hidden;
 }
 
 .info .info__logo {

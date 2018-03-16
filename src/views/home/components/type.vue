@@ -5,7 +5,7 @@
 				v-for="(item, index) in data" 
 				:key="index" 
 				:name="item.name"
-        :icon="item.fe.icon"
+        :icon="item.icon"
 				/>
     </div>
   </div>
@@ -26,8 +26,13 @@
     },
     async mounted () {
       let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
-      console.log(res.data);
-      this.data = res.data;
+      res.data.map(item => {
+        let config = { name: item.name, icon: item.fe.icon };
+        this.data.push(config);
+      })
+      this.data.push({ name: '其他分类', icon: 'typeAll' })
+      // console.log(res.data);
+      // this.data = res.data;
     }
   }
 </script>
