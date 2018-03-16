@@ -15,14 +15,14 @@
 		<p class="head">上传协议扫描版</p>
 		
 		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" />
+			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
 			<img class="upload__show" :src="file" alt="" />
 		</div>
 
 		<p class="head">身份证正面</p>
 
 		<div class="upload">
-			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="image/*" />
+			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
 			<img class="upload__show" :src="infos.certificate[0].src" alt="" />
 		</div>
 

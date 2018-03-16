@@ -31,8 +31,6 @@
         this.data.push(config);
       })
       this.data.push({ name: '其他分类', icon: 'typeAll' })
-      // console.log(res.data);
-      // this.data = res.data;
     }
   }
 </script>

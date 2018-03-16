@@ -3,17 +3,18 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh" v-show="!location">
       <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
       <Swipe></Swipe>
-      <Type></Type>
-      <HotArea></HotArea>
-      <Ticket></Ticket>
-      <Activity></Activity>
-      <div class="shopTitle">
-        <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
-      </div>
-      <shop-list></shop-list>
-      <div class="space"></div>
-      <div id="allmap"></div>
     </van-pull-refresh>
+
+    <Type></Type>
+    <HotArea></HotArea>
+    <Ticket></Ticket>
+    <Activity></Activity>
+    <div class="shopTitle">
+      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+    </div>
+    <shop-list></shop-list>
+    <div class="space"></div>
+    <div id="allmap"></div>
 
     <location v-on:changeCity="changeCity" v-show="location"/>
 
@@ -59,7 +60,7 @@
     methods: {
       onRefresh() {
         setTimeout(() => {
-          this.prompt('刷新成功', 'success');
+          this.prompt('刷新成功', 'success').show();
           this.isLoading = false;
         }, 500);
       },
