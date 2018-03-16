@@ -1,5 +1,13 @@
 <template>
   <div class="listView" ref="listView">
+    <!-- <cube-scroll 
+            class="ordersScroll" 
+            :options="options" 
+            :data="shopData" 
+            ref="scroll" 
+            @pulling-down="onPullingDown"
+            @pulling-up="loadMore">
+    <div> -->
     <div v-if="shopData.length"
          class="shopMain"
          @click="selectItem(item)"
@@ -29,6 +37,8 @@
       <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
       <p>{{moreText}}</p>
     </div>
+    <!-- </div>
+    </cube-scroll> -->
   </div>
 </template>
 
@@ -41,7 +51,21 @@
       return {
         showMore: false,
         nowData: 0,
-        moreText: ""
+        moreText: "",
+        options: {
+          pullDownRefresh: {
+            threshold: 90,
+            stop: 40,
+            txt: '刷新成功'
+          },
+          pullUpLoad: {
+            threshold: 0,
+            txt: {
+              more: 'Load more',
+              noMore: '没有更多了'
+            }
+          }
+        }
       }
     },
     props: {
@@ -92,12 +116,23 @@
         }, err => {
           console.log(err);
         })
+      },
+       onPullingDown: function() {
+        setTimeout(() => {
+          this.$refs.ordersList.forceUpdate()
+        }, 1000)
       }
     }
   };
 </script>
 
 <style scoped>
+  /* .listView{
+    height: 100vh;
+  }
+  .listView .ordersScroll{
+    height: 100%;
+  } */
   .listView .shopMain{
     width: auto;
     height: 60px;

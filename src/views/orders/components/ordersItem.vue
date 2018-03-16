@@ -1,6 +1,12 @@
 <template>
   <div class="ordersItems">
-    <scroll class="ordersScroll" :data="orders" ref="ordersList">
+    <cube-scroll 
+            class="ordersScroll" 
+            :options="options" 
+            :data="orders" 
+            ref="ordersList" 
+            @pulling-down="onPullingDown"
+            @pulling-up="loadMore">
       <div class="">
         <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders">
           <div class="itemTitle">
@@ -28,12 +34,12 @@
             </div>
           </div>
         </div>
-        <div class="loadMore">
+        <!-- <div class="loadMore">
           <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
           <p>{{moreText}}</p>
-        </div>
+        </div> -->
       </div>
-    </scroll>
+    </cube-scroll>
     <router-view></router-view>
   </div>
 </template>
@@ -70,7 +76,21 @@
         },
         servers: [],
         rePayData: {},
-        dates:[]
+        dates:[],
+        options: {
+          pullDownRefresh: {
+            threshold: 90,
+            stop: 40,
+            txt: '刷新成功'
+          },
+          pullUpLoad: {
+            threshold: 0,
+            txt: {
+              more: 'Load more',
+              noMore: '没有更多了'
+            }
+          }
+        }
       }
     },
     components: {
@@ -134,6 +154,7 @@
         })
       },
       loadMore: function() {
+        let that = this;
         let userInfo = this.getUserInfo();
         this.showMore = false;
         this.nowData += this.orders.length;
@@ -150,7 +171,7 @@
         getMoreOrderList(req).then(res => {
           console.log(res.data);
           if(res.data.length === 0){
-            this.moreText = "没有更多了"
+            this.$refs.ordersList.forceUpdate()
           }else {
             this.orders.push(...res.data);
             this.showMore = true;
@@ -159,9 +180,11 @@
           console.log(err);
         })
       },
-      refresh() {
-        this.$refs.ordersList.refresh()
-      },
+      onPullingDown: function() {
+        setTimeout(() => {
+          this.$refs.ordersList.forceUpdate()
+        }, 1000)
+      }
     }
   };
 </script>

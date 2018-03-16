@@ -13,10 +13,12 @@
         </ul>
       </div>
       <div class="ordersList">
-        <van-pull-refresh class="ordersListRefresh" v-model="isLoading" @refresh="onRefresh">
+        <!-- <van-pull-refresh class="ordersListRefresh" v-model="isLoading" @refresh="onRefresh"> -->
+        <div>
           <no-order v-if="!orderData.length"></no-order>
           <order-item v-else :orders="orderData" :states="state"></order-item>
-        </van-pull-refresh>
+        <!-- </van-pull-refresh> -->
+        </div>
       </div>
       <!-- <div class="loadMore">
         <van-button v-if="orderData.length" v-show="showMore" @click="loadMore">点击加载更多</van-button>
