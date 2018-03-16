@@ -1,6 +1,8 @@
 <template>
   <div class="info">
 
+	  <img class="info__logo" :src="logo" alt="" />
+
 		<van-field
 			v-model="infos.name"
 			label="商铺名称"
@@ -106,7 +108,7 @@
 
 		<div id="allmap"></div>
 
-		<cube-button @click="register">注册</cube-button>
+		<cube-button class="register" @click="register">注册</cube-button>
   </div>
 </template>
 
@@ -114,6 +116,7 @@
 import InfoItem from './infoItem'
 import { Field, Uploader, Icon } from 'vant'
 import timeJson from '../data/data.json'
+import logo from '@/assets/logo.png'
 export default {
 	mounted () {
 		this.startPicker = this.$createPicker({
@@ -143,6 +146,7 @@ export default {
 			startHour: '',
 			endHour: '',
 			serviceWay: '',
+			logo: logo,
 			file: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			infos: {
 				name: '',
@@ -186,7 +190,7 @@ export default {
 				message: '加载中...'
 			})
 			toast.show();
-			let res = await this.$api.sendData('https://yixiu.natappvip.cc/upload', formdata, config);
+			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
 			toast.hide();
 
 			this.infos.certificate.map( item => item.name == name ? item.src = res.data : null );
@@ -234,12 +238,19 @@ export default {
 				message: '加载中...'
 			})
 			toast.show();
-			let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop', this.infos);
+			let res = await this.$api.sendData('https://m.yixiutech.com/shop', this.infos);
 			toast.hide();
+			const wait  = this.$createToast({
+				type: 'warn',
+				mask: true,
+				txt: '请等待1 - 2个工作日审核',
+				time: 5000
+			})
 			if (res.code == 4001) {
 				alert(res.errMsg);
 				return;
 			}
+			wait.show();
 		},
 		start () {
 			this.startPicker.show()
@@ -276,12 +287,20 @@ export default {
 
 <style scoped>
 .info {
-    width: 100%;
+		width: 100%;
+    height: 100%;
     position: absolute;
     left: 50%;
-    margin-top: 40px;
+		background: #eee;
     transform: translate(-50%);
+		text-align: center;
 }
+
+.info .info__logo {
+	width: 200px;
+	display: inline-block;
+}
+
 .condition {
 	display: flex;
 	align-items: center;
@@ -322,7 +341,7 @@ export default {
 .info-item {
 	padding: 10px 15px;
 	display: flex;
-	color: #fff;
+	color: #000;
 	align-items: center;
 	justify-content: flex-start;
 }
@@ -332,10 +351,11 @@ export default {
 }
 
 .cube-btn {
-	background: transparent;
-	border: 2px solid #fff;
+	background: #e0620d;
 	border-radius: 5px;
 	margin: 10px 0;
+	display: inline-block;
+	width: 60%;
 }
 
 .van-field__control {
@@ -344,7 +364,8 @@ export default {
 
 .info .head {
 	padding: 10px 15px;
-	color: #fff;
+	text-align: left;
+	color: #000;
 }
 
 .info .van-uploader {
@@ -356,15 +377,15 @@ export default {
 	width: 100%;
 	margin-top: 30px;
 	padding: 20px 0;
-	color: #fff;
-	background: transparent;
+	color: #000;
+	background: #e0620d;
 	border-radius: 10px;
-	border: 2px solid #fff;
+	border: 2px solid #000;
 }
 
 .info .van-field {
 	background: transparent;
-	color: #fff;
+	color: #000;
 	font-size: 1em;
 }
 
@@ -374,7 +395,7 @@ export default {
 }
 
 .info__tip a {
-	color: #fff;
+	color: #000;
 }
 
 .info__tip .tip__pwd {
@@ -383,5 +404,9 @@ export default {
 
 .info__tip .tip__register {
 	float: right;
+}
+
+.register {
+	background: #ec3030;
 }
 </style>

@@ -26,6 +26,7 @@
     },
     async mounted () {
       let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
+      console.log(res.data);
       this.data = res.data;
     }
   }

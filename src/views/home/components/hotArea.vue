@@ -26,11 +26,12 @@
     },
     async mounted () {
       let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
-      console.log(res);
       this.data = res.data;
     }
   }
 </script>
+
+
 
 <style scoped>
   .hot {

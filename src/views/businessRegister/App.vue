@@ -1,6 +1,5 @@
 <template>
   <div class="login">
-    <Header></Header>
     <Info></Info>
   </div>
 </template>
@@ -10,7 +9,6 @@
   import Info from './components/info.vue'
   export default {
     components: {
-      Header,
       Info
     }
   }
@@ -24,7 +22,7 @@ body {
 .login {
   width: 100%;
   height: 250%;
-  background-image: linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%);
+  background: #fff;
   position: relative;
 }
 </style>
