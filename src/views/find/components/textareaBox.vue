@@ -66,7 +66,7 @@
     text-align: left;
     background: transparent;
     z-index: 10;
-    -webkit-user-select:auto;
+    -webkit-user-select:text;
     &[contenteditable=true]{
       user-modify: read-write-plaintext-only;
       &:empty:before {

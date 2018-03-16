@@ -51,8 +51,9 @@
         .then(res => {
           this.$emit("addnewphoto", res.data.data);
           
-          toast.clear();
+          
           const tip = Toast.success('上传成功');
+          toast.clear();
           // tip.show()
           console.log(res.data.data);
         })
