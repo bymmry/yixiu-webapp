@@ -98,7 +98,7 @@
           }
           let finddata = {
             com:this.com,
-            no:this.order.replace(/\b/g,"")
+            no:this.order.replace(/\s/g,"")
           }
           getemail(finddata)
           .then(res => {
