@@ -1,15 +1,23 @@
 <template>
   <div class="detail">
-		<Header 
+
+    <Header 
       :name="name"
     />
+
+    <GoodSwipe 
+      :images="images"
+    />
+
+    <Content 
+      :data="data"
+    />
+
     <Personal 
       :data="data"
     />
     
-    <Content 
-      :data="data"
-    />
+    
 
     <Footer 
       :sureOrderData="sureOrderData"
@@ -23,18 +31,21 @@ import Header from '../components/header'
 import Personal from '../components/personal'
 import Content from '../components/detailContent'
 import Footer from '../components/footer'
+import GoodSwipe from '../components/goodSwipe'
 export default {
   components: {
     Header,
     Personal,
     Content,
-    Footer
+    Footer,
+    GoodSwipe
   },
   data () {
     return {
       name: '手机详情',
       data: {},
-      sureOrderData: {}
+      sureOrderData: {},
+      images: []
     }
   },
   async mounted () {
@@ -46,6 +57,7 @@ export default {
     let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
     toast.hide();
     this.data = res.data;
+    this.images.push(this.data.cover);
     this.sureOrderData = {
       type: 2,
 			user: this.getUserInfo()._id,
@@ -57,7 +69,6 @@ export default {
 			price: this.data.price,
 			payment: this.data.price
     }
-    console.log(this.sureOrderData)
   }
 }
 </script>

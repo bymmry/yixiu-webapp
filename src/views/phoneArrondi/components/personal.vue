@@ -28,6 +28,7 @@ export default {
 	display: flex;
 	align-items: center;
 	border-bottom: 1px solid gray;
+	border-top: 1px solid gray;
 }
 
 .personal .personal__img {
