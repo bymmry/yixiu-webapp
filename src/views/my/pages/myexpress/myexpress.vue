@@ -30,12 +30,8 @@
 </template>
 
 <script>
-  import { Button } from 'vant';
-  import { Field } from 'vant';
-  import { NavBar } from 'vant';
-  import { Popup } from 'vant';
-  import { Picker } from 'vant';
-  import { gettracking,fadegettracking } from '../../../common/api'
+  import { Button,Picker,Field,NavBar,Popup,Toast } from 'vant';
+  import { gettracking,getemail } from '../../../common/api'
 
   export default {
     data () {
@@ -44,7 +40,7 @@
         name:"",
         com:"",
         order:"",
-        columns: ['杭州', '宁波', '温州', '嘉兴', '湖州'],
+        columns: [],
         newcolumns:[],
       }
     },
@@ -54,6 +50,7 @@
       [Popup.name]: Popup,
       [Picker.name]: Picker,
       [Button.name]: Button,
+      [Toast.name]: Toast,
     },
     methods: {
       //导航栏 前往个人中心
@@ -92,36 +89,37 @@
           toast.show()
         }else{
           for(let ind in this.newcolumns){
-            if (this.name === this.newcolumns[index].com) {
-              this.com = this.newcolumns[index].no;
+            if (this.name === this.newcolumns[ind].com) {
+              this.com = this.newcolumns[ind].no;
               break;
             }
           }
-          // let finddata = {
-          //   com:this.com,
-          //   no:this.order
-          // }
           let finddata = {
-            com: "tt",
-            no: "668336262917"
+            com:this.com,
+            no:this.order.replace(/\b/g,"")
           }
-
-          this.$router.push({ name: "expressDetails" ,params: { finddata: finddata }})
+          getemail(finddata)
+          .then(res => {
+            if (res.errMsg) {
+              Toast.fail(res.errMsg);
+            }else{
+              this.$router.push({ name: "expressDetails" ,params: { res: res }})
+            }
+          },(err => {
+            console.log(err);
+          }))
+          
         }
       },
       //获取用户信息
       getexpress(){
         gettracking()
-        // fadegettracking()
         .then(res => {
-          console.log(res);
           this.newcolumns = res.data;
+
           for(let index in this.newcolumns){
-            this.columns[index] = this.newcolumns[index].com
+            this.columns = this.columns.concat(this.newcolumns[index].com)
           }
-          // console.log(this.newcolumns);
-          // this.columns = this.newcolumns
-          // console.log(this.columns);
         },(err => {
           console.log(err);
         }))

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-  import { Uploader } from 'vant';
+  import { Uploader,Toast } from 'vant';
   import axios from 'axios'
 
   export default {
@@ -30,10 +30,16 @@
     },
     components: {
       [Uploader.name]: Uploader,
+      [Toast.name]: Toast,
     },
     methods: {
       //点击 上传图片
       onRead(file) {
+        const toast = Toast.loading({
+          mask: true,
+          message: '上传中...'
+        });
+
         let fd = new FormData();
         
         fd.append('file', file.file);
@@ -44,6 +50,10 @@
         axios.post('https://yixiu.natappvip.cc/upload', fd, config)
         .then(res => {
           this.$emit("addnewphoto", res.data.data);
+          
+          toast.clear();
+          const tip = Toast.success('上传成功');
+          // tip.show()
           console.log(res.data.data);
         })
       },

@@ -137,6 +137,10 @@
 </script>
 
 <style scoped>
+  .answer-container{
+    overflow: auto;
+    max-height: 85vh;
+  }
   .close{
     color: #7d7d7d;
   }
