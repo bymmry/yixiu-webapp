@@ -10,7 +10,9 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
 
-    <van-field v-model="name" label="快递公司" placeholder="" class="orderinput" @click="showChose" />
+    <div @click="showChose">
+      <van-field v-model="name" label="快递公司" placeholder="" class="orderinput" disabled/>
+    </div>
     <van-field v-model="order" label="快递单号" placeholder="请输入快递单号" class="orderinput"/>
 
     <van-button type="primary" class="findBtn" @click="toexpressDetai">查询</van-button>

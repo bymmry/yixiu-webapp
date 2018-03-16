@@ -16,7 +16,6 @@
 
     <topNav></topNav>
 
-    <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <!-- 问题部分 -->
       <detailContent :question="questiondetail" @type="canChose"></detailContent>
       <div class="answerblank"></div>
@@ -25,13 +24,11 @@
         <answerBox :answer="answer"></answerBox>
       </div>
 
-    </van-pull-refresh>
-
   </div>
 </template>
 
 <script>
-  import { NavBar, PullRefresh } from 'vant';
+  import { NavBar } from 'vant';
   import detailContent from "../components/detailContent";
   import answerBox from "../components/answerBox";
   import topNav from "../components/topNav";
@@ -41,7 +38,6 @@
     data(){
       return {
         caniChose:false,
-        isLoading:false,
         questionId:"",
         getAnswerList: {},
         questiondetail: {},
@@ -61,17 +57,11 @@
     },
     components: {
       [NavBar.name]: NavBar,
-      [PullRefresh.name]: PullRefresh,
       detailContent,
       answerBox,
       topNav,
     },
     methods: {
-      //刷新
-      onRefresh(){
-        this.getQuestion(this.questionId);
-        this.getQAList(this.questionId);
-      },
       //返回首页
       prepage(){
         this.$router.push({ path: "/find/question"})
@@ -109,7 +99,6 @@
         getQuestionByQid(id)
         .then(res => {
           toast.hide();
-          this.isLoading = false;
           this.questiondetail = res.data;
         },(err => {
           console.log(err);
