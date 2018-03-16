@@ -1,35 +1,39 @@
 <template>
   <div class="ordersItems">
-    <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders">
-      <div class="itemTitle">
-        <span class="shopName">{{item.shop.name}}</span>
-        <span class="orderState">{{state[item.state]}}</span>
-      </div>
-      <div class="orderContent">
-        <div class="goods" v-if="item.goods.length != 0">
-          <div class="cover">
-            <img :src="item.goods[0].cover">
+    <scroll class="ordersScroll" :data="orders" ref="ordersList">
+      <div class="">
+        <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders">
+          <div class="itemTitle">
+            <span class="shopName">{{item.shop.name}}</span>
+            <span class="orderState">{{state[item.state]}}</span>
           </div>
-          <div class="info">
-            <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
-            <p>商品信息：<span>{{item.goods[0].desc}}</span></p>
-            <p>下单时间：<span>{{dates[index]}}</span></p>
-            <p>订单金额：<span>￥{{item.payment}}</span></p>
+          <div class="orderContent">
+            <div class="goods" v-if="item.goods.length != 0">
+              <div class="cover">
+                <img :src="item.goods[0].cover">
+              </div>
+              <div class="info">
+                <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
+                <p>商品信息：<span>{{item.goods[0].desc}}</span></p>
+                <p>下单时间：<span>{{dates[index]}}</span></p>
+                <p>订单金额：<span>￥{{item.payment}}</span></p>
+              </div>
+            </div>
+            <div v-if="item.phoneModel">
+              <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
+              <p>手机型号：<span>{{item.phoneModel.desc}}</span></p>
+              <p>服务：<span>{{servers[index]}}</span></p>
+              <p>下单时间：<span>{{dates[index]}}</span></p>
+              <p>订单金额：<span>￥{{item.payment/100}}</span></p>
+            </div>
           </div>
         </div>
-        <div v-if="item.phoneModel">
-          <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
-          <p>手机型号：<span>{{item.phoneModel.desc}}</span></p>
-          <p>服务：<span>{{servers[index]}}</span></p>
-          <p>下单时间：<span>{{dates[index]}}</span></p>
-          <p>订单金额：<span>￥{{item.payment/100}}</span></p>
+        <div class="loadMore">
+          <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
+          <p>{{moreText}}</p>
         </div>
       </div>
-    </div>
-    <div class="loadMore">
-      <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
-      <p>{{moreText}}</p>
-    </div>
+    </scroll>
     <router-view></router-view>
   </div>
 </template>
@@ -44,6 +48,7 @@
   };
   import { Button } from 'vant';
   import {getMoreOrderList} from '../api.js';
+  import scroll from '../../common/base/scroll'
   
   export default {
     name: 'orders-item',
@@ -69,7 +74,8 @@
       }
     },
     components: {
-      [Button.name]: Button
+      [Button.name]: Button,
+      scroll
     },
     props: {
       orders: {
@@ -152,7 +158,10 @@
         }, err => {
           console.log(err);
         })
-      }
+      },
+      refresh() {
+        this.$refs.ordersList.refresh()
+      },
     }
   };
 </script>
@@ -160,7 +169,10 @@
 <style scoped>
   .ordersItems{
     width: auto;
-    height: auto;
+    height: 78vh;
+  }
+  .ordersItems .ordersScroll{
+    height: 100%
   }
   .ordersItems .ordersItem{
     width: auto;

@@ -35,8 +35,10 @@
   import shopList from '../common/components/shopList'
   import { PullRefresh } from 'vant'
   import location from './pages/location.vue'
+  import scroll from '../common/base/scroll'
   export default {
     components: {
+      scroll,
       Nav,
       HomeHeader,
       Swipe,

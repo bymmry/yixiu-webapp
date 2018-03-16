@@ -93,6 +93,7 @@
           scrollX: this.scrollX
         })
 
+        console.log(this.scroll);
         // 是否派发滚动事件
         if (this.listenScroll) {
           let me = this
@@ -152,6 +153,7 @@
     watch: {
       // 监听数据的变化，延时refreshDelay时间后调用refresh方法重新计算，保证滚动效果正常
       data() {
+        console.log(this.scroll);
         setTimeout(() => {
           this.refresh()
         }, this.refreshDelay)
