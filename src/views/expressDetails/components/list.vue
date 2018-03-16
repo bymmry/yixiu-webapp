@@ -33,9 +33,11 @@
         let redate = this.list.datetime.replace(reg2,"")
 
         let reg3 = /\d{4}-/
-        let reg4 = /\d{2}:/
+        let reg4 = /\d{2}:\d{2}/
 
-        this.time = retime.replace(reg4,"")
+        let a = reg4.exec(retime)
+
+        this.time=a[0]
         this.date = redate.replace(reg3,"")
 
       }
@@ -75,6 +77,7 @@
     left: -8px;
   }
   .text{
+    line-height: 20px;
     width: 65vw;
     font-size: 4.5vw;
     margin-top: 2px;
