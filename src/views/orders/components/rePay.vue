@@ -136,6 +136,7 @@
       setData: function () {
         let req  = {};
         let that = this;
+        let orderData = this.orderData;
         if(this.goodsId.length != 0){
           req = {
             goods: that.goodsId || undefined
@@ -147,7 +148,6 @@
             phoneModel: orderData.phoneModel._id || undefined
           }
         }
-        let orderData = this.orderData;
         let userInfo = this.getUserInfo();
         this.sureOrderData = Object.assign({},req,{
           type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
