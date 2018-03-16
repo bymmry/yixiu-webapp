@@ -49,7 +49,7 @@
         }
         axios.post('https://m.yixiutech.com/upload', fd, config)
         .then(res => {
-          this.$emit("addnewphoto", res.data.data);
+          this.$emit("addnewphoto", res.data.data+"?x-oss-process=image/quality,q_80");
           
           
           const tip = Toast.success('上传成功');
