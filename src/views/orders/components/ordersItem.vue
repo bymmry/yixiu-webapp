@@ -6,11 +6,24 @@
         <span class="orderState">{{state[item.state]}}</span>
       </div>
       <div class="orderContent">
-        <p>卖家联系电话：<span>{{item.shop.contactNumber}}</span></p>
-        <p>手机型号：<span>{{item.phoneModel.desc + " " + item.phoneModel.name}}</span></p>
-        <p>服务：<span>{{servers[index]}}</span></p>
-        <p>下单时间：<span>{{dates[index]}}</span></p>
-        <p>订单金额：<span>￥{{item.payment/100}}</span></p>
+        <div class="goods" v-if="item.goods.length != 0">
+          <div class="cover">
+            <img :src="item.goods[0].cover">
+          </div>
+          <div class="info">
+            <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
+            <p>商品信息：<span>{{item.goods[0].desc}}</span></p>
+            <p>下单时间：<span>{{dates[index]}}</span></p>
+            <p>订单金额：<span>￥{{item.payment}}</span></p>
+          </div>
+        </div>
+        <div v-if="item.phoneModel">
+          <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
+          <p>手机型号：<span>{{item.phoneModel.desc}}</span></p>
+          <p>服务：<span>{{servers[index]}}</span></p>
+          <p>下单时间：<span>{{dates[index]}}</span></p>
+          <p>订单金额：<span>￥{{item.payment/100}}</span></p>
+        </div>
       </div>
     </div>
     <div class="loadMore">
@@ -152,7 +165,8 @@
   .ordersItems .ordersItem{
     width: auto;
     margin-bottom: 10px;
-    height: 141px;
+    /* height: 141px; */
+    height: auto;
     background-color: #fff;
   }
   .ordersItems .itemTitle{
@@ -175,6 +189,23 @@
     padding-right: 15px;
     color: #f85;
     font-weight: 700;
+  }
+  .orderContent div.goods{
+   display: flex;
+  }
+  .orderContent div.goods > div.cover{
+    flex: 1;
+  }
+  .orderContent div.goods > div.cover img{
+    width: 100%;
+
+    /* height: 100%; */
+  }
+  .orderContent div.goods > div.info{
+   flex: 4;
+  }
+  .orderContent div.goods > div.info > p{
+    padding-left: 0;
   }
   .orderContent p{
     width: auto;

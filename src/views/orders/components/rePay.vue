@@ -7,7 +7,7 @@
       </div>
     </div>
     <h3>订单详情</h3>
-    <div class="information" v-if="orderData.shop">
+    <div class="information" v-if="orderData.goods.length == 0">
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
         <li><span class="name">商家电话</span><span class="value">{{orderData.shop.contactNumber}}</span></li>
@@ -20,6 +20,24 @@
         <li><span class="name">订单总额</span><span class="value">{{orderData.payment/100}}</span></li>
       </ul>
     </div>
+    <div class="information" v-if="orderData.goods.length != 0">
+      <div class="img" v-for="i in orderData.goods">
+        <img :src="i.cover" alt="">
+      </div>
+      <ul>
+        <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
+        <li><span class="name">商家电话</span><span class="value">{{orderData.shop.contactNumber}}</span></li>
+        <li>
+          <span class="name">手机信息</span>
+          <span class="value">
+            <span v-for="i in orderData.goods">{{i.desc}}&nbsp;</span>
+          </span>
+        </li>
+        <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
+        <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
+        <li><span class="name">订单总额</span><span class="value">{{orderData.payment}}</span></li>
+      </ul>
+    </div>
     <div class="stepButton">
       <div class="stepPrev">
         <van-button @click="cancelOrder" bottom-action>
@@ -27,7 +45,7 @@
         </van-button>
       </div>
       <div class="stepNext">
-        <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
+        <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment"></sure-order>
         <!--<van-button @click="nextStep" bottom-action>-->
         <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
         <!--</van-button>-->
@@ -48,7 +66,8 @@
         sureOrderData: {},
         serverId:[],
         serverList: "",
-        orderData: {}
+        orderData: {},
+        goodsId: []
       }
     },
     created() {
@@ -63,6 +82,9 @@
           return val.name;
         });
         this.serverId = servers.map(function (val) {
+          return val._id;
+        });
+        this.goodsId = this.orderData.goods.map(function (val) {
           return val._id;
         });
         this.serverList = pro.join("/");
@@ -111,25 +133,40 @@
         });
       },
       setData: function () {
-        console.log("set");
+        let req  = {};
+        let that = this;
+        if(this.goodsId.length != 0){
+          req = {
+            goods: that.goodsId || undefined
+          }
+        }else{
+          console.log(this.goodsId)
+          req = {
+            service: that.serverId,//服务列表
+            phoneModel: orderData.phoneModel._id || undefined
+          }
+        }
         let orderData = this.orderData;
         let userInfo = this.getUserInfo();
-        this.sureOrderData = {
+        this.sureOrderData = Object.assign({},req,{
           type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
           user: userInfo._id,
           shop: orderData.shop._id,
-          serviceWay: "2",//服务方式 1.上门服务 2.自行到店
+          serviceWay: orderData.type,//服务方式 1.上门服务 2.自行到店
           phone: orderData.phone,//联系电话
           // address: "",//联系人地址
-          // goods: this.shopId,//商品列表
-          service: this.serverId,//服务列表
-          phoneModel: orderData.phoneModel._id,//
+          // goods: this.goodsId || undefined,//商品列表
+          // service: this.serverId,//服务列表
+          // phoneModel: orderData.phoneModel._id || undefined,//
           // card:[""],//优惠券列表
           remark: orderData.remark,//备注
           paymentType: 0, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
           price: orderData.price,//总金额(优惠前金额)
           payment: orderData.payment//实付金额
-        };
+        })
+        // this.sureOrderData = {
+          
+        // };
         console.log(this.sureOrderData);
       }
     }
@@ -166,6 +203,13 @@
     height: auto;
     max-height: 70vh;
     overflow-y: scroll;
+  }
+  .chooseInfos .information .img{
+    width: auto;
+    height: auto;
+  }
+  .chooseInfos .information .img img{
+    width: 50vw;
   }
   .chooseInfos .information ul{
     width: 100%;
