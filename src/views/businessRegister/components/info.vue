@@ -288,7 +288,6 @@ export default {
 <style scoped>
 .info {
 		width: 100%;
-    height: 100%;
     position: absolute;
     left: 50%;
 		background: #eee;

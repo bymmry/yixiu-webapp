@@ -21,7 +21,6 @@ body {
 
 .login {
   width: 100%;
-  height: 250%;
   background: #fff;
   position: relative;
 }
