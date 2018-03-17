@@ -119,7 +119,7 @@
     height: 91vh;
   }
   .homeContent{
-    padding-top: 50px;
+    padding-top: 53px;
   }
   .space {
     width: 100%;

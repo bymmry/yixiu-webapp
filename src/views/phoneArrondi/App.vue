@@ -1,21 +1,25 @@
 <template>
   <div class="phone">
-		<Header 
-			:name="name"
-		/>
-		<Swipe></Swipe>
-		<Type />
-		<Arrondi
-			:title="iosTitle"
-			:data="iphone"
-		/>
-		<Arrondi
-			:title="androidTitle"
-			:data="android"
-		/>
-		<HotSale></HotSale>
-		<Recommend/>
-		<div class="space"></div>
+	<cube-scroll class="scroll">
+		<div>
+			<Header 
+				:name="name"
+			/>
+			<Swipe></Swipe>
+			<Type />
+			<Arrondi
+				:title="iosTitle"
+				:data="iphone"
+			/>
+			<Arrondi
+				:title="androidTitle"
+				:data="android"
+			/>
+			<HotSale></HotSale>
+			<Recommend/>
+			<div class="space"></div>
+		</div>
+	</cube-scroll>
   </div>
 </template>
 
@@ -58,6 +62,10 @@
 </script>
 
 <style scoped>
+.scroll{
+	width: 100%;
+	height: 91vh;
+	}
 .space {
 	width: 100%;
 	height: 8vh;
