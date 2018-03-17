@@ -15,8 +15,10 @@
     <topNav></topNav>
 
     <div class="replyTop">评论({{ answerData.comment }})</div>
-    <cube-scroll class="scroll">
-    <replyBox v-for="reply in replyData" :key="reply.id" :reply="reply" @replyuser="replyuser"></replyBox>
+    <cube-scroll class="scroll" :data="replyData">
+      <div style="padding-bottom:20px;">
+        <replyBox v-for="reply in replyData" :key="reply.id" :reply="reply" @replyuser="replyuser"></replyBox>
+      </div>
     </cube-scroll>
     <div class="newreply">
       <input class="replyInput" type="text" placeholder="添加评论" v-model="reply">
@@ -145,9 +147,13 @@
   }
   .reply-container{
     background: #f6f6f6;
-    margin-bottom: 70px;
+    /*margin-bottom: 70px;*/
+    height: 91vh;
+    overflow: hidden;
   }
   .close{
+    width: 50px;
+    margin-left: -15px;
     color: #7d7d7d;
   }
   .newTitle{

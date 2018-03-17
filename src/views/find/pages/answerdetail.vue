@@ -15,11 +15,18 @@
     
     <topNav></topNav>
 
-    <div class="answercontent" v-html="answerdetail.content">
-    
-    </div>
+    <cube-scroll class="scroll" :data="answerdetail">
 
-    <div class="answerend">该文发表于&nbsp;--&nbsp;{{ createdtime }}</div>
+      <div style="padding-bottom:60px;">
+        <div class="answercontent" v-html="answerdetail.content">
+        
+        </div>
+
+        <div class="answerend">该文发表于&nbsp;--&nbsp;{{ createdtime }}</div>
+      </div>
+      
+
+    </cube-scroll>
 
     <div class="answerFooter">
       <div class="supportArea">
@@ -214,18 +221,25 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 85vh;
+    /*padding-bottom: 45px;*/
+  }
   .prepage{
     display: flex;
     flex-direction: row;
     align-items:center;
-    width: 16vw;
+    width: 65px;
     color: rgb(98, 164, 255);
-    margin-left: -2vw;
+    margin-left: -15px;
+    padding-left: 11px;
   }
   .answer-container{
-    margin-bottom: 10vh;
+    height: 91vh;
+    /*margin-bottom: 10vh;*/
     /*padding-top: 30px;*/
-    padding-bottom: 15vh;
+    /*padding-bottom: 15vh;*/
     overflow: hidden;
   }
   .titleshadow{
@@ -258,10 +272,12 @@
     flex-direction: row;
     align-items:center;
     justify-content:center;
-    width: 94%;
-    height: 27px;
+    width: 100%;
+    height: 8vh;
+    min-height: 50px;
+    max-height: 60px;
     border-top: 0.3vw solid #ebebeb;
-    padding: 2vh 3vw 2vh 3vw;
+    padding: 0 0;
     background: #fff;
     z-index: 100;
   }
@@ -287,6 +303,7 @@
   }
   .otherBtn{
     width: 50%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content:center;
@@ -297,9 +314,11 @@
     justify-content:center;
     flex-direction: column;
     align-items:center;
-    margin-left: 6.8vw;
+    margin-left: 20px;
     font-size: 4vw;
     color: #333;
+    width: 40px;
+    height: 100%;
   }
   .funcBtn svg{
     margin-bottom: 0.6vh;

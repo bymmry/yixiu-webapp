@@ -90,7 +90,9 @@
     align-items:center;
     justify-content:flex-end;
     width: 100%;
-    height: 27px;
+    height: 8vh;
+    min-height: 50px;
+    max-height: 60px;
     padding: 2vh 0vw;
     background: #fff;
     z-index: 100;

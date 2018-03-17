@@ -4,7 +4,7 @@
             class="ordersScroll" 
             :options="options" 
             :data="orders" 
-            ref="ordersList" 
+            ref="ordersList"
             @pulling-down="onPullingDown"
             @pulling-up="loadMore">
       <div class="">

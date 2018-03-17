@@ -16,14 +16,18 @@
 
     <topNav></topNav>
 
-      <!-- 问题部分 -->
-      <detailContent :question="questiondetail" @type="canChose"></detailContent>
-      <div class="answerblank"></div>
-      <!-- 回答部分 -->
-      <div v-for="answer in answerData" :key="answer.id" @click="jumpanswerDetail(answer)">
-        <answerBox :answer="answer"></answerBox>
+    <cube-scroll class="scroll" :data="answerData">
+      <div style="padding-bottom:30px;">
+        <!-- 问题部分 -->
+        <detailContent :question="questiondetail" @type="canChose"></detailContent>
+        <div class="answerblank"></div>
+        <!-- 回答部分 -->
+        <div v-for="answer in answerData" :key="answer.id" @click="jumpanswerDetail(answer)">
+          <answerBox :answer="answer"></answerBox>
+        </div>
       </div>
-
+      
+    </cube-scroll>
   </div>
 </template>
 
@@ -151,13 +155,19 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 85vh;
+    /*padding-bottom: 45px;*/
+  }
   .prepage{
     display: flex;
     flex-direction: row;
     align-items:center;
-    width: 16vw;
+    width: 65px;
     color: rgb(98, 164, 255);
-    margin-left: -2vw;
+    margin-left: -15px;
+    padding-left: 11px;
   }
   .detailTitle{
     display: inline-block;
@@ -174,8 +184,11 @@
   }
   .questionDetail-container{
     background: #ebebeb;
-    min-height: 100vh;
-    padding-bottom: 45px;
+    /*min-height: 100vh;*/
+    height: 91vh;
+    overflow: hidden;
+    /*padding-bottom: 45px;*/
+    /*margin-bottom: 30px;*/
   }
   .titleSearch{
     float: right;
