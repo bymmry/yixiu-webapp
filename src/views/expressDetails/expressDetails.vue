@@ -15,7 +15,10 @@
     <div class="Listtitle">快递单号：{{emailData.no}}</div>
     
     <div class="messageBox">
+      <last-list-area :list="nowstate" :key="index" v-if="emailData.status!=1"></last-list-area>
+      <get-list-area :list="nowstate" :key="index" v-else></get-list-area>
       <list-area v-for="(list,index) in emailData.list" :list="list" :key="index"></list-area>
+
     </div>
 
   </div>
@@ -26,11 +29,14 @@
   import { NavBar } from 'vant';
   import { getemail } from '../common/api'
   import listArea from "./components/list"
+  import lastListArea from "./components/last-list"
+  import getListArea from "./components/get-list"
 
 
   export default {
     data () {
       return {
+        nowstate:{},
         state:{
           '0':"关闭",
           '1':"已签收",
@@ -47,7 +53,9 @@
     },
     components: {
       [NavBar.name]: NavBar,
-      listArea
+      listArea,
+      lastListArea,
+      getListArea
     },
     methods: {
       //导航栏 前往个人中心
@@ -56,7 +64,9 @@
       },
       gettheemail(res){
         this.emailData = res.data.result;
-        this.emailData.list = this.emailData.list.reverse()
+        this.emailData.list = this.emailData.list.reverse();
+        this.nowstate = this.emailData.list[0];
+        delete this.emailData.list[0];
       }
     },
     created() {
@@ -94,7 +104,7 @@
     color: rgb(204, 204, 204);
   }
   .get{
-    color: #00B7C2;
+    color: #2796CB;
   }
   .onway{
     color: rgb(250, 135, 26);
