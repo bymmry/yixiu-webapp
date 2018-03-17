@@ -26,7 +26,7 @@
     </div>
     
 
-    <location v-on:changeCity="changeCity" v-show="location"  v-on:back="back"/>
+    <location v-on:changeCity="changeCity" v-if="location"  v-on:back="back"/>
   </div>
 </template>
 
