@@ -1,14 +1,14 @@
 <template>
   <div class="select " @click="selectOn" v-bind:class="{ border: hasBorder }">
 		<sicon name="gou" scale="1.4" v-show="hasBorder"></sicon>
-		{{ brand }}
+		{{ data }}
 	</div>
 </template>
 
 <script>
 export default {
 	props: {
-		brand: String
+		data: String
 	},
   data () {
 		return {
@@ -17,7 +17,13 @@ export default {
 	},
 	methods: {
 		selectOn () {
-			this.hasBorder = !this.hasBorder
+			this.hasBorder = !this.hasBorder;
+			if (this.hasBorder) {
+				this.$emit('sendMsg', this.data);
+			} else {
+				this.$emit('remove', this.data);
+			}
+			
 		}
 	}
 }
@@ -30,6 +36,7 @@ export default {
 	line-height: 30px;
 	border: 1px solid gray;
 	text-align: center;
+	margin-bottom: 10px;
 }
 
 .border {

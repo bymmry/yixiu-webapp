@@ -8,7 +8,6 @@
 			{{ data.detail }}
 		</div>
 		<p class="content__item">支付方式: 微信线上支付</p>
-		<p class="content__item">产品参数</p>
 	</div>
 </template>
 
@@ -29,7 +28,7 @@ export default {
 
 <style scoped>
 .content {
-	padding: 4%;
+	padding: 4% 0;
 }
 
 .content .content__price {
@@ -38,6 +37,7 @@ export default {
 
 .content .content__name {
 	font-size: 20px;
+	padding: 0 4%;
 }
 
 .content__price span:nth-child(1) {
@@ -54,11 +54,15 @@ export default {
 .content .content__spec {
 	color: gray;
 	font-size: 0.4em;
+	padding: 0 4%;
 }
 
 .content__item {
-	border-top: 1px solid #fff;
+	padding: 1% 0;
+	border-top: 1px solid gray;
+	border-bottom: 1px solid gray;
 }
+
 
 .content__img .img {
 	width: 100%;
@@ -68,6 +72,7 @@ export default {
 .content .content__desc {
 	font-size: 16px;
 	letter-spacing: 2px;
+	padding: 2% 4%;
 	line-height: 24px;
 	transition: all 0.1s;
 }

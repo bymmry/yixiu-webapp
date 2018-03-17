@@ -2,8 +2,8 @@
 	<div class="info">
 		<p>选择品牌</p>
 		<div class="service">
-			<selects 
-				:brand="brand"
+			<selects v-for="(item, index) in brand" :key="index"
+				:data="item"
 			/>
 		</div>
 		<p>选择型号</p>
@@ -15,22 +15,22 @@
 
 		<p>选择颜色</p>
 		<div class="service">
-			<selects 
-				:brand="brand"
+			<selects v-for="(item, index) in color" :key="index"
+				:data="item"
 			/>
 		</div>
 
 		<p>选择分类</p>
 		<div class="service">
-			<selects 
-				:brand="brand"
+			<selects v-for="(item, index) in category" :key="index"
+				:data="item"
 			/>
 		</div>
 		
 		<p>选择维修服务</p>
 		<div class="service">
-			<selects 
-				:brand="brand"
+			<selects v-for="(item, index) in service" :key="index"
+				:data="service"
 			/>
 		</div>
 
@@ -47,9 +47,12 @@ export default {
 	},
 	data () {
 		return {
-			brand: '苹果',
+			brand: ['苹果', '三星', '小米'],
 			models: [],
-			res: {}
+			res: {},
+			color: ['银色', '金色', '黑色', '白色'],
+			category: ['屏幕问题', '耳机问题'],
+			service: []
 		}
 	}
 }
@@ -60,7 +63,7 @@ export default {
 	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content:space-around;
 }
 
 .info p {

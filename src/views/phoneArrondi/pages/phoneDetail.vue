@@ -66,8 +66,8 @@ export default {
 			reamrk: "",
 			goods: [this.data._id],
 			paymentType: 0,
-			price: this.data.price,
-			payment: this.data.price
+			price: this.data.price * 100,
+			payment: this.data.price * 100
     }
   }
 }

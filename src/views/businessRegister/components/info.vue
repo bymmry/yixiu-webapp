@@ -10,13 +10,13 @@
 			placeholder="请输入商铺名称"
 		/>
 
-		<p class="head">下载协议   <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修代理入驻协议.docx</a></p>
+		<p class="head">下载协议 <span class="link" @click="download">翼修代理入驻协议.docx</span></p>
 		
 		<p class="head">上传协议扫描版</p>
 		
 		<div class="upload">
 			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
-			<img class="upload__show" :src="file" alt="" />
+			<img class="upload__show" :src="files" alt="" />
 		</div>
 
 		<p class="head">身份证正面</p>
@@ -99,12 +99,25 @@
 
 		<cube-button @click="add">添加满减条件</cube-button>
 
-		<van-field
+		<!-- <van-field
 			v-model="serviceWay"
 			label="服务方式"
 			placeholder="请输入支持的服务方式，用中文逗号隔开"
 			@blur="serviceBlur"
-		/>
+		/> -->
+
+		<div class="info-item">
+			<p class="info-item__title">请选择服务方式</p>
+		</div>
+
+		<div class="service">
+			<selects v-for="(item, index) in serviceWay"  
+				@sendMsg="setData"
+				@remove="removeData"
+				:key="index"
+				:data="item"
+			/>
+		</div>
 
 		<div id="allmap"></div>
 
@@ -117,6 +130,9 @@ import InfoItem from './infoItem'
 import { Field, Uploader, Icon } from 'vant'
 import timeJson from '../data/data.json'
 import logo from '@/assets/logo.png'
+import file from '@/assets/file.png'
+import selects from '../../sellerHome/components/select'
+import wx from "weixin-js-sdk"
 export default {
 	mounted () {
 		this.startPicker = this.$createPicker({
@@ -139,15 +155,18 @@ export default {
 	components: {
 		[Field.name]: Field,
 		[Uploader.name]: Uploader,
-		[Icon.name]: Icon
+		[Icon.name]: Icon,
+		selects
 	},
 	data () {
 		return {
 			startHour: '',
 			endHour: '',
-			serviceWay: '',
+			serviceWay: ['上门服务', '店面维修', '线上快递'],
 			logo: logo,
-			file: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			files: file,
+			file: file,
+			id1: '',
 			infos: {
 				name: '',
 				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
@@ -175,6 +194,36 @@ export default {
 		}
 	},
 	methods: {
+		setData (data) {
+			this.infos.serviceWay.push(data);
+		},
+		removeData (data) {
+			this.infos.serviceWay.map( (item, index) => {
+				item == data ? this.infos.serviceWay.splice(index, 1) : null
+			})
+		},
+		download () {
+			let isWxMini ;
+			isWxMini = window.__wxjs_environment === 'miniprogram';
+			if (isWxMini) {
+				wx.downloadFile({
+					url: 'http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx',
+					success: function (res) {
+						if (res.statusCode === 200) {
+							let filePath = res.tempFilePath
+							wx.saveFile({
+								tempFilePath: tempFilePaths[0],
+								success: function(res) {
+									var savedFilePath = res.savedFilePath
+								}
+							})
+						}
+					}
+				})
+			} else {
+				alert('非小程序环境')
+			}
+		},
 		async uploadPic (pic, name) {
 			let formdata = new FormData();
 
@@ -191,11 +240,12 @@ export default {
 			})
 			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
-			toast.hide();
 
 			this.infos.certificate.map( item => item.name == name ? item.src = res.data : null );
 
 			name == 'cover' ? this.infos.cover = res.data : null;
+
+			toast.hide();
 		},
 		coverUpload (event, name) {
 			this.file = event.target.files[0];
@@ -203,12 +253,17 @@ export default {
 		},
 		protocolUpload (event, name) {
 			this.file = event.target.files[0];
+
 			this.uploadPic(this.file, 'protocol');
 		},
 		async idcardUpload1 (event, name) {
-			console.log(name);
-			this.file = event.target.files[0];
-
+			let file = event.target.files[0];
+			let reader = new FileReader();
+			let that = this;
+			reader.readAsDataURL(file);
+			reader.onload = function (e) {
+				console.log(this.result)
+			}
 			this.uploadPic(this.file, 'idcard1');
 		},
 		async idcardUpload2 (event) {
@@ -294,6 +349,13 @@ export default {
     transform: translate(-50%);
 		text-align: center;
 		overflow: hidden;
+}
+
+.service {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-around;
 }
 
 .info .info__logo {
