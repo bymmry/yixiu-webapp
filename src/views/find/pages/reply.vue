@@ -9,15 +9,15 @@
         <sicon name="close" scale="1.4"></sicon>
       </div>
       <div slot="title" class="newTitle">评论</div>
-      </van-search>
+      <!-- </van-search> -->
     </van-nav-bar>
     
     <topNav></topNav>
 
     <div class="replyTop">评论({{ answerData.comment }})</div>
-
+    <cube-scroll class="scroll">
     <replyBox v-for="reply in replyData" :key="reply.id" :reply="reply" @replyuser="replyuser"></replyBox>
-    
+    </cube-scroll>
     <div class="newreply">
       <input class="replyInput" type="text" placeholder="添加评论" v-model="reply">
       <div @click="pushnewreply"><sicon name="find-send" scale="2.3" color="#9c9c9c" ></sicon></div>
@@ -139,6 +139,10 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 80vh;
+  }
   .reply-container{
     background: #f6f6f6;
     margin-bottom: 70px;
