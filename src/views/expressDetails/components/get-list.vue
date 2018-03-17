@@ -4,7 +4,7 @@
       <div class="time-date">{{date}}</div>
       <div>{{time}}</div>
     </div>
-    <div class="line"><sicon name="express-top" scale="1.7" color="#4D4545"></sicon></div>
+    <div class="line"><sicon name="express-get" scale="1.7" color="#2796CB"></sicon></div>
     
     <div class="text">{{ list.remark }}</div>
   </div>
@@ -22,6 +22,7 @@
       list:Object
     },
     components: {
+
     },
     methods:{
       timeReg(){
@@ -51,7 +52,7 @@
     color: #4D4545;
     display: flex;
     flex-direction: row;
-    color: #616161
+    color: #2796CB;
     /*padding-bottom: 20px;*/
   }
   .time{
@@ -69,7 +70,7 @@
     position: relative;
     margin:0 5vw;
     min-height: 14vh;
-    border-left: 1px solid rgb(203, 203, 203);
+    border-left: 1px solid #2796CB;
   }
   .line svg{
     background: #fff;
