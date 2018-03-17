@@ -218,6 +218,8 @@
     overflow: hidden;
   }
   .close{
+    width: 50px;
+    margin-left: -15px;
     color: #7d7d7d;
   }
   .newTitle{

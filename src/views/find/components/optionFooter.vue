@@ -89,9 +89,9 @@
     flex-direction: row;
     align-items:center;
     justify-content:flex-end;
-    width: 94%;
+    width: 100%;
     height: 27px;
-    padding: 2vh 3vw 2vh 3vw;
+    padding: 2vh 0vw;
     background: #fff;
     z-index: 100;
   }
@@ -116,7 +116,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    min-width: 40px;
+    width: 60px;
+    padding-left: 2vw;
+    margin-left: -10px;
   }
   .addphoto{
     display: flex;
@@ -124,6 +126,6 @@
     justify-content: center;
     width: 60px; 
     height: 100%;
-    margin-left: -10px;
+    /*margin-left: -10px;*/
   }
 </style>
