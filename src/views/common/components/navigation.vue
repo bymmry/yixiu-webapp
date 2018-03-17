@@ -38,7 +38,7 @@
     left: 0;
     right: 0;
     height: 8vh;
-    /*z-index: 10;*/
+    z-index: 2;
     min-height: 50px;
     max-height: 60px;
     border-top: 1px solid #eee;

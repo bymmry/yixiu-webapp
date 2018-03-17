@@ -3,11 +3,14 @@
     <div class="header">
       <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
     </div>
-    <!-- <div class="homeContent"> -->
-    <van-pull-refresh class="homeContent" v-model="isLoading" @refresh="onRefresh" v-show="!location">
+    
+    <cube-scroll
+        class="homeScroll">
+    <div class="homeContent">
+    <!-- <van-pull-refresh class="homeContent" v-model="isLoading" @refresh="onRefresh" v-show="!location"> -->
       <Swipe></Swipe>
-    </van-pull-refresh>
-
+    <!-- </van-pull-refresh> -->
+    </div>
     <Type></Type>
     <HotArea></HotArea>
     <Ticket></Ticket>
@@ -21,6 +24,7 @@
 
     <location v-on:changeCity="changeCity" v-show="location"/>
 
+    </cube-scroll>
   </div>
 </template>
 
@@ -109,6 +113,10 @@
     z-index: 99;
     top: 0;
     height: auto;
+  }
+  .homeScroll{
+    width: 100%;
+    height: 91vh;
   }
   .homeContent{
     padding-top: 50px;
