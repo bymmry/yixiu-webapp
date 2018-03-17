@@ -281,6 +281,7 @@
           this.changed = true;
           this.radio = this.userInfo.sex === "男"? "man" : "woman",
           this.newbir = this.userInfo.birthday;
+          this.newuserInfo = this.copy(this.userInfo);
         }
       },
       //取消修改个人信息、密码
@@ -416,7 +417,6 @@
           this.userInfo.mobile = res.data.mobile || "";
           this.userInfo.name = res.data.name;
           this.id = res.data._id;
-          this.newuserInfo = this.copy(this.userInfo);
         },(err => {
           console.log(err);
         }))
