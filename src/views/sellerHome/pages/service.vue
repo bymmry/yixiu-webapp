@@ -1,11 +1,12 @@
 <template>
 	<div class="info">
 		<p>选择品牌</p>
-		<div class="service">
-			<selects v-for="(item, index) in brand" :key="index"
+		<div class="service" @click="click">
+			<single-select ref="select"  v-for="(item, index) in brand" :key="index"
 				:data="item"
 			/>
 		</div>
+		
 		<p>选择型号</p>
 
 		<cube-select
@@ -41,9 +42,11 @@
 
 <script>
 import selects from '../components/select'
+import singleSelect from '../components/singleSelect'
 export default {
   components: {
-		selects
+		selects,
+		singleSelect
 	},
 	data () {
 		return {
@@ -53,6 +56,13 @@ export default {
 			color: ['银色', '金色', '黑色', '白色'],
 			category: ['屏幕问题', '耳机问题'],
 			service: []
+		}
+	},
+	methods: {
+		click () {
+			this.$refs.select.map(item => {
+				console.log(item);
+			})
 		}
 	}
 }

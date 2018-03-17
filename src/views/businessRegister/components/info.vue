@@ -10,7 +10,9 @@
 			placeholder="请输入商铺名称"
 		/>
 
-		<p class="head">下载协议 <span class="link" @click="download">翼修代理入驻协议.docx</span></p>
+		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修代理入驻协议.docx</a></p>
+
+		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
 		
 		<p class="head">上传协议扫描版</p>
 		
@@ -23,28 +25,28 @@
 
 		<div class="upload">
 			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[0].src" alt="" />
+			<img class="upload__show" :src="id1" alt="" />
 		</div>
 
 		<p class="head">身份证反面</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="idcardUpload2($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[1].src" alt="" />
+			<img class="upload__show" :src="id2" alt="" />
 		</div>
 
 		<p class="head">营业执照</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="licenseUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[2].src" alt="" />
+			<img class="upload__show" :src="license" alt="" />
 		</div>
 
 		<p class="head">运营资格证书</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="certificateUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[3].src" alt="" />
+			<img class="upload__show" :src="certificate" alt="" />
 		</div>
 
 		<p class="head">商铺封面</p>
@@ -166,7 +168,10 @@ export default {
 			logo: logo,
 			files: file,
 			file: file,
-			id1: '',
+			id1: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			id2: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			license: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			certificate: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			infos: {
 				name: '',
 				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
@@ -202,28 +207,6 @@ export default {
 				item == data ? this.infos.serviceWay.splice(index, 1) : null
 			})
 		},
-		download () {
-			let isWxMini ;
-			isWxMini = window.__wxjs_environment === 'miniprogram';
-			if (isWxMini) {
-				wx.downloadFile({
-					url: 'http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx',
-					success: function (res) {
-						if (res.statusCode === 200) {
-							let filePath = res.tempFilePath
-							wx.saveFile({
-								tempFilePath: tempFilePaths[0],
-								success: function(res) {
-									var savedFilePath = res.savedFilePath
-								}
-							})
-						}
-					}
-				})
-			} else {
-				alert('非小程序环境')
-			}
-		},
 		async uploadPic (pic, name) {
 			let formdata = new FormData();
 
@@ -236,12 +219,22 @@ export default {
 			}
 
 			const toast = this.$createToast({
-				message: '加载中...'
+				txt: '加载中...'
 			})
 			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
 
 			this.infos.certificate.map( item => item.name == name ? item.src = res.data : null );
+
+			
+			if (name == 'protocol') {
+				const toast1 = this.$createToast({
+					time: 5000,
+					txt: '协议上传成功',
+					type: 'correct'
+				});
+				toast1.show()
+			}
 
 			name == 'cover' ? this.infos.cover = res.data : null;
 
@@ -257,27 +250,28 @@ export default {
 			this.uploadPic(this.file, 'protocol');
 		},
 		async idcardUpload1 (event, name) {
-			let file = event.target.files[0];
-			let reader = new FileReader();
-			let that = this;
-			reader.readAsDataURL(file);
-			reader.onload = function (e) {
-				console.log(this.result)
-			}
+			this.file = event.target.files[0];
+			let url = window.URL.createObjectURL(this.file);
+			this.id1 = url;
 			this.uploadPic(this.file, 'idcard1');
 		},
 		async idcardUpload2 (event) {
 			this.file = event.target.files[0];
-
+			let url = window.URL.createObjectURL(this.file);
+			this.id2 = url;
 			this.uploadPic(this.file, 'idcard2');
 		},
 		async licenseUpload (event) {
 			this.file = event.target.files[0];
+			let url = window.URL.createObjectURL(this.file);
+			this.license = url;
 
 			this.uploadPic(this.file, 'license');
 		},
 		async certificateUpload (event) {
 			this.file = event.target.files[0];
+			let url = window.URL.createObjectURL(this.file);
+			this.certificate = url;
 
 			this.uploadPic(this.file, 'certificate');
 		},
@@ -358,6 +352,12 @@ export default {
 	justify-content:space-around;
 }
 
+.links {
+	color: #ec3030;
+	text-align: left;
+	padding: 2%;
+}
+
 .info .info__logo {
 	width: 200px;
 	display: inline-block;
@@ -394,10 +394,10 @@ export default {
 
 .upload .upload__select {
 	position: absolute;
-	width: 100%;
 	z-index: 8;
 	font-size: 50px;
 	opacity: 0;
+	left: 0;
 }
 
 .info-item {
@@ -419,6 +419,7 @@ export default {
 	display: inline-block;
 	width: 60%;
 }
+
 
 .van-field__control {
 	background: transparent;
