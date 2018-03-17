@@ -7,7 +7,7 @@
     <div class="ordersRow">
       <div class="ordersTabs">
         <ul>
-          <li @click="selectOrder(index)" v-for="(item, index) in ordersList">
+          <li @click="selectOrder(index)" v-for="(item, index) in ordersList" :key="index">
             <span :data-index="index" :class="{'active': currentIndex === index}">{{item.name}}</span>
           </li>
         </ul>

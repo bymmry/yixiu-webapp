@@ -1,7 +1,7 @@
 <template>
   <div class="brand">
     <div class="stepsContent" ref="stepsContent">
-      <span data-isSelected="0" @click="selectBrand(index)" class="brand" v-for="(item, index) in brandData">{{item.name}}</span>
+      <span data-isSelected="0" @click="selectBrand(index)" class="brand" v-for="(item, index) in brandData" :key="index">{{item.name}}</span>
     </div>
     <van-button @click="nextStep" class="stepsButton" :disabled="nextStepButtonDisabled" bottom-action size="large">
       <sicon name="nextStep" scale="1.8"></sicon><span>下一步</span>
@@ -49,6 +49,7 @@
           that.selectedBrand = that.brandData[nextInfo.index];
           that.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
         }
+        this.nextStep();
 
       },
       nextStep: function () {

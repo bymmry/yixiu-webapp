@@ -1,5 +1,5 @@
 <template>
-  <div class="chooseInfos">
+  <div class="chooseInfos" v-if="orderData">
     <div class="header">
       <div class="back" @click="goBack">
         <sicon name="back" scale="1.7"></sicon>
@@ -7,6 +7,7 @@
       </div>
     </div>
     <h3>订单详情<span v-if="orderData.state == 100">（订单已取消）</span></h3>
+    <!-- 维修订单 -->
     <div class="information" v-if="orderData.goods.length == 0">
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
@@ -17,11 +18,12 @@
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
-        <li><span class="name">订单总额</span><span class="value">{{orderData.payment/100}}</span></li>
+        <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
       </ul>
     </div>
+    <!-- 手机订单 -->
     <div class="information" v-if="orderData.goods.length != 0">
-      <div class="img" v-for="i in orderData.goods">
+      <div class="img" v-for="(i,index) in orderData.goods" :key="index">
         <img :src="i.cover" alt="">
       </div>
       <ul>
@@ -30,7 +32,7 @@
         <li>
           <span class="name">手机信息</span>
           <span class="value">
-            <span v-for="i in orderData.goods">{{i.desc}}&nbsp;</span>
+            <span v-for="(i,index) in orderData.goods" :key="index">{{i.desc}}&nbsp;</span>
           </span>
         </li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
@@ -48,8 +50,8 @@
           <sicon name="back" scale="1.8"></sicon><span>返回</span>
         </van-button>
       </div>
-      <div class="stepNext" v-if="orderData.state != 100">
-        <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment"></sure-order>
+      <div class="stepNext" v-if="orderData.state == 10">
+        <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
       </div>
     </div>
   </div>
@@ -67,17 +69,18 @@
         sureOrderData: {},
         serverId:[],
         serverList: "",
-        orderData: {},
+        orderData: undefined,
         goodsId: []
       }
     },
     created() {
       let that = this;
       let id = this.$route.params.id;
-      console.log(id);
+      
       getOrderDetail(id).then(res => {
-        console.log(res);
         this.orderData = res.data;
+        
+        console.log(this.orderData);
         let servers = this.orderData.service;
         let pro = servers.map(function (val) {
           return val.name;
@@ -136,15 +139,17 @@
       setData: function () {
         let req  = {};
         let that = this;
-        if(this.goodsId.length != 0){
+        console.log(this.goodsId);
+        if(this.goodsId.length != 0){ //手机订单
+          console.log("if")
           req = {
             goods: that.goodsId || undefined
           }
-        }else{
-          console.log(this.goodsId)
+        }else{ //维修订单
+          console.log("else")
           req = {
             service: that.serverId,//服务列表
-            phoneModel: orderData.phoneModel._id || undefined
+            phoneModel: that.orderData.phoneModel._id || undefined
           }
         }
         let orderData = this.orderData;

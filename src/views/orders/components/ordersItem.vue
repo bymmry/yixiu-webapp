@@ -8,7 +8,7 @@
             @pulling-down="onPullingDown"
             @pulling-up="loadMore">
       <div class="">
-        <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders">
+        <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders" :key="index">
           <div class="itemTitle">
             <span class="shopName">{{item.shop.name}}</span>
             <span class="orderState">{{state[item.state]}}</span>
@@ -144,7 +144,6 @@
 
       },
       rePay: function (index) {
-        console.log(this.orders[index]);
         this.rePayData = this.orders[index];
         this.$router.push({
           path: `/toOrders/${this.rePayData._id}`,

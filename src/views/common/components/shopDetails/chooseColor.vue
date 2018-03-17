@@ -1,7 +1,7 @@
 <template>
     <div class="color">
       <div class="colorList" ref="stepsContent">
-        <span data-isSelected="0" @click="selectColor" v-for="(item, index) in color">{{item}}</span>
+        <span data-isSelected="0" @click="selectColor" v-for="(item, index) in color" :key="index">{{item}}</span>
       </div>
       <div class="stepButton">
         <div class="stepPrev">
@@ -69,6 +69,8 @@
 
         this.selectedColor = this.color[nextInfo.index];
         this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
+
+        this.nextStep();
       },
       nextStep: function () {
         console.log("------------------------------------>nextStep()");

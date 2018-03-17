@@ -1,7 +1,7 @@
 <template>
   <div class="model">
     <div class="modelList" ref="stepsContent">
-      <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model">{{item.name}}</span>
+      <span data-isSelected="0" @click="selectModel" v-for="(item, index) in model" :key="index">{{item.name}}</span>
     </div>
     <div class="stepButton">
       <div class="stepPrev">
@@ -76,6 +76,7 @@
 
         this.selectedModel = this.model[nextInfo.index];
         this.nextStepButtonDisabled = nextInfo.nextStepButtonDisabled;
+        this.nextStep();
       },
       nextStep: function () {
         console.log("------------------------------------>nextStep()");
