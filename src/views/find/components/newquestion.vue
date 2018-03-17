@@ -23,9 +23,10 @@
     <div class="questionarea" v-if="inNext === false">
       <inputBox :placeholder="inputpla" @titleText="getTitle" :value="answerdetail.title"></inputBox>
 
-      <p class="questiontitle" v-if='text == ""'>请输入问题描述</p>
+      <!-- <p class="questiontitle" v-if='text == ""'>请输入问题描述</p> -->
 
-      <textareaBox v-model='text'></textareaBox>
+      <textarea v-model='text' class="coverArea" placeholder="请输入问题描述"></textarea>
+      <textareaBox v-model="text" :imgs="answerdetail.image"></textareaBox>
 
     </div>
 
@@ -67,8 +68,8 @@
           info: "",//详情
           tag: [],//问题的标签 (字符串数组)
           author: "",   // 用户id
-          reward: 0   //赏金
-          // photo: []  //图片
+          reward: 0,   //赏金
+          image:[]  //存储图片
         }
       }
     },
@@ -95,7 +96,7 @@
       },
       //添加图片
       addnewphoto(url){
-        this.text = this.text.concat(`<img src='${url}'>`)
+        this.answerdetail.image = this.answerdetail.image.concat(url)
         if (this.descphoto==="") {
           this.descphoto = `<img src='${url}'>`
         }
@@ -134,6 +135,10 @@
         if(!this.checkQuestion()){
           return 0;
         }
+
+        let info = this.text.replace(/\n/g,"<br/>");
+        info = info.replace(/\s/g,"&nbsp;");
+        /*
         //替换<img src 字符
         let reg = /<img src/g
         this.answerdetail.info = this.text.replace(reg,"i-m-g");
@@ -144,11 +149,15 @@
         let reg3 = /i-m-g/g
         this.answerdetail.info = this.answerdetail.info.replace(reg3,"<img src");
 
-        this.answerdetail.desc = this.removeHTML(this.text);
+        */
+       
+        this.answerdetail.info = info;
+        this.answerdetail.desc = this.text.substring(0,80);
         let userData = this.getUserInfo();
         this.answerdetail.author = userData._id;
         this.inNext = true;
         console.log(this.answerdetail)
+        // console.log(this.text);
       },
       //添加Tag
       changeTag(tag){
@@ -162,6 +171,8 @@
       pushnewquestionPre(){
         this.answerdetail.tag = [];
         this.inNext = false;
+        console.log(this.answerdetail)
+        console.log(this.text);
       },
       //提交
       pushnewquestion(){
@@ -202,6 +213,10 @@
 </script>
 
 <style scoped>
+  .answer-container{
+    margin-bottom: 70px;
+    overflow: hidden;
+  }
   .close{
     color: #7d7d7d;
   }
@@ -228,7 +243,7 @@
     position: relative;
     padding: 5vh 3.9vw 0 3.9vw;
     padding-top: 24px;
-    height: 60vh;
+    /*height: 60vh;*/
   }
   .questiontitle{
     position: absolute;
@@ -250,5 +265,31 @@
     padding: 2vh 3vw 2vh 3vw;
     background: #fff;
     z-index: 100;
+  }
+  .coverArea{
+    position: absolute;
+    width: 100%;
+    /*height: 100%;*/
+    min-height: 40vh;
+    font-size: 14px;
+    margin-top: 17px;
+    line-height: 16px;
+    overflow: auto;
+    word-break: break-all;
+    outline: none;
+    user-select: text;
+    white-space: pre-wrap;
+    text-align: left;
+    background: #fff;
+    border: 0;
+    z-index: 10;
+    &[contenteditable=true]{
+      user-modify: read-write-plaintext-only;
+      &:empty:before {
+        content: attr(placeholder);
+        display: block;
+        color: #ccc;
+      }
+    }
   }
 </style>

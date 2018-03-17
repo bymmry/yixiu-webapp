@@ -10,13 +10,13 @@
         {{ name }}
       </div>
       <div class="questionContent">
-        <!-- <img v-if="answer.imgurl !== 0" :src="answer.imgurl"> -->
+        <img v-if="answer.image[0] !== 0" :src="answer.image[0]">
         <div class="questionText" v-html="answer.content"></div>
       </div>
       <div class="questionContent-hidden" v-if="foldquestion == true">...</div>
       <div class="questionFooter">
         <div class="questionFooterLeft">
-          <!-- <div>{{ answer.reply }} 评论&nbsp;·&nbsp;</div> -->
+          <div>{{ answer.reply.length }} 评论&nbsp;·&nbsp;</div>
           <div>{{ createdtime }}</div>
         </div>
         <div>点击查看详情</div>

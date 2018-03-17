@@ -16,9 +16,9 @@
     <topNav></topNav>
 
     <div class="questionarea">
-      <p class="questiontitle" v-if='text == ""'>请输入问题描述</p>
+      <!-- <p class="questiontitle" v-if='text == ""'>请输入问题描述</p> -->
 
-      <textareaBox v-model='text' class="answerBox"></textareaBox>
+      <textareaBox v-model="text" :imgs="answer.image" class="answerBox"></textareaBox>
 
     </div>
 
@@ -46,7 +46,8 @@
           content: "",//内容字符串
           question: "",//此评论属于哪个问题的标识_id
           // parent: "", //父级评论的标识_id(不填则为1级评论 填了则为二级评论)
-          author: "" //此评论属于哪个用户的标识_id(或者叫回复人,评论者)
+          author: "", //此评论属于哪个用户的标识_id(或者叫回复人,评论者),
+          image:[]
         }
       }
     },
@@ -63,7 +64,7 @@
       },
       //添加图片
       addnewphoto(url){
-        this.text = this.text.concat(`<img src='${url}'>`)
+        this.answer.image = this.answer.image.concat(url)
       },
       close(){
         this.$router.go(-1)
@@ -79,19 +80,24 @@
           })
           toast.show();
         }else {
-          //替换<img src 字符
-          let reg = /<img src/g
-          this.answer.content = this.text.replace(reg,"i-m-g");
-          //去空格
-          let reg2 = /\s/g
-          this.answer.content = this.answer.content.replace(reg2,"&nbsp;");
-          // //替换回<img src 字符
-          let reg3 = /i-m-g/g
-          this.answer.content = this.answer.content.replace(reg3,"<img src");
+          // //替换<img src 字符
+          // let reg = /<img src/g
+          // this.answer.content = this.text.replace(reg,"i-m-g");
+          // //去空格
+          // let reg2 = /\s/g
+          // this.answer.content = this.answer.content.replace(reg2,"&nbsp;");
+          // // //替换回<img src 字符
+          // let reg3 = /i-m-g/g
+          // this.answer.content = this.answer.content.replace(reg3,"<img src");
 
+          let info = this.text.replace(/\n/g,"<br/>");
+          info = info.replace(/\s/g,"&nbsp;");
+
+          this.answer.content = info;
           this.answer.question = this.questionId;
           let userData = this.getUserInfo();
-          this.answer.author = userData._id
+          this.answer.author = userData._id;
+          console.log(this.answer)
           this.pushnewAnswer();
         }
       },
@@ -158,8 +164,8 @@
   }
   .questionarea{
     position: relative;
-    padding: 5vh 3.9vw 0 3.9vw;
-    padding-top: 24px;
+    padding: 0vh 3.9vw 0 3.9vw;
+    /*padding-top: 24px;*/
   }
   .questiontitle{
     position: absolute;

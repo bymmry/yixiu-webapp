@@ -63,6 +63,7 @@
   export default {
     data(){
       return {
+        allword:"",
         show:false,
         visitType:"other",
         foldquestion: false,
@@ -192,26 +193,16 @@
           });
         }
       },
-      onConfirm(){
-
-      },
-      onCancel(){
-
-      },
       //点击标签进行搜索
       searchBytag(tag) {
-        // console.log(tag)
         let tagSearch = {
           tag:[tag],
-          // title:"",
-          // desc:"",
-          // info:"",
           state: [1,2],
           limit:10,
           skip:0
         }
         this.$router.push({ name: "search", params:{searchData: tagSearch}})
-      }
+      },
     },
     created: function(){
       console.log(this.question);
@@ -297,7 +288,7 @@
     max-width: 100%;
     max-height: 60vh;
     display: block;
-    margin: 0 auto;
+    margin: 10px auto;
   }
   .foldquestionBtn{
     display: inline-block;

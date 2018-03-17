@@ -19,7 +19,7 @@
     
     </div>
 
-    <div class="answerend">该文发表与&nbsp;--&nbsp;{{ createdtime }}</div>
+    <div class="answerend">该文发表于&nbsp;--&nbsp;{{ createdtime }}</div>
 
     <div class="answerFooter">
       <div class="supportArea">
@@ -67,11 +67,9 @@
 
 <script>
   //vant
-  import { NavBar } from 'vant';
+  import { NavBar,Toast,Button,Popup } from 'vant';
   import topNav from "../components/topNav";
   import { likethis,adoptThis  } from '../../common/api'
-  import { Button } from 'vant';
-  import { Popup } from 'vant';
 
   export default {
     data(){
@@ -90,7 +88,7 @@
             // createdAt: 0  //创建时间  时间戳
             // father:"",  问题的题目
             // like:0      点赞数
-            // comment: 0   //子评论数，基于reply的长度
+            // comment: 0   //子评论数,基于reply的长度
           //}
         }
       }
@@ -99,6 +97,7 @@
       [NavBar.name]: NavBar,
       [Button.name]: Button,
       [Popup.name]: Popup,
+      [Toast.name]: Toast,
       topNav
     },
     methods: {
@@ -111,21 +110,14 @@
       },
       //点击支持
       clickSupport(id){
-        const toast = this.$createToast({
+        const toast = Toast.loading({
           mask: true,
           message: '加载中...'
-        })
-        toast.show();
+        });
         likethis(id)
         .then(res => {
-          toast.hide();
-          const tip = this.$createToast({
-            txt: 'you like it!',
-            type: 'success',
-            time: 1300
-          })
-          //使用show调出方法
-          tip.show()
+          toast.clear();
+          Toast.success('you like it!');
           this.like = true;
           this.answerdetail.like += 1;
         },(err => {
@@ -155,11 +147,11 @@
       clickAdopt(){
         this.popupshow = true;
       },
-      //取消删除地址
+      //取消采纳
       popupChoseNO(){
         this.popupshow = false;
       },
-      //删除地址
+      //采纳
       popupChoseYES(){
         const toast = this.$createToast({
           time: 0,
@@ -204,13 +196,15 @@
       },
     },
     created:function(){
-      document.body.scrollTop = 0
-      document.documentElement.scrollTop = 0
-      
+      document.body.scrollTop = 0;
       this.answerdetail = this.$route.params.answerData;
       let Time = new Date();  
       Time.setTime(this.answerdetail.createdAt * 1000); 
       this.createdtime = this.datestr(Time,"yyyy.MM.d");
+
+      for(let index in this.answerdetail.image){
+        this.answerdetail.content = this.answerdetail.content.concat(`<img src='${this.answerdetail.image[index]}'>`)
+      }
 
       this.answerdetail.comment = this.answerdetail.reply.length ? this.answerdetail.reply.length : 0;
 
@@ -232,6 +226,7 @@
     margin-bottom: 10vh;
     /*padding-top: 30px;*/
     padding-bottom: 15vh;
+    overflow: hidden;
   }
   .titleshadow{
     -moz-box-shadow:0vw -0.5vh 3vw #b6baba; 

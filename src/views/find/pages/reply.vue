@@ -70,7 +70,6 @@
     },
     methods: {
       close(){
-        // this.$router.go(-1);
         this.$router.push({ path: "/find/questiondetail"})
       },
       replyuser(Arr){
@@ -101,8 +100,16 @@
           })
           //使用show调出方法
           tip.show();
-          // this.$router.go(-1);
+          // this.$router.push();
           // location.reload();
+
+          // let myreply = {
+          //   author: userData._id,
+          //   content:this.pushData.content,    //回答的内容
+          //   updatedAt:Date.parse(new Date()),
+          // }
+          // this.answerData.reply = this.answerData.reply.push(myreply)
+          // console.log(this.answerData)
         },(err => {
           const tip = this.$createToast({
             txt: '评论失败...',
@@ -118,6 +125,7 @@
     },
     created(){
       let answerData = sessionStorage.getItem("answerData")
+      // console.log(answerData)
       answerData = JSON.parse(answerData);
       console.log(answerData)
       this.pushData.parent = answerData._id;
@@ -133,6 +141,7 @@
 <style scoped>
   .reply-container{
     background: #f6f6f6;
+    margin-bottom: 70px;
   }
   .close{
     color: #7d7d7d;

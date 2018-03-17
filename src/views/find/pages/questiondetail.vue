@@ -89,6 +89,13 @@
 
         this.$router.push({ name: "answerdetail", params:{answerData: answer}})
       },
+      //吧info和Img的内容连接起来
+      allcontent(){
+        for(let index in this.questiondetail.image){
+          this.questiondetail.info = 
+          this.questiondetail.info.concat(`<img src=${this.questiondetail.image[index]}>`)
+        }
+      },
       //通过id查询问题详情
       getQuestion(id) {
         const toast = this.$createToast({
@@ -100,6 +107,8 @@
         .then(res => {
           toast.hide();
           this.questiondetail = res.data;
+          this.allcontent();
+          console.log(this.questiondetail)
         },(err => {
           console.log(err);
         }))
@@ -116,7 +125,7 @@
           toast.hide();
           // console.log(res.data)
           this.answerData = res.data;
-          console.log(this.answerData)
+          // console.log(this.answerData)
         },(err => {
           console.log(err);
         }))
@@ -132,7 +141,7 @@
       document.documentElement.scrollTop = 0
 
       this.questionId = sessionStorage.getItem("questionId")
-      console.log(this.questionId);
+      // console.log(this.questionId);
 
       this.getQuestion(this.questionId);
       this.getQAList(this.questionId);

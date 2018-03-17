@@ -47,10 +47,10 @@
         .then(res => {
           this.name = res.data.name
           this.avator = res.data.wx.avatarUrl;
-          console.log(this.reply)
-          console.log(res)
+          // console.log(this.reply)
+          // console.log(res)
         },(err => {
-          console.log(err);
+          // console.log(err);
         }))
       },
       datestr(x,y) {
@@ -72,10 +72,9 @@
   .replyBox-container{
     display: flex;
     flex-direction: row;
-    min-height: 20vh;
+    /*min-height: 20vh;*/
     padding: 3vh 2vw 3vh 2.7vw;
     background: #fff;
-    
   }
   .avator{
     width: 11vw;
@@ -97,18 +96,18 @@
   }
   .username{
     color: #1b1b1b;
-    margin-bottom: 2.8vh;
+    margin-bottom: 15px;
   }
   .messagetext{
     color: #5a5a5a;
-    margin-bottom: 3vh;
+    margin-bottom: 10px;
   }
   .messageFooter{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     color: #979797;
-    margin-bottom: 4vh;
+    margin-bottom: 10px;
   }
   .messageBtnBox{
     display: flex;
