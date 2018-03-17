@@ -1,10 +1,14 @@
 <template>
   <div class="question-container">
     <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
+      <cube-scroll class="scroll" :data="questionData">
+        <div>
       <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
         <questionBox  :question="question" :questionType="questionType"></questionBox>
       </div>
     <!-- </van-pull-refresh> -->
+        </div>
+      </cube-scroll>
     
 
     <!-- 这里再添加一个组件，当没有内容的时候显示的东西 -->
@@ -69,6 +73,10 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 76%;
+  }
   .question-container{
     background: #ebebeb;
     min-height: 100vh;

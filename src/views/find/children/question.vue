@@ -1,7 +1,8 @@
 <template>
   <div class="question-container">
     <!-- <van-pull-refresh v-model="isLoading" @refresh="onRefresh"> -->
-
+      <cube-scroll class="scroll" :data="questionData">
+        <div>
         <div v-for="question in questionData" :key="question.id" @click="createdQStorage(question)">
           <questionBox  :question="question" :questionType="questionType"></questionBox>
         </div>
@@ -12,7 +13,8 @@
         <div class="getMoeMessage"  v-else>
           已无更多信息
         </div>
-
+        </div>
+      </cube-scroll>
 
     <!-- </van-pull-refresh> -->
     
@@ -116,6 +118,10 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 76vh;
+  }
   .question-container{
     background: #ebebeb;
     min-height: 100vh;

@@ -26,9 +26,6 @@
 
     <topNav></topNav>
     <!-- Vant 标签页组件 -->
-
-    <cube-scroll class="scroll">
-      <div>
     <van-tabs :active="0" @click="handleTabClick" class="tabsBox">
       <van-tab v-for="(index,num) in 2" :key="num">
 
@@ -45,9 +42,6 @@
 
       </van-tab>
     </van-tabs>
-
-      </div>
-    </cube-scroll>
   </div>
   <div v-else>
     <newquestion @close="newQuestion"></newquestion>
