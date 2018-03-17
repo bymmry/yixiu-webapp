@@ -6,11 +6,15 @@
       <p class="header__title">选择城市</p>
     </div>
 
+    <cube-scroll class="scroll" :data="citys">
+      <div>
     <p class="position__item" @click="pitchOn" v-for="(city, index) in citys" :key="index">
       {{city}}
     </p>
 
     <div class="space"></div>
+    </div>
+    </cube-scroll>
   </div>
 </template>
 
@@ -18,15 +22,20 @@
   import Header from '../components/itemHeader.vue'
   import PositionItem from '../components/positionItem.vue'
   import city from '../data/city.json'
+  import scroll from '../../common/base/scroll'
   export default {
     components: {
       Header,
-      PositionItem
+      PositionItem,
+      scroll
     },
     data () {
       return {
-        citys: city
+        citys: []
       }
+    },
+    mounted(){
+      this.citys = city;
     },
     methods: {
       back () {
@@ -41,6 +50,10 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 91vh;
+  }
   .space {
     width: 100%;
     height: 8vh;
