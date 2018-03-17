@@ -75,7 +75,7 @@
 <style scoped>
   .scroll{
     width: 100%;
-    height: 76%;
+    height: 76vh;
   }
   .question-container{
     background: #ebebeb;
