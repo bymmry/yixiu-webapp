@@ -2,7 +2,7 @@
   <div class="shopList">
     <Search @sendShopList="sendShopList"  />
 
-    <cube-scroll class="scroll">
+    <!-- <cube-scroll class="scroll"> -->
     <div class="shopSort">
       <ul ref="shopSort">
         <!-- <li @click="chooseMainType(0)" ref="shopSortItem" :class="{'active': currentIndex===0}"><span>{{nowColumnsType}}<sicon name="choose" scale="2"></sicon></span>
@@ -44,8 +44,7 @@
          ref="shopDes">
       <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
     </div>
-    <div class="space"></div>
-    </cube-scroll>
+    <!-- </cube-scroll> -->
   </div>
 </template>
 
@@ -57,7 +56,7 @@
   import listView from "./listView"
 
   export default {
-    name: 'shop-list',
+    name: 'shop-list-home',
     components: {
       [Toast.name]: Toast,
       [Actionsheet.name]:Actionsheet,

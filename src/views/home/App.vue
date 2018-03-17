@@ -38,7 +38,7 @@
   import HotArea from './components/hotArea.vue'
   import Ticket from './components/tickets.vue'
   import Activity from './components/activity.vue'
-  import shopList from '../common/components/shopList'
+  import shopList from '../common/components/shopListHome'
   import { PullRefresh } from 'vant'
   import location from './pages/location.vue'
   import scroll from '../common/base/scroll'

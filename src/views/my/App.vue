@@ -9,7 +9,7 @@
     />
     <!-- 顶部留白 -->
     <div class="topblank"></div>
-
+    <cube-scroll class="scroll">
     <!-- 个人中心-信息 -->
     <!-- 顶部背景图 -->
     <div class="userbg"></div>
@@ -41,6 +41,7 @@
         />
       </van-cell-group>
     </div>
+    </cube-scroll>
   </div>
 </template>
 
@@ -168,13 +169,18 @@
 </script>
 
 <style scoped>
-  html{
+  /* html{
     overflow: scroll;
+  } */
+  .scroll{
+    width: 100%;
+    height: 84vh;
   }
   .my-container{
     padding: 0.3vh 0vw 5vh 0vw;
-    margin-bottom: 70px;
+    /* margin-bottom: 70px; */
     background: #fff;
+    height: 91vh;
   }
   .topblank{
     margin-top: 45.6px;
@@ -219,5 +225,8 @@
   }
   .username{
     justify-content:center;
+  }
+  .user-menu{
+    padding-bottom: 30px;
   }
 </style>
