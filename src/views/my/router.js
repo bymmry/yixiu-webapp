@@ -8,6 +8,7 @@ import mycoupus from './pages/mycoupus/mycoupus'
 import myaddress from './pages/myaddress/myaddress'
 import mywallet from './pages/mywallet/mywallet'
 import myexpress from './pages/myexpress/myexpress'
+import test from './pages/test/test'
 
 export default [
 {
@@ -51,6 +52,14 @@ export default [
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }
+},
+{
+  path: '/my/test',
+  component: test,
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 }
+
 
 ]
