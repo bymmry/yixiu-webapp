@@ -1,6 +1,10 @@
 <template>
   <div class="position">
-    <Header></Header>
+    <div class="position__header">
+      <div class="icon" @click="back"></div>
+      <sicon name="back" scale="3"></sicon>
+      <p class="header__title">选择城市</p>
+    </div>
 
     <p class="position__item" @click="pitchOn" v-for="(city, index) in citys" :key="index">
       {{city}}
@@ -25,6 +29,9 @@
       }
     },
     methods: {
+      back () {
+        this.$emit('back', true);
+      },
       pitchOn: function (e) {
         let currentItem = e.target.innerHTML.trim();
         this.$emit('changeCity', currentItem);
@@ -44,5 +51,28 @@
   width: 90%;
   font-size: 18px;
   border-bottom: 1px solid #eee;
+}
+
+.position__header {
+	background: #ffbd5c;
+	padding: 8px;
+	display: flex;
+	align-items: center;
+  position: relative;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.header__title {
+	color: #fff;
+	font-size: 20px;
+	margin-left: 20px;
+	letter-spacing: 4px;
 }
 </style>

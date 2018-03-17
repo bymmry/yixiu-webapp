@@ -1,30 +1,32 @@
 <template>
   <div>
-    <div class="header">
-      <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
+    <div v-show="!location">
+      <div class="header">
+        <HomeHeader :city="city"  v-on:listenToChild="showMsg"></HomeHeader>
+      </div>
+      
+      <cube-scroll
+          class="homeScroll">
+      <div class="homeContent">
+      <!-- <van-pull-refresh class="homeContent" v-model="isLoading" @refresh="onRefresh" v-show="!location"> -->
+        <Swipe></Swipe>
+      <!-- </van-pull-refresh> -->
+      </div>
+      <Type></Type>
+      <HotArea></HotArea>
+      <Ticket></Ticket>
+      <Activity></Activity>
+      <div class="shopTitle">
+        <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+      </div>
+      <shop-list></shop-list>
+      <div class="space"></div>
+      <div id="allmap"></div>
+      </cube-scroll>
     </div>
     
-    <cube-scroll
-        class="homeScroll">
-    <div class="homeContent">
-    <!-- <van-pull-refresh class="homeContent" v-model="isLoading" @refresh="onRefresh" v-show="!location"> -->
-      <Swipe></Swipe>
-    <!-- </van-pull-refresh> -->
-    </div>
-    <Type></Type>
-    <HotArea></HotArea>
-    <Ticket></Ticket>
-    <Activity></Activity>
-    <div class="shopTitle">
-      <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
-    </div>
-    <shop-list></shop-list>
-    <div class="space"></div>
-    <div id="allmap"></div>
 
-    <location v-on:changeCity="changeCity" v-show="location"/>
-
-    </cube-scroll>
+    <location v-on:changeCity="changeCity" v-show="location"  v-on:back="back"/>
   </div>
 </template>
 
@@ -67,6 +69,10 @@
       this.initPosition();
     },
     methods: {
+      back () {
+        console.log(123);
+        this.location = !this.location;
+      },
       onRefresh() {
         setTimeout(() => {
           this.prompt('刷新成功', 'success').show();
@@ -78,6 +84,7 @@
         this.location = !this.location;
       },
       showMsg (data) {
+        console.log(data);
         this.location = !this.location;
       },
       initPosition () {
