@@ -7,6 +7,11 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
 
+    <div class="topblank"></div>
+  
+    <p class="divboxxx" contenteditable="true" v-html="aa"></p>
+
+    <!-- <div class="topblank"></div> -->
 
     <button @click="aac">++++</button>
     <div>这里是要添加的部分：
@@ -48,6 +53,12 @@
 </script>
 
 <style scoped>
+  .divboxxx{
+    width: 80%;
+    height: 100px;
+    border: 1px solid #000;
+    -webkit-user-select:text;
+  }
   .myinfo-container{
     overflow: hidden;
     width: 100vw;
