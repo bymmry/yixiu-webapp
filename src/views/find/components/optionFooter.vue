@@ -122,7 +122,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /*width:40px; */
+    width: 60px; 
     height: 100%;
+    margin-left: -10px;
   }
 </style>

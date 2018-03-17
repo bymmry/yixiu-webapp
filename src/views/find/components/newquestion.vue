@@ -11,8 +11,8 @@
       <div slot="title" class="newTitle">提问</div>
       <div slot="right" class="newBtn" @click="pushnewquestionNext" v-if="inNext === false">下一步</div>
       <div slot="right" class="newBtn nextBtnArea" v-else>
-        <div @click="pushnewquestionPre">上一步</div>
-        <div @click="pushnewquestion">提交</div>
+        <div @click="pushnewquestionPre" class="preStep">上一步</div>
+        <div @click="pushnewquestion" class="push">提交</div>
       </div>
       
       </van-search>
@@ -224,12 +224,22 @@
     margin-left: -55vw;
   }
   .newBtn{
-    margin-left: 55vw;
+    min-width: 55px;
+    padding-right: 15px;
+    margin-right: -15px;
     color: #0086ff;
+  }
+  .preStep{
+    width: 55px;
+  }
+  .push{
+    width: 50px;
+    padding-right: 15px;
+    margin-right: -15px
   }
   .nextBtnArea{
     display: flex;
-    flex-direction:row;
+    flex-direction:row; 
   }
   .nextBtnArea div{
     margin-left: 13px;

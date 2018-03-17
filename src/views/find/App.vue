@@ -169,7 +169,8 @@
     align-items:center;
     width: 16vw;
     color: rgb(98, 164, 255);
-    margin-left: -2vw;
+    padding-left: 10px;
+    margin-left: -4vw;
   }
 </style>
 
