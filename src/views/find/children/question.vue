@@ -124,9 +124,9 @@
   }
   .question-container{
     background: #ebebeb;
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     padding-top: 1.6vh;
-    margin-bottom: 10vh;
+    /*margin-bottom: 10vh;*/
   }
   .getMoeMessage{
     width: 100%;

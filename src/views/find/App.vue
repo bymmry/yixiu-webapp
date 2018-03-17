@@ -1,5 +1,5 @@
 <template>
-  <div v-if="newquestion === false">
+  <div v-if="newquestion === false" class="bigbox">
     <!-- 导航栏 -->
     <van-nav-bar
       fixed
@@ -122,6 +122,9 @@
 </script>
 
 <style scoped>
+  .bigbox{
+    overflow: hidden;
+  }
   .scroll{
 	  width: 100%;
 	  height: 91vh;

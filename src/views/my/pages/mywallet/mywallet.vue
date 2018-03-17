@@ -13,14 +13,19 @@
         <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/dribbble2.png" alt="">
         <div class="money">{{userinfo.points/100}} 元</div>
       </div>
-    </van-pull-refresh>
 
+      
+    </van-pull-refresh>
+    <div class="funcbtn">
+      <div>转出</div>
+      <div class="outmoney">转入</div>
+    </div>
   </div>
 
 </template>
 
 <script>
-  import { PullRefresh } from 'vant';
+  import { PullRefresh,Button } from 'vant';
   import { getuserinforByopenId } from '../../../common/api'
 
   export default {
@@ -32,6 +37,7 @@
     },
     components: {
       [PullRefresh.name]: PullRefresh,
+      [Button.name]: Button,
     },
     methods: {
       //导航栏 前往个人中心
@@ -121,21 +127,43 @@
   }
   .countBox{
     padding-top: 10vh;
-    height: 70vh;
+    /*height: 70vh;*/
     text-align: center;
   }
   .countBox img{
-    width: 166px;
-    height: 233.3px;
+    width: 186px;
+    height: 263.3px;
   }
   .money{
+    position: relative;
     color:#3c6b7a;
     font-size: 6vw;
-    margin-top: -30px;
+    bottom: 35px;
   }
   .topblank{
     margin-top: 15vh;
   }
-
-
+  .funcbtn{
+    position: fixed;
+    bottom: 0vh;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    z-index: 100;
+    background: #fff;
+    display: flex;
+    flex-direction: row;
+    border-top: 1px solid #E2DED3;
+  }
+  .funcbtn div{
+    width: 50%;
+    line-height: 60px;
+    text-align: center;
+    color: #2796CB;
+    font-size: 6vw;
+  }
+  .funcbtn .outmoney{
+    background: #2796CB;
+    color: #fff;
+  }
 </style>

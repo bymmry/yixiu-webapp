@@ -115,11 +115,6 @@
             name: "问题反馈",
             icon: "question",
             url: ""
-          },
-          {
-            name: "测试",
-            icon: "question",
-            url: "my/test"
           }
         ]
       }
