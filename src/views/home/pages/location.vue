@@ -1,5 +1,6 @@
 <template>
   <div class="position">
+    <cube-scroll class="scroll" :data="citys">
     <div class="position__header">
       <div class="icon" @click="back"></div>
       <sicon name="back" scale="3"></sicon>
@@ -11,6 +12,7 @@
     </p>
 
     <div class="space"></div>
+    </cube-scroll>
   </div>
 </template>
 
@@ -41,6 +43,10 @@
 </script>
 
 <style scoped>
+  .scroll{
+    width: 100%;
+    height: 91vh;
+  }
   .space {
     width: 100%;
     height: 8vh;
