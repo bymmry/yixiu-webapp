@@ -2,7 +2,7 @@
   <div class="shopList">
     <Search @sendShopList="sendShopList"  />
 
-    <cube-scroll class="scroll">
+    <cube-scroll class="scroll" :data="shopData">
     <div class="shopSort">
       <ul ref="shopSort">
         <!-- <li @click="chooseMainType(0)" ref="shopSortItem" :class="{'active': currentIndex===0}"><span>{{nowColumnsType}}<sicon name="choose" scale="2"></sicon></span>
