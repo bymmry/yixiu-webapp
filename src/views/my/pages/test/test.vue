@@ -8,9 +8,26 @@
     <div class="topblank"></div>
 
     <div class="topblank"></div>
-  
-    <p class="divboxxx" contenteditable="true" v-html="aa"></p>
-
+    c-text:
+    <p class="divbo1" contenteditable="true" v-html="aa"></p>
+    c-auto:
+    <p class="divbo2" contenteditable="true" v-html="aa"></p>
+    c-none:
+    <p class="divbo3" contenteditable="true" v-html="aa"></p>
+    
+    
+    <div class="divbo4Box">
+      p-text:
+      <p class="divbo4" contenteditable="true" v-html="aa"></p>
+    </div>
+    <div class="divbo4Box2">
+    p-auto:
+      <p class="divbo4" contenteditable="true" v-html="aa"></p>
+    </div>
+    <div class="divbo4Box3">
+    p-none:
+      <p class="divbo4" contenteditable="true" v-html="aa"></p>
+    </div>
     <!-- <div class="topblank"></div> -->
 
     <button @click="aac">++++</button>
@@ -53,15 +70,42 @@
 </script>
 
 <style scoped>
-  .divboxxx{
+  .divbo1{
     width: 80%;
-    height: 100px;
+    height: 50px;
+    margin-bottom: 10px;
     border: 1px solid #000;
     -webkit-user-select:text;
+  }
+  .divbo2{
+    width: 80%;
+    height: 50px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+    -webkit-user-select:auto;
+  }
+  .divbo3{
+    width: 80%;
+    height: 50px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
+  }
+  .divbo4Box{
+    -webkit-user-select:text;
+  }
+  .divbo4Box2{
+    -webkit-user-select:auto;
+  }
+  .divbo4{
+    width: 80%;
+    height: 50px;
+    margin-bottom: 10px;
+    border: 1px solid #000;
   }
   .myinfo-container{
     overflow: hidden;
     width: 100vw;
+    margin-bottom: 70px;
  }
   .navBox{
     position: fixed;
