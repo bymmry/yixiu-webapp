@@ -16,10 +16,12 @@
           <div class="shopMainContent">
             <p><span>营业时间：每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
             <p><span>联系方式：{{shopInfo.contactNumber}}</span></p>
-            <p><span>服务方式：{{shopInfo.serviceWay[0]}} {{shopInfo.serviceWay[1]}}</span></p>
-            <p><span>店铺地址：</span></p>
+            <p><span>联系方式：</span></p>
+            <p><span><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
+            <!-- <p><span>店铺地址：</span></p> -->
           </div>
         </div>
+        <p class="address"><span>店铺地址：</span></p>
       </div>
       <div class="steps">
         <van-steps :active="active" active-color="#fb8e53">
@@ -110,7 +112,8 @@
         serverList: "",
         serverId: "",
         shopInfo: {},
-        lastChooseInfo: {}
+        lastChooseInfo: {},
+        serviceWays: []
       }
     },
     watch: {
@@ -139,6 +142,8 @@
           }
           if(res.code === 200){
             this.shopInfo = res.data;
+            this.serviceWays = this.shopInfo.serviceWay;
+            console.log(...this.serviceWays)
           }
         }, function (err) {
           console.log(err);
@@ -273,11 +278,15 @@
     height: 25%;
     font-size: 13px;
   }
+ .shopDetail .shopDes p.address{
+   width: auto;
+   padding: 5px 10px;
+ }
 
   .shopDetail  .steps{
     width: auto;
     height: auto;
-    padding-top: 4vh;
+    padding-top: 2vh;
   }
   .shopDetail .stepsContent{
     width: auto;
