@@ -2,14 +2,14 @@
   <div class="info">
 		<item-header :name="infoName" v-on:backParent="backParent" />
 		
-		<div class="info__name">
+		<!-- <div class="info__name">
 			<p>分类类型</p>
 			<cube-select
 				v-model="category.type"
 				:options="categoryList"
 				@change="typeChange"
 			/>
-		</div>
+		</div> -->
 
 		<van-field
 			v-model="category.name"
@@ -17,11 +17,11 @@
 			placeholder="请输入分类名称"
 		/>
 
-		<van-field
+		<!-- <van-field
 			v-model="category.cover"
 			label="封面图片链接"
 			placeholder="请输入分类封面图片信息"
-		/>
+		/> -->
 
 		<van-field
 			v-model="category.desc"
@@ -29,11 +29,11 @@
 			placeholder="请输入分类描述"
 		/>
 
-		<van-field
+		<!-- <van-field
 			v-model="category.parent"
 			label="此分类的父级"
 			placeholder="请输入次分类的父级"
-		/>
+		/> -->
 
 		<van-button size="large" @click="submit">确认添加</van-button>
 
@@ -44,6 +44,9 @@
 import { Field, Button } from 'vant'
 import ItemHeader from '../components/itemHeader'
 export default {
+	props: {
+		parentCategory: String
+	},
 	components: {
 		[Field.name]: Field,
 		[Button.name]: Button,
@@ -58,7 +61,7 @@ export default {
 			],
 			infoName: '添加手机分类',
 			category: {
-				type: '',
+				type: sessionStorage.getItem('category'),
 				name: '',
 				cover: '',
 				desc: '',
@@ -75,6 +78,7 @@ export default {
 
 		},
 		async submit () {
+			this.parentCategory != '' ? this.category.parent = this.parentCategory : null;
 			const toast = this.$createToast({
 				message: '加载中...'
 			})
@@ -87,12 +91,17 @@ export default {
 			}
 			this.prompt('提交成功!', 'success').show();
 			this.$emit('updateCategory', true);
+
 		}
 	}
 }
 </script>
 
 <style scoped>
+.info {
+	position: relative;
+}
+
 .info__name {
 	display: flex;
 	justify-content: flex-start;

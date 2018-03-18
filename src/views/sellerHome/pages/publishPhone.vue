@@ -1,14 +1,15 @@
 <template>
-	<div class="info">
-		<item-header :name="infoName" />
+	<div class="infos">
 
+		<div v-show="!categoryStatus">
+			<item-header :name="infosName" />
 			<van-field
 				v-model="goods.name"
 				label="商品名称"
 				placeholder="请输入商品名称"
 			/>
 
-			<div class="info__name">
+			<div class="infos__name">
 				<p>商品分类</p>
 				<cube-select
 					v-model="goods.category"
@@ -17,37 +18,13 @@
 				/>
 			</div>
 
-			<!-- <van-field
-				v-model="goods.category"
-				label="其他商品分类"
-				placeholder="请输入商品分类名称"
-			/> -->
+			<van-button class="btn" size="large" @click="appendCategory">没找到?添加一个分类</van-button>
 
 			<van-field
 				v-model="goods.price"
 				label="商品价格"
 				placeholder="请输入商品价格"
 			/>
-			
-			<!-- <van-field
-				v-model="goods.inventory"
-				label="商品库存"
-				placeholder="请输入商品价格"
-				disabled
-			/> -->
-
-			<!-- <van-field
-				v-model="goods.freight"
-				label="运费"
-				placeholder="请输入商品运费"
-				disabled
-			/> -->
-
-			<!-- <van-field
-				v-model="goods.cover"
-				label="宝贝封面"
-				placeholder="请输入宝贝封面链接"
-			/> -->
 
 			<van-field
 				v-model="goods.desc"
@@ -61,7 +38,7 @@
 				placeholder="请输入宝贝详情"
 			/>
 
-			<div class="info__name">
+			<div class="infos__name">
 				<p>商品图片</p>
 			</div>
 
@@ -72,40 +49,44 @@
 
 			<van-button size="large" @click="addNew">添加新图片</van-button>
 
-			<!-- <div class="info__name">
-				<p>发货地</p>
-				<cube-select
-					v-model="goods.base"
-					:options="base"
-					@change="baseChange"
-				/>
-			</div> -->
-
 			<van-button size="large" @click="submit">确认添加</van-button>
 
+		</div>
+
+			<add-category 
+				v-show="categoryStatus"
+				:parentCategory="category"
+				v-on:updateCategory="updateCategory"
+				v-on:backParent="backParent"
+			/>
 	</div>
 </template>
 
 <script>
 import ItemHeader from '../components/itemHeader'
 import { Field, Button, Uploader } from 'vant'
+import addCategory from './addCatagory'
 export default {
 	components: {
 		[Field.name]: Field,
 		[Button.name]: Button,
 		[Uploader.name]: Uploader,
-		ItemHeader
+		ItemHeader,
+		addCategory
 	},
 	async mounted () {
 		let data = { type: 'goods', shop: this.goods.shop }
 		let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', data);
 		categoryRes.data.map(item => {
-			this.categoryList.push({value: item._id, text: item.name});
+			item['name'] == '二手手机' ? this.category = item['_id'] : null;
 		})
+		
+		this.updateCategory();
 	},
   data () {
 		return {
-			infoName: '发布宝贝',
+			infosName: '发布宝贝',
+			categoryStatus: false,
 			src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			goods: {
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
@@ -115,10 +96,26 @@ export default {
 				]
 			},
 			base: ['重庆'],
-			categoryList: []
+			categoryList: [],
+			category: ''
 		}
 	},
 	methods: {
+		backParent () {
+			this.categoryStatus = false;
+		},
+		async updateCategory () {
+			this.categoryStatus = false;
+			let hasCategory = await this.$api.getData('https://m.yixiutech.com/category/parent/' + this.category);
+			this.categoryList.length = 0;
+			hasCategory.data.map(item => {
+				this.categoryList.push({value: item._id, text: item.name});
+			})
+		},
+		appendCategory () {
+			this.categoryStatus = !this.categoryStatus;
+			sessionStorage.setItem('category', 'goods');
+		},
 		uploadFile (event, index) {
 			this.file = event.target.files[0];
 			let url = window.URL.createObjectURL(this.file);
@@ -162,15 +159,16 @@ export default {
 </script>
 
 <style scoped>
-.info {
+.infos {
 	width: 100%;
 	overflow: hidden;
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%);
+	text-align: center;
 }
 
-.info__name {
+.infos__name {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -179,19 +177,26 @@ export default {
 	font-size: 14px;
 }
 
-.info__name p {
+.infos__name p {
 	width: 90px;
 }
 
-.info .van-uploader {
+.infos .van-uploader {
 	display: flex;
 	justify-content: center;
 	margin: 10px 0;
 }
 
-.info .info__img {
+.infos .infos__img {
 	width: 100px;
 	height: 100px;
+}
+
+.btn {
+	width: 80%;
+	display: inline-block;
+	color: #fff;
+	background: #e0620d;
 }
 
 .upload {
@@ -223,7 +228,7 @@ export default {
 	margin-top: 50px;
 }
 
-.info__name .cube-select {
+.infos__name .cube-select {
 	width: 60%;
 }
 </style>

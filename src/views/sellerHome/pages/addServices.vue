@@ -148,6 +148,7 @@ export default {
 		},
 		appendCategory () {
 			this.categoryStatus = !this.categoryStatus;
+			sessionStorage.setItem('category', 'service');
 		},
 		async manufacturerChange (value, index) {
 			this.service.manufacturer = this.manufacturerInfo[ index ]._id;
