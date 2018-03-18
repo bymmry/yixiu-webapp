@@ -32,13 +32,22 @@
 	import HotSale from './components/hotSale.vue'
   export default {
 		async mounted () {
-			let iphoneData= { goodsName: 'iphone', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
-			let iphoneRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', iphoneData);
-			this.iphone = iphoneRes.data;
 
-			let androidData = { goodsName: '三星', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
-			let androidRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', androidData);
-			this.android = androidRes.data;
+			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', { type: 'goods', shop: '5aa4a1a3733e266adc724d1a' });
+			this.category = categoryRes.data[0]._id;
+			let list = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: this.category, shop: '5aa4a1a3733e266adc724d1a'});
+			// this.data = res.data;
+			console.log(list);
+
+			// let iphoneData= { goodsName: 'iphone', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
+			// let iphoneRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', iphoneData);
+			// this.iphone = iphoneRes.data;
+
+			// let androidData = { goodsName: '三星', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
+			// let androidRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', androidData);
+			// this.android = androidRes.data;
+
+			console.log(this.iphone);
 
 		},
     components: {

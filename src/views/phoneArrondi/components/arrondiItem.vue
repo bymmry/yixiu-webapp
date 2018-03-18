@@ -4,7 +4,7 @@
 		<div class="arrondi-item__content">
 			<p class="arrondi-item__name">{{ name }}</p>
 			<p class="arrondi-item__name"><span class="arrondi-item__price">￥{{ price }}</span> <span class="arrondi-item__primeCost">￥{{ primeCost }}</span></p>
-			<div class="arrondi-item__preferential">立省1600元</div>
+			<div class="arrondi-item__preferential">立省{{ primeCost - price }}元</div>
 		</div>
   </div>
 </template>
@@ -14,8 +14,8 @@
 		props: {
 			src: String,
 			name: String,
-			price: String,
-			primeCost: String,
+			price: Number,
+			primeCost: Number,
 			icon: String,
 			shop: String
 		},

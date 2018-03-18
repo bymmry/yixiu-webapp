@@ -10,6 +10,7 @@ import updateMsg from './pages/updateMsg.vue'
 import payBail from './pages/payBail.vue'
 import service from './pages/service.vue'
 import addServices from './pages/addServices.vue'
+import shopWallet from './pages/shopWallet.vue'
 
 
 export default [{
@@ -65,5 +66,12 @@ export default [{
   component: addServices,
   meta: {
     keepAlive: true // 需要被缓存
+  }
+},
+{
+  path: '/shopWallet',
+  component: shopWallet,
+  meta: {
+    keepAlive: true
   }
 }]
