@@ -1,6 +1,10 @@
 <template>
   <div class="info">
 
+		<router-link to="/enterRules">
+			<sicon name="back" scale="3"></sicon>
+		</router-link>
+
 	  <img class="info__logo" :src="logo" alt="" />
 
 		<van-field
@@ -9,17 +13,6 @@
 			class="item"
 			placeholder="请输入商铺名称"
 		/>
-
-		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修代理入驻协议.docx</a></p>
-
-		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
-		
-		<p class="head">上传协议扫描版</p>
-		
-		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
-			<img class="upload__show" :src="files" alt="" />
-		</div>
 
 		<p class="head">身份证正面</p>
 
@@ -47,6 +40,17 @@
 		<div class="upload">
 			<input class="upload__select" @change="certificateUpload($event)" type="file" accept="image/*" />
 			<img class="upload__show" :src="certificate" alt="" />
+		</div>
+
+		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修入驻协议.docx</a></p>
+
+		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
+		
+		<p class="head">上传翼修入驻协议扫描版</p>
+		
+		<div class="upload">
+			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
+			<img class="upload__show" :src="files" alt="" />
 		</div>
 
 		<p class="head">商铺封面</p>
@@ -471,5 +475,11 @@ export default {
 
 .register {
 	background: #ec3030;
+}
+
+.svg-icon {
+	position: absolute;
+	left: 20px;
+	top: 40px;
 }
 </style>

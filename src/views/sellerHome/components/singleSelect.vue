@@ -1,5 +1,5 @@
 <template>
-  <div class="select" v-bind:class="{ border: hasBorder }">
+  <div class="select" @click="selectOn" v-bind:class="{ border: hasBorder }" :type="type">
 		<sicon name="gou" scale="1.4" v-show="hasBorder"></sicon>
 		{{ data }}
 	</div>
@@ -8,7 +8,9 @@
 <script>
 export default {
 	props: {
-		data: String
+		data: String,
+		type: String,
+		manufacturer: String
 	},
   data () {
 		return {
@@ -19,9 +21,12 @@ export default {
 		
 	},
 	methods: {
-		selectOn () {
+		async selectOn () {
 			this.hasBorder = !this.hasBorder;
-			console.log('调用成功')
+			this.$emit('cancelOther', this.data + '&' + this.type + '&' + this.manufacturer);
+		},
+		cancelSelect () {
+			this.hasBorder ? this.hasBorder = !this.hasBorder : null;
 		}
 	}
 }

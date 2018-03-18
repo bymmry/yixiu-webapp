@@ -1,8 +1,7 @@
 <template>
   <div class="header">
-		<router-link to="/sellerHome">
-			<sicon name="back" scale="3"></sicon>
-		</router-link>
+		<div class="back" @click="back"></div>
+		<sicon @click="back" name="back" scale="3"></sicon>
 		<p class="header__title">{{ name }}</p>
   </div>
 </template>
@@ -11,6 +10,11 @@
 export default {
 	props: {
 		name: String
+	},
+	methods: {
+		back () {
+			this.$emit('backParent', true);
+		}
 	}
 }
 </script>
@@ -30,4 +34,12 @@ export default {
 	letter-spacing: 4px;
 }
 
+.back {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 8;
+}
 </style>

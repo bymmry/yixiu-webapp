@@ -1,6 +1,6 @@
 <template>
   <div class="info">
-		<item-header :name="infoName" />
+		<item-header :name="infoName" v-on:backParent="backParent" />
 		
 		<div class="info__name">
 			<p>分类类型</p>
@@ -68,6 +68,9 @@ export default {
 		}
 	},
 	methods: {
+		backParent () {
+			this.$emit('backParent', true);
+		},
 		typeChange (value ,index) {
 
 		},
@@ -78,12 +81,12 @@ export default {
 			toast.show();
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
 			toast.hide();
-			if (categoryRes.code == 4001) {
+			if (categoryRes.code !== 200) {
 				this.prompt(categoryRes.errMsg, 'error').show();
 				return;	
 			}
 			this.prompt('提交成功!', 'success').show();
-			this.$router.push('/sellerHome');
+			this.$emit('updateCategory', true);
 		}
 	}
 }

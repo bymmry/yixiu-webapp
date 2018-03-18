@@ -13,10 +13,13 @@
       :data="data"
     />
 
+    <quality
+      :data="data"
+    />
+
     <Personal 
       :data="data"
     />
-    
     
 
     <Footer 
@@ -32,13 +35,15 @@ import Personal from '../components/personal'
 import Content from '../components/detailContent'
 import Footer from '../components/footer'
 import GoodSwipe from '../components/goodSwipe'
+import quality from '../components/quality'
 export default {
   components: {
     Header,
     Personal,
     Content,
     Footer,
-    GoodSwipe
+    GoodSwipe,
+    quality
   },
   data () {
     return {

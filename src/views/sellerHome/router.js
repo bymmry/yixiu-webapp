@@ -9,6 +9,7 @@ import orderDetail from './pages/orderDetail.vue'
 import updateMsg from './pages/updateMsg.vue'
 import payBail from './pages/payBail.vue'
 import service from './pages/service.vue'
+import addServices from './pages/addServices.vue'
 
 
 export default [{
@@ -58,4 +59,11 @@ export default [{
 {
   path: '/service',
   component: service
+},
+{
+  path: '/addServices',
+  component: addServices,
+  meta: {
+    keepAlive: true // 需要被缓存
+  }
 }]

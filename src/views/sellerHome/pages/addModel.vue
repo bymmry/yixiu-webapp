@@ -1,7 +1,7 @@
 <template>
   <div class="info">
 
-		<item-header :name="infoName" />
+		<item-header :name="infoName" v-on:backParent="backParent" />
 
 		<div class="info__name">
 			<p>品牌名称</p>
@@ -13,7 +13,7 @@
 		</div>
 
 		<div class="info__name">
-			<p>型号名称</p>
+			<p>系统推荐型号</p>
 			<cube-select
 				v-model="model.name"
 				:options="phoneModel"
@@ -105,6 +105,9 @@ export default {
 		}
 	},
 	methods: {
+		backParent () {
+			this.$emit('backParent', true);
+		},
 		async nameChange(value, index) {
 			this.model['manufacturer'] = this.phoneInfo[ index ]._id;
 			const toast = this.$createToast({
@@ -132,12 +135,12 @@ export default {
 			toast.show();
 			let modelRes = await this.$api.sendData('https://m.yixiutech.com/phone/model', this.model);
 			toast.hide();
-			if (modelRes.code == 4001) {
+			if (modelRes.code !== 200) {
 				this.prompt(modelRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt(modelRes.data, 'success').show();
-			this.$router.push('/sellerHome');
+			this.prompt('添加成功!', 'success').show();
+			this.$emit('updateModel', true);
 		}
 	}
 }

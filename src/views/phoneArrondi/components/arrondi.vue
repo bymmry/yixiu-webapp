@@ -6,7 +6,8 @@
 				:key="index" 
 				:name="item.name"
 				:src="item.cover"
-				:shop="item._id"
+				:price="item.price"
+				:primeCost="item.primeCost"
 			/>
 		</div>
   </div>
@@ -14,17 +15,26 @@
 
 <script>
 	import ArrondiItem from './arrondiItem.vue'
+	import iphoneX from '@/assets/iphoneX.png';
+	import iphone8 from '@/assets/iphone8.png';
+	import iphone8P from '@/assets/iphone8PLUS.png';
+	import iphone6s from '@/assets/iphone6.png';
   export default {
     props: {
 			title: String,
-			data: Array
+			// data: Array
 		},
 		components: {
 			ArrondiItem
 		},
 		data () {
 			return {
-				
+				data: [
+					{ name: 'iphoneX', price: 6800, primeCost:8600, cover: iphoneX },
+					{ name: 'iphone8', price: 5400, primeCost:7800, cover: iphone8 },
+					{ name: 'iphone8 PLUS', price: 5800, primeCost:8200, cover: iphone8P },
+					{ name: 'iphone6S', price: 3000, primeCost:5300, cover: iphone6s },
+				]
 			}
 		},
   }

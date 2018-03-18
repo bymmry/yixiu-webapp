@@ -64,13 +64,13 @@
 			<div class="info__name">
 				<p>商品图片</p>
 			</div>
-			<cube-upload
-				action="https://m.yixiutech.com/upload"
-				:simultaneous-uploads="1"
-				@files-added="filesAdded"
-				@file-removed="fileRemove"
-				@file-success="fileSuccess"
-			/>
+
+			<div class="upload" v-for="(item, index) in goods.cover" :key="index">
+				<input class="upload__select" @change="uploadFile($event, index)" type="file" accept="image/*" />
+				<img class="upload__show" :src="item" alt="" />
+			</div>
+
+			<van-button size="large" @click="addNew">添加新图片</van-button>
 
 			<!-- <div class="info__name">
 				<p>发货地</p>
@@ -106,18 +106,26 @@ export default {
   data () {
 		return {
 			infoName: '发布宝贝',
+			src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			goods: {
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				// shop: '5aa27cf18d78c262b3f19937',
-				cover: 'https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3146109938,3614262430&fm=27&gp=0.jpg'
+				cover: [
+					'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
+				]
 			},
 			base: ['重庆'],
 			categoryList: []
 		}
 	},
 	methods: {
-		fileSuccess (data) {
-			this.goods.cover = data.response.cover;
+		uploadFile (event, index) {
+			this.file = event.target.files[0];
+			let url = window.URL.createObjectURL(this.file);
+			this.goods.cover[ index ] = url;
+		},
+		addNew () {
+			this.goods.cover.push('https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png');
 		},
 		fileRemove () {
 
@@ -154,6 +162,13 @@ export default {
 </script>
 
 <style scoped>
+.info {
+	width: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
+}
 
 .info__name {
 	display: flex;
@@ -177,6 +192,27 @@ export default {
 .info .info__img {
 	width: 100px;
 	height: 100px;
+}
+
+.upload {
+	width: 100%;
+	height: 100px;
+}
+
+.upload .upload__show {
+	position: absolute;
+	width: 100px;
+	height: 80px;
+	left: 50%;
+	margin-left: -50px;
+}
+
+.upload .upload__select {
+	position: absolute;
+	z-index: 8;
+	font-size: 50px;
+	opacity: 0;
+	left: 0;
 }
 
 .cube-upload-def {

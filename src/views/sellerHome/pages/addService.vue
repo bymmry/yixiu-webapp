@@ -1,6 +1,10 @@
 <template>
   <div class="info">
-		<item-header :name="infoName" />
+		<div class="header">
+			<div class="back" @click="back"></div>
+			<sicon name="back" scale="3"></sicon>
+			<p class="header__title">{{ infoName }}</p>
+		</div>
 
 		<div class="info__name">
 			<p>分类名称</p>
@@ -79,8 +83,8 @@ export default {
 				name: '',
 				price: '',
 				desc: '',
-				// shop: '5aa27cf18d78c262b3f19937',
-				shop: JSON.parse(localStorage.getItem('shopData'))._id,
+				shop: '5aa27cf18d78c262b3f19937',
+				// shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				support: []
 			},
 			manufacturer: '',
@@ -97,7 +101,6 @@ export default {
 		})
 		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/category/shop/'+ this.service.shop);
-		console.log(res)
 		res.data.map(item => {
 			this.category.push(item.name);
 			this.categoryInfo.push(item);
@@ -110,6 +113,9 @@ export default {
 		})
 	},
 	methods: {
+		back () {
+			this.$emit('backParent', true);
+		},
 		async submit () {
 			const toast = this.$createToast({
 				message: '加载中...'
@@ -122,7 +128,6 @@ export default {
 				return;	
 			}
 			this.prompt(serviceRes.data, 'success').show();
-			this.$router.push('/sellerHome');
 		},
 		change (value, index) {
 			this.service['category'] = this.categoryInfo[ index ]._id;
@@ -170,5 +175,28 @@ export default {
 .space {
 	width: 100%;
 	height: 8vh;
+}
+
+.header {
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	background: #ffbd5c;
+}
+
+.header__title {
+	color: #fff;
+	font-size: 20px;
+	margin-left: 20px;
+	letter-spacing: 4px;
+}
+
+.back {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 8;
 }
 </style>

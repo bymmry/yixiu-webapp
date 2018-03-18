@@ -1,6 +1,6 @@
 <template>
 	<div class="info">
-		<item-header :name="infoName" />
+		<item-header :name="infoName"  v-on:backParent="backParent"/>
 
 		<div class="info__name">
 			<p>品牌名称</p>
@@ -10,12 +10,6 @@
 				@change="change"
 			/>
 		</div>
-
-		<van-field
-			v-model="phoneRes.name"
-			label="其他品牌"
-			placeholder="若没有你想要的品牌名称,请填写你想要的品牌名称"
-		/>
 
 		<van-field
 			v-model="phoneRes.desc"
@@ -71,18 +65,21 @@ export default {
 		})
 	},
 	methods: {
+		backParent () {
+			this.$emit('backParent', true);
+		},
 		change(value, index) {
 			this.phoneRes['name'] = value;
 			this.phoneRes['alias'] = this.phoneInfo[ index ].alias;
 		},
 		async submit () {
 			let phoneRes = await this.$api.sendData('https://m.yixiutech.com/phone/manufacturer', this.phoneRes);
-			if (phoneRes.code == 4001) {
+			if (phoneRes.code !== 200) {
 				this.prompt(phoneRes.errMsg, 'error').show();
 				return;	
 			}
 			this.prompt('添加成功', 'success').show();
-			this.$router.push('/sellerHome');
+			this.$emit('updateBrand', true);
 		}
 	}
 }
