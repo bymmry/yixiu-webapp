@@ -94,7 +94,7 @@
   }
   .model .modelList{
     width: auto;
-    height: 46vh;
+    height: 42vh;
     overflow: scroll;
     padding: 1vh 10px;
   }

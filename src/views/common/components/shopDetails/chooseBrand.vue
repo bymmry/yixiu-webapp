@@ -64,7 +64,7 @@
 <style scoped>
   .brand .stepsContent{
     width: auto;
-    height: 48vh;
+    height: 44vh;
     padding: 0 2vw;
     overflow-y: scroll;
   }

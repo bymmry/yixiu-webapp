@@ -12,6 +12,8 @@
 			:icon="item.icon"
 			:link="item.link"
 		 />
+		 <!-- 删除店铺信息按钮 慎用 -->
+		 <!-- <button @click="deleteData">删除</button> -->
   </div>
 </template>
 
@@ -45,6 +47,16 @@
 			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
 			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
 		},
+		// 删除店铺信息  慎用
+		methods: {
+			async deleteData(){
+				let req = {
+					_id: "5aaf7f2aeba92d2a49431767"
+				}
+				let res = await this.$api.sendData('https://m.yixiutech.com/service/delete', req);
+				console.log(res);
+			}
+		}
   }
 </script>
 

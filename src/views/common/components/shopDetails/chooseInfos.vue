@@ -278,7 +278,7 @@
   .chooseInfos .information{
     width: auto;
     height: auto;
-    max-height: 45vh;
+    max-height: 41vh;
     overflow-y: scroll;
   }
   .chooseInfos .information ul{

@@ -16,7 +16,7 @@
           <div class="shopMainContent">
             <p><span>营业时间：每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
             <p><span>联系方式：{{shopInfo.contactNumber}}</span></p>
-            <p><span>联系方式：</span></p>
+            <p><span>服务方式：</span></p>
             <p><span><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
             <!-- <p><span>店铺地址：</span></p> -->
           </div>

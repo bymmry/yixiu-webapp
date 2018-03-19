@@ -215,10 +215,11 @@
   .problem{
     width: auto;
     height: auto;
+    font-size: 13px;
   }
   .problem .proContent{
     width: auto;
-    height: 45vh;
+    height: 41vh;
     display: flex;
   }
   .problem .proContent > div.problemSort{
@@ -229,7 +230,7 @@
     width: auto;
     margin: 0 10px;
     padding: 15px 0;
-    font-size: 14px;
+    font-size: 12px;
     border-bottom: 1px solid #c7c7c7;
   }
   .problem .proContent > div.problemSort ul li.selected{
@@ -295,6 +296,7 @@
   }
   .problem .proContent > div.childShow{
     display: block;
+    overflow: scroll;
     /*background-color: #eee;;*/
   }
 </style>
