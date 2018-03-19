@@ -21,7 +21,7 @@
 <script>
   import { Uploader,Toast } from 'vant';
   import axios from 'axios'
-  // import lrz from "lrz"
+  import lrz from "lrz"
 
   export default {
     data(){
@@ -41,6 +41,62 @@
           message: '上传中...'
         });
 
+        let fd = new FormData();
+
+        let config = {
+          headers: {'Content-Type': 'multipart/form-data'}
+        }
+
+        if (file.file.type==="image/gif") {
+
+          fd.append('file', file.file);
+          
+          axios.post('https://m.yixiutech.com/upload', fd, config)
+          .then(res => {
+            if (res.data.data.match(/\.gif/)) {
+              this.$emit("addnewphoto", res.data.data);
+            }else{
+              this.$emit("addnewphoto", res.data.data+"?x-oss-process=image/quality,q_80");
+            }
+            const tip = Toast.success('上传成功');
+            toast.clear();
+          })
+        }else{
+          lrz(file.file)
+          .then( (rst) => {
+              // 处理成功会执行
+              return rst;
+          })
+          .catch(function (err) {
+              // 处理失败会执行
+          })
+          .always(function () {
+              // 不管是成功失败，都会执行
+          }).then((zphoto)=>{
+            // console.log(zphoto);
+
+            // var newfile = new File([zphoto], file.file.name,{type:"image/jpeg"});
+
+            // console.log(newfile)
+            // console.log(file)
+
+            fd.append('file', zphoto.file);
+            // fd.append('name', zphoto.file.name);
+            
+            axios.post('https://m.yixiutech.com/upload', fd, config)
+            .then(res => {
+              console.log(res)
+              if (res.data.data.match(/\.gif/)) {
+                this.$emit("addnewphoto", res.data.data);
+              }else{
+                this.$emit("addnewphoto", res.data.data+"?x-oss-process=image/quality,q_80");
+              }  
+              const tip = Toast.success('上传成功');
+              toast.clear();
+            })
+          })
+        }
+
         // lrz(file.file)
         // .then( (rst) => {
         //     // 处理成功会执行
@@ -52,23 +108,21 @@
         // .always(function () {
         //     // 不管是成功失败，都会执行
         // }).then((zphoto)=>{
-          let fd = new FormData();
           
-          fd.append('file', file.file);
+          
+          // fd.append('file', file.file);
 
-          let config = {
-            headers: {'Content-Type': 'multipart/form-data'}
-          }
-          axios.post('https://m.yixiutech.com/upload', fd, config)
-          .then(res => {
-            if (res.data.data.match(/\.gif/)) {
-              this.$emit("addnewphoto", res.data.data);
-            }else{
-              this.$emit("addnewphoto", res.data.data+"?x-oss-process=image/quality,q_80");
-            }
-            const tip = Toast.success('上传成功');
-            toast.clear();
-          })
+          
+          // axios.post('https://m.yixiutech.com/upload', fd, config)
+          // .then(res => {
+          //   if (res.data.data.match(/\.gif/)) {
+          //     this.$emit("addnewphoto", res.data.data);
+          //   }else{
+          //     this.$emit("addnewphoto", res.data.data+"?x-oss-process=image/quality,q_80");
+          //   }
+          //   const tip = Toast.success('上传成功');
+          //   toast.clear();
+          // })
       },
       //更改 是否匿名
       changeAnonymous(){
