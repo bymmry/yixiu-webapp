@@ -259,7 +259,7 @@ export default {
 				message: '加载中...'
 			})
 			toast.show();
-			let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/update', this.infos);
+			let res = await this.$api.sendData('https://m.yixiutech.com/shop/update', this.infos);
 			toast.hide();
 			if (res.code == 4001) {
 				alert(res.errMsg);

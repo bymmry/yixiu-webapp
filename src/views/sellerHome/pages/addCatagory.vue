@@ -82,6 +82,9 @@ export default {
 			const toast = this.$createToast({
 				message: '加载中...'
 			})
+			let type = sessionStorage.getItem('category');
+			console.log(sessionStorage.getItem('category'));
+			this.category.type = type;
 			toast.show();
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
 			toast.hide();
