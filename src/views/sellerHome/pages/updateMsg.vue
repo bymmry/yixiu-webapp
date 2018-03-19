@@ -148,7 +148,7 @@ export default {
 			message: '加载中...'
 		})
 		toast.show();
-		let res = await this.$api.sendData('https://yixiu.natappvip.cc/shop/user', { openid: userData.wx.openid })
+		let res = await this.$api.sendData('https://m.yixiutech.com/shop/user', { openid: userData.wx.openid })
 		toast.hide();
 		if (res.code == 200) {
 			this.infos = res.data;
@@ -212,7 +212,7 @@ export default {
 				message: '加载中...'
 			})
 			toast.show();
-			let res = await this.$api.sendData('https://yixiu.natappvip.cc/upload', formdata, config);
+			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
 			toast.hide();
 
 			this.infos.certificate.map( item => item.name == name ? item.src = res.data : null );
