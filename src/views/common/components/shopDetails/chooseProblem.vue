@@ -1,7 +1,7 @@
 <template>
   <div class="problem">
     <div class="readySelectedSpace">
-      <p class="readySelected">已选：<span v-if="item.name" v-for="item in selectedProblem">{{item.name}}</span></p>
+      <p class="readySelected">已选：<span v-if="item.name" v-for="(item,index) in selectedProblem" :key="index">{{item.name}}</span></p>
     </div>
     <div class="proContent">
       <div class="problemSort">
@@ -11,7 +11,8 @@
             :data-index="index"
             :data-id="item._id"
             @click="selectChildren"
-            v-for="(item, index) in items">{{item.name}}
+            v-for="(item, index) in items"
+            :key="index">{{item.name}}
           </li>
         </ul>
       </div>
@@ -19,7 +20,9 @@
         :class="{'childShow': currentChildIndex === childIndex}"
         class="problemDetail"
         ref="problemDetail"
+        :data-index="childIndex"
         v-for="(child, childIndex) in items.length"
+        :key="childIndex"
         v-if="parent[childIndex].data.length"
       >
           <span
@@ -28,6 +31,7 @@
             :data-index="index"
             data-isSelected="0"
             v-for="(item, index) in parent[childIndex].data"
+            :key="index"
           >{{item.name}}&nbsp;￥{{item.price}}
           </span>
       </div>
@@ -69,6 +73,7 @@
         }],
         selectedServer: [],
         parent: [],
+        parentIndex: 0
       }
     },
     props: {
@@ -101,12 +106,9 @@
                 this.parent.push({type: i, data: {}});
               }
             }
-
             // this.parent.length = this.items.length;
-            this.selectedServer.length = this.items.length;
+            // this.selectedServer.length = this.items.length;
             console.log("step1--------------------->");
-            console.log(this.parent);
-            console.log(this.parent[0].data.length); //0
             this.getProblem(res.data);
           }
         }, function (err) {
@@ -122,14 +124,18 @@
         this.getChildrenProblem(req, this.currentChildIndex);
       },
       getChildrenProblem: function (req, index) { // 获取子元素列表
+        const toast = this.$createToast({
+				  message: '加载中...'
+        });
+        toast.show();
         getChildrenProblem(req).then(res => {
           this.itemsChildren = res.data;
-          // if(this.parent[index].length === 0){
+          this.parentIndex = index;
           this.parent[index].data = Object.assign(this.itemsChildren, this.parent[index].data);
           console.log("step2------------------------------->");
-          console.log(this.parent);
-          console.log(this.parent[0].data.length); //1
-          Toast.clear();
+          setTimeout(function(){
+            toast.hide();
+          },100)
           // }
         }, err => {
           console.log(err);
@@ -170,8 +176,7 @@
         let childIndex = tar.getAttribute("data-index");
 
         this.setTarget(tar, isSelected);
-
-        this.getSelectedServer();
+        this.getSelectedServer(childIndex);
 
         if(this.selectedServer.length === 0){
           this.nextStepButtonDisabled = true;
@@ -181,24 +186,45 @@
 
       },
 
-      getSelectedServer: function () {
+      getSelectedServer: function (childIndex) {
         let that = this;
         that.selectedServer = [];
-        let problemDetail = this.$refs.problemDetail;
-        if(problemDetail.length){
-          for(let i=0; i<problemDetail.length; i++){
-            let target = problemDetail[i];
-            let spans = target.getElementsByTagName("span");
+        // this.selectedServer.push(this.parent[this.parentIndex].data[childIndex]);
+        let problemSort = this.$refs.problemSort.getElementsByTagName('li');  // 父列表
+        let problemDetail = this.$refs.problemDetail; // 子列表
+        for(let i=0; i<problemDetail.length; i++){
+          let chi = problemDetail[i];
+          let index = chi.getAttribute("data-index");
+          let spans = chi.getElementsByTagName("span");
+          console.log(spans);
+          if(spans != 0){
             for(let j=0; j<spans.length; j++){
               let span = spans[j];
+              console.log(span);
               let isSelected = span.getAttribute("data-isSelected");
-              if(isSelected === "1"){
-                let id = span.getAttribute("data-id");
-                that.selectedServer.push(that.parent[i].data[j]);
+              if(isSelected == "1"){
+                that.selectedServer.push(that.parent[index].data[j]);
               }
             }
           }
         }
+        // if(problemDetail.length){
+        //   for(let i=0; i<problemDetail.length; i++){
+        //     let target = problemDetail[i];
+        //     console.log(target);
+        //     let spans = target.getElementsByTagName("span");
+        //     for(let j=0; j<spans.length; j++){
+        //       let span = spans[j];
+        //       let isSelected = span.getAttribute("data-isSelected");
+        //       if(isSelected == "1"){
+        //         console.log("that.parent[i].data[j]---------------------------------------------------",i);
+        //         console.log(that.parent[i].data);
+        //         that.selectedServer.push(that.parent[i].data[childIndex]);
+        //       }
+        //     }
+            
+        //   }
+        // }
         console.log(this.selectedServer);
         this.selectedProblem = this.selectedServer;
         let TotalFee = 0;
