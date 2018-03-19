@@ -47,8 +47,6 @@
 			// let androidRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', androidData);
 			// this.android = androidRes.data;
 
-			console.log(this.iphone);
-
 		},
     components: {
 			Header,
