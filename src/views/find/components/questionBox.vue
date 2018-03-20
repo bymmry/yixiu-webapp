@@ -17,7 +17,7 @@
       <div class="questionFooter">
         <div class="questionFooterLeft">
           <div>回复：{{ question.replyCount }}</div>
-          <div>赏金：{{ question.reward ? question.reward/100 : 0 }} 元</div>
+          <div>赏金：{{ question.reward ? question.reward : 0 }} 积分</div>
           <div>{{ createdtime }}</div>
         </div>
         <div>

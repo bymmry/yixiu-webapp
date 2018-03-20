@@ -12,7 +12,7 @@
       <div slot="right" class="newBtn" @click="pushnewquestionNext" v-if="inNext === false">下一步</div>
       <div slot="right" class="newBtn nextBtnArea" v-else>
         <div @click="pushnewquestionPre" class="preStep">上一步</div>
-        <div @click="pushnewquestion" class="push">提交</div>
+        <div @click="pushnewquestion" class="push" v-if="!nomoney">提交</div>
       </div>
       
       </van-search>
@@ -33,7 +33,7 @@
     <div class="extraOption" v-else>
       <questionTagBox @changeTag="changeTag"></questionTagBox>
 
-      <questionmoney  @changeMoney="changeMoney"></questionmoney>
+      <questionmoney  @changeMoney="changeMoney" @cantpush="cantpush"></questionmoney>
     </div>
     
     
@@ -52,7 +52,7 @@
   import textareaBox from "./textareaBox"
   import questionTagBox from "./questionTagBox"
   import questionmoney from "./questionmoney"
-  import { addNewQuestion } from '../../common/api'
+  import { addNewQuestion, updateuserinfo } from '../../common/api'
 
   export default {
     data(){
@@ -70,7 +70,9 @@
           author: "",   // 用户id
           reward: 0,   //赏金
           image:[]  //存储图片
-        }
+        },
+        nomoney:false,
+        allmoney:0,
       }
     },
     components: {
@@ -155,8 +157,10 @@
         this.answerdetail.desc = this.text.substring(0,80);
         let userData = this.getUserInfo();
         this.answerdetail.author = userData._id;
+        this.allmoney = userData.points;
         this.inNext = true;
-        console.log(this.answerdetail)
+        console.log(this.answerdetail);
+        
         // console.log(this.text);
       },
       //添加Tag
@@ -165,7 +169,12 @@
       },
       //添加悬赏
       changeMoney(money){
-        this.answerdetail.reward = money*100
+        this.answerdetail.reward = parseInt(money);
+        this.nomoney = false;
+      },
+      //无法提交
+      cantpush(){
+        this.nomoney = true;
       },
       //上一步
       pushnewquestionPre(){
@@ -183,30 +192,52 @@
         })
         toast.show();
 
+        // this.answerdetail.reward = this.answerdetail.reward
+
         console.log(this.answerdetail)
-        
-        addNewQuestion(this.answerdetail)
+
+        let updatauser = {
+          _id:this.answerdetail.author,
+          points: this.allmoney - this.answerdetail.reward
+        }
+
+        // console.log(updatauser)
+
+        updateuserinfo(updatauser)
         .then(res => {
-          toast.hide();
-
-          const tip = this.$createToast({
-            txt: '提交成功!',
-            type: 'correct',
-            time: 1300
-          })
-          tip.show();
-
-          setTimeout(() => { this.close(); }, 1600);
-
-          // console.log(res)
+          console.log(res);
+          return "OK"
         },(err => {
-          const tip = this.$createToast({
-            txt: '提交失败!',
-            type: 'fail',
-            time: 1000
-          })
-          console.log(err);
+
         }))
+        .then(res =>{
+          if (res=="OK") {
+            addNewQuestion(this.answerdetail)
+            .then(res => {
+              toast.hide();
+
+              const tip = this.$createToast({
+                txt: '提交成功!',
+                type: 'correct',
+                time: 1300
+              })
+              tip.show();
+
+              setTimeout(() => { this.close(); }, 1600);
+
+              // console.log(res)
+            },(err => {
+              const tip = this.$createToast({
+                txt: '提交失败!',
+                type: 'fail',
+                time: 1000
+              })
+              console.log(err);
+            }))
+          }
+        })
+
+        
       }
     }
   }

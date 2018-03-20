@@ -3,9 +3,10 @@
     <p class="questiontitle">
       请输入 
       <span style="color:#FF5722">悬赏金额</span> 
-      <van-tag plain type="danger">赏金将从钱包中扣除</van-tag>
+      <van-tag plain type="danger">赏金将从积分中扣除</van-tag>
     </p>
-    <input type="text" placeholder="整数" v-model="money"><span style="font-size: 8vw;">元</span>
+    <input type="text" placeholder="整数" v-model="money"><span style="font-size: 8vw;"></span>
+    <p>你的总积分为：{{allmoney}}</p> <span class="notice" v-if="noticeshow">没有足够的积分</span>
   </div>
 </template>
 
@@ -21,19 +22,33 @@
   	data(){
   		return {
   			money: 0,
+        allmoney:0,
+        noticeshow:false,
+        UID:"",
   		}
   	},
   	watch: {
       money: function(){
-      	this.$emit("changeMoney",this.money)
+        if (this.money<=this.allmoney) {
+          this.$emit("changeMoney",this.money)
+          this.noticeshow=false;
+        }else{
+          this.noticeshow=true;
+          this.$emit("cantpush")
+        }
       }
     },
     components: {
       [Tag.name]: Tag,
     },
     methods: {
+      getMymoney(){
+        let userData = this.getUserInfo();
+        this.allmoney = userData.points;
+      }
     },
     created(){
+      this.getMymoney();
       this.money = this.oldMoney ? this.oldMoney : this.money
     }
     
@@ -79,5 +94,9 @@
   }
   .questiontitle{
   	margin-bottom: 20px;
+  }
+  .notice{
+    font-size: 12px;
+    color: red;
   }
 </style>

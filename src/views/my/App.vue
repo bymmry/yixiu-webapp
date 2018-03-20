@@ -93,7 +93,7 @@
             url: "my/information"
           },
           {
-            name: "我的钱包",
+            name: "我的积分",
             icon: "pending-payment",
             url: "my/mywallet"
           },

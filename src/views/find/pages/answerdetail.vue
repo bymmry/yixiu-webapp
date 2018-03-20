@@ -76,7 +76,7 @@
   //vant
   import { NavBar,Toast,Button,Popup } from 'vant';
   import topNav from "../components/topNav";
-  import { likethis,adoptThis  } from '../../common/api'
+  import { likethis,adoptThis,updateuserinfo  } from '../../common/api'
 
   export default {
     data(){
@@ -165,41 +165,59 @@
           txt: '正在采纳'
         })
         toast.show();
-        let choseData = {
-          question: this.answerdetail.question,  //问题的_id
-          _id: this.answerdetail._id   //回复数据的id
+
+        let userData = this.getUserInfo();
+        let updatauser = {
+          _id:this.answerdetail.author,
+          points: parseInt(userData.points) + parseInt(this.answerdetail.points)
         }
-        // console.log(choseData)
-        adoptThis(choseData)
+        // console.log(updatauser)
+
+        updateuserinfo(updatauser)
         .then(res => {
-          toast.hide()
-          if (res.errMsg=="问题已经采纳过回复,请勿重复采纳") {
-            const tip = this.$createToast({
-              txt: '一个问题只能采纳一个回答！',
-              type: 'fail',
-              time: 1300
-            })
-            tip.show()
-          }else{
-            const tip = this.$createToast({
-              txt: '采纳成功!',
-              type: 'correct',
-              time: 1300
-            })
-            tip.show()
-            setTimeout(() => {
-              this.$router.push({ path: "/find/questiondetail"})
-            },1600)
-          }          
+          console.log(res);
+          return "OK"
         },(err => {
-          console.log(err);
-          const tip = this.$createToast({
-            txt: '采纳失败!',
-            type: 'fail',
-            time: 1000
-          })
-          tip.show()
+
         }))
+        .then(res=>{
+          let choseData = {
+            question: this.answerdetail.question,  //问题的_id
+            _id: this.answerdetail._id   //回复数据的id
+          }
+          // console.log(this.answerdetail)
+          // console.log(choseData)
+          adoptThis(choseData)
+          .then(res => {
+            toast.hide()
+            if (res.errMsg=="问题已经采纳过回复,请勿重复采纳") {
+              const tip = this.$createToast({
+                txt: '一个问题只能采纳一个回答！',
+                type: 'fail',
+                time: 1300
+              })
+              tip.show()
+            }else{
+              const tip = this.$createToast({
+                txt: '采纳成功!',
+                type: 'correct',
+                time: 1300
+              })
+              tip.show()
+              setTimeout(() => {
+                this.$router.push({ path: "/find/questiondetail"})
+              },1600)
+            }          
+          },(err => {
+            console.log(err);
+            const tip = this.$createToast({
+              txt: '采纳失败!',
+              type: 'fail',
+              time: 1000
+            })
+            tip.show()
+          }))
+        })
       },
     },
     created:function(){

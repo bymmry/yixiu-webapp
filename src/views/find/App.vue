@@ -50,10 +50,7 @@
 
 <script>
   //vant
-  import { NavBar } from 'vant';
-  import { Search } from 'vant';
-  import { Tab, Tabs } from 'vant';
-  import { Icon } from 'vant';
+  import { NavBar,Tab, Tabs,Search,Icon } from 'vant';
   import newquestion from './components/newquestion'
   import topNav from "./components/topNav"
 

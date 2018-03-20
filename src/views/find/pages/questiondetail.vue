@@ -84,6 +84,7 @@
       jumpanswerDetail(answer){
         // console.log(answer)
         answer.father = this.questiondetail.title;
+        answer.points = this.questiondetail.reward;
         let arr = this.questiondetail.reply ? this.questiondetail.reply : 0;
         answer.comment = arr.length ? arr.length : 0;
 
@@ -112,7 +113,7 @@
           toast.hide();
           this.questiondetail = res.data;
           this.allcontent();
-          console.log(this.questiondetail)
+          // console.log(this.questiondetail)
         },(err => {
           console.log(err);
         }))

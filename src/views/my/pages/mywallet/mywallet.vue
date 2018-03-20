@@ -2,7 +2,7 @@
   <div class="myinfo-container">
     <div class="navBox">
       <div @click="prepage" class="prepageBox"><sicon name="find-leftArr" scale="1.2"></sicon>&nbsp;返回</div>
-      <div class="navtitle">我的钱包</div>
+      <div class="navtitle">我的积分</div>
     </div>
     <!-- 顶部留白 -->
     <div class="topblank"></div>
@@ -11,7 +11,7 @@
     <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
       <div class="countBox">
         <img src="https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/dribbble2.png" alt="">
-        <div class="money">{{userinfo.points/100}} 元</div>
+        <div class="money">{{userinfo.points}} 分</div>
       </div>
 
       
