@@ -131,7 +131,7 @@ export default {
 		async updateModel (data) {
 			this.modelStatus = false;
 			let ownModel = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop', { shop: this.service.shop, manufacturer: this.service.manufacturer });
-			this.modelNames.length = 0;
+			this.modelNames = [];
 			ownModel.data.map(item => {
 				this.modelNames.push({ label: item.name, value: item._id });
 			});

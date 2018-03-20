@@ -41,19 +41,16 @@
 
 		<div class="info__name">
 			<p>手机颜色</p>
-			<cube-select
-				v-model="phoneModelColorRes"
-				:options="phoneModelColor"
-				@change="colorChange"
-			/>
 		</div>
 
-		<van-field
-			v-model="phoneModelColorRes"
-			label="其他颜色"
-			placeholder="如果没有你想要的颜色,请填写颜色"
-			@change="colorChange"
-		/>
+		<div class="service">
+			<selects ref="select" v-for="(item, index) in phoneModelColor"
+				:key="index"
+				:data="item"
+				v-on:sendMsg="sendMsg"
+				v-on:remove="remove"
+			/>
+		</div>
 
 		<van-button size="large" @click="submit">确认添加</van-button>
 
@@ -63,11 +60,13 @@
 <script>
 import { Field, Button } from 'vant'
 import ItemHeader from '../components/itemHeader'
+import selects from '../components/select'
 export default {
   components: {
 		[Field.name]: Field,
 		[Button.name]: Button,
-		ItemHeader
+		ItemHeader,
+		selects
 	},
 	async mounted () {
 		const toast = this.$createToast({
@@ -84,13 +83,15 @@ export default {
 	data () {
 		return {
 			infoName: '添加手机型号',
+			colors: ['黑色', '白色', '银灰色', ],
 			phoneName: [],
 			phoneInfo: [],
 			phoneModel: [],
 			phoneModelAlias: '',
 			phoneModelInfo: [],
 			phoneModelColor: [],
-			phoneModelColorRes: '',
+			phoneModelColorRes: [],
+			colorType: 'color',
 			model: {
 				brandName: '',
 				name: '',
@@ -105,6 +106,14 @@ export default {
 		}
 	},
 	methods: {
+		sendMsg (data) {
+			this.model.color.push(data);
+		},
+		remove(data) {
+			this.model.color.map( (item, index) => {
+				item == data ? this.model.color.splice(index, 1) : null
+			})
+		},
 		backParent () {
 			this.$emit('backParent', true);
 		},
@@ -162,6 +171,14 @@ export default {
 
 .van-button {
 	margin-top: 50px;
+}
+
+.service {
+	width: 92%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
+	padding: 4%;
 }
 
 .info__name .cube-select {

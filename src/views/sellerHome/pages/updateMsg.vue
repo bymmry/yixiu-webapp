@@ -1,8 +1,11 @@
 <template>
   <div class="info">
 		<item-header 
-			:infoName="infoName"
+			:name="infoName"
+			v-on:backParent="back"
 		/>
+
+	  	<img class="info__logo" :src="logo" alt="" />
 
 		<van-field
 			v-model="infos.name"
@@ -11,41 +14,43 @@
 			placeholder="请输入商铺名称"
 		/>
 
-		<p class="head">下载协议   <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E4%BB%A3%E7%90%86%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修代理入驻协议.docx</a></p>
-		
-		<p class="head">上传协议扫描版</p>
-		
-		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" />
-			<img class="upload__show" :src="file" alt="" />
-		</div>
-
 		<p class="head">身份证正面</p>
 
 		<div class="upload">
-			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="image/*" />
-			<img class="upload__show" :src="infos.certificate[0].src" alt="" />
+			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
+			<img class="upload__show" :src="infos.certificate[0] ? infos.certificate[0].src : defaults" alt="" />
 		</div>
 
 		<p class="head">身份证反面</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="idcardUpload2($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[1].src" alt="" />
+			<img class="upload__show" :src="infos.certificate[1] ? infos.certificate[1].src : defaults" alt="" />
 		</div>
 
 		<p class="head">营业执照</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="licenseUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[2].src" alt="" />
+			<img class="upload__show" :src="infos.certificate[2] ? infos.certificate[2].src : defaults" alt="" />
 		</div>
 
 		<p class="head">运营资格证书</p>
 
 		<div class="upload">
 			<input class="upload__select" @change="certificateUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[3].src" alt="" />
+			<img class="upload__show" :src="infos.certificate[3] ? infos.certificate[3].src : defaults" alt="" />
+		</div>
+
+		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修入驻协议.docx</a></p>
+
+		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
+		
+		<p class="head">拍照上传翼修入驻协议</p>
+		
+		<div class="upload">
+			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
+			<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
 		</div>
 
 		<p class="head">商铺封面</p>
@@ -62,9 +67,15 @@
 		/>
 
 		<van-field
-			v-model="infos.contactNumber"
+			v-model="infos.mobile"
 			label="联系电话"
 			placeholder="请输入联系电话"
+		/>
+
+		<van-field
+			v-model="infos.notice"
+			label="店铺公告"
+			placeholder="请输入输入店铺公告"
 		/>
 
 		<van-field
@@ -72,6 +83,17 @@
 			label="商铺地址"
 			placeholder="请输入商铺详细地址"
 		/>
+
+		<van-field
+			v-model="infos.tempPhone"
+			v-for="(item, index) in this.infos.user"
+			:key="index"
+			label="添加管理者"
+			placeholder="请输入管理者的电话号码"
+			@blur="addManager(index)"
+		/>
+
+		<cube-button @click="addM">添加商铺管理者</cube-button>
 
 		<div class="info-item">
 			<p class="info-item__title">开始营业时间</p>
@@ -106,14 +128,19 @@
 
 		<cube-button @click="add">添加满减条件</cube-button>
 
-		<van-field
-			v-model="serviceWay"
-			label="服务方式"
-			placeholder="请输入支持的服务方式，用中文逗号隔开"
-			@blur="serviceBlur"
-		/>
+		<div class="info-item">
+			<p class="info-item__title">请选择服务方式</p>
+		</div>
 
-		<div id="allmap"></div>
+		<div class="service">
+			<selects v-for="(item, index) in serviceWay"
+				ref="child"
+				@sendMsg="setData"
+				@remove="removeData"
+				:key="index"
+				:data="item"
+			/>
+		</div>
 
 		<cube-button @click="register">更新</cube-button>
   </div>
@@ -121,7 +148,11 @@
 
 <script>
 import { Field, Uploader, Icon } from 'vant'
+import itemHeader from '../components/itemHeader'
 import timeJson from '../data/data.json'
+import logo from '@/assets/logo.png'
+import file from '@/assets/file.png'
+import selects from '../../sellerHome/components/select'
 export default {
 	async mounted () {
 		this.startPicker = this.$createPicker({
@@ -139,7 +170,6 @@ export default {
 				this.infos.businessHours.push(this.startHour + ' - ' + this.endHour);
       }
 		})
-		this.initPosition();
 		
 		let userData = JSON.parse(sessionStorage.getItem('userData'));
 		console.log(userData);
@@ -149,54 +179,78 @@ export default {
 		})
 		toast.show();
 		let res = await this.$api.sendData('https://m.yixiutech.com/shop/user', { openid: userData.wx.openid })
-		toast.hide();
+		
 		if (res.code == 200) {
 			this.infos = res.data;
 			let businessHours = this.infos.businessHours[0].split('-');
 			this.startHour = businessHours[0].trim();
 			this.endHour = businessHours[1].trim();
-			this.serviceWay  = this.infos.serviceWay.join('，');
+			
+			this.$refs.child.filter(item => {
+				if(this.infos.serviceWay.includes(item.data))  {
+					item.selectOn();
+				}
+			})
+
 		}
+		toast.hide();
 	},
 	components: {
 		[Field.name]: Field,
 		[Uploader.name]: Uploader,
-		[Icon.name]: Icon
+		[Icon.name]: Icon,
+		selects,
+		itemHeader
 	},
 	data () {
 		return {
 			infoName: '更新店铺信息',
 			startHour: '',
+			tempPhone: '',
 			endHour: '',
-			serviceWay: '',
-			file: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			serviceWay: ['上门服务', '用户到店', '线上快递'],
+			logo: logo,
+			files: file,
+			defaults: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			file: file,
 			infos: {
 				name: '',
 				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
-				contactNumber: '',
+				moblie: '',	
 				serviceWay: [],
-				position: {
-					lng: '',
-					lat: ''
-				},
 				businessHours: [],
 				promotion: [
 					{condition: '', denomination: ''}
 				],
 				ownerOpenid: JSON.parse(sessionStorage.getItem('userData')).wx.openid,
-				certificate: [
-					{ name: 'idcard1', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'idcard2', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'license', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'certificate', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'protocol', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' }
-				]
+				certificate: []
 			},
 			time: timeJson,
 			money: ''
 		}
 	},
 	methods: {
+		back () {
+			this.$router.push('/sellerHome');
+		},
+		addM () {
+			this.infos.user.push(0);
+		},
+		async addManager (index) {
+			let userInfo = await this.$api.sendData('https://m.yixiutech.com/user/mobile/' + this.tempPhone);
+			userInfo.code == 200 ? this.infos.user[ index ] = userInfo.data._id : null;
+		},
+		setData (data) {
+			this.infos.serviceWay.push(data);
+		},
+		removeData (data) {
+			this.infos.serviceWay.map( (item, index) => {
+				if ( item == data ) { 
+					this.infos.serviceWay.splice(index, 1) 
+					console.log(this.infos.serviceWay);
+				}
+			})
+		},
 		async uploadPic (pic, name) {
 			let formdata = new FormData();
 
@@ -224,76 +278,57 @@ export default {
 			this.uploadPic(this.file, 'cover');
 		},
 		protocolUpload (event, name) {
+			this.infos.certificate.push({ name: 'protocol', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' })
 			this.file = event.target.files[0];
 			this.uploadPic(this.file, 'protocol');
 		},
 		async idcardUpload1 (event, name) {
-			console.log(name);
+			this.infos.certificate.push({ name: 'idcard1', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' })
 			this.file = event.target.files[0];
 
 			this.uploadPic(this.file, 'idcard1');
 		},
 		async idcardUpload2 (event) {
+			this.infos.certificate.push({ name: 'idcard2', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  })
 			this.file = event.target.files[0];
 
 			this.uploadPic(this.file, 'idcard2');
 		},
 		async licenseUpload (event) {
+			this.infos.certificate.push({ name: 'license', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  })
 			this.file = event.target.files[0];
 
 			this.uploadPic(this.file, 'license');
 		},
 		async certificateUpload (event) {
+			this.infos.certificate.push({ name: 'certificate', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  })
 			this.file = event.target.files[0];
 
 			this.uploadPic(this.file, 'certificate');
-		},
-		serviceBlur () {
-			this.infos.serviceWay = this.serviceWay.split('，');
 		},
 		add () {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
 			const toast = this.$createToast({
-				message: '加载中...'
+				txt: '加载中...',
+				type: 'loading'
 			})
 			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/update', this.infos);
 			toast.hide();
-			if (res.code == 4001) {
+			if (res.code !== 200) {
 				alert(res.errMsg);
 				return;
 			}
+			this.prompt('修改成功', 'success').show();
+			this.$router.push('/sellerHome');
 		},
 		start () {
 			this.startPicker.show()
 		},
 		finish () {
 			this.endPicker.show()
-		},
-		initPosition () {
-			let map = new BMap.Map("allmap");
-			let point = new BMap.Point(116.331398,39.897445);
-			map.centerAndZoom(point,12);
-
-			let _this = this;
-
-			let geolocation = new BMap.Geolocation();
-			geolocation.getCurrentPosition(function(r){
-				if(this.getStatus() == BMAP_STATUS_SUCCESS){
-					var mk = new BMap.Marker(r.point);
-					map.addOverlay(mk);
-					map.panTo(r.point);
-				
-					_this.infos.position.lng = r.point.lng;
-					_this.infos.position.lat = r.point.lat;
-					
-				}
-				else {
-					alert('failed'+this.getStatus());
-				}
-			},{enableHighAccuracy: true})
 		}
 	}
 }
@@ -302,9 +337,33 @@ export default {
 
 <style scoped>
 .info {
-	width: 100%;
-	background-image: linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%);
+		width: 100%;
+    position: absolute;
+    left: 50%;
+		background: #eee;
+    transform: translate(-50%);
+		text-align: center;
+		overflow: hidden;
 }
+
+.service {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-around;
+}
+
+.links {
+	color: #ec3030;
+	text-align: left;
+	padding: 2%;
+}
+
+.info .info__logo {
+	width: 200px;
+	display: inline-block;
+}
+
 .condition {
 	display: flex;
 	align-items: center;
@@ -336,16 +395,16 @@ export default {
 
 .upload .upload__select {
 	position: absolute;
-	width: 100%;
 	z-index: 8;
 	font-size: 50px;
 	opacity: 0;
+	left: 0;
 }
 
 .info-item {
 	padding: 10px 15px;
 	display: flex;
-	color: #fff;
+	color: #000;
 	align-items: center;
 	justify-content: flex-start;
 }
@@ -355,11 +414,13 @@ export default {
 }
 
 .cube-btn {
-	background: transparent;
-	border: 2px solid #fff;
+	background: #e0620d;
 	border-radius: 5px;
 	margin: 10px 0;
+	display: inline-block;
+	width: 60%;
 }
+
 
 .van-field__control {
 	background: transparent;
@@ -367,7 +428,8 @@ export default {
 
 .info .head {
 	padding: 10px 15px;
-	color: #fff;
+	text-align: left;
+	color: #000;
 }
 
 .info .van-uploader {
@@ -379,15 +441,15 @@ export default {
 	width: 100%;
 	margin-top: 30px;
 	padding: 20px 0;
-	color: #fff;
-	background: transparent;
+	color: #000;
+	background: #e0620d;
 	border-radius: 10px;
-	border: 2px solid #fff;
+	border: 2px solid #000;
 }
 
 .info .van-field {
 	background: transparent;
-	color: #fff;
+	color: #000;
 	font-size: 1em;
 }
 
@@ -397,7 +459,7 @@ export default {
 }
 
 .info__tip a {
-	color: #fff;
+	color: #000;
 }
 
 .info__tip .tip__pwd {
@@ -406,5 +468,15 @@ export default {
 
 .info__tip .tip__register {
 	float: right;
+}
+
+.register {
+	background: #ec3030;
+}
+
+.svg-icon {
+	position: absolute;
+	left: 20px;
+	top: 40px;
 }
 </style>

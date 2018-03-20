@@ -12,6 +12,12 @@
 		</div>
 
 		<van-field
+			v-model="phoneRes.name"
+			label="其他品牌名称"
+			placeholder="若没有想要的,请输入其他品牌名称"
+		/>
+
+		<van-field
 			v-model="phoneRes.desc"
 			label="描述"
 			placeholder="请输入品牌描述"
