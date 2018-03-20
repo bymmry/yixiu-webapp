@@ -67,7 +67,7 @@
 }
 
 .position__header {
-	background: #ffbd5c;
+	background: #66c6ff;
 	padding: 8px;
 	display: flex;
 	align-items: center;

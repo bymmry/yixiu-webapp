@@ -42,7 +42,7 @@
     min-height: 50px;
     max-height: 60px;
     border-top: 1px solid #eee;
-    box-shadow: 0 -3px 5px #ddd;
+    box-shadow: 0 -1px 2px #ddd;
     background-color: #fff;
   }
   .navigation .routerBox{

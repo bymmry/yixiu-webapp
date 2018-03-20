@@ -42,7 +42,7 @@
 .header {
   display: flex;
   justify-content: space-around;
-  background: #ffbd5c;
+  background: #66c6ff;
   padding: 10px 0;
 }
 
@@ -53,21 +53,26 @@
 
 .header__input {
   width: 90%;
-  border-radius: 5px;
-  padding: 6px;
+  border-radius: 20px;
+  padding: 7px 0 7px 15px;
+  font-size: 14px;
 }
 
 .header__pos {
   display: flex;
   padding: 2vw 0.5vh;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  /* background: rgba(0, 0, 0, 0.2); */
+  /* border-radius: 10px; */
+  border: none;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 }
 
 .header__pos .pos__name {
+  color: #fff;
+}
+.header__operate{
   color: #fff;
 }
 </style>

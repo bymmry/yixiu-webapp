@@ -41,5 +41,6 @@
   .hot__content {
     width: 90%;
     display: inline-block;
+    border-bottom: 2px solid #efefef;
   }
 </style>
