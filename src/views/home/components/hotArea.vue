@@ -6,7 +6,6 @@
         v-for="(item, index) in data"
         :key="index"
         :name="item.name"
-        :icon="item.fe.icon"
         :service="item.name"
       />
     </div>

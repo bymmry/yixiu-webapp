@@ -8,7 +8,7 @@
             @pulling-down="onPullingDown"
             @pulling-up="loadMore">
       <div class="">
-        <div class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders" :key="index">
+        <div v-if="item.shop" class="ordersItem" @click="rePay(index)"  v-for="(item, index) in orders" :key="index">
           <div class="itemTitle">
             <span class="shopName">{{item.shop.name}}</span>
             <span class="orderState">{{state[item.state]}}</span>
@@ -121,6 +121,7 @@
       }
     },
     mounted() {
+      console.log(this.orders);
       this.setData();
     },
     methods: {
@@ -141,7 +142,6 @@
           console.log(commonTime);
           return commonTime;
         });
-
       },
       rePay: function (index) {
         this.rePayData = this.orders[index];
