@@ -5,7 +5,7 @@
 			<sicon name="back" scale="3"></sicon>
 		</router-link>
 
-	  <img class="info__logo" :src="logo" alt="" />
+	  	<img class="info__logo" :src="logo" alt="" />
 
 		<van-field
 			v-model="infos.name"
@@ -46,7 +46,7 @@
 
 		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
 		
-		<p class="head">上传翼修入驻协议扫描版</p>
+		<p class="head">拍照上传翼修入驻协议</p>
 		
 		<div class="upload">
 			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
@@ -138,7 +138,6 @@ import timeJson from '../data/data.json'
 import logo from '@/assets/logo.png'
 import file from '@/assets/file.png'
 import selects from '../../sellerHome/components/select'
-import wx from "weixin-js-sdk"
 export default {
 	mounted () {
 		this.startPicker = this.$createPicker({
@@ -299,11 +298,12 @@ export default {
 				txt: '请等待1 - 2个工作日审核',
 				time: 5000
 			})
-			if (res.code == 4001) {
+			if (res.code !== 200) {
 				alert(res.errMsg);
 				return;
 			}
 			wait.show();
+			
 		},
 		start () {
 			this.startPicker.show()

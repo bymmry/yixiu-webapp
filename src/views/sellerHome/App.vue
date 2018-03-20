@@ -33,6 +33,7 @@
 				state: '',
 				content: [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/addServices' },
+					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
 					{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
 					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' },

@@ -11,6 +11,7 @@ import payBail from './pages/payBail.vue'
 import service from './pages/service.vue'
 import addServices from './pages/addServices.vue'
 import shopWallet from './pages/shopWallet.vue'
+import viewServices from './pages/viewServices.vue'
 
 
 export default [{
@@ -74,4 +75,8 @@ export default [{
   meta: {
     keepAlive: true
   }
+}, 
+{
+  path: '/viewServices',
+  component: viewServices
 }]

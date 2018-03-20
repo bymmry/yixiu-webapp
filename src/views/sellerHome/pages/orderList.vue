@@ -1,6 +1,6 @@
 <template>
   <div class="order">
-		<item-header :name="infoName" />
+		<item-header :name="infoName" v-on:backParent="back"/>
 		<div class="blank" v-if="data.length == 0">
 			<sicon name="order" scale="30"></sicon>
 			<h1>该订单列表为空~~</h1>
@@ -37,6 +37,11 @@ export default {
 		let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', data);
 		toast.hide();
 		this.data = res.data;
+	},
+	methods: {
+		back () {
+			this.$router.push('/sellerHome');
+		}
 	}
 }
 </script>
