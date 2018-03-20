@@ -1,0 +1,44 @@
+[
+    {
+        "itemName": "基础参数",
+        "content": [
+            {
+                "name": "型号",
+                "value": "iPhone7 Plus"
+            },
+            {
+                "name": "内存",
+                "value": "32G"
+            },
+            {
+                "name": "颜色",
+                "value": "玫瑰金"
+            },
+            {
+                "name": "网络",
+                "value": "移动4G,联通4G,电信4G"
+            },
+            {
+                "name": "成色",
+                "value": "95新"
+            },
+            {
+                "name": "版本",
+                "value": "其他版本"
+            }
+        ]
+    },
+    {
+        "itemName": "屏幕信息",
+        "content": [
+            {
+                "name": "屏幕尺寸",
+                "value": "5.5英寸"
+            },
+            {
+                "name": "分辨率",
+                "value": "1920*1080"
+            }
+        ]
+    }
+]

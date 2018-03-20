@@ -12,6 +12,7 @@ import service from './pages/service.vue'
 import addServices from './pages/addServices.vue'
 import shopWallet from './pages/shopWallet.vue'
 import viewServices from './pages/viewServices.vue'
+import serviceDetail from './pages/serviceDetail.vue'
 
 
 export default [{
@@ -79,4 +80,8 @@ export default [{
 {
   path: '/viewServices',
   component: viewServices
+},
+{
+  path: '/serviceDetail',
+  component: serviceDetail
 }]

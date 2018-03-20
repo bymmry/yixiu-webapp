@@ -13,10 +13,6 @@
       :data="data"
     />
 
-    <quality
-      :data="data"
-    />
-
     <Personal 
       :data="data"
     />

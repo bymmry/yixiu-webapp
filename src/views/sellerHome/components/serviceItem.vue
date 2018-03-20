@@ -19,8 +19,9 @@ export default {
     }
   },
   methods: {
-    toDetails () {
-      
+    toDetail () {
+      sessionStorage.setItem('serviceItem', JSON.stringify(this.data));
+      this.$router.push('/serviceDetail')
     }
   }
 }

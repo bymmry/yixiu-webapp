@@ -1,7 +1,8 @@
 <template>
 	<van-goods-action>
-		<van-goods-action-mini-btn class="icon" @click="good" icon="like-o" text="点赞" />
-		<van-goods-action-mini-btn class="icon" icon="more-o" @click="good" text="评论" />
+		<van-goods-action-mini-btn class="icon" @click="good" icon="chat" text="客服" />
+		<van-goods-action-mini-btn class="icon" @click="good" icon="like-o" text="收藏" />
+		<van-goods-action-mini-btn class="icon" icon="cart" @click="good" text="购物车" />
 		<sure-order 
 			:sureOrderData="sureOrderData"
 			:TotalFee="sureOrderData.price"
@@ -44,13 +45,5 @@ export default {
 <style scoped>
 .van-goods-action {
 	z-index: 20;
-}
-
-.icon {
-	height: 8vh;
-}
-
-.van-button {
-	height: 8vh;
 }
 </style>

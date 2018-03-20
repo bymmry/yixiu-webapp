@@ -1,31 +1,37 @@
 <template>
 	<div class="content">
-		<p class="content__name">{{ data.name }}</p>
-		<p class="content__spec">网络: 移动4G,联通4G,电信4G </p>
-		<p class="content__spec"> 版本: 国行 </p>
-		<p class="content__price"><span>￥{{ data.price }}</span></p>
-		<!-- <div class="content__desc">
-			{{ data.detail }}
-		</div> -->
-		<div class="content__present"> <tag type="danger">赠品</tag> 国产苹果充电套装(充电头 + 数据线) </div>
-		<div class="content__promise"> <sicon name="bao" scale="2.0"></sicon> 官方自营/七天包换/一年保修 </div>
-		<p class="content__item" @click="showDetail">支付方式: 微信线上支付 <sicon name="right" scale="2"></sicon></p>
-		<p class="content__item" @click="showParam">产品参数 <sicon name="right" scale="2"></sicon></p>
-		<van-popup v-model="popupShow" position="right" :overlay="false">
+		<div v-show="!paramsStatus">
+			<p class="content__name">{{ data.name }}</p>
+			<p class="content__spec">网络: 移动4G,联通4G,电信4G </p>
+			<p class="content__spec"> 版本: 国行 </p>
+			<p class="content__price"><span>￥{{ data.price }}</span></p>
+
+			<div class="content__present"> <tag type="danger">赠品</tag> 国产苹果充电套装(充电头 + 数据线) </div>
+			<div class="content__promise"> <sicon name="bao" scale="2.0"></sicon> 官方自营/七天包换/一年保修 </div>
+			<p class="content__item" @click="showDetail">支付方式: 微信线上支付 <sicon name="right" scale="2"></sicon></p>
+			<p class="content__item" @click="showParam"> 产品参数 <sicon name="right" scale="2"></sicon></p>
+			<p class="content__item" @click="showQuality"> 质量报告 <sicon name="right" scale="2"></sicon></p>
+			<van-popup v-model="popupShow" position="right" :overlay="false">
 			
-		</van-popup>
-		<actionsheet class="certain" v-model="show" :actions="actions" cancel-text="确定" />
+			</van-popup>
+			<actionsheet class="certain" v-model="show" :actions="actions" cancel-text="确定" />	
+		</div>
 		
+		<product 
+			v-show="paramStatus"
+		/>
 	</div>
 </template>
 
 <script>
 import { Actionsheet, Tag, Popup } from 'vant';
+import product from './product';
 export default {
 	components: {
 		Actionsheet,
 		Tag,
-		[Popup.name]: Popup
+		[Popup.name]: Popup,
+		product
 	},
 	props: {
 		data: Object
@@ -35,7 +41,7 @@ export default {
 			this.show = !this.show;	
 		},
 		showParam () {
-			this.popupShow = !this.popupShow;
+			this.paramsStatus = !this.paramsStatus;
 		}
 	},
   data () {
@@ -43,6 +49,7 @@ export default {
 			imgList: [],
 			show: false,
 			popupShow: false,
+			paramsStatus: false,
       actions: [
         {
           name: '支持服务方式: 微信线上支付'

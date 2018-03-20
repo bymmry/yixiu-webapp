@@ -5,28 +5,24 @@
 		/>
 
 		<div class="filter">
-			<select name="排序" class="select">
-				<option value="">排序</option>
-				<option value="">价格从低到高</option>
-				<option value="">价格从高到低</option>
-			</select>
+			<cube-button class="choose-model" @click="showSort">排序</cube-button>
 			<cube-button class="choose-model" @click="showModel">机型</cube-button>
 			<cube-button class="choose-model" @click="showPrice">价格</cube-button>
 			<cube-button class="choose-model" @click="filterType">筛选</cube-button>
 		</div>
+			
+		<div v-show="!filterShow">
+			<phoneItem v-for="(item ,index) in data" 
+				:key="index"
+				:name="item.name"
+				:desc="item.desc"
+				:price="item.price"
+				:cover="item.cover"
+				:phone="item._id"
+			/>
+		</div>
 
-		<phoneItem v-for="(item ,index) in data" 
-			:key="index"
-			:name="item.name"
-			:desc="item.desc"
-			:price="item.price"
-			:cover="item.cover"
-			:phone="item._id"
-		/>
-
-		<van-popup v-model="filterShow" position="right" :overlay="false" class="popup">
-			<Filters></Filters>
-		</van-popup>
+		<Filters v-show="filterShow"></Filters>
 	</div>
 </template>
 
@@ -65,9 +61,28 @@ export default {
       onSelect: (selectedVal, selectedIndex, selectedText) => {
         
       }
-    })
+		})
+		
+
 	},
 	methods: {
+		showSort () {
+			this.$createActionSheet({
+        title: '请选择排序方式',
+        active: 0,
+        data: [
+          {
+            content: '价格从低到高'
+          },
+          {
+           content: '价格从高到低'
+          }
+        ],
+        onSelect: (item, index) => {
+					
+        }
+      }).show()
+		},
 		showModel () {
 			this.picker.show();
 		},
@@ -98,7 +113,7 @@ export default {
       }).show()
     },
 		filterType () {
-			this.filterShow = true;
+			this.filterShow = !this.filterShow;
 		}
 	}
 }
