@@ -44,7 +44,9 @@
 
 		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修入驻协议.docx</a></p>
 
-		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
+		<p class="links">温馨提示: 如果上述链接点击不能下载，请复制以下链接到浏览器上进行下载!</p>
+
+		<p class="links">https://0x9.me/nDh9Z</p>
 		
 		<p class="head">拍照上传翼修入驻协议</p>
 		
@@ -85,12 +87,8 @@
 		/>
 
 		<van-field
-			v-model="infos.tempPhone"
-			v-for="(item, index) in this.infos.user"
-			:key="index"
 			label="添加管理者"
 			placeholder="请输入管理者的电话号码"
-			@blur="addManager(index)"
 		/>
 
 		<cube-button @click="addM">添加商铺管理者</cube-button>
@@ -206,8 +204,11 @@ export default {
 		return {
 			infoName: '更新店铺信息',
 			startHour: '',
-			tempPhone: '',
 			endHour: '',
+			users: [{
+				name: ''
+			}],
+			tempPhone: '',
 			serviceWay: ['上门服务', '用户到店', '线上快递'],
 			logo: logo,
 			files: file,
@@ -234,10 +235,12 @@ export default {
 			this.$router.push('/sellerHome');
 		},
 		addM () {
-			this.infos.user.push(0);
+			this.infos.user.push({});
+			console.log(this.infos.user);
 		},
 		async addManager (index) {
-			let userInfo = await this.$api.sendData('https://m.yixiutech.com/user/mobile/' + this.tempPhone);
+			console.log(this.tempPhone);
+			let userInfo = await this.$api.getData('https://m.yixiutech.com/user/mobile/' + this.tempPhone);
 			userInfo.code == 200 ? this.infos.user[ index ] = userInfo.data._id : null;
 		},
 		setData (data) {

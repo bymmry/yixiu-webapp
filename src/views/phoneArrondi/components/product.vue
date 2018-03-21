@@ -8,6 +8,9 @@
 				<span class="content__value">{{contentItem.value}}</span> 
 			</p>
 		</div>
+		<div class="quit" @click="back">
+			<sicon name="quit" scale="5"></sicon>
+		</div>
 	</div>
 </template>
 
@@ -18,6 +21,11 @@ export default {
 		return {
 			data: parameter
 		}
+	},
+	methods: {
+		back () {
+			this.$emit('backDetail', true);
+		}
 	}
 }
 </script>
@@ -25,6 +33,7 @@ export default {
 <style scoped>
 .product {
 	width: 100%;
+	position: relative;
 }
 
 .title {
@@ -46,5 +55,11 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	padding: 2% 0;
+}
+
+.quit {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
 }
 </style>

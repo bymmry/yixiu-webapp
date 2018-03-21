@@ -285,7 +285,9 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
-			// console.log(this.infos);
+			// for (var key in this.infos) {
+			// 	console.log(this.infos[ key ])
+			// }
 			const toast = this.$createToast({
 				message: '加载中...'
 			})

@@ -1,8 +1,8 @@
 <template>
 	<div class="infos">
 
-		<div v-show="!categoryStatus">
-			<item-header :name="infosName" />
+		<div v-show="!categoryStatus && !paramStatus && !qualityStatus">
+			<item-header :name="infosName" @backParent="back" />
 			<van-field
 				v-model="goods.name"
 				label="商品名称"
@@ -27,6 +27,30 @@
 			/>
 
 			<van-field
+				v-model="goods.infos.primeCost"
+				label="商品原价"
+				placeholder="请输入商品价格"
+			/>
+
+			<van-field
+				v-model="goods.desc"
+				label="宝贝描述"
+				placeholder="请输入宝贝描述"
+			/>
+
+			<van-field
+				v-model="goods.infos.present"
+				label="赠品"
+				placeholder="请输入赠品信息"
+			/>
+
+			<van-field
+				v-model="goods.infos.promise"
+				label="商品保证"
+				placeholder="请输入商品保证"
+			/>
+
+			<van-field
 				v-model="goods.desc"
 				label="宝贝描述"
 				placeholder="请输入宝贝描述"
@@ -38,6 +62,10 @@
 				placeholder="请输入宝贝详情"
 			/>
 
+			<van-button class="btn" size="large" @click="addParam">添加手机参数</van-button>
+
+			<van-button class="btn" size="large" @click="addQualityInfo">添加质检数据</van-button>
+
 			<div class="infos__name">
 				<p>商品图片</p>
 			</div>
@@ -47,11 +75,21 @@
 				<img class="upload__show" :src="item" alt="" />
 			</div>
 
-			<van-button size="large" @click="addNew">添加新图片</van-button>
+			<van-button class="btn" size="large" @click="addNew">添加新图片</van-button>
 
 			<van-button size="large" @click="submit">确认添加</van-button>
 
 		</div>
+
+		<add-params
+			v-show="paramStatus"
+			@addParamInfo="addParamInfo"
+		/>
+
+		<add-quality
+			v-show="qualityStatus"
+			@addQualityInfo="addQualityInfo"
+		/>
 
 			<add-category 
 				v-show="categoryStatus"
@@ -65,6 +103,8 @@
 <script>
 import ItemHeader from '../components/itemHeader'
 import { Field, Button, Uploader } from 'vant'
+import addParams from '../components/addParams'
+import addQuality from '../components/addQuality'
 import addCategory from './addCatagory'
 export default {
 	components: {
@@ -72,7 +112,9 @@ export default {
 		[Button.name]: Button,
 		[Uploader.name]: Uploader,
 		ItemHeader,
-		addCategory
+		addCategory,
+		addParams,
+		addQuality
 	},
 	async mounted () {
 		let data = { type: 'goods', shop: this.goods.shop }
@@ -87,13 +129,23 @@ export default {
 		return {
 			infosName: '发布宝贝',
 			categoryStatus: false,
+			paramStatus: false,
+			qualityStatus: false,
 			src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			goods: {
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				// shop: '5aa27cf18d78c262b3f19937',
 				cover: [
 					'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
-				]
+				],
+				infos: {
+					network: [],
+					version: '',
+					present: '',
+					assure: [],
+					productParam: {},
+					qualityParam: {}
+				}
 			},
 			base: ['重庆'],
 			categoryList: [],
@@ -101,6 +153,29 @@ export default {
 		}
 	},
 	methods: {
+		addParamInfo (data) {
+			this.goods.productParam = data;
+			console.log(data);
+			this.paramStatus = false;
+		},
+		addQualityInfo (data) {
+			alert(data);
+			this.goods.qualityParam = data;
+			this.qualityStatus = false;
+		},
+		addParam () {
+			this.paramStatus = !this.paramStatus
+		},
+		addQualityInfo () {
+			this.qualityStatus = !this.qualityStatus
+		},
+		backToPublish() {
+			this.qualityStatus = false;
+			this.paramStatus = false;
+		},
+		back () {
+			this.$router.push('/sellerHome');
+		},
 		backParent () {
 			this.categoryStatus = false;
 		},
@@ -225,7 +300,7 @@ export default {
 }
 
 .van-button {
-	margin-top: 50px;
+	margin-top: 10px;
 }
 
 .infos__name .cube-select {
