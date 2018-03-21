@@ -1,11 +1,12 @@
 <template>
   <div class="hot">
     <p class="hot__title">热门手机维修服务</p>
-    <div class="hot__content">
+    <div v-if="data" class="hot__content">
       <hot-item
         v-for="(item, index) in data"
         :key="index"
         :name="item.name"
+        :icon="item.fe.icon"
         :service="item.name"
       />
     </div>
@@ -20,12 +21,26 @@
     },
     data () {
       return {
-        data: []
+        data: [],
+        iconData:{
+          fe: {
+            icon: "undefined"
+          }
+        }
       }
     },
     async mounted () {
+      let that = this;
       let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
-      this.data = res.data;
+      let newData = res.data.map(function (val) {
+        if(val.fe){
+          return val;
+        }else{
+          return Object.assign({}, val, that.iconData);
+        }
+      });
+      console.log(newData);
+      this.data = newData;
     }
   }
 </script>

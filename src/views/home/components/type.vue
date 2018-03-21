@@ -30,7 +30,7 @@
         let config = { name: item.name, icon: item.fe.icon };
         this.data.push(config);
       })
-      this.data.push({ name: '其他分类', icon: 'typeAll' })
+      this.data.push({ name: '其他分类', icon: 'homeSort' })
     }
   }
 </script>

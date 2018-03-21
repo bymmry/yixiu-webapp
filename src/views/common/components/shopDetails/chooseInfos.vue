@@ -21,17 +21,26 @@
           </span>
         </li>
         <li>
-          <span class="name">服务方式</span>
-          <span class="value">
-            <select v-on:change="selectServiceWay" v-model="indexId" name="serviceWay">
-              <option v-for="(ser, i) in serviceWay" :value="i+1">{{ser}}</option>
-            </select>
-          </span>
-        </li>
-        <li>
           <span class="name">预约时间</span>
           <span class="value">
             <cube-button @click="showTimePicker">请选择时间:{{time}}</cube-button>
+          </span>
+        </li>
+        <li>
+          <span class="name">服务方式</span>
+          <span class="value">
+            <cube-select
+              v-model="serWay"
+              placeholder="请选择服务方式"
+              :options="theServiceWay"
+              @change="selectServiceWay">
+            </cube-select>
+          </span>
+        </li>
+        <li v-if="isShowAddress">
+          <span class="name">你的地址:</span>
+          <span class="value">
+            <input placeholder="请输入你的地址" v-model="address" />
           </span>
         </li>
       </ul>
@@ -110,16 +119,18 @@
         coupons: [coupon],
         disabledCoupons: [coupon],
         shopServer: [],
-        sureOrderData: {},
-        payment: 0,
+        sureOrderData: {}, 
+        payment: 0, //实付金额
         TotalFee: 0,
-        phoneNumber: "",
+        phoneNumber: "", // 电话号码
         errorMessage: "",
-        indexId: 0,
-        serWay: 1,
-        time: "",
+        serWay: "", //服务方式
+        theServiceWay: [],
+        time: "", // 时间选择
         timeNum: "",
-        remack: "" //备注
+        remack: "", //备注
+        isShowAddress: false,
+        address: ""
       }
     },
     props: {
@@ -145,7 +156,7 @@
       }
     },
     mounted() {
-      this.theServiceWay = this.serviceWay[0];
+      this.theServiceWay = this.serviceWay;
       let servers = this.chooseData.problem.data;
       let pro = servers.map(function (val) {
         return val.name;
@@ -186,6 +197,10 @@
       serverId: function (val) {
         return val;
       },
+      address: function(val){
+        this.setOrderData();
+        return val;
+      },
       time: function(val){
         console.log(val);
         this.setOrderData();
@@ -216,8 +231,10 @@
       onExchange(code) {
         this.coupons.push(this.coupon);
       },
-      selectServiceWay: function() {
-        this.serWay = this.indexId;
+      selectServiceWay: function(value, index, text) {
+        if(value == "线上快递"){
+          this.isShowAddress = true;
+        }
         this.setOrderData();
       },
       setOrderData: function () {
@@ -229,7 +246,7 @@
           shop: shopId,
           serviceWay: this.serWay,//服务方式 1.上门服务 2.自行到店
           phone: this.phoneNumber,//联系电话
-          // address: "",//联系人地址
+          address: this.address,//联系人地址
           // goods: this.shopId,//商品列表
           appointment: this.timeNum,
           service: this.serverId,//服务列表
