@@ -197,6 +197,10 @@
       serverId: function (val) {
         return val;
       },
+      address: function(val){
+        this.setOrderData();
+        return val;
+      },
       time: function(val){
         console.log(val);
         this.setOrderData();
