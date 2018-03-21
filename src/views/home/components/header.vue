@@ -42,7 +42,8 @@
 .header {
   display: flex;
   justify-content: space-around;
-  background: #66c6ff;
+  /* background: #66c6ff; */
+  background: #fff;
   padding: 10px 0;
 }
 
@@ -56,6 +57,7 @@
   border-radius: 20px;
   padding: 7px 0 7px 15px;
   font-size: 14px;
+  background: #eee;
 }
 
 .header__pos {
@@ -69,10 +71,13 @@
   cursor: pointer;
 }
 
-.header__pos .pos__name {
-  color: #fff;
+.header__pos .pos__name{
+  color: #66c6ff;
+}
+.pos__icon{
+  color: #66c6ff;
 }
 .header__operate{
-  color: #fff;
+  color: #66c6ff;
 }
 </style>

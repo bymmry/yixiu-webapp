@@ -14,14 +14,14 @@
             <img :src="shopInfo.cover" alt="">
           </div>
           <div class="shopMainContent">
-            <p><span>营业时间：每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
-            <p><span>联系方式：{{shopInfo.contactNumber}}</span></p>
-            <p><span>服务方式：</span></p>
+            <p><span><b>营业时间：</b>每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
+            <p><span><b>联系方式：</b>{{shopInfo.contactNumber}}</span></p>
+            <p><span><b>服务方式：</b></span></p>
             <p><span><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
             <!-- <p><span>店铺地址：</span></p> -->
           </div>
         </div>
-        <p class="address"><span>店铺地址：</span></p>
+        <p class="address"><span><b>店铺地址：</b>{{shopInfo.address}}</span></p>
       </div>
       <div class="steps">
         <van-steps :active="active" active-color="#fb8e53">
@@ -279,9 +279,16 @@
     font-size: 13px;
   }
  .shopDetail .shopDes p.address{
-   width: auto;
-   padding: 5px 10px;
- }
+    width: auto;
+    font-size: 13px;
+    padding: 5px 10px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  span > b{
+    color: #f85;
+  }
 
   .shopDetail  .steps{
     width: auto;
