@@ -27,7 +27,7 @@
 			/>
 
 			<van-field
-				v-model="goods.infos.primeCost"
+				v-model="goods.info.primeCost"
 				label="商品原价"
 				placeholder="请输入商品价格"
 			/>
@@ -39,21 +39,15 @@
 			/>
 
 			<van-field
-				v-model="goods.infos.present"
+				v-model="goods.info.present"
 				label="赠品"
 				placeholder="请输入赠品信息"
 			/>
 
 			<van-field
-				v-model="goods.infos.promise"
+				v-model="goods.info.promise"
 				label="商品保证"
 				placeholder="请输入商品保证"
-			/>
-
-			<van-field
-				v-model="goods.desc"
-				label="宝贝描述"
-				placeholder="请输入宝贝描述"
 			/>
 
 			<van-field
@@ -64,7 +58,7 @@
 
 			<van-button class="btn" size="large" @click="addParam">添加手机参数</van-button>
 
-			<van-button class="btn" size="large" @click="addQualityInfo">添加质检数据</van-button>
+			<van-button class="btn" size="large" @click="openQuality">添加质检数据</van-button>
 
 			<div class="infos__name">
 				<p>商品图片</p>
@@ -72,7 +66,7 @@
 
 			<div class="upload" v-for="(item, index) in goods.cover" :key="index">
 				<input class="upload__select" @change="uploadFile($event, index)" type="file" accept="image/*" />
-				<img class="upload__show" :src="item" alt="" />
+				<img class="upload__show" :src="item.url" alt="" />
 			</div>
 
 			<van-button class="btn" size="large" @click="addNew">添加新图片</van-button>
@@ -84,11 +78,13 @@
 		<add-params
 			v-show="paramStatus"
 			@addParamInfo="addParamInfo"
+			@backToPublish="backToPublish"
 		/>
 
 		<add-quality
 			v-show="qualityStatus"
-			@addQualityInfo="addQualityInfo"
+			@addQualityInfos="addQualityInfos"
+			@backToPublish="backToPublish"
 		/>
 
 			<add-category 
@@ -131,16 +127,17 @@ export default {
 			categoryStatus: false,
 			paramStatus: false,
 			qualityStatus: false,
+			photo: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			goods: {
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				// shop: '5aa27cf18d78c262b3f19937',
-				cover: [
-					'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
-				],
-				infos: {
-					network: [],
+				cover: [{
+					url: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
+				}],
+				info: {
 					version: '',
+					primeCost: '',
 					present: '',
 					assure: [],
 					productParam: {},
@@ -154,20 +151,20 @@ export default {
 	},
 	methods: {
 		addParamInfo (data) {
-			this.goods.productParam = data;
+			this.goods.info.productParam = data;
 			console.log(data);
 			this.paramStatus = false;
 		},
-		addQualityInfo (data) {
-			alert(data);
-			this.goods.qualityParam = data;
+		addQualityInfos (data) {
+			console.log(data);
+			this.goods.info.qualityParam = data;
 			this.qualityStatus = false;
+		},
+		openQuality () {
+			this.qualityStatus = true;
 		},
 		addParam () {
 			this.paramStatus = !this.paramStatus
-		},
-		addQualityInfo () {
-			this.qualityStatus = !this.qualityStatus
 		},
 		backToPublish() {
 			this.qualityStatus = false;
@@ -191,13 +188,33 @@ export default {
 			this.categoryStatus = !this.categoryStatus;
 			sessionStorage.setItem('category', 'goods');
 		},
-		uploadFile (event, index) {
+		async uploadFile (event, index) {
 			this.file = event.target.files[0];
 			let url = window.URL.createObjectURL(this.file);
-			this.goods.cover[ index ] = url;
+			// this.photo = url;
+			this.goods.cover[ index ].url = url;
+
+			let formdata = new FormData();
+
+			formdata.append('file', this.file);
+
+			let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+
+			const toast = this.$createToast({
+				txt: '加载中...'
+			})
+			toast.show();
+			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
+			this.goods.cover.push()
 		},
 		addNew () {
-			this.goods.cover.push('https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png');
+			this.goods.cover.push({
+				url: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
+			});
 		},
 		fileRemove () {
 
@@ -219,7 +236,7 @@ export default {
 		},
 		async submit () {
 			let goodRes = await this.$api.sendData('https://m.yixiutech.com/goods/shop', this.goods);
-			if (goodRes.code == 4001) {
+			if (goodRes.code !== 200) {
 				this.prompt(goodRes.errMsg, 'error').show();
 				return;	
 			}

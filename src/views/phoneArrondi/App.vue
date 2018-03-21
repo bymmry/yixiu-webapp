@@ -34,10 +34,33 @@
 		async mounted () {
 
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', { type: 'goods', shop: '5aa4a1a3733e266adc724d1a' });
-			this.category = categoryRes.data[0]._id;
-			let list = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: this.category, shop: '5aa4a1a3733e266adc724d1a'});
+			categoryRes.data.map(item => {
+				if (item.name == 'ios') {
+					this.ios = item._id;
+				}
+				if (item.name == '安卓') {
+					this.android = item._id;
+				}
+			})
+
+			let iosList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.ios, shop: '5aa4a1a3733e266adc724d1a'});
+			
+			if (iosList.code == 200) { 
+				iosList.data.map(item => {
+					this.iphone.push(item);
+				})
+			}else {
+				alert('网络错误, 请稍后重试!');	
+			} 
+			let androidList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.android, shop: '5aa4a1a3733e266adc724d1a'})
+			
+			androidList.code == 200 ? this.android = androidList.data : alert('网络错误, 请稍后重试!');
+			console.log(this.iphone);
+			console.log(this.android);
+
+			// let list = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: this.category, shop: '5aa4a1a3733e266adc724d1a'});
 			// this.data = res.data;
-			console.log(list);
+			// console.log(list);
 
 			// let iphoneData= { goodsName: 'iphone', position: { lng: localStorage.getItem('lng'), lat: localStorage.getItem('lat') }, limit: 4 }
 			// let iphoneRes = await this.$api.sendData('https://m.yixiutech.com/shop/filter/', iphoneData);
