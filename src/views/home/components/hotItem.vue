@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .hot-item {
 	display: inline-block;
-	width: 25%;
+	width: 20%;
 	text-align: center;
 	font-size: 12px;
   color: #949191;

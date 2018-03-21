@@ -1,6 +1,6 @@
 <template>
   <div class="sureOrder">
-    <van-button @click="sureOrder" bottom-action>
+    <van-button @click="sureOrder" :disabled="nextStepButtonDisabled" bottom-action>
       <sicon name="nextStep" scale="1.8"></sicon><span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
   </div>
@@ -47,6 +47,10 @@
         default: function () {
           return {}
         }
+      },
+      nextStepButtonDisabled: {
+        type: Boolean,
+        default: true
       }
     },
     watch: {

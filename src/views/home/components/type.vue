@@ -46,7 +46,7 @@
 
 .type {
     width: 90%;
-    border-bottom: 2px solid #efefef;
+    border-bottom: 1px solid #efefef;
     /* border: 2px solid #eee; */
     /* border-radius: 4px; */
 		justify-content: space-between;

@@ -86,7 +86,13 @@
         </van-button>
       </div>
       <div class="stepNext">
-        <sure-order :sureOrderData="sureOrderData" :data="chooseData" :TotalFee="TotalFee" :serverId="serverId"></sure-order>
+        <sure-order 
+          :sureOrderData="sureOrderData" 
+          :data="chooseData" 
+          :TotalFee="TotalFee" 
+          :serverId="serverId"
+          :nextStepButtonDisabled="nextStepButtonDisabled"
+          ></sure-order>
         <!--<van-button @click="nextStep" bottom-action>-->
         <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
         <!--</van-button>-->
@@ -130,7 +136,8 @@
         timeNum: "",
         remack: "", //备注
         isShowAddress: false,
-        address: ""
+        address: "",
+        nextStepButtonDisabled: true
       }
     },
     props: {
@@ -240,6 +247,17 @@
       setOrderData: function () {
         let shopId = this.$route.params.id;
         let userInfo = this.getUserInfo();
+
+        if(this.phoneNumber != "" && this.serWay != "" && this.timeNum != ""){
+          if(this.isShowAddress == true && this.address == ""){
+            this.nextStepButtonDisabled = true;
+          }else {
+            this.nextStepButtonDisabled = false;
+          }
+        }else{
+          this.nextStepButtonDisabled = true;
+        }
+
         this.sureOrderData = {
           type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
           user: userInfo._id,

@@ -27,7 +27,7 @@
             </div>
             <div v-if="item.phoneModel">
               <p>商家联系电话：<span>{{item.shop.contactNumber}}</span></p>
-              <p>手机型号：<span>{{item.phoneModel.desc}}</span></p>
+              <p>手机型号：<span>{{item.phoneModel.name}} {{item.phoneModel.color[0]}}</span></p>
               <p>服务：<span>{{servers[index]}}</span></p>
               <p>下单时间：<span>{{dates[index]}}</span></p>
               <p>订单金额：<span>￥{{item.payment/100}}</span></p>

@@ -32,6 +32,12 @@
     async mounted () {
       let that = this;
       let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
+      let showData = [];
+      res.data.forEach(el => {
+        if(el.fe){
+          showData.push(el);
+        }
+      });
       let newData = res.data.map(function (val) {
         if(val.fe){
           return val;
@@ -39,8 +45,10 @@
           return Object.assign({}, val, that.iconData);
         }
       });
-      console.log(newData);
-      this.data = newData;
+      if(showData.length >= 5){
+        showData = showData.slice(0, 5);
+      }
+      this.data = showData;
     }
   }
 </script>
@@ -52,10 +60,11 @@
     width: 100%;
     text-align: center;
     margin-top: 20px;
+    
+    border-bottom: 10px solid #efefef;
   }
   .hot__content {
     width: 90%;
     display: inline-block;
-    border-bottom: 2px solid #efefef;
   }
 </style>

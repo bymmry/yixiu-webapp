@@ -12,12 +12,12 @@
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
         <li><span class="name">商家电话</span><span class="value">{{orderData.shop.contactNumber}}</span></li>
-        <li><span class="name">手机品牌</span><span class="value">{{orderData.phoneModel.desc}}</span></li>
         <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
         <li><span class="name">手机颜色</span><span class="value">{{...orderData.phoneModel.color}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
+        <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
       </ul>
     </div>
