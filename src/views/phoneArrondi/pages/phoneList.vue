@@ -47,13 +47,27 @@ export default {
 		return {
 			name: '商店手机列表',
 			data: [],
+			result: [],
+			phoneList: [],
 			filterShow: false
 		}
 	},
 	async mounted () {
-		let param = location.href.split('/').pop().split('&');
-		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: param[0], shop: param[1]});
-		this.data = res.data;
+		// let param = location.href.split('/').pop().split('&');
+		// let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: param[0], shop: param[1]});
+		// this.data = res.data;
+
+		let params = location.href.split('/').pop().split('&');
+		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5aa4a1a3733e266adc724d1a'});
+		res.code == 200 ? this.phoneList = res.data : alert('网路错误，请稍后重试');
+		let searchName = decodeURI(params[1]);
+
+		this.phoneList.map(item => {
+			item.name == searchName ? this.result.push(item) : null;
+		})
+
+		console.log(this.result);
+		
 
 		this.picker = this.$createPicker({
       title: '手机型号选择',

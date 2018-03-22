@@ -1,6 +1,6 @@
 <template>
   <div class="arrondi-item">
-		<img :src="src" alt="" class="arrondi-item__img" srcset="" :shop="shop" @click="route"/>
+		<img :src="src" alt="" class="arrondi-item__img" srcset="" @click="route"/>
 		<div class="arrondi-item__content">
 			<p class="arrondi-item__name">{{ name }}</p>
 			<p class="arrondi-item__name"><span class="arrondi-item__price">￥{{ price }}</span> <span class="arrondi-item__primeCost">￥{{ primeCost }}</span></p>
@@ -15,16 +15,15 @@
 			src: String,
 			name: String,
 			price: Number,
-			primeCost: Number,
+			primeCost: String,
 			icon: String,
-			shop: String
+			type: String
 		},
 		methods: {
 			async route () {
-				// console.log(this.shop);
-				// let res = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'goods', shop: this.shop});
+				// let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: this.type, shop: '5aa4a1a3733e266adc724d1a'});
 				// console.log(res);
-				// this.$router.push('/phoneList/' + res.data[0]._id + '&' + this.shop);
+				this.$router.push('/phoneList/' + this.type + '&' + this.name);
 			}
 		}
   }
@@ -37,7 +36,7 @@
 	height: 100px;
 	border-radius: 5px;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-between;
 	background: #eee;
 	margin-top: 10px;
 }

@@ -3,25 +3,25 @@
 		<item-header :name="infosName" @backParent="back" />
 
 		<van-field
-			v-model="qualityParam.name"
+			v-model="qualityParam.qualityInfo.name"
 			label="工程师姓名"
 			placeholder="请输入质检工程师姓名"
 		/>
 
 		<van-field
-			v-model="qualityParam.academicTitle"
+			v-model="qualityParam.qualityInfo.academicTitle"
 			label="职称名称"
 			placeholder="请输入职称名称"
 		/>
 
 		<van-field
-			v-model="qualityParam.agency"
+			v-model="qualityParam.qualityInfo.agency"
 			label="质检地址"
 			placeholder="请输入质检地址"
 		/>
 		
 		<van-field
-			v-model="qualityParam.number"
+			v-model="qualityParam.qualityInfo.number"
 			label="质检数量"
 			placeholder="请输入质检数量"
 		/>
@@ -44,7 +44,8 @@ import selects from './select'
 export default {
 	methods: {
 		submit () {
-			this.$emit('addQualityInfos', this.qualityParam);
+			alert(123);
+			this.$emit('addQualityInfo', this.qualityParam);
 		},
 		back () {
 			this.$emit('backToPublish', true)
@@ -61,10 +62,12 @@ export default {
 			infosName: '添加质检数据',
 			qualityParam: {
 				sum: '',
-				name: '',
-				academicTitle: '',
-				agency: '',
-				number: ''
+				qualityInfo: {
+					name: '',
+					academicTitle: '',
+					agency: '',
+					number: ''
+				}
 			}
 		}
 	}

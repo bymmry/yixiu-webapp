@@ -2,12 +2,13 @@
   <div class="arrondi">
 		<p class="arrondi__title">{{ title }}</p>
 		<div class="arrondi__cotent">
-			<ArrondiItem v-for="(item, index) in datas" 
+			<ArrondiItem v-for="(item, index) in content" 
 				:key="index"
 				:name="item.name"
-				:src="item.cover"
+				:src="defaultPhoto"
 				:price="item.price"
-				:primeCost="item.primeCost"
+				:type="type"
+				:primeCost="item.info ? item.info.primeCost : defaultPrice"
 			/>
 		</div>
   </div>
@@ -22,13 +23,19 @@
   export default {
     props: {
 			title: String,
-			data: Array
+			content: Array,
+			type: String
 		},
 		components: {
 			ArrondiItem
 		},
+		methods: {
+
+		},
 		data () {
 			return {
+				defaultPrice: '7800',
+				defaultPhoto: iphoneX,
 				datas: [
 					// { name: 'iphoneX', price: 6800, primeCost:8600, cover: iphoneX },
 					// { name: 'iphone8', price: 5400, primeCost:7800, cover: iphone8 },
