@@ -7,7 +7,7 @@ export default [{
   component: App
 },
 {
-  path: '/phoneDetail/:id',
+  path: '/phoneDetail',
   component: phoneDetail
 }, 
 {

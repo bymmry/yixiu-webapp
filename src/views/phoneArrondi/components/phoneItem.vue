@@ -1,22 +1,22 @@
 <template>
-  <div class="phone" :phone="phone" @click="routeDetail">
-		<img :src="cover" class="phone__img" alt="" />
+  <div class="phone" @click="routeDetail">
+		<img :src="data.cover" class="phone__img" alt="" />
 		<div class="phone-msg">
-			<p class="phone-msg__name">{{ name }}</p>
-			<p class="phone-msg__desc">{{ desc }}</p>
-			<p class="phone-msg__price">￥{{ price }}</p>
+			<p class="phone-msg__name">{{ data.name }} {{ data.info ? data.info.productParam.storage : null }} {{ data.info ? data.info.productParam.color : null }}</p>
+			<p class="phone-msg__desc">{{ data.desc }}</p>
+			<p class="phone-msg__price"> <span>￥{{ data.price }}</span> <span>￥{{ data.info ? data.info.primeCost : null }}</span> </p>
+			<P class="save"> <span>省 {{ data.info ? ( data.info.primeCost - data.price ) : null }}</span> </P>
 		</div>
 	</div>
 </template>
 
 <script>
 export default {
+	mounted () {
+		console.log(this.data);
+	},
 	props: {
-		name: String,
-		cover: String,
-		desc: String,
-		price: Number,
-		phone: String
+		data: Object
 	},
   data () {
 		return {
@@ -25,7 +25,8 @@ export default {
 	},
 	methods: {
 		routeDetail () {
-			this.$router.push('/phoneDetail/' + this.phone);
+			sessionStorage.setItem('detail', JSON.stringify(this.data));
+			this.$router.push('/phoneDetail');
 		}
 	}
 }
@@ -50,7 +51,8 @@ export default {
 
 .phone-msg .phone-msg__name {
 	padding: 5px 0;
-	font-size: 20px;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .phone-msg .phone-msg__desc {
@@ -58,9 +60,22 @@ export default {
 	font-size: 14px;
 }
 
-.phone-msg .phone-msg__price {
+.phone-msg__price span:nth-child(1) {
 	padding: 5px 0;
 	font-size: 20px;
 	color: red;
+}
+
+.phone-msg__price span:nth-child(2) {
+	padding: 5px 0;
+	font-size: 14px;
+	color: #000;
+	text-decoration: line-through;
+}
+
+.save  span {
+	padding: 4px 20px;
+	color: #fff;
+	background: #fe6547;
 }
 </style>

@@ -12,13 +12,9 @@
 		</div>
 			
 		<div v-show="!filterShow">
-			<phoneItem v-for="(item ,index) in data" 
+			<phoneItem v-for="(item ,index) in result" 
 				:key="index"
-				:name="item.name"
-				:desc="item.desc"
-				:price="item.price"
-				:cover="item.cover"
-				:phone="item._id"
+				:data="item"
 			/>
 		</div>
 
@@ -46,28 +42,24 @@ export default {
 	data () {
 		return {
 			name: '商店手机列表',
-			data: [],
 			result: [],
 			phoneList: [],
-			filterShow: false
+			filterShow: false,
+			sortActive: 0,
+			prices: []
 		}
 	},
 	async mounted () {
-		// let param = location.href.split('/').pop().split('&');
-		// let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: param[0], shop: param[1]});
-		// this.data = res.data;
-
 		let params = location.href.split('/').pop().split('&');
 		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5aa4a1a3733e266adc724d1a'});
-		res.code == 200 ? this.phoneList = res.data : alert('网路错误，请稍后重试');
+		this.phoneList = res.data;
 		let searchName = decodeURI(params[1]);
+		console.log(this.phoneList);
 
 		this.phoneList.map(item => {
 			item.name == searchName ? this.result.push(item) : null;
+			this.prices.push(item.price);
 		})
-
-		console.log(this.result);
-		
 
 		this.picker = this.$createPicker({
       title: '手机型号选择',
@@ -83,19 +75,27 @@ export default {
 		showSort () {
 			this.$createActionSheet({
         title: '请选择排序方式',
-        active: 0,
+        active: this.sortActive,
         data: [
           {
             content: '价格从低到高'
           },
           {
-           content: '价格从高到低'
+           	content: '价格从高到低'
           }
         ],
         onSelect: (item, index) => {
-					
+					this.sortActive = index;
+					console.log(this.phoneList.sort(compare('price')));
         }
       }).show()
+		},
+		compare (prop) {
+			return function (a, b) {
+				let value1 = a[prop];
+				let value2 = b[prop];
+				return value1 - value2;
+			}
 		},
 		showModel () {
 			this.picker.show();

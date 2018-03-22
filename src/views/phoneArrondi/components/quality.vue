@@ -6,11 +6,11 @@
 				<span>翼修优品第8888份报告</span>
 				<span>No.956541235787</span>
 			</p>
-			<p class="content__title">iPhone6s</p>
-			<p class="content__desc">16GB <span>/容量</span></p>
-			<p class="content__desc">金色 <span>/颜色</span></p>
+			<p class="content__title">{{ data.name }}</p>
+			<p class="content__desc">{{ data.info ? data.info.productParam.storage : null }} <span>/容量</span></p>
+			<p class="content__desc">{{ data.info ? data.info.productParam.color : null }} <span>/颜色</span></p>
 			<p class="content__desc">354*****56 <span>/imei</span></p>
-			<p class="content__desc">移动4G 联通4G 电信4G <span>/网络制式</span></p>
+			<p class="content__desc"> {{ data.info ? data.info.productParam.network.join(',') : null }} <span>/网络制式</span></p>
 		</div>
 		
 		<div class="content spec">
@@ -25,14 +25,14 @@
 			<div class="expert">
 				<sicon name="zhijian" scale="3"></sicon>
 				<div class="expert__info">
-					<p>WingW.Z   <span class="info__academic">高级质检工程师</span></p>
-					<p> <span class="info__address">重庆验机中心</span> </p>
-					<p>已检测 1372 台机器</p>
+					<p>{{ data.info ? data.info.qualityParam.name : null }}   <span class="info__academic">{{ data.info ? data.info.qualityParam.academicTitle : null }}</span></p>
+					<p> <span class="info__address">{{ data.info ? data.info.qualityParam.agency : null }}</span> </p>
+					<p>已检测 {{ data.info ? data.info.qualityParam.num : null }} 台机器</p>
 				</div>
 			</div>
 			<div class="content__sum">
 				<p class="sum__title">总体质检结论</p>
-				<p class="sum__content">经检测, 该设备屏幕触控功能正常。指纹识别功能灵敏。WI-FI连接顺畅。SIM卡可以正常的读取</p>
+				<p class="sum__content">{{ data.info ? data.info.qualityParam.sum : null }}</p>
 			</div>
 		</div>
 
@@ -44,6 +44,9 @@
 
 <script>
 export default {
+	props: {
+		data: Object
+	},
   methods: {
 		back () {
 			this.$emit('backDetail', true);
@@ -55,7 +58,7 @@ export default {
 <style scoped>
 .quality {
 	width: 100%;
-	height: 100%;
+	height: 600px;
 	position: relative;
 	background: #eee;
 }

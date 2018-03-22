@@ -10,6 +10,15 @@
 			/>
 
 			<div class="infos__name">
+				<p>商品图片</p>
+			</div>
+
+			<div class="upload">
+				<input class="upload__select" @change="uploadCover($event)" type="file" accept="image/*" />
+				<img class="upload__show" :src="goods.cover" alt="" />
+			</div>
+
+			<div class="infos__name">
 				<p>商品分类</p>
 				<cube-select
 					v-model="goods.category"
@@ -64,7 +73,7 @@
 				<p>商品图片</p>
 			</div>
 
-			<div class="upload" v-for="(item, index) in goods.cover" :key="index">
+			<div class="upload" v-for="(item, index) in goods.info.photo" :key="index">
 				<input class="upload__select" @change="uploadFile($event, index)" type="file" accept="image/*" />
 				<img class="upload__show" :src="item.url" alt="" />
 			</div>
@@ -132,10 +141,11 @@ export default {
 			goods: {
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				// shop: '5aa27cf18d78c262b3f19937',
-				cover: [{
-					url: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
-				}],
+				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 				info: {
+					photo: [{
+						url: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
+					}],
 					version: '',
 					primeCost: '',
 					present: '',
@@ -150,6 +160,29 @@ export default {
 		}
 	},
 	methods: {
+		async uploadCover (event) {
+			this.file = event.target.files[0];
+			let url = window.URL.createObjectURL(this.file);
+
+			this.goods.cover = url;
+
+			let formdata = new FormData();
+
+			formdata.append('file', this.file);
+
+			let config = {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+
+			const toast = this.$createToast({
+				txt: '加载中...'
+			})
+			toast.show();
+			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
+			this.goods.cover = res.data;
+		},
 		addParamInfo (data) {
 			this.goods.info.productParam = data;
 			console.log(data);
@@ -191,8 +224,8 @@ export default {
 		async uploadFile (event, index) {
 			this.file = event.target.files[0];
 			let url = window.URL.createObjectURL(this.file);
-			// this.photo = url;
-			this.goods.cover[ index ].url = url;
+
+			this.goods.info.photo[ index ].url = url;
 
 			let formdata = new FormData();
 
@@ -209,10 +242,10 @@ export default {
 			})
 			toast.show();
 			let res = await this.$api.sendData('https://m.yixiutech.com/upload', formdata, config);
-			this.goods.cover.push()
+			this.goods.info.photo[ index ].url = res.data;
 		},
 		addNew () {
-			this.goods.cover.push({
+			this.goods.info.photo.push({
 				url: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'
 			});
 		},

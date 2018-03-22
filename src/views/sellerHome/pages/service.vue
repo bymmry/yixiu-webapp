@@ -50,10 +50,12 @@
 					<van-cell-group>
 						<van-cell v-for="(listItem, listIndex) in item.list" :key="listIndex">
 							<van-checkbox class="service-item" :name="listItem.name">
-								{{ listItem.name }}
+								<!-- {{ listItem.name }} -->
+								<input type="text" placeholder="服务的名称" />
 								<span class="price"><input type="text" placeholder="服务的价格"/></span>
 							</van-checkbox>
 						</van-cell>
+						<van-button size="large" @click="addService(index)">添加服务</van-button>
 					</van-cell-group>
 				</van-checkbox-group>
 			</div>
@@ -65,7 +67,7 @@
 <script>
 import selects from '../components/select'
 import singleSelect from '../components/singleSelect'
-import { Checkbox, CheckboxGroup, Cell, CellGroup } from 'vant'
+import { Checkbox, CheckboxGroup, Cell, CellGroup, Button } from 'vant'
 export default {
   components: {
 		selects,
@@ -73,7 +75,8 @@ export default {
 		[Checkbox.name]: Checkbox,
 		[CheckboxGroup.name]: CheckboxGroup,
 		[Cell.name]: Cell,
-		[CellGroup.name]: CellGroup
+		[CellGroup.name]: CellGroup,
+		[Button.name]: Button	
 	},
 	data () {
 		return {
@@ -85,6 +88,7 @@ export default {
 			modelNames: [],
 			active: '',
 			res: {},
+			shop: JSON.parse(localStorage.getItem('shopData'))._id,
 			result: [],
 			colors: {
 				type: 'color',
@@ -137,11 +141,14 @@ export default {
 			type: 'correct'
 		})
 		toast.show();
-		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
+		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.shop);
 		this.brand.list = res.data;
 		toast.hide();
 	},
 	methods: {
+		addService (index) {
+			this.questions[ index ].list.push({}); 
+		},
 		colorSelect (data) {
 			let color = data.split('&')[0];
 		},
@@ -160,9 +167,9 @@ export default {
 				type: 'correct'
 			})
 			toast.show();
-			let model = await this.$api.getData('https://m.yixiutech.com/phone/model/' + manufacturer);
+			let model = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop/', { shop: this.shop, manufacturer: manufacturer });
 			this.models = model.data;
-			// this.color.list.push()
+			console.log(this.models);
 			model.data.map(item => {
 				this.modelNames.push(item.name);
 			})

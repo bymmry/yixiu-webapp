@@ -16,7 +16,7 @@
         @showQuality="showQuality"
       />
 
-      <commit/>
+      <!-- <commit/> -->
 
       <!-- <Personal 
         :data="data"
@@ -32,11 +32,13 @@
     <product 
 			v-show="paramStatus"
       @backDetail="backDetail"
+      :data="data"
 		/>
 
 		<quality
 			v-show="qualityStatus"
       @backDetail="backDetail"
+      :data="data"
 		/>
     
 
@@ -55,6 +57,11 @@ import quality from '../components/quality'
 import product from '../components/product'
 import commit from '../components/commit'
 export default {
+  mounted () {
+    this.data = JSON.parse(sessionStorage.getItem('detail'))
+    this.images = thia.data.info.photo;
+    console.log(this.data);
+  },
   methods: {
     showParam () {
       this.paramStatus = !this.paramStatus;
@@ -93,22 +100,25 @@ export default {
       type: 'loading'
 		})
 		// toast.show();
-    let phoneId = location.href.split('/').pop();
-    let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
-    // toast.hide();
-    this.data = res.data;
-    this.images.push(this.data.cover);
-    this.sureOrderData = {
-      type: 2,
-			user: this.getUserInfo()._id,
-			shop: this.data.shop._id,
-			phone: "",
-			reamrk: "",
-			goods: [this.data._id],
-			paymentType: 0,
-			price: this.data.price,
-			payment: this.data.price * 100
-    }
+    // let phoneId = location.href.split('/').pop();
+    // let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
+    // // toast.hide();
+    // this.data = res.data;
+    // this.images.push(this.data.cover);
+    // this.sureOrderData = {
+    //   type: 2,
+		// 	user: this.getUserInfo()._id,
+		// 	shop: this.data.shop._id,
+		// 	phone: "",
+		// 	reamrk: "",
+		// 	goods: [this.data._id],
+		// 	paymentType: 0,
+		// 	price: this.data.price,
+		// 	payment: this.data.price * 100
+    // }
+
+    this.data = JSON.parse(sessionStorage.getItem('detail'));
+    // console.log(this.data);
   }
 }
 </script>
