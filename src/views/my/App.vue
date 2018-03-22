@@ -115,7 +115,7 @@
           {
             name: "问题反馈",
             icon: "question",
-            url: ""
+            url: "my/feedback"
           },
           {
             name: "测试",

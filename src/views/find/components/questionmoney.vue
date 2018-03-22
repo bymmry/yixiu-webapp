@@ -5,7 +5,17 @@
       <span style="color:#FF5722">悬赏金额</span> 
       <van-tag plain type="danger">赏金将从积分中扣除</van-tag>
     </p>
-    <input type="text" placeholder="整数" v-model="money"><span style="font-size: 8vw;"></span>
+    <van-stepper
+      v-model="money"
+      :min="0"
+      :max="5"
+      :step="1"
+      :default-value="0"
+      @change="inputMoney"
+      style="margin-bottom:20px;"
+    />
+    <!-- <span style="font-size: 8vw;">123</span> -->
+    <!-- <input type="text" placeholder="整数" v-model="money"> -->
     <p>你的总积分为：{{allmoney}}</p> <span class="notice" v-if="noticeshow">没有足够的积分</span>
   </div>
 </template>
@@ -13,7 +23,7 @@
 <script>
   //vant
 
-  import { Tag } from 'vant';
+  import { Tag, Stepper } from 'vant';
   
   export default {
     props:{
@@ -27,8 +37,12 @@
         UID:"",
   		}
   	},
-  	watch: {
-      money: function(){
+    components: {
+      [Tag.name]: Tag,
+      [Stepper.name]: Stepper,
+    },
+    methods: {
+      inputMoney(){
         if (this.money<=this.allmoney) {
           this.$emit("changeMoney",this.money)
           this.noticeshow=false;
@@ -36,12 +50,7 @@
           this.noticeshow=true;
           this.$emit("cantpush")
         }
-      }
-    },
-    components: {
-      [Tag.name]: Tag,
-    },
-    methods: {
+      },
       getMymoney(){
         let userData = this.getUserInfo();
         this.allmoney = userData.points;

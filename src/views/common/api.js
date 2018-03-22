@@ -1,7 +1,7 @@
 import ajaxLib from '../../lib/ajax';
 const ajax = ajaxLib.ajax;
-const url = 'https://m.yixiutech.com';
-// const url = "https://yixiu.natappvip.cc";
+// const url = 'https://m.yixiutech.com';
+const url = "https://yixiu.natappvip.cc";
 
 //获取商家列表
 export function getShopList() {
