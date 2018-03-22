@@ -15,7 +15,12 @@
           </div>
           <div class="shopMainContent">
             <p><span><b>营业时间：</b>每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
-            <p><span><b>联系方式：</b>{{shopInfo.contactNumber}}</span></p>
+            <p>
+              <span>
+                <b>联系方式：</b>
+                <a :href="telContactNumber">{{shopInfo.contactNumber}}</a>
+              </span>
+            </p>
             <p><span><b>服务方式：</b></span></p>
             <p><span><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
             <!-- <p><span>店铺地址：</span></p> -->
@@ -113,7 +118,8 @@
         serverId: "",
         shopInfo: {},
         lastChooseInfo: {},
-        serviceWays: []
+        serviceWays: [],
+        telContactNumber: ""
       }
     },
     watch: {
@@ -142,6 +148,7 @@
           }
           if(res.code === 200){
             this.shopInfo = res.data;
+            this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
             this.serviceWays = this.shopInfo.serviceWay;
             console.log(...this.serviceWays)
           }

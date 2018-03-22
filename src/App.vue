@@ -80,6 +80,9 @@
 <style scoped>
   #app{
     /*height: 97%;*/
+    height: 100%;
+    min-height: 580px;
+    overflow-y: scroll;
   }
   .van-field input, .van-field textarea{
     text-align: right;

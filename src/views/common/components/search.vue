@@ -1,7 +1,7 @@
 <template>
   <div class="search-body">
     <div class="allmap"></div>
-    <sicon name="search" scale="4"></sicon>
+    <sicon name="search" scale="3.2"></sicon>
     <input type="text" class="search-body__input" v-model="content.name" @change="contentChange" placeholder="请输入想要搜索的内容"/>
     <button class="search-body__btn" @click="search">搜索</button>
   </div>
