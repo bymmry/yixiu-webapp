@@ -11,7 +11,10 @@
     <div class="information" v-if="orderData.goods.length == 0">
       <ul>
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
-        <li><span class="name">商家电话</span><span class="value">{{orderData.shop.contactNumber}}</span></li>
+        <li>
+          <span class="name">商家电话</span>
+          <span class="value"><a :href="telContactNumber">{{orderData.shop.contactNumber}}</a></span>
+          </li>
         <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
         <li><span class="name">手机颜色</span><span class="value">{{...orderData.phoneModel.color}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
@@ -70,7 +73,8 @@
         serverId:[],
         serverList: "",
         orderData: undefined,
-        goodsId: []
+        goodsId: [],
+        telContactNumber: ""
       }
     },
     created() {
@@ -80,6 +84,7 @@
       getOrderDetail(id).then(res => {
         this.orderData = res.data;
         
+        this.telContactNumber = `tel:${this.orderData.shop.contactNumber}`;
         console.log(this.orderData);
         let servers = this.orderData.service;
         let pro = servers.map(function (val) {
