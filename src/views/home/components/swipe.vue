@@ -19,6 +19,7 @@
     async mounted () {
       let res = await this.$api.getData('https://m.yixiutech.com/carousel');
       this.images = res.data;
+      console.log(res.data);
     },
     data () {
       return {

@@ -133,7 +133,9 @@
         this.distances = data.map(function (val) {
           if(val.position){
             let dis = parseInt(that.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
-            if(dis >= 1000){
+            if(dis >= 100000){
+              dis = "太远啦"
+            }else if(dis >= 1000){
               dis = parseInt(dis/1000);
               dis = `${dis}km`;
             }else{
