@@ -9,9 +9,11 @@
             @pulling-up="loadMore">
     <div> -->
     <div v-if="shopData.length"
-         class="shopMain"
-         @click="selectItem(item)"
-         v-for="item in shopData">
+      class="shopMain"
+      @click="selectItem(item)"
+      v-for="(item,i) in shopData"
+      :key="i"
+    >
       <div class="shopMainImg">
         <img v-lazy="item.cover" alt="">
       </div>
@@ -26,7 +28,7 @@
       <div class="shopMainOther">
         <div class="more"><sicon name="more" scale="1.5"></sicon></div>
         <div class="shopMainOtherInfo">
-          <span>{{item.serviceFinishTime}}分钟 | 633米</span>
+          <span v-if="distances">{{item.serviceFinishTime}}分钟 | {{distances[i]}}</span>
         </div>
         <div class="shopMainOtherType">
           <span>上门服务</span>
@@ -65,7 +67,8 @@
               noMore: '没有更多了'
             }
           }
-        }
+        },
+        distances:""
       }
     },
     props: {
@@ -86,6 +89,7 @@
           this.showMore = true;
           this.moreText = "";
         }
+        this.getDistance(val);
       }
     },
     components: {
@@ -117,10 +121,29 @@
           console.log(err);
         })
       },
-       onPullingDown: function() {
+      onPullingDown: function() {
         setTimeout(() => {
           this.$refs.ordersList.forceUpdate()
         }, 1000)
+      },
+      getDistance: function(data){
+        let that = this;
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
+        this.distances = data.map(function (val) {
+          if(val.position){
+            let dis = parseInt(that.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
+            if(dis >= 1000){
+              dis = parseInt(dis/1000);
+              dis = `${dis}km`;
+            }else{
+              dis = `${dis}m`;
+            }
+            return dis;
+          }else{
+            return "未知";
+          }
+        })
       }
     }
   };

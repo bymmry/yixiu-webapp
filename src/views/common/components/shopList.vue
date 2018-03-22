@@ -128,7 +128,6 @@
       }
     },
     created() {
-      console.log(window.location.href);
       let url = decodeURIComponent(window.location.href).split("?");
       Toast.loading({
         duration: 0,
@@ -157,8 +156,6 @@
           console.log(err);
         });
       }
-
-
     },
     methods: {
       chooseMainType: function (index) {
@@ -176,7 +173,7 @@
           }
         }else if(index === 2){ //julizuijin
           filterShop = {
-            distance: -1
+            distance: 1
           }
         }
         Toast.loading({
@@ -245,6 +242,8 @@
       },
       sureFliter: function () {
         this.showFilter = false;
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
         let filterShop = {
           score: BooleanToNum(this.filterData.score), //评分
           serviceFinishTime: BooleanToNum(this.filterData.serviceFinishTime), //速度
@@ -256,7 +255,8 @@
           categoryName: "",//服务分类名称
           serviceName: "",//服务名称
           position: {
-
+            lng: lng,
+            lat: lat
           },//用户定位信息的经纬度
           limit: 10,//一次获取列表的条数,系统默认为10
           skip: 0//跳过几个数据,系统默认为0

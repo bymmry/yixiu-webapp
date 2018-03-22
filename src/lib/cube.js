@@ -5,7 +5,7 @@ import {
   CheckboxGroup,
   // Loading,
   // Tip,
-  // Popup,
+  Popup,
   Toast,
   Picker,
   TimePicker,
@@ -33,5 +33,6 @@ export default {
     Vue.use(CheckboxGroup)
     Vue.use(Upload)
     Vue.use(TimePicker)
+    Vue.use(Popup)
   }
 }

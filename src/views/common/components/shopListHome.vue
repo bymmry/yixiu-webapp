@@ -19,6 +19,7 @@
             v-model="showFilter"
             position="right"
             :close-on-click-overlay=false
+            class="filterBox"
           >
             <div class="filter">
               <div class="list"><van-checkbox v-model="filterData.score">评分最高</van-checkbox></div>
@@ -31,6 +32,7 @@
                 <van-cell-group @click.stop="chooseMainType">
                   <van-cell><van-radio v-model="radio" name="1">上门维修</van-radio></van-cell>
                   <van-cell><van-radio v-model="radio" name="2">自行到店</van-radio></van-cell>
+                  <van-cell><van-radio v-model="radio" name="3">线上快递</van-radio></van-cell>
                 </van-cell-group>
               </div>
               <van-button @click.stop="chooseMainType" @click="sureFliter">确定</van-button>
@@ -127,7 +129,6 @@
       }
     },
     created() {
-      console.log(window.location.href);
       let url = decodeURIComponent(window.location.href).split("?");
       Toast.loading({
         duration: 0,
@@ -135,9 +136,14 @@
       });
       if (url.length === 2){
         const categoryName = url[1];
-        console.log(categoryName);
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
         let req = {
-          categoryName: categoryName
+          categoryName: categoryName,
+          position: {
+            lng: lng,
+            lat: lat
+          },
         };
         this.getShopList(req);
       }else {
@@ -175,7 +181,7 @@
           }
         }else if(index === 2){ //julizuijin
           filterShop = {
-            distance: -1
+            distance: 1
           }
         }
         Toast.loading({
@@ -244,6 +250,8 @@
       },
       sureFliter: function () {
         this.showFilter = false;
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
         let filterShop = {
           score: BooleanToNum(this.filterData.score), //评分
           serviceFinishTime: BooleanToNum(this.filterData.serviceFinishTime), //速度
@@ -255,7 +263,8 @@
           categoryName: "",//服务分类名称
           serviceName: "",//服务名称
           position: {
-
+            lng: lng,
+            lat: lat
           },//用户定位信息的经纬度
           limit: 10,//一次获取列表的条数,系统默认为10
           skip: 0//跳过几个数据,系统默认为0
@@ -324,19 +333,24 @@
     height: 8vh;
   }
 
+  .filterBox{
+    width: 100vw;
+  }
   .filter{
-    width: 80vw;
+    width: 100vw;
     background-color: #fff;
     height: auto;
   }
   .filter > div.list{
-    width: auto;
+    width: 35vw;
+    display: inline-block;
     padding: 0 5vw;
   }
   .filter > div.button{
     width: auto;
   }
   .filter button{
+    float: right;
     width: 60vw;
     margin: 2vh 5vw;
     background-color: #f85;
