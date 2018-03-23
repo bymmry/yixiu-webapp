@@ -8,7 +8,7 @@
     <van-stepper
       v-model="money"
       :min="0"
-      :max="5"
+      :max="allmoney > 5 ? 5 : allmoney"
       :step="1"
       :default-value="0"
       @change="inputMoney"
