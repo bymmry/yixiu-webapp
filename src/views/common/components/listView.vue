@@ -31,7 +31,7 @@
           <span v-if="distances">{{item.serviceFinishTime}}分钟 | {{distances[i]}}</span>
         </div>
         <div class="shopMainOtherType">
-          <span>上门服务</span>
+          <span v-for="(ser,s) in serWays[i]" :key="s">{{ser}} </span>
         </div>
       </div>
     </div>
@@ -68,7 +68,8 @@
             }
           }
         },
-        distances:""
+        distances:"",
+        serWays: []
       }
     },
     props: {
@@ -145,7 +146,14 @@
             }
             return dis;
           }else{
-            return "";
+            return "未知";
+          }
+        });
+
+        this.serWays = data.map(function (val) {
+          if(val.serviceWay){
+            return val.serviceWay
+          }else {
           }
         })
       }
@@ -206,10 +214,16 @@
     text-align: right;
     color: #575757;
   }
-  .listView .shopMain .shopMainOther > div.more{
-  }
   .listView .shopMain .shopMainOther > div.shopMainOtherInfo span{
     line-height: 28px;
+  }
+  .listView .shopMain .shopMainOther > div.shopMainOtherType{
+    width: 80px;
+    position: relative;
+    right: 0;
+     overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
   }
   .listView .shopMain .shopMainOther > div.shopMainOtherType span{
     line-height: 28px;
