@@ -26,6 +26,9 @@
       // mainApp
     },
     created() {
+      let y =document.body.clientHeight;
+      console.log(document.getElementById("app"))
+      document.getElementById("app").style.height = y + 'px';
       // console.log("App onload--------------------------------------------------->");
       let userData = this.urlDataTurnObj(window.location.href);
       userData = JSON.parse(userData);
@@ -79,9 +82,11 @@
 
 <style scoped>
   #app{
-    /*height: 97%;*/
-    height: 100%;
-    min-height: 580px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* height: 97%;
+    min-height: 550px; */
     overflow-y: scroll;
   }
   .van-field input, .van-field textarea{
