@@ -1,6 +1,6 @@
 <template>
   <div class="shopList">
-    <Search @sendShopList="sendShopList"  />
+    <!-- <Search @sendShopList="sendShopList"  /> -->
 
     <!-- <cube-scroll class="scroll"> -->
     <div class="shopSort">

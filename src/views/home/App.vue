@@ -14,10 +14,13 @@
       </div>
       <Type></Type>
       <HotArea></HotArea>
-      <Ticket></Ticket>
-      <Activity></Activity>
+      <Ticket v-show="false"></Ticket>
+      <Activity v-show="false"></Activity>
       <div class="shopTitle">
-        <h3><sicon name="home" scale="1.6"></sicon><span>附近维修店</span></h3>
+        <h3>
+          <!-- <sicon name="home" scale="1.6"></sicon> -->
+          <span>附近维修店</span>
+        </h3>
       </div>
       <shop-list></shop-list>
       <div class="space"></div>
@@ -134,12 +137,36 @@
   }
   .shopTitle{
     width: auto;
+    margin-top: 1vh;
     height: 5vh;
   }
   .shopTitle h3{
     width: auto;
+    height: 5vh;
+    line-height: 5vh;
     text-align: center;
   }
+  .shopTitle h3 span{
+    position: relative;
+  }
+  .shopTitle h3 span::before{
+    content: "";
+    width: 50px;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    position: absolute;
+    left: -60px;
+    top: 8px;
+  }
+  .shopTitle h3 span::after{
+    content: "";
+    width: 50px;
+    height: 1px;
+    border-top: 1px solid #ccc;
+    position: absolute;
+    margin-left: 10px;
+    top: 8px;
+   }
   .shopTitle h3 svg{
     color: #eea17a;
     margin-right: 2px;

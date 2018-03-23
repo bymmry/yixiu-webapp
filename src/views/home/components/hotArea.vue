@@ -1,6 +1,6 @@
 <template>
   <div class="hot">
-    <p class="hot__title">热门手机维修服务</p>
+    <!-- <p class="hot__title">热门手机维修服务</p> -->
     <div v-if="data" class="hot__content">
       <hot-item
         v-for="(item, index) in data"
@@ -59,7 +59,7 @@
   .hot {
     width: 100%;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
     
     border-bottom: 10px solid #efefef;
   }
