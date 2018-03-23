@@ -20,10 +20,10 @@
       <div class="row-line"></div>
 
       <van-popup v-model="show" position="bottom">
-        <van-radio-group v-model="radio">
+        <van-radio-group v-model="radio" @change="closeShow">
           <van-cell-group>
             <label v-for="(item,index) in list" :for="item">
-              <van-cell><van-radio :name="item" id="item">{{item}}</van-radio></van-cell>
+              <van-cell><van-radio :name="item" :id="item">{{item}}</van-radio></van-cell>
             </label>
             
           </van-cell-group>
@@ -80,6 +80,9 @@
       },
       showChose(){
         this.show=true;
+      },
+      closeShow(){
+        this.show=false;
       },
       output(){
         if (this.radio=="") {
