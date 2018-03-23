@@ -2,7 +2,7 @@
   <div class="swipe">
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img v-lazy="image.imgUrl" />
+        <img @click="toShop(image)" v-lazy="image.imgUrl" />
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -46,14 +46,22 @@
       ];
       this.images = imgData;
     },
-    async mounted () {
-      // let res = await this.$api.getData('https://m.yixiutech.com/carousel');
-      // this.images = res.data;
-      // console.log(res.data);
-    },
     data () {
       return {
         images: []
+      }
+    },
+    methods: {
+      toShop: function(item) {
+        if(item.shopId){
+          console.log(this);
+          this.$router.push({
+            path: `/shop/${item.shopId}`,
+            params: {
+              id: item.shopId
+            }
+          })
+        }
       }
     }
   }
