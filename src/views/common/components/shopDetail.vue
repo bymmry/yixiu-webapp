@@ -228,6 +228,8 @@
   .shopDetail{
     position: fixed;
     top: 0;
+    min-height: 500px;
+    overflow-y: scroll;
     bottom: 8vh;
     width: 100%;
     z-index: 10;
