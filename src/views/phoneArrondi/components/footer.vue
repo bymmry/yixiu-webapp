@@ -6,6 +6,7 @@
 		<sure-order 
 			:sureOrderData="sureOrderData"
 			:TotalFee="sureOrderData.price"
+			:nextStepButtonDisabled="nextStepButtonDisabled"
 			class="sss"
 		/>
 		<van-goods-action-big-btn class="icon" text="联系客服" @click="good" primary />
@@ -31,7 +32,7 @@ export default {
 	},
 	data () {
 		return {
-
+			nextStepButtonDisabled: false
 		}
 	},
 	methods: {

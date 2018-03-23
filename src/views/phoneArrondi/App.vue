@@ -47,11 +47,11 @@
 
 			let iosList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.ios, shop: '5aa4a1a3733e266adc724d1a'});
 			
-			iosList.code == 200 ? this.iphone = iosList.data : alert('网络错误, 请稍后重试!');	
+			iosList.code == 200 ? this.iphone = iosList.data.slice(0, 4) : alert('网络错误, 请稍后重试!');	
 
 			let androidList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.androidId, shop: '5aa4a1a3733e266adc724d1a'})
 			
-			androidList.code == 200 ? this.android = androidList.data : alert('网络错误, 请稍后重试!');
+			androidList.code == 200 ? this.android = androidList.data.slice(0, 4) : alert('网络错误, 请稍后重试!');
 			// console.log(this.iphone);
 			// console.log(this.android);
 

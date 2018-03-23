@@ -17,7 +17,7 @@
 			placeholder="若没有想要的,请输入其他品牌名称"
 		/>
 
-		<van-field
+		<!-- <van-field
 			v-model="phoneRes.desc"
 			label="描述"
 			placeholder="请输入品牌描述"
@@ -27,7 +27,7 @@
 			v-model="phoneRes.cover"
 			label="封面"
 			placeholder="请输入封面地址"
-		/>
+		/> -->
 
 		<van-button size="large" @click="submit">确认添加</van-button>
 
@@ -92,6 +92,9 @@ export default {
 </script>
 
 <style scoped>
+.info {
+	background: #fff;
+}
 .info__name {
 	display: flex;
 	justify-content: flex-start;

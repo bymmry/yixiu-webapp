@@ -99,26 +99,26 @@ export default {
       txt: '加载中...',
       type: 'loading'
 		})
-		// toast.show();
+    toast.show();
+    let detail = JSON.parse(sessionStorage.getItem('detail'));
+    console.log(detail);
     // let phoneId = location.href.split('/').pop();
-    // let res = await this.$api.getData('https://m.yixiutech.com/goods/' + phoneId);
-    // // toast.hide();
-    // this.data = res.data;
+    let res = await this.$api.getData('https://m.yixiutech.com/goods/' + detail._id);
+    toast.hide();
+    console.log(res)
+    this.data = res.data;
     // this.images.push(this.data.cover);
-    // this.sureOrderData = {
-    //   type: 2,
-		// 	user: this.getUserInfo()._id,
-		// 	shop: this.data.shop._id,
-		// 	phone: "",
-		// 	reamrk: "",
-		// 	goods: [this.data._id],
-		// 	paymentType: 0,
-		// 	price: this.data.price,
-		// 	payment: this.data.price * 100
-    // }
-
-    this.data = JSON.parse(sessionStorage.getItem('detail'));
-    // console.log(this.data);
+    this.sureOrderData = {
+      type: 2,
+			user: this.getUserInfo()._id,
+			shop: detail._id,
+			phone: "",
+			reamrk: "",
+			goods: [this.data._id],
+			paymentType: 0,
+			price: this.data.price,
+			payment: this.data.price * 100
+    }
   }
 }
 </script>

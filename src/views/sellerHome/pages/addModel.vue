@@ -27,17 +27,17 @@
 			placeholder="如果没有你想要的型号名,请填写你想要的型号名"
 		/>
 
-		<van-field
+		<!-- <van-field
 			v-model="model.desc"
 			label="描述"
 			placeholder="请输入品牌描述"
-		/>
+		/> -->
 
-		<van-field
+		<!-- <van-field
 			v-model="model.cover"
 			label="封面"
 			placeholder="请输入封面地址"
-		/>
+		/> -->
 
 		<div class="info__name">
 			<p>手机颜色</p>
@@ -51,6 +51,12 @@
 				v-on:remove="remove"
 			/>
 		</div>
+
+		<van-field
+			v-model="otherColors"
+			label="其他颜色"
+			placeholder="请输入其他颜色,并以中文逗号相隔"
+		/>
 
 		<van-button size="large" @click="submit">确认添加</van-button>
 
@@ -84,6 +90,7 @@ export default {
 		return {
 			infoName: '添加手机型号',
 			colors: ['黑色', '白色', '银灰色', ],
+			otherColors: [],
 			phoneName: [],
 			phoneInfo: [],
 			phoneModel: [],
@@ -138,6 +145,8 @@ export default {
 			this.model.color.push(this.phoneModelColorRes);
 		},
 		async submit () {
+			this.model.color.length == 0 ? 
+				this.model.color = this.otherColors.split('，') : null;
 			const toast = this.$createToast({
 				message: '加载中...'
 			})
@@ -156,12 +165,15 @@ export default {
 </script>
 
 <style scoped>
+.info {
+	background: #fff;
+}
 .info__name {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	padding: 0 15px;
-	margin-top: 20px;
+	margin: 10px 0;
 	font-size: 14px;
 }
 

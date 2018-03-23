@@ -1,9 +1,13 @@
 <template>
 	<div class="infos">
-		<item-header :name="name"  v-on:backParent="back"/>
+
+		<item-header 
+			:name="infoName"
+			v-on:backParent="back"
+		/>
 
 		<div v-show="!brandStatus && !modelStatus && !categoryStatus">
-			<div class="box">
+			<!-- <div class="box">
 				<p>选择品牌</p>
 				<div class="service">
 					<single-select ref="select"  v-for="(item, index) in brand.list"
@@ -15,9 +19,9 @@
 					/>
 				</div>
 				<van-button size="large" @click="openBrand">添加品牌</van-button>
-			</div>
+			</div> -->
 			
-			<div class="box">
+			<!-- <div class="box">
 				<p>选择型号</p>
 
 				<div class="service">
@@ -31,12 +35,8 @@
 					/>
 				</div>
 				<van-button size="large" @click="openModel">添加型号</van-button>
-				<!-- <cube-select
-					v-model="res.name"
-					:options="modelNames"
-					@change="modelChange"
-				/> -->
-			</div>
+				
+			</div> -->
 			
 			<!-- <div class="box">
 				<p>选择颜色</p>
@@ -69,23 +69,6 @@
 			</div>
 		</div>
 
-		<add-brand 
-			v-show="brandStatus"
-			@updateBrand="updateBrand"
-			@backParent="backParent"
-		/>
-
-		<add-model
-			v-show="modelStatus"
-			@updateModel="updateModel"
-			@backParent="backParent"
-		/>
-
-		<add-category 
-			v-show="categoryStatus"
-			@updateCategory="updateCategory"
-			@backParent="backParent"
-		/>
 		
 		
 	</div>
@@ -115,11 +98,11 @@ export default {
 	},
 	data () {
 		return {
-			name: '添加手机维修服务',
 			brand: {
 				type: 'brand',
 				list: []
 			},
+			infoName: '更新服务价格',
 			models: [],
 			modelNames: [],
 			modelRes: [],
@@ -136,64 +119,54 @@ export default {
 			colors: {
 				type: 'color',
 				list: []},
-			questions: [
-				{ name: '屏幕问题', show: false, list: [
-					{ name: '内屏碎裂', price: 200 },
-					{ name: '外屏碎裂', price: 100 }
-				]},
-				{ name: '电池电源问题', show: false, list: [
-
-				]}
-			]
+			service: []
 		}
 	},
 	async mounted () {
+
+		let data = { shop: this.shop };
+
 		const toast = this.$createToast({
 			txt: '加载中...',
-			type: 'correct'
+			type: 'loading'
 		})
 		toast.show();
-		this.updateBrand();
 		this.updateCategory();
+		let serviceMap = await this.$api.sendData('https://m.yixiutech.com/service/shop', data);
+		serviceMap.code == 200 ? this.services = serviceMap.data : null;
+		this.services.map(item => {
+			this.categoryinfos.map(categoryItem => {
+				categoryItem.name == item.category.name ? categoryItem.list.push(item) : null;
+			})
+		})
 		toast.hide();
 	},
 	methods: {
 		back () {
-			this.$router.push('/sellerHome');
+			this.$router.go(-1);
 		},
 		submit () {
+			this.service = [];
 			this.categoryinfos.map(item => {
 				item.list.map(childItem => {	
 						if (childItem.name !== undefined) {
 							let obj = Object.assign(childItem, {shop: this.shop, support: this.modelRes})
-							this.services.push(obj);	
+							this.service.push(obj);	
 						}
 				})
 			})
+			console.log(this.service);
 			const toast = this.$createToast({
 				txt: '请稍后...',
 				type: 'loading'
 			})
 			toast.show();
-			this.services.map(async item => {
-				let res = await this.$api.sendData('https://m.yixiutech.com/service', item);
-				res.code == 200 ? this.prompt(`添加${res.data.name}成功!`, 'success').show() : alert(res.errMsg);
+			this.service.map(async item => {
+				let res = await this.$api.sendData('https://m.yixiutech.com/service/update/', item);
 			})
 			toast.hide();
-		},
-		async updateModel () {
-			this.modelStatus = false;
-			let model = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop/', { shop: this.shop, manufacturer: this.manufacturer });
-			this.models = model.data;
-			this.modelNames  = [];
-			model.data.map(item => {
-				this.modelNames.push(item.name);
-			})
-		},
-		async updateBrand () {
-			this.brandStatus = false;
-			let ownBrand = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer/shop/' + this.shop);
-			this.brand.list = ownBrand.data;
+			this.prompt('更新成功!', 'correct').show();
+			this.$router.push('/sellerHome');
 		},
 		sendMsg (index) {
 			this.modelRes.push(this.models[ index ]._id);
@@ -239,28 +212,6 @@ export default {
 					show: false,
 					list: []
 				})
-			})
-		},
-		async cancel (data) {
-			let zData = data.split('&');
-			let type = zData[1];
-			let name = zData[0];
-			this.manufacturer = zData[2]
-			
-			// 根据手机品牌获取型号
-			const toast = this.$createToast({
-				txt: '加载中...',
-				type: 'correct'
-			})
-			toast.show();
-			this.updateModel();
-			toast.hide();
-
-			// 取消其他几个子项的选中
-			this.$refs.select.map(item => {
-				if (item.type == type && item.data !== name) {
-					item.cancelSelect()
-				}
 			})
 		},
 		showItem (index) {

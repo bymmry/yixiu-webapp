@@ -14,6 +14,7 @@ import shopWallet from './pages/shopWallet.vue'
 import viewServices from './pages/viewServices.vue'
 import serviceDetail from './pages/serviceDetail.vue'
 import deletePhone from './pages/deletePhone.vue'
+import updateService from './pages/updateService.vue'
 
 
 export default [{
@@ -89,4 +90,8 @@ export default [{
 {
   path: '/deletePhone',
   component: deletePhone
+},
+{
+  path: '/updateService',
+  component: updateService
 }]

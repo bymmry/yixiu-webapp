@@ -6,9 +6,8 @@
 		/>
 
 		<service-item
-			v-for="(item, index) in services"
 			:key="index"
-			:data="item"
+			:data="services"
 		/>
 		
 
@@ -23,6 +22,7 @@ export default {
 		let data = { shop: this.shop };
 		let serviceMap = await this.$api.sendData('https://m.yixiutech.com/service/shop', data);
 		serviceMap.code == 200 ? this.services = serviceMap.data : null;
+		console.log(this.services);
 	},
 	methods: {
 		back () {
