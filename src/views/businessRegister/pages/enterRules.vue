@@ -1,6 +1,10 @@
 <template>
   <div class="rules">
-		<p class="rules__title">翼修商家入驻须知</p>
+		<p class="rules__title">
+			<span class="active" @click="back"></span>
+			<sicon name="back" scale="3"></sicon>
+			翼修商家入驻须知
+		</p>
 
 		<div class="content">
 			<p class="content__clause">第一章 入驻须知 </p>
@@ -97,6 +101,9 @@
 <script>
 export default {
   methods: {
+	  back () {
+		  this.$router.push('/sellerHome');
+	  },
 		agree () {
 			this.$router.push('/businessRegister');
 		}
@@ -114,6 +121,24 @@ export default {
 	text-align: center;
 	background: #ffbd5c;
 	color: #fff;
+	position: relative;
+}
+
+.active {
+	display: block;
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 20;
+}
+
+.rules__title .svg-icon {
+	position: absolute;
+	top: 50%;
+	left: 10px;
+	transform: translate(0, -50%);
 }
 
 .content {

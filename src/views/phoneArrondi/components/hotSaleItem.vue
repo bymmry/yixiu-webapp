@@ -17,7 +17,7 @@ export default {
 	},
 	methods: {
 		search () {
-			this.$router.push('shop/?' + this.name);
+			this.$router.push('/phoneList/' + this.type + '&' + this.name);
 		}
 	}
 }

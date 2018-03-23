@@ -1,6 +1,6 @@
 <template>
-  <div class="arrondi-item">
-		<img :src="src" alt="" class="arrondi-item__img" srcset="" @click="route"/>
+  <div class="arrondi-item" @click="route">
+		<img :src="src" alt="" class="arrondi-item__img" srcset=""/>
 		<div class="arrondi-item__content">
 			<p class="arrondi-item__name">{{ name }}</p>
 			<p class="arrondi-item__name"><span class="arrondi-item__price">￥{{ price }}</span> <span class="arrondi-item__primeCost">￥{{ primeCost }}</span></p>
