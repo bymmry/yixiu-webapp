@@ -157,13 +157,6 @@
         })
       }
     },
-    mounted() {
-
-      let y =document.body.clientHeight;
-      console.log(this.$refs.shopDetail);
-      this.$refs.shopDetail.style.height = y + 'px';
-      this.$refs.shopDetail.style.overflowY = 'scroll';
-    },
     methods: {
       back: function () {
         this.$router.back();
@@ -235,7 +228,7 @@
   .shopDetail{
     position: fixed;
     top: 0;
-    min-height: 530px;
+    min-height: 480px;
     overflow-y: scroll;
     bottom: 8vh;
     width: 100%;
@@ -247,7 +240,6 @@
     width: auto;
     padding: 0 10px;
     height: 10vh;
-    min-height: 58px;
   }
   .shopDetail .shopTitle > div{
     line-height: 10vh;
@@ -276,7 +268,6 @@
   .shopDetail .shopDes .shopMain{
     width: auto;
     height: 14vh;
-    min-height: 100px;
     padding: 0 10px;
     display: flex;
   }
