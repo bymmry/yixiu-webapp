@@ -27,7 +27,6 @@
     },
     created() {
       let y =document.body.clientHeight;
-      console.log(document.getElementById("app"))
       document.getElementById("app").style.height = y + 'px';
       // console.log("App onload--------------------------------------------------->");
       let userData = this.urlDataTurnObj(window.location.href);
