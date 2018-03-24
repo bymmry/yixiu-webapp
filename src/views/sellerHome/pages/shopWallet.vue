@@ -13,7 +13,6 @@
         <!-- </van-pull-refresh> -->
         <div class="funcbtn">
             <button>提现</button>
-            <button class="outmoney">转入</button>
         </div>
     </div>
 </template>
@@ -95,20 +94,16 @@ export default {
     }
     .shopWallet .funcbtn button{
         border: none;
-        background-color: #fff;
+        background-color: #2796CB;
         float: left;
         padding: 0;
-        width: 50vw;
+        width: 100vw;
         line-height: 60px;
         text-align: center;
-        color: #2796CB;
+        color: #fff;
         font-size: 6vw;
         
         border-top: 1px solid #eee;
-    }
-    .shopWallet .funcbtn .outmoney{
-        background: #2796CB;
-        color: #fff;
     }
 
 </style>
