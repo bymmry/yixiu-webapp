@@ -54,7 +54,7 @@
         </van-button>
       </div>
       <div class="stepNext" v-if="orderData.state == 10">
-        <sure-order :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
+        <sure-order :nextStepButtonDisabled="false" :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
       </div>
     </div>
   </div>
