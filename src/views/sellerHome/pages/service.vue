@@ -1,8 +1,8 @@
 <template>
 	<div class="infos">
-		<item-header :name="name"  v-on:backParent="back"/>
 
 		<div v-show="!brandStatus && !modelStatus && !categoryStatus">
+			<item-header :name="name"  v-on:backParent="back"/>
 			<div class="box">
 				<p>选择品牌</p>
 				<div class="service">
@@ -177,7 +177,7 @@ export default {
 			toast.show();
 			this.services.map(async item => {
 				let res = await this.$api.sendData('https://m.yixiutech.com/service', item);
-				res.code == 200 ? this.prompt(`添加${res.data.name}成功!`, 'success').show() : alert(res.errMsg);
+				res.code == 200 ? this.prompt(`添加${res.data.name}成功!`, 'correct').show() : alert(res.errMsg);
 			})
 			toast.hide();
 		},
@@ -233,6 +233,7 @@ export default {
 		async updateCategory (data) {
 			this.categoryStatus = false;
 			let ownCategory = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'service', shop: this.shop});
+			this.categoryinfos = [];
 			ownCategory.data.map(item => {
 				this.categoryinfos.push({
 					_id: item._id,

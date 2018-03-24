@@ -42,9 +42,11 @@
 			<img class="upload__show" :src="certificate" alt="" />
 		</div>
 
-		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修入驻协议.docx</a></p>
+		<p class="head">下载协议 <a class="link" href="http://t.cn/RnCHOyk">翼修入驻协议.docx</a></p>
 
-		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动长按复制到浏览器上进行下载!</p>
+		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动复制以下地址到浏览器上进行下载!</p>
+
+		<p class="link">http://t.cn/RnCHOyk</p>
 		
 		<p class="head">拍照上传翼修入驻协议</p>
 		

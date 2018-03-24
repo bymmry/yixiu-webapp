@@ -84,7 +84,7 @@ export default {
 				this.prompt(phoneRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt('添加成功', 'success').show();
+			this.prompt('添加成功', 'correct').show();
 			this.$emit('updateBrand', true);
 		}
 	}

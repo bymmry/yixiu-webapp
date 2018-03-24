@@ -83,7 +83,6 @@ export default {
 				message: '加载中...'
 			})
 			let type = sessionStorage.getItem('category');
-			console.log(sessionStorage.getItem('category'));
 			this.category.type = type;
 			toast.show();
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);
@@ -92,7 +91,7 @@ export default {
 				this.prompt(categoryRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt('提交成功!', 'success').show();
+			this.prompt('提交成功!', 'correct').show();
 			this.$emit('updateCategory', true);
 
 		}

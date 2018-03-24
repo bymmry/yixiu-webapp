@@ -130,7 +130,7 @@ export default {
 				message: '加载中...'
 			})
 			toast.show();
-			let manufacturer = await this.$api.sendData('https://m.yixiutech.com/phone/model/shop/', {shop: this.model.shop, manufacturer: this.model.manufacturer});
+			let manufacturer = await this.$api.getData('https://m.yixiutech.com/phone/model/' + this.model['manufacturer']);
 			toast.hide();
 			manufacturer.data.map(item => {
 				this.phoneModel.push(item.name);
@@ -157,7 +157,7 @@ export default {
 				this.prompt(modelRes.errMsg, 'error').show();
 				return;	
 			}
-			this.prompt('添加成功!', 'success').show();
+			this.prompt('添加成功!', 'correct').show();
 			this.$emit('updateModel', true);
 		}
 	}
