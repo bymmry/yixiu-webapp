@@ -15,10 +15,22 @@
         <li @click="chooseMainType(1)" :class="{'active': currentIndex===1}"><span>评分最高</span></li>
         <li @click="chooseMainType(2)" :class="{'active': currentIndex===2}"><span>距离最近</span></li>
         <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span>
-          <van-popup
+         
+        </li>
+      </ul>
+    </div>
+    <div @click="selectShop"
+         class="shopDes"
+         ref="shopDes">
+      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
+    </div>
+    <div class="space"></div>
+    </cube-scroll>
+     <van-popup
             v-model="showFilter"
-            position="right"
+            position="top"
             :close-on-click-overlay=false
+            class="filterBox"
           >
             <div class="filter">
               <div class="list"><van-checkbox v-model="filterData.score">评分最高</van-checkbox></div>
@@ -31,21 +43,12 @@
                 <van-cell-group @click.stop="chooseMainType">
                   <van-cell><van-radio v-model="radio" name="1">上门维修</van-radio></van-cell>
                   <van-cell><van-radio v-model="radio" name="2">自行到店</van-radio></van-cell>
+                  <van-cell><van-radio v-model="radio" name="3">线上快递</van-radio></van-cell>
                 </van-cell-group>
               </div>
               <van-button @click.stop="chooseMainType" @click="sureFliter">确定</van-button>
             </div>
           </van-popup>
-        </li>
-      </ul>
-    </div>
-    <div @click="selectShop"
-         class="shopDes"
-         ref="shopDes">
-      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
-    </div>
-    <div class="space"></div>
-    </cube-scroll>
   </div>
 </template>
 
@@ -242,6 +245,7 @@
       },
       sureFliter: function () {
         this.showFilter = false;
+        this.currentIndex = 3;
         let lng = localStorage.getItem('lng');
         let lat = localStorage.getItem('lat');
         let filterShop = {
@@ -325,19 +329,25 @@
     height: 8vh;
   }
 
+  .filterBox{
+    width: 100vw;
+    padding-top: 5vh;
+  }
   .filter{
-    width: 80vw;
+    width: 100vw;
     background-color: #fff;
     height: auto;
   }
   .filter > div.list{
-    width: auto;
-    padding: 0 5vw;
+    width: 35vw;
+    display: inline-block;
+    padding: 10px 5vw;
   }
   .filter > div.button{
     width: auto;
   }
   .filter button{
+    float: right;
     width: 60vw;
     margin: 2vh 5vw;
     background-color: #f85;

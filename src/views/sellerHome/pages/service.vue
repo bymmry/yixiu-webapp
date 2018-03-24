@@ -206,6 +206,7 @@ export default {
 		},
 		openCategory () {
 			this.categoryStatus = true;
+			sessionStorage.setItem('category', 'service');
 		},
 		openBrand () {
 			this.brandStatus = true;

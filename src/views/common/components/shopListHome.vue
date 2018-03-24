@@ -250,6 +250,7 @@
       },
       sureFliter: function () {
         this.showFilter = false;
+        this.currentIndex = 3;
         let lng = localStorage.getItem('lng');
         let lat = localStorage.getItem('lat');
         let filterShop = {
