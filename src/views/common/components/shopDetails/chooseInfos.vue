@@ -239,7 +239,7 @@
         this.coupons.push(this.coupon);
       },
       selectServiceWay: function(value, index, text) {
-        if(value == "线上快递"){
+        if(value == "线上快递" || value == "上门服务"){
           this.isShowAddress = true;
         }
         this.setOrderData();
