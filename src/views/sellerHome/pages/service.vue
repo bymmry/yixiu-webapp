@@ -77,6 +77,11 @@
 
 		<add-model
 			v-show="modelStatus"
+			:brandName="brandName"
+			:brandId="brandId"
+			:sysModel="sysModel"
+			:phoneModel="phoneModel"
+			:manufacturer="manufacturer"
 			@updateModel="updateModel"
 			@backParent="backParent"
 		/>
@@ -115,14 +120,19 @@ export default {
 	},
 	data () {
 		return {
+			brandName: '',
 			name: '添加手机维修服务',
 			brand: {
 				type: 'brand',
 				list: []
 			},
+			sysModel: [],
+			brandId: '',
 			models: [],
 			modelNames: [],
+			phoneModel: [],
 			modelRes: [],
+			manufacturer: '',
 			categoryNames: [],
 			categoryinfos: [],
 			active: '',
@@ -248,6 +258,25 @@ export default {
 			let type = zData[1];
 			let name = zData[0];
 			this.manufacturer = zData[2]
+			this.brandName = name;
+
+			let sysBrand = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
+			sysBrand.data.map(item => {
+				item.name == this.brandName ? this.brandId = item._id : null;
+			})
+
+			let sysModel = await this.$api.getData('https://m.yixiutech.com/phone/model/' + this.brandId);
+			
+			this.sysModel = sysModel.data;
+
+			this.phoneModel = [];
+			
+			this.sysModel.map(item => {
+				this.phoneModel.push({
+					text: item.name,
+					value: item._id
+				})
+			})
 			
 			// 根据手机品牌获取型号
 			const toast = this.$createToast({

@@ -1,5 +1,6 @@
 import App from './App'
 import enterRules from './pages/enterRules.vue'
+import wait from './pages/wait.vue'
 
 export default [{
   path: '/businessRegister',
@@ -8,4 +9,8 @@ export default [{
 {
   path: '/enterRules',
   component: enterRules
+},
+{
+  path: '/wait',
+  component:wait
 }]

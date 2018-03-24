@@ -10,7 +10,8 @@ export default {
 	props: {
 		data: String,
 		type: String,
-		manufacturer: String
+		manufacturer: String,
+		index: Number
 	},
   data () {
 		return {
@@ -23,7 +24,7 @@ export default {
 	methods: {
 		async selectOn () {
 			this.hasBorder = !this.hasBorder;
-			this.$emit('cancelOther', this.data + '&' + this.type + '&' + this.manufacturer);
+			this.$emit('cancelOther', this.data + '&' + this.type + '&' + this.manufacturer + '&' + this.index);
 		},
 		cancelSelect () {
 			this.hasBorder ? this.hasBorder = !this.hasBorder : null;

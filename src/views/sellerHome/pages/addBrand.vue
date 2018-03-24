@@ -4,17 +4,31 @@
 
 		<div class="info__name">
 			<p>品牌名称</p>
-			<cube-select
-				v-model="phoneRes.name"
-				:options="phoneName"
-				@change="change"
-			/>
+		</div>
+
+		<div class="info__name">
+			<div class="service">
+				<single-select ref="select" v-for="(item, index) in brand.list"
+					:type="brand.type"
+					:key="index" 
+					v-on:cancelOther="cancel"
+					:data="item.name"
+					:manufacturer="item._id"
+					:index="index"
+				/>
+			</div>
 		</div>
 
 		<van-field
 			v-model="phoneRes.name"
 			label="其他品牌名称"
 			placeholder="若没有想要的,请输入其他品牌名称"
+		/>
+
+		<van-field
+			v-model="phoneRes.alias"
+			label="名称的别名"
+			placeholder="若没有想要的,请输入其他品牌名称的别名"
 		/>
 
 		<!-- <van-field
@@ -37,17 +51,24 @@
 <script>
 import { Field, Button, Toast } from 'vant'
 import ItemHeader from '../components/itemHeader'
+import singleSelect from '../components/singleSelect'
+
 export default {
   components: {
 		[Field.name]: Field,
 		[Button.name]: Button,
-		ItemHeader
+		ItemHeader,
+		singleSelect
 	},
 	data () {
 		return {
 			infoName: '添加手机品牌',
 			phoneName: [],
 			phoneInfo: [],
+			brand: {
+				type: 'brand',
+				list: []
+			},
 			phoneRes: {
 				name: '',
 				alias: '',
@@ -64,6 +85,7 @@ export default {
 		})
 		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
+		this.brand.list = res.data;
 		toast.hide();
 		res.data.map(item => {
 			this.phoneName.push(item.name);
@@ -71,6 +93,22 @@ export default {
 		})
 	},
 	methods: {
+		async cancel (data) {
+			let zData = data.split('&');
+			let type = zData[1];
+			let name = zData[0];
+			let index = zData[3];
+			this.manufacturer = zData[2]
+			this.phoneRes.name = name;
+			this.phoneRes.alias = this.phoneInfo[ index ].alias;
+
+			// 取消其他几个子项的选中
+			this.$refs.select.map(item => {
+				if (item.type == type && item.data !== name) {
+					item.cancelSelect()
+				}
+			})
+		},
 		backParent () {
 			this.$emit('backParent', true);
 		},
@@ -100,12 +138,19 @@ export default {
 	justify-content: flex-start;
 	align-items: center;
 	padding: 0 15px;
-	margin-top: 50px;
+	margin: 20px 0;
 	font-size: 14px;
 }
 
 .info__name p {
 	width: 90px;
+}
+
+.service {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:flex-start;
 }
 
 .van-button {

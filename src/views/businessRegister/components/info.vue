@@ -7,13 +7,6 @@
 
 	  	<img class="info__logo" :src="logo" alt="" />
 
-		<van-field
-			v-model="infos.name"
-			label="商铺名称"
-			class="item"
-			placeholder="请输入商铺名称"
-		/>
-
 		<p class="head">身份证正面</p>
 
 		<div class="upload">
@@ -51,7 +44,7 @@
 		<p class="head">拍照上传翼修入驻协议</p>
 		
 		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
+			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
 			<img class="upload__show" :src="files" alt="" />
 		</div>
 
@@ -61,6 +54,13 @@
 			<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
 			<img class="upload__show" :src="infos.cover" alt="" />
 		</div>
+
+		<van-field
+			v-model="infos.name"
+			label="商铺名称"
+			class="item"
+			placeholder="请输入商铺名称"
+		/>
 
 		<van-field
 			v-model="infos.contactNumber"
@@ -169,7 +169,7 @@ export default {
 		return {
 			startHour: '',
 			endHour: '',
-			serviceWay: ['上门服务', '店面维修', '线上快递'],
+			serviceWay: ['用户到店', '上门维修', '快递维修'],
 			logo: logo,
 			files: file,
 			file: file,
@@ -307,7 +307,7 @@ export default {
 				return;
 			}
 			wait.show();
-			
+			this.$router.push('/wait');
 		},
 		start () {
 			this.startPicker.show()

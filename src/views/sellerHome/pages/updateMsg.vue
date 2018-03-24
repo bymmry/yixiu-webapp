@@ -153,6 +153,7 @@ import file from '@/assets/file.png'
 import selects from '../../sellerHome/components/select'
 export default {
 	async mounted () {
+		window.status = false;
 		this.startPicker = this.$createPicker({
       title: '选择开始营业时间',
       data: [this.time],
@@ -170,10 +171,10 @@ export default {
 		})
 		
 		let userData = JSON.parse(sessionStorage.getItem('userData'));
-		console.log(userData);
 
 		const toast = this.$createToast({
-			message: '加载中...'
+			txt: '加载中...',
+			type: 'loading'
 		})
 		toast.show();
 		let res = await this.$api.sendData('https://m.yixiutech.com/shop/user', { openid: userData.wx.openid })
@@ -189,9 +190,9 @@ export default {
 					item.selectOn();
 				}
 			})
-
 		}
 		toast.hide();
+		window.status = true;
 	},
 	components: {
 		[Field.name]: Field,
@@ -209,7 +210,7 @@ export default {
 				name: ''
 			}],
 			tempPhone: '',
-			serviceWay: ['上门服务', '用户到店', '线上快递'],
+			serviceWay: ['用户到店', '上门维修', '线上快递'],
 			logo: logo,
 			files: file,
 			defaults: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
@@ -236,10 +237,8 @@ export default {
 		},
 		addM () {
 			this.infos.user.push({});
-			console.log(this.infos.user);
 		},
 		async addManager (index) {
-			console.log(this.tempPhone);
 			let userInfo = await this.$api.getData('https://m.yixiutech.com/user/mobile/' + this.tempPhone);
 			userInfo.code == 200 ? this.infos.user[ index ] = userInfo.data._id : null;
 		},
@@ -249,8 +248,7 @@ export default {
 		removeData (data) {
 			this.infos.serviceWay.map( (item, index) => {
 				if ( item == data ) { 
-					this.infos.serviceWay.splice(index, 1) 
-					console.log(this.infos.serviceWay);
+					this.infos.serviceWay.splice(index, 1)
 				}
 			})
 		},
