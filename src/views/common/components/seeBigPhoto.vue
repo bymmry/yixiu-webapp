@@ -41,6 +41,10 @@
     justify-content: center;
     overflow: auto;
   }
+  .imgBox img{
+    max-height: 80%;
+    max-width: 100%;
+  }
   .imgCover{
     position: absolute;
     width: 100%;

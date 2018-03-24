@@ -41,6 +41,8 @@
           message: '上传中...'
         });
 
+        console.log(file.file)
+
         let fd = new FormData();
 
         let config = {
@@ -73,7 +75,7 @@
           .always(function () {
               // 不管是成功失败，都会执行
           }).then((zphoto)=>{
-            // console.log(zphoto);
+            console.log(zphoto);
 
             // var newfile = new File([zphoto], file.file.name,{type:"image/jpeg"});
 

@@ -17,8 +17,8 @@
       
     </van-pull-refresh>
     <div class="funcbtn">
-      <div>转出</div>
-      <div class="outmoney">转入</div>
+      <!-- <div>转出</div> -->
+      <div class="outmoney">兑换</div>
     </div>
   </div>
 
@@ -156,7 +156,7 @@
     border-top: 1px solid #E2DED3;
   }
   .funcbtn div{
-    width: 50%;
+    width: 100%;
     line-height: 60px;
     text-align: center;
     color: #2796CB;
