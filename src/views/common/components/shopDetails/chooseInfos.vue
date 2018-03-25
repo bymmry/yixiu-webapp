@@ -240,7 +240,7 @@
         this.coupons.push(this.coupon);
       },
       selectServiceWay: function(value, index, text) {
-        if(value == "线上快递" || value == "上门服务"){
+        if(value == "快递维修" || value == "上门维修"){
           this.isShowAddress = true;
         }
         this.setOrderData();
@@ -342,9 +342,9 @@
     float: right;
   }
   .chooseInfos .information ul li span .valueBorder{
-    width: 150px;
-    color: #eee;
-    border: 1px solid #eee;
+    /* width: 150px; */
+    /* color: #eee; */
+    /* border: 1px solid #eee; */
   }
   .chooseInfos .information ul li span.value input{
     text-align: right;
