@@ -5,14 +5,7 @@
 			v-on:backParent="back"
 		/>
 
-	  	<img class="info__logo" :src="logo" alt="" />
-
-		<van-field
-			v-model="infos.name"
-			label="商铺名称"
-			class="item"
-			placeholder="请输入商铺名称"
-		/>
+	  <img class="info__logo" :src="logo" alt="" />
 
 		<p class="head">身份证正面</p>
 
@@ -42,20 +35,24 @@
 			<img class="upload__show" :src="infos.certificate[3] ? infos.certificate[3].src : defaults" alt="" />
 		</div>
 
-		<p class="head">下载协议 <a class="link" href="http://bymm.oss-cn-shenzhen.aliyuncs.com/yixiu/%E7%BF%BC%E4%BF%AE%E5%85%A5%E9%A9%BB%E5%8D%8F%E8%AE%AE.docx">翼修入驻协议.docx</a></p>
+		<p class="head">下载协议 <a class="link" href="http://t.cn/RnCHOyk">翼修入驻协议.docx</a></p>
 
 		<p class="links">温馨提示: 如果上述链接点击不能下载，请复制以下链接到浏览器上进行下载!</p>
 
-		<p class="links">https://0x9.me/nDh9Z</p>
+		<van-field
+			label="翼修协议地址"
+			placeholder="请勿删除协议地址"
+			v-model="linkAddress"
+		/>
 		
 		<p class="head">拍照上传翼修入驻协议</p>
 		
 		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file"  />
+			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
 			<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
 		</div>
 
-		<p class="head">商铺封面</p>
+		<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
 
 		<div class="upload">
 			<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
@@ -69,26 +66,49 @@
 		/>
 
 		<van-field
-			v-model="infos.mobile"
+			v-model="infos.name"
+			label="商铺名称"
+			class="item"
+			placeholder="请输入商铺名称"
+		/>
+
+		<van-field
+			v-model="infos.contactNumber"
 			label="联系电话"
 			placeholder="请输入联系电话"
 		/>
 
-		<van-field
+		<!-- <van-field
 			v-model="infos.notice"
 			label="店铺公告"
 			placeholder="请输入输入店铺公告"
+		/> -->
+
+		<van-field
+			v-model="area"
+			label="所在地区"
+			placeholder="请选择所在地区"
+			@click="showArea"
 		/>
+
+		<van-area 
+			:area-list="areaList"
+			v-show="areaStatus"
+			@confirm="confirms"
+			@cancel="cancels"
+			/>
 
 		<van-field
 			v-model="infos.address"
-			label="商铺地址"
-			placeholder="请输入商铺详细地址"
+			label="详细地址"
+			placeholder="如街道、楼层、门牌号等"
 		/>
 
 		<van-field
+			v-model="managerPhone"	
 			label="添加管理者"
 			placeholder="请输入管理者的电话号码"
+			@blur="searchId"
 		/>
 
 		<cube-button @click="addM">添加商铺管理者</cube-button>
@@ -145,15 +165,15 @@
 </template>
 
 <script>
-import { Field, Uploader, Icon } from 'vant'
+import { Field, Uploader, Icon, Area } from 'vant'
 import itemHeader from '../components/itemHeader'
 import timeJson from '../data/data.json'
 import logo from '@/assets/logo.png'
 import file from '@/assets/file.png'
 import selects from '../../sellerHome/components/select'
+import areaList from '../../my/components/data/area.json'
 export default {
 	async mounted () {
-		window.status = false;
 		this.startPicker = this.$createPicker({
       title: '选择开始营业时间',
       data: [this.time],
@@ -180,10 +200,13 @@ export default {
 		let res = await this.$api.sendData('https://m.yixiutech.com/shop/user', { openid: userData.wx.openid })
 		
 		if (res.code == 200) {
+			window.status = true;
 			this.infos = res.data;
 			let businessHours = this.infos.businessHours[0].split('-');
 			this.startHour = businessHours[0].trim();
 			this.endHour = businessHours[1].trim();
+			this.area = this.infos.address.split('-')[0];
+			this.infos.address = this.infos.address.split('-')[1];
 			
 			this.$refs.child.filter(item => {
 				if(this.infos.serviceWay.includes(item.data))  {
@@ -192,12 +215,13 @@ export default {
 			})
 		}
 		toast.hide();
-		window.status = true;
+		window.status = false;
 	},
 	components: {
 		[Field.name]: Field,
 		[Uploader.name]: Uploader,
 		[Icon.name]: Icon,
+		[Area.name]: Area,
 		selects,
 		itemHeader
 	},
@@ -205,6 +229,11 @@ export default {
 		return {
 			infoName: '更新店铺信息',
 			startHour: '',
+			areaList: areaList,
+			areaStatus: false,
+			linkAddress: 'http://t.cn/RnCHOyk',
+			managerPhone: '',
+			area: '选择身份  选择城市  选择地区',
 			endHour: '',
 			users: [{
 				name: ''
@@ -232,6 +261,28 @@ export default {
 		}
 	},
 	methods: {
+		async searchId () {
+			let user = await this.$api.getData('https://m.yixiutech.com/user/mobile/' + this.managerPhone);
+			if (user.code !== 200) {
+				this.prompt(user.errMsg, 'error').show();
+				return;
+			}
+
+		},
+		showArea () {
+			this.areaStatus = true;
+			// let top = window.innerHeight
+		},
+		confirms (value) {
+			let province = value[0].name;
+			let city = value[1].name;
+			let area = value[2].name;
+			this.area = `${province} ${city} ${area}`;
+			this.areaStatus = false;
+		},
+		cancels () {
+			this.areaStatus = false;
+		},
 		back () {
 			this.$router.push('/sellerHome');
 		},
@@ -244,6 +295,7 @@ export default {
 		},
 		setData (data) {
 			this.infos.serviceWay.push(data);
+			console.log(this.infos.serviceWay);
 		},
 		removeData (data) {
 			this.infos.serviceWay.map( (item, index) => {
@@ -311,6 +363,11 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
+			if (this.infos.serviceWay.length == 0) {
+				this.prompt('请至少选择一个服务方式', 'error').show();
+				return;
+			}
+			this.infos.address = this.area + '-' + this.infos.address;
 			const toast = this.$createToast({
 				txt: '加载中...',
 				type: 'loading'

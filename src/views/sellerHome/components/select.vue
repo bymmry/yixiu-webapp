@@ -19,7 +19,9 @@ export default {
 		selectOn () {
 			this.hasBorder = !this.hasBorder;
 			if (this.hasBorder) {
-				!window.status ? this.$emit('sendMsg', this.data) : null;
+				if (window.status == 'false') {
+					this.$emit('sendMsg', this.data)
+				}
 			} else {
 				this.$emit('remove', this.data);
 			}

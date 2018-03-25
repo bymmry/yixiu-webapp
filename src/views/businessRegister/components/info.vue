@@ -1,6 +1,8 @@
 <template>
   <div class="info">
 
+		<div class="shadow" v-show="areaStatus"></div>
+
 		<router-link to="/enterRules">
 			<sicon name="back" scale="3"></sicon>
 		</router-link>
@@ -39,16 +41,20 @@
 
 		<p class="links">温馨提示: 如果上述链接点击不能下载，请手动复制以下地址到浏览器上进行下载!</p>
 
-		<p class="link">http://t.cn/RnCHOyk</p>
+		<van-field
+			label="协议地址"
+			placeholder="请勿删除协议地址"
+			v-model="linkAddress"
+		/>
 		
 		<p class="head">拍照上传翼修入驻协议</p>
 		
 		<div class="upload">
 			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
-			<img class="upload__show" :src="files" alt="" />
+			<img class="upload__show" :src="protocol" alt="" />
 		</div>
 
-		<p class="head">商铺封面</p>
+		<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
 
 		<div class="upload">
 			<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
@@ -69,10 +75,26 @@
 		/>
 
 		<van-field
-			v-model="infos.address"
-			label="商铺地址"
-			placeholder="请输入商铺详细地址"
+			v-model="area"
+			label="所在地区"
+			placeholder="请选择所在地区"
+			@click="showArea"
 		/>
+
+		<van-area 
+			:area-list="areaList"
+			v-show="areaStatus"
+			@confirm="confirms"
+			@cancel="cancels"
+			/>
+
+		<van-field
+			v-model="infos.address"
+			label="详细地址"
+			placeholder="如街道、楼层、门牌号等"
+		/>
+
+		
 
 		<div class="info-item">
 			<p class="info-item__title">开始营业时间</p>
@@ -135,10 +157,11 @@
 
 <script>
 import InfoItem from './infoItem'
-import { Field, Uploader, Icon } from 'vant'
+import { Field, Uploader, Icon, Area } from 'vant'
 import timeJson from '../data/data.json'
 import logo from '@/assets/logo.png'
 import file from '@/assets/file.png'
+import areaList from '../../my/components/data/area.json'
 import selects from '../../sellerHome/components/select'
 export default {
 	mounted () {
@@ -163,20 +186,27 @@ export default {
 		[Field.name]: Field,
 		[Uploader.name]: Uploader,
 		[Icon.name]: Icon,
+		[Area.name]: Area,
 		selects
 	},
 	data () {
 		return {
 			startHour: '',
 			endHour: '',
+			area: '选择身份  选择城市  选择地区',
 			serviceWay: ['用户到店', '上门维修', '快递维修'],
 			logo: logo,
+			areaStatus: false,
+			areaList: areaList,
 			files: file,
+			linkAddress: 'http://t.cn/RnCHOyk',
 			file: file,
 			id1: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			id2: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			license: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			certificate: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			protocol: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
+			cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			infos: {
 				name: '',
 				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
@@ -192,10 +222,10 @@ export default {
 				],
 				ownerOpenid: JSON.parse(sessionStorage.getItem('userData')).wx.openid,
 				certificate: [
-					{ name: 'idcard1', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'idcard2', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'license', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
-					{ name: 'certificate', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png'  },
+					{ name: 'idcard1', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' },
+					{ name: 'idcard2', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' },
+					{ name: 'license', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' },
+					{ name: 'certificate', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' },
 					{ name: 'protocol', src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png' }
 				]
 			},
@@ -204,6 +234,20 @@ export default {
 		}
 	},
 	methods: {
+		cancels () {
+			this.areaStatus = false;
+		},
+		confirms (value) {
+			let province = value[0].name;
+			let city = value[1].name;
+			let area = value[2].name;
+			this.area = `${province} ${city} ${area}`;
+			this.areaStatus = false;
+		},
+		showArea () {
+			this.areaStatus = true;
+			// let top = window.innerHeight
+		},
 		setData (data) {
 			this.infos.serviceWay.push(data);
 		},
@@ -231,27 +275,24 @@ export default {
 
 			this.infos.certificate.map( item => item.name == name ? item.src = res.data : null );
 
-			
-			if (name == 'protocol') {
-				const toast1 = this.$createToast({
-					time: 5000,
-					txt: '协议上传成功',
-					type: 'correct'
-				});
-				toast1.show()
-			}
-
 			name == 'cover' ? this.infos.cover = res.data : null;
 
 			toast.hide();
 		},
 		coverUpload (event, name) {
 			this.file = event.target.files[0];
+			if (this.file.size > 305644) {
+				this.prompt('图片不能超过300kb哟', 'warn').show();
+				return;
+			}
+			let url = window.URL.createObjectURL(this.file);
+			this.infos.cover = url;
 			this.uploadPic(this.file, 'cover');
 		},
 		protocolUpload (event, name) {
 			this.file = event.target.files[0];
-
+			let url = window.URL.createObjectURL(this.file);
+			this.protocol = url;
 			this.uploadPic(this.file, 'protocol');
 		},
 		async idcardUpload1 (event, name) {
@@ -287,6 +328,7 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
+			this.infos.address = this.area + '-' + this.infos.address;
 			// for (var key in this.infos) {
 			// 	console.log(this.infos[ key ])
 			// }
@@ -353,6 +395,16 @@ export default {
 		overflow: hidden;
 }
 
+.shadow {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 20;
+}
+
 .service {
 	width: 100%;
 	display: flex;
@@ -385,6 +437,13 @@ export default {
 
 .full-cut {
 	width: 48%;
+}
+
+.van-area {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	z-index: 21;
 }
 
 .upload {

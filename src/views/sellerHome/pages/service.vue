@@ -23,7 +23,7 @@
 				<div class="service">
 					<selects v-for="(item, index) in modelNames"
 						:type="brand.type"
-						:key="index" 
+						:key="index"
 						@sendMsg="sendMsg(index)"
 						@remove="remove(index)"
 						:data="item"
@@ -158,13 +158,23 @@ export default {
 		}
 	},
 	async mounted () {
+		window.status = false;
 		const toast = this.$createToast({
 			txt: '加载中...',
-			type: 'correct'
+			type: 'loading'
 		})
 		toast.show();
 		this.updateBrand();
 		this.updateCategory();
+		let sysService = await this.$api.sendData('https://m.yixiutech.com/service/shop', {});
+		this.sysServices = sysService.data;
+		this.sysServices.map(item => {
+			item.category !== null && this.categoryinfos.map(categoryItem => {
+				categoryItem.name == item.category.name ? categoryItem.list.push({ name: item.name, price: '', category: item.category._id }) : null;
+			})
+		})
+		let ownServices = await this.$api.sendData('https://m.yixiutech.com/service/shop', {shop: this.shop});
+
 		toast.hide();
 	},
 	methods: {
@@ -172,9 +182,10 @@ export default {
 			this.$router.push('/sellerHome');
 		},
 		submit () {
+			this.services = [];
 			this.categoryinfos.map(item => {
-				item.list.map(childItem => {	
-						if (childItem.name !== undefined) {
+				item.list.map(childItem => {
+						if (childItem.name !== undefined && childItem.name !== '' && childItem.price !== '') {
 							let obj = Object.assign(childItem, {shop: this.shop, support: this.modelRes})
 							this.services.push(obj);	
 						}
@@ -222,7 +233,8 @@ export default {
 			this.brandStatus = true;
 		},
 		openModel () {
-			this.modelStatus = true;
+			this.brandName !== '' ? this.modelStatus = true : this.prompt('请先添加品牌!', 'warn').show();
+			
 		},
 		backParent () {
 			this.brandStatus = false;
@@ -242,9 +254,21 @@ export default {
 		},
 		async updateCategory (data) {
 			this.categoryStatus = false;
+			let sysCategory = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
 			let ownCategory = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'service', shop: this.shop});
+			
 			this.categoryinfos = [];
+			// 已拥有的分类添加
 			ownCategory.data.map(item => {
+				this.categoryinfos.push({
+					_id: item._id,
+					name: item.name,
+					show: false,
+					list: []
+				})
+			})
+			// 系统分类列表
+			sysCategory.data.map(item => {
 				this.categoryinfos.push({
 					_id: item._id,
 					name: item.name,

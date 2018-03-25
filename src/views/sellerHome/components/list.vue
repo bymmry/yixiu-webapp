@@ -29,7 +29,7 @@
 		},
 		async mounted () {
 			this.modules.slice(0, 3).map( async item => {
-				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
+				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
 				item.num = res.data.length;
 			})
 			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
