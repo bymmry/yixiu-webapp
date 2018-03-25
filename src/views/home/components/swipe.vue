@@ -19,27 +19,27 @@
     created(){
       let imgData = [
         {
-          imgUrl: 'https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/swipe1.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe1.jpg',
           shopId: '5a96659dda3df52e946142ff',
           type: 'shop'
         },
         {
-          imgUrl: 'https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/swipe2.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe2.jpg',
           shopId: '5aac6e86eb477d0e1d0bfbb4',
           type: 'shop'
         },
         {
-          imgUrl: 'https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/swipe3.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe3.jpg',
           shopId: '5aa27cf18d78c262b3f19937',
           type: 'shop'
         },
         {
-          imgUrl: 'https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/swipe4.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe4.jpg',
           shopId: '5aa4a1a3733e266adc724d1a',
           type: 'shop'
         },
         {
-          imgUrl: 'https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/swipe5.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe5.jpg',
           shopId: '5aaccd67e3dfdd1ad607f283',
           type: 'shop'
         },

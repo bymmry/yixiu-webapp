@@ -32,7 +32,7 @@
       let userData = this.urlDataTurnObj(window.location.href);
       userData = JSON.parse(userData);
       // alert(window.location.href);  
-      if (location.href.indexOf('enterRules') !== -1) {
+      if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
       }else {
         this.$router.push("/home");

@@ -15,7 +15,7 @@
       <Type></Type>
       <HotArea></HotArea>
       <Ticket v-show="false"></Ticket>
-      <Activity v-show="false"></Activity>
+      <Activity></Activity>
       <div class="shopTitle">
         <h3>
           <!-- <sicon name="home" scale="1.6"></sicon> -->

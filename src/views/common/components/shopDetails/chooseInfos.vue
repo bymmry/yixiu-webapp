@@ -23,13 +23,14 @@
         <li>
           <span class="name">预约时间</span>
           <span class="value">
-            <cube-button @click="showTimePicker">请选择时间:{{time}}</cube-button>
+            <cube-button class="valueBorder" @click="showTimePicker">请选择时间:{{time}}</cube-button>
           </span>
         </li>
         <li>
           <span class="name">服务方式</span>
           <span class="value">
             <cube-select
+              class="valueBorder"
               v-model="serWay"
               placeholder="请选择服务方式"
               :options="theServiceWay"
@@ -339,6 +340,11 @@
 
   .chooseInfos .information ul li span.value{
     float: right;
+  }
+  .chooseInfos .information ul li span .valueBorder{
+    width: 150px;
+    color: #eee;
+    border: 1px solid #eee;
   }
   .chooseInfos .information ul li span.value input{
     text-align: right;
