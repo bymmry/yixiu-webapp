@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <img class="header__logo" :src="shopData.cover"/>
+    <img v-if="shopData.cover" class="header__logo" :src="shopData.cover"/>
 		<p>{{ shopData.name }}</p>
   </div>
 </template>

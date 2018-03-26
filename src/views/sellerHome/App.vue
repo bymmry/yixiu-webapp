@@ -2,6 +2,7 @@
   <div class="seller">
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
 			<Header 
+				v-if="shopData"
 				:shopData="shopData"
 			/>
 			<List 
@@ -50,12 +51,18 @@
 				shopData: {}
 			}
 		},
-		async mounted () {
+		watch: {
+			shopData: function(val){
+				this.shopData = val;
+			}
+		},
+		async created () {
 			let userData = JSON.parse(sessionStorage.getItem('userData'));
-
+			console.log(userData);
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
-
-			this.shopData = res.data;
+			if(res.code == 200){
+				this.shopData = res.data;
+			}
 
 			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
 			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
@@ -70,11 +77,21 @@
 				this.isLoading = false;
 			},
 			async deleteData(){
+				// 删除店铺
 				let req = {
-					_id: "5ab7c20ee705c235f6fa0f50"
+					_id: "5ab8cd68d4e7f1497d58d923"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
+
+				//删除手机型号
+				// let req = {
+				// 	_id: "5ab8afbbd4e7f1497d58d906",
+				// 	shop: "5ab8ae16d4e7f1497d58d8fc"
+				// }
+				// let res = await this.$api.sendData('https://m.yixiutech.com/phone/model/delete', req);
+				// console.log(res);
+
 			}
 		}
   }
