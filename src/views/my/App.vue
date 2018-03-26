@@ -246,7 +246,6 @@
     align-items: center;
     right: 0;
     top: 8.5vh;
-    /*width: 100px;*/
     height: 40px;
     background-image: linear-gradient(90deg, rgba(53, 53, 53, 0.2) 0%, rgba(53, 53, 53, 0.1) 100%);
     
