@@ -17,7 +17,7 @@
 				<van-button size="large" @click="openBrand">添加品牌</van-button>
 			</div>
 			
-			<div class="box">
+			<div class="box" v-if="this.brandName">
 				<p>选择型号</p>
 
 				<div class="service">
@@ -50,7 +50,7 @@
 				</div>
 			</div> -->
 
-			<div class="box">
+			<div class="box" v-if="this.brandName">
 				<p>选择问题分类</p>
 				<div class="box-item" v-for="(item, index) in categoryinfos" :key="index">
 					<p @click="showItem(index)"><sicon name="add" scale="2.4"></sicon><span class="box__name">{{ item.name }}</span></p>
@@ -120,7 +120,7 @@ export default {
 	},
 	data () {
 		return {
-			brandName: '',
+			brandName: undefined,
 			name: '添加手机维修服务',
 			brand: {
 				type: 'brand',
@@ -210,6 +210,7 @@ export default {
 			model.data.map(item => {
 				this.modelNames.push(item.name);
 			})
+			
 		},
 		async updateBrand () {
 			this.brandStatus = false;
@@ -234,7 +235,6 @@ export default {
 		},
 		openModel () {
 			this.brandName !== '' ? this.modelStatus = true : this.prompt('请先添加品牌!', 'warn').show();
-			
 		},
 		backParent () {
 			this.brandStatus = false;

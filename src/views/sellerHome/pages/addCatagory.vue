@@ -2,15 +2,14 @@
   <div class="info">
 		<item-header :name="infoName" v-on:backParent="backParent" />
 		
-		<!-- <div class="info__name">
-			<p>分类类型</p>
+		<div class="info__name">
+			<p>系统推荐分类</p>
 			<cube-select
-				v-model="category.type"
-				:options="categoryList"
+				v-model="category.name"
+				:options="categoryName"
 				@change="typeChange"
 			/>
-		</div> -->
-
+		</div>
 		<van-field
 			v-model="category.name"
 			label="分类名称"
@@ -24,7 +23,7 @@
 		/> -->
 
 		<van-field
-			v-model="category.desc"
+			v-model="category.name"
 			label="分类描述"
 			placeholder="请输入分类描述"
 		/>
@@ -54,11 +53,8 @@ export default {
 	},
 	data () {
 		return {
-			categoryList: [
-				{value: 'plate', text: '平台板块'},
-				{value: 'service', text: '维修服务'},
-				{value: 'goods', text: '普通商品'}
-			],
+			categoryList: [],
+			categoryName: [],
 			infoName: '添加手机分类',
 			category: {
 				type: sessionStorage.getItem('category'),
@@ -68,6 +64,17 @@ export default {
 				// shop: '5aa27cf18d78c262b3f19937',
 				shop: JSON.parse(localStorage.getItem('shopData'))._id
 			}
+		}
+	},
+	async created() {
+		let res = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
+		if(res.code == 200){
+			this.categoryList = res.data;
+			this.categoryName = res.data.map( item => {
+				return item.name;
+			})
+			console.log(this.categoryList);
+			
 		}
 	},
 	methods: {
@@ -108,8 +115,7 @@ export default {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 0 15px;
-	margin-top: 50px;
+	padding: 15px 15px;
 	font-size: 14px;
 }
 

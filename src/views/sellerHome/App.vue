@@ -62,6 +62,7 @@
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
 			if(res.code == 200){
 				this.shopData = res.data;
+				console.log(this.shopData);
 			}
 
 			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
@@ -78,11 +79,11 @@
 			},
 			async deleteData(){
 				// 删除店铺
-				let req = {
-					_id: "5ab8cd68d4e7f1497d58d923"
-				}
-				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
-				console.log(res);
+				// let req = {
+				// 	_id: "5ab8ceb0d4e7f1497d58d924"
+				// }
+				// let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
+				// console.log(res);
 
 				//删除手机型号
 				// let req = {
@@ -91,6 +92,13 @@
 				// }
 				// let res = await this.$api.sendData('https://m.yixiutech.com/phone/model/delete', req);
 				// console.log(res);
+
+				//删除分类
+				let req = {
+					_id: "5ab8d946d4e7f1497d58d92a"
+				}
+				let res = await this.$api.sendData('https://m.yixiutech.com/category/delete', req);
+				console.log(res);
 
 			}
 		}
