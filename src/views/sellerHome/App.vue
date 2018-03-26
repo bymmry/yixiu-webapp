@@ -54,7 +54,7 @@
 		methods: {
 			async deleteData(){
 				let req = {
-					_id: "5ab4f800e705c235f6fa0e4c"
+					_id: "5ab5b665e705c235f6fa0e52"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);

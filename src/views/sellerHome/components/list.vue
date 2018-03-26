@@ -12,7 +12,7 @@
 		data () {
 			return {
 				modules: [
-					{ name: '待接单', num: 0, state: 10},
+					{ name: '待接单', num: 0, state: 11},
 					{ name: '维修中', num: 0, state: 12 },
 					{ name: '已完成', num: 0, state: 13 },
 					{ name: '浏览量', num: 0, state: 0 }
