@@ -133,11 +133,11 @@
             icon: "question",
             url: "my/feedback"
           },
-          {
-            name: "测试",
-            icon: "question",
-            url: "my/test"
-          }
+          // {
+          //   name: "测试",
+          //   icon: "question",
+          //   url: "my/test"
+          // }
         ]
       }
     },
