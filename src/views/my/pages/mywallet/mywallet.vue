@@ -18,7 +18,7 @@
     </van-pull-refresh>
     <div class="funcbtn">
       <!-- <div>转出</div> -->
-      <div class="outmoney">兑换</div>
+      <div class="outmoney" @click="enterIcons">兑换</div>
     </div>
   </div>
 
@@ -44,38 +44,8 @@
       prepage(){
         this.$router.push({ path: "/my" })
       },
-
-      //更新
-      async onRefresh(type){
-        const toast = this.$createToast({
-          time: 0,
-          txt: '正在更新'
-        })
-        toast.show();
-
-
-        //更新需要进行的操作
-        //传递的新数据
-        getuserinforByopenId(this.userinfo.wx.openid)
-        .then(res => {
-          toast.hide()
-          const tip = this.$createToast({
-            txt: '更新成功!',
-            type: 'correct',
-            time: 1000
-          })
-          tip.show();
-          this.isLoading = false;
-          this.userinfo = res.data;
-
-        },(err => {
-          const tip = this.$createToast({
-            txt: '更新失败!',
-            type: 'fail',
-            time: 1000
-          })
-          tip.show()
-        }))
+      enterIcons(){
+        this.functionunavailable()
       },
       //获取用户信息
       async getUserinfo(userData){

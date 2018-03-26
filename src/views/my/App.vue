@@ -32,7 +32,7 @@
         </div>
       </div>
       
-      <div class="rightTag">
+      <div class="rightTag" @click="enterIcons">
         <div class="iconBox">
           <sicon name="my-icons" scale="2.7" color="#fff"></sicon>
         </div>
@@ -152,6 +152,9 @@
       prepage(){
         this.$router.push({ path: "/home"})
       },
+      enterIcons(){
+        this.functionunavailable()
+      },
       //点击功能后进行跳转
       async changepage(url){
         if (this.loggedin===false) {
@@ -206,11 +209,12 @@
   }
   .userbg{
     height: 21vh;
+    min-height: 130px;
     border: 0.1vw solid #e9e9e9;
     -moz-box-shadow:0vw 1vh 4vw #e9e9e9;
     -webkit-box-shadow:0vw 1vh 4vw #e9e9e9;
     box-shadow:0vw 1vh 4vw #e9e9e9;
-    background-image: linear-gradient(90deg, rgb(126, 177, 251) 0%, rgb(189, 149, 231) 30%, rgb(254, 123, 185) 60% , rgb(254, 176, 138) 100%);
+    background-image: linear-gradient(90deg, #48c6ef 0%, #6f86d6 100%);
   }
   .returnHome{
     display: flex;
