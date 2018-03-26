@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="shopMainContent">
-            <p><span><b>营业时间：</b>每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
+            <p><span><b>营业时间：</b>每日{{shopInfo.businessHours[0]}}</span></p>
             <p>
               <span>
                 <b>联系方式：</b>

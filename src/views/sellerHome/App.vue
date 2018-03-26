@@ -17,7 +17,7 @@
 
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
-		 <!-- <button @click="deleteData">删除</button> -->
+		 <button @click="deleteData">删除</button>
   </div>
 </template>
 
@@ -79,11 +79,11 @@
 			},
 			async deleteData(){
 				// 删除店铺
-				// let req = {
-				// 	_id: "5ab8ceb0d4e7f1497d58d924"
-				// }
-				// let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
-				// console.log(res);
+				let req = {
+					_id: "5ab8d008d4e7f1497d58d925"
+				}
+				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
+				console.log(res);
 
 				//删除手机型号
 				// let req = {
@@ -94,11 +94,11 @@
 				// console.log(res);
 
 				//删除分类
-				let req = {
-					_id: "5ab8d946d4e7f1497d58d92a"
-				}
-				let res = await this.$api.sendData('https://m.yixiutech.com/category/delete', req);
-				console.log(res);
+				// let req = {
+				// 	_id: "5ab8d946d4e7f1497d58d92a"
+				// }
+				// let res = await this.$api.sendData('https://m.yixiutech.com/category/delete', req);
+				// console.log(res);
 
 			}
 		}

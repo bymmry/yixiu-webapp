@@ -99,6 +99,7 @@
         getPhoneProblem(shopId).then((res) => {
           if(res.code === 200){
             this.items = res.data;
+            this.parent = [];
             if (this.parent.length === this.items.length){
 
             }else {
@@ -128,6 +129,7 @@
 				  message: '加载中...'
         });
         toast.show();
+        // this.parent = [];
         getChildrenProblem(req).then(res => {
           this.itemsChildren = res.data;
           this.parentIndex = index;

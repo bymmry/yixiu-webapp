@@ -40,11 +40,15 @@
         </li>
         <li v-if="isShowAddress">
           <span class="name">你的地址:</span>
-          <span class="value">
-            <input placeholder="请输入你的地址" v-model="address" />
+          <span class="value" @click="getAddress">
+            <input readonly="readonly" placeholder="请输入你的地址" v-model="address" />
           </span>
         </li>
       </ul>
+      <cube-popup type="my-popup" :center="true" ref="getAddress">
+        <the-address v-on:returnAddress="getTheAddress"></the-address>
+        <cube-button @click="cancle">取消</cube-button>
+      </cube-popup>
       <!-- <div id="input">
         <van-field
           label="手机号"
@@ -105,6 +109,7 @@
 <script>
   import { CouponCell, CouponList, Popup, Toast, Button, Field } from 'vant';
   import sureOrder from "../sureOrder"
+  import theAddress from '../theAddress'
   const coupon = {
     available: 1,
     discount: 0,
@@ -221,7 +226,8 @@
       [CouponList.name]: CouponList,
       [Popup.name]: Popup,
       [Toast.name]: Toast,
-      sureOrder
+      sureOrder,
+      theAddress
     },
     methods: {
       goBack: function () {
@@ -240,8 +246,10 @@
         this.coupons.push(this.coupon);
       },
       selectServiceWay: function(value, index, text) {
-        if(value == "快递维修" || value == "上门维修"){
+        if(value == "线上快递" || value == "上门维修"){
           this.isShowAddress = true;
+        }else {
+          this.isShowAddress = false;
         }
         this.setOrderData();
       },
@@ -305,6 +313,21 @@
         this.choseTime = "";
         timePicker.setTime(time)
         timePicker.show()
+      },
+      getAddress: function(){
+        let address = this.$refs.getAddress;
+        address.show();
+      },
+      getTheAddress: function(address){
+        console.log(address);
+
+        this.address = address.info;
+        let add = this.$refs.getAddress;
+        add.hide();
+      },
+      cancle: function(){
+        let address = this.$refs.getAddress;
+        address.hide();
       }
     }
   };
