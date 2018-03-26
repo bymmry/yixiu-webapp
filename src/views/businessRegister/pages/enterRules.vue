@@ -1,11 +1,11 @@
 <template>
   <div class="rules">
 		<p class="rules__title">
-			<span class="active" @click="back"></span>
-			<sicon name="back" scale="3"></sicon>
+			<!-- <span class="active" @click="back"></span>
+			<sicon name="back" scale="3"></sicon> -->
 			翼修商家入驻须知
 		</p>
-
+		
 		<div class="content">
 			<p class="content__clause">第一章 入驻须知 </p>
 			<p>翼修暂未授权任何机构进行代理招商服务，入驻申请流程及相关的收费说明均以官方招商页面为准。</p>

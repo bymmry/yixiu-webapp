@@ -59,11 +59,11 @@
 							<input type="text" v-model="listItem.name" placeholder="服务的名称" />
 							<input type="text" v-model="listItem.price" placeholder="服务的价格"/>
 						</p>
-						<van-button size="large" @click="addService(index, item._id)">添加服务</van-button>
+						<!-- <van-button size="large" @click="addService(index, item._id)">添加服务</van-button> -->
 					</div>
 					
 				</div>
-				<van-button size="large" @click="openCategory">添加服务分类</van-button>
+				<!-- <van-button size="large" @click="openCategory">添加服务分类</van-button> -->
 
 				<van-button size="large" @click="submit">提交</van-button>
 			</div>
@@ -166,7 +166,9 @@ export default {
 			})
 			toast.hide();
 			this.prompt('更新成功!', 'correct').show();
-			this.$router.push('/sellerHome');
+			setTimeout(() => {
+				this.$router.push('/sellerHome');
+			}, 2000);
 		},
 		sendMsg (index) {
 			this.modelRes.push(this.models[ index ]._id);

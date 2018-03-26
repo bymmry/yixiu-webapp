@@ -166,13 +166,13 @@ export default {
 		toast.show();
 		this.updateBrand();
 		this.updateCategory();
-		let sysService = await this.$api.sendData('https://m.yixiutech.com/service/shop', {});
-		this.sysServices = sysService.data;
-		this.sysServices.map(item => {
-			item.category !== null && this.categoryinfos.map(categoryItem => {
-				categoryItem.name == item.category.name ? categoryItem.list.push({ name: item.name, price: '', category: item.category._id }) : null;
-			})
-		})
+		// let sysService = await this.$api.sendData('https://m.yixiutech.com/service/shop', {});
+		// // this.sysServices = sysService.data;
+		// this.sysServices.map(item => {
+		// 	item.category !== null && this.categoryinfos.map(categoryItem => {
+		// 		categoryItem.name == item.category.name ? categoryItem.list.push({ name: item.name, price: '', category: item.category._id }) : null;
+		// 	})
+		// })
 		let ownServices = await this.$api.sendData('https://m.yixiutech.com/service/shop', {shop: this.shop});
 
 		toast.hide();
@@ -254,7 +254,7 @@ export default {
 		},
 		async updateCategory (data) {
 			this.categoryStatus = false;
-			let sysCategory = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
+			// let sysCategory = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
 			let ownCategory = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'service', shop: this.shop});
 			
 			this.categoryinfos = [];
@@ -268,14 +268,14 @@ export default {
 				})
 			})
 			// 系统分类列表
-			sysCategory.data.map(item => {
-				this.categoryinfos.push({
-					_id: item._id,
-					name: item.name,
-					show: false,
-					list: []
-				})
-			})
+			// sysCategory.data.map(item => {
+			// 	this.categoryinfos.push({
+			// 		_id: item._id,
+			// 		name: item.name,
+			// 		show: false,
+			// 		list: []
+			// 	})
+			// })
 		},
 		async cancel (data) {
 			let zData = data.split('&');
@@ -374,8 +374,12 @@ export default {
 
 .concrete-service {
 	display: flex;
+	width: auto;
 	justify-content: space-between;
 	align-items: center;
+}
+.concrete-service input{
+	width: 40%;
 }
 
 .box .svg-icon {
