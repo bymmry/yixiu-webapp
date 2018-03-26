@@ -153,7 +153,7 @@
         LoadinggetMessaga: false,
         theTime:60,
         getMessaga: "点击获得手机验证码",
-        updataBtnShop: true ,
+        updataBtnShop: true,
         Etag:"",
         changed: false, //是否正在修改信息
         changedPassword: false, //是否正在修改密码
@@ -278,6 +278,9 @@
         if (type==="pass") {
           this.changedPassword = true;
         }else if(type==="info"){
+          if (this.userInfo.mobile != "") {
+            this.updataBtnShop = false;
+          }
           this.changed = true;
           this.radio = this.userInfo.sex === "男"? "man" : "woman",
           this.newbir = this.userInfo.birthday;

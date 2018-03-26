@@ -1,33 +1,49 @@
 <template>
   <div class="my-container">
-    <van-nav-bar
+    <!-- <van-nav-bar
       title="个人中心"
       left-text="返回"
       fixed
       left-arrow
       @click-left="prepage"
-    />
+    /> -->
     <!-- 顶部留白 -->
-    <div class="topblank"></div>
+    <!-- <div class="topblank"></div> -->
     <cube-scroll class="scroll">
     <!-- 个人中心-信息 -->
     <!-- 顶部背景图 -->
-    <div class="userbg"></div>
+    <div class="userbg">
+      <div class="returnHome" @click="prepage">
+        <sicon name="find-leftArr" scale="1.7" color="#FCFCFC"></sicon>
+        &nbsp;首页
+      </div>
+      <!-- 用户头像及登录注册 -->
+      <div class="user-area">
+        <div class="user-profile">
+          <img :src="userInfo.wx.avatarUrl">
+        </div>
+        <div class="usermessage" v-if="!loggedin">
+          <router-link id="login" to="/login">登录</router-link>
+          <div>|</div>
+          <router-link id="register" to="/register">注册</router-link>
+        </div>
+        <div class="usermessage username" v-else>
+          {{ userInfo.name }}
+        </div>
+      </div>
+      
+      <div class="rightTag" @click="enterIcons">
+        <div class="iconBox">
+          <sicon name="my-icons" scale="2.7" color="#fff"></sicon>
+        </div>
+        <div class="integralBox">
+          {{ userInfo.points }} 积分
+        </div>
+      </div>
 
-    <!-- 用户头像及登录注册 -->
-    <div class="user-area">
-      <div class="user-profile">
-        <img :src="userInfo.wx.avatarUrl">
-      </div>
-      <div class="usermessage" v-if="!loggedin">
-        <router-link id="login" to="/login">登录</router-link>
-        <div>|</div>
-        <router-link id="register" to="/register">注册</router-link>
-      </div>
-      <div class="usermessage username" v-else>
-        {{ userInfo.name }}
-      </div>
     </div>
+
+    
     <!-- 个人中心-功能菜单 -->
     <div class="user-menu">
       <van-cell-group>
@@ -117,11 +133,11 @@
             icon: "question",
             url: "my/feedback"
           },
-          {
-            name: "测试",
-            icon: "question",
-            url: "my/test"
-          }
+          // {
+          //   name: "测试",
+          //   icon: "question",
+          //   url: "my/test"
+          // }
         ]
       }
     },
@@ -135,6 +151,9 @@
       //返回首页
       prepage(){
         this.$router.push({ path: "/home"})
+      },
+      enterIcons(){
+        this.functionunavailable()
       },
       //点击功能后进行跳转
       async changepage(url){
@@ -167,7 +186,6 @@
     },
     activated() {
       let userData = this.getUserInfo();
-
       this.getUserinfo(userData.wx.openid)
     }
   }
@@ -183,7 +201,6 @@
   }
   .my-container{
     padding: 0.3vh 0vw 5vh 0vw;
-    /* margin-bottom: 70px; */
     background: #fff;
     height: 91vh;
   }
@@ -191,27 +208,33 @@
     margin-top: 45.6px;
   }
   .userbg{
-    height: 24vh;
+    height: 21vh;
+    min-height: 130px;
     border: 0.1vw solid #e9e9e9;
-    border-radius: 5px;
     -moz-box-shadow:0vw 1vh 4vw #e9e9e9;
     -webkit-box-shadow:0vw 1vh 4vw #e9e9e9;
     box-shadow:0vw 1vh 4vw #e9e9e9;
-    background: url(https://paraslee-img-bucket-1253369066.cos.ap-chengdu.myqcloud.com/lattice.jpg);
+    background-image: linear-gradient(90deg, #48c6ef 0%, #6f86d6 100%);
+  }
+  .returnHome{
+    display: flex;
+    width: 20vw;
+    padding: 15px 10px;
+    padding-bottom: 10px;
+    color: #FCFCFC;
   }
   .user-area{
     display: flex;
-    flex-direction: column;
-    align-items:center;
-    margin-top: -8vw;
-    margin-bottom: 7vh;
+    flex-direction: flex-start;
+    margin-top: 3.5vw;
   }
   .user-profile{
-    width: 16vw;
-    height: 16vw;
+    width: 14vw;
+    height: 14vw;
     border-radius: 50%;
-    border: 0.1vw solid #b6baba;
+    border: 1px solid #fff;
     margin-bottom: 2vh;
+    margin-left: 4vw;
     -moz-box-shadow:0vw 0.5vh 3vw #b6baba;
     -webkit-box-shadow:0vw 0.5vh 3vw #b6baba;
     box-shadow:0vw 0.5vh 3vw #b6baba;
@@ -221,15 +244,46 @@
     width: 100%;
     height: 100%;
   }
+  .rightTag{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 0;
+    top: 8.5vh;
+    height: 40px;
+    background-image: linear-gradient(90deg, rgba(53, 53, 53, 0.2) 0%, rgba(53, 53, 53, 0.1) 100%);
+    
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
+  .iconBox{
+    margin-top: 2px;
+    margin-left: 8px;
+    margin-right: 8px;
+  }
+  .integralBox{
+    font-size: 15px;
+    color: #F3F3F3;
+    margin-right: 8px;
+  }
   .usermessage{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    margin-left: 5vw;
+    margin-top: 13px;
     min-width: 25vw;
-    color: #42535e
+    max-width: 75vw;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #FCFCFC;
+    font-size: 5vw;
+  }
+  .usermessage a{
+    margin: 0 5px;
   }
   .username{
     justify-content:center;
+    font-size: 6vw;
   }
   .user-menu{
     padding-bottom: 30px;
