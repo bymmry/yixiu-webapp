@@ -58,7 +58,7 @@
 			</div>
 
 		</div>
-		<div v-if="details.state == 10">
+		<div v-if="details.state == 11">
 			<button class="footer" @click="takeOrder">接单</button>
 		</div>
 		<div v-else-if="details.state == 12">
