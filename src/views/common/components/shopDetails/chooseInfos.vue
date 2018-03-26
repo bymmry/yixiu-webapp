@@ -23,7 +23,7 @@
         <li>
           <span class="name">预约时间</span>
           <span class="value">
-            <cube-button class="valueBorder" @click="showTimePicker">请选择时间:{{time}}</cube-button>
+            <cube-button class="valueBorder" @click="showTimePicker">{{choseTime}}{{time}}</cube-button>
           </span>
         </li>
         <li>
@@ -135,6 +135,7 @@
         theServiceWay: [],
         time: "", // 时间选择
         timeNum: "",
+        choseTime: "请选择时间",
         remack: "", //备注
         isShowAddress: false,
         address: "",
@@ -210,7 +211,6 @@
         return val;
       },
       time: function(val){
-        console.log(val);
         this.setOrderData();
       }
     },
@@ -302,7 +302,7 @@
             }).show()
           }
         })
-
+        this.choseTime = "";
         timePicker.setTime(time)
         timePicker.show()
       }
@@ -314,7 +314,7 @@
   .chooseInfos .information{
     width: auto;
     height: auto;
-    max-height: 41vh;
+    max-height: 44vh;
     overflow-y: scroll;
   }
   .chooseInfos .information ul{
@@ -342,6 +342,11 @@
     float: right;
   }
   .chooseInfos .information ul li span .valueBorder{
+    padding-right: 28px;
+    color: red!important;
+  }
+  .chooseInfos .information ul li span .valueBorder::after{
+    border: none;
     /* width: 150px; */
     /* color: #eee; */
     /* border: 1px solid #eee; */

@@ -11,7 +11,9 @@
       <div class="shopDes">
         <div class="shopMain">
           <div class="shopMainImg">
-            <img :src="shopInfo.cover" alt="">
+            <div class="imgBox">
+              <img :src="shopInfo.cover" alt="">
+            </div>
           </div>
           <div class="shopMainContent">
             <p><span><b>营业时间：</b>每日{{shopInfo.businessHours[0]}}{{shopInfo.businessHours[1]}}</span></p>
@@ -22,7 +24,7 @@
               </span>
             </p>
             <p><span><b>服务方式：</b></span><span class="serWays"><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
-            <p></p>
+            <!-- <p></p> -->
             <!-- <p><span>店铺地址：</span></p> -->
           </div>
         </div>
@@ -267,24 +269,38 @@
 
   .shopDetail .shopDes .shopMain{
     width: auto;
-    height: 14vh;
+    height: 10vh;
+    min-height: 65px;
     padding: 0 10px;
     display: flex;
   }
   .shopDetail .shopDes .shopMain .shopMainImg{
-    flex: 3;
+    flex: 2;
+    overflow: hidden;
     padding-right: 10px;
+  }
+  .shopDetail .shopDes .shopMain .shopMainImg .imgBox{
+    width: 60px;
+    height: 60px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid #aaa;
+    overflow: hidden;
   }
   .shopDetail .shopDes .shopMain .shopMainImg img{
     width: 100%;
     height: 100%;
   }
   .shopDetail .shopDes .shopMain .shopMainContent{
-    flex: 4;
+    flex: 7;
     height: 100%;
   }
   .shopDetail .shopDes .shopMain .shopMainContent p{
-    height: 25%;
+    max-width: 230px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    height: 33%;
     font-size: 13px;
   }
   .shopDetail .shopDes .shopMain .shopMainContent p span.serWays{
@@ -294,7 +310,8 @@
     /* text-overflow:ellipsis; */
     /* white-space:nowrap; */
    }
- .shopDetail .shopDes p.address{
+  .shopDetail .shopDes p.address{
+    border-top: 1px solid #eee;
     width: auto;
     font-size: 13px;
     padding: 5px 10px;
@@ -304,6 +321,13 @@
   }
   span > b{
     color: #f85;
+  }
+  .shopDetail .shopDes p.address span > b{
+    color: #666;
+    font-weight: 700;
+  }
+  .shopDetail .shopDes p.address span{
+    color: #999;
   }
 
   .shopDetail  .steps{
