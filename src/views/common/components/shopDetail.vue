@@ -21,8 +21,8 @@
                 <a :href="telContactNumber">{{shopInfo.contactNumber}}</a>
               </span>
             </p>
-            <p><span><b>服务方式：</b></span></p>
-            <p><span class="serWays"><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
+            <p><span><b>服务方式：</b></span><span class="serWays"><span v-for="(ser,i) in serviceWays" :key="i">{{ser}} </span></span></p>
+            <p></p>
             <!-- <p><span>店铺地址：</span></p> -->
           </div>
         </div>
@@ -288,7 +288,7 @@
     font-size: 13px;
   }
   .shopDetail .shopDes .shopMain .shopMainContent p span.serWays{
-    display: inline-block;
+    /* display: inline-block; */
     height: 100%;
     overflow:hidden;
     /* text-overflow:ellipsis; */

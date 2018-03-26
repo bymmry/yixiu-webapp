@@ -193,6 +193,10 @@
     font-size: 15px;
     height: 20px;
     line-height: 20px;
+    max-width: 130px;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
   }
   .listView .shopMain .shopMainContent p, .shopDes .shopMain .shopMainContent p{
     height: 20px;
