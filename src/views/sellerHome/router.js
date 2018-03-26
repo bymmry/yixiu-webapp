@@ -15,11 +15,12 @@ import viewServices from './pages/viewServices.vue'
 import serviceDetail from './pages/serviceDetail.vue'
 import deletePhone from './pages/deletePhone.vue'
 import updateService from './pages/updateService.vue'
+import entry from './pages/chooseEntry.vue'
 
 
 export default [{
   path: '/sellerHome',
-  // redirect: '/enterRules?nickName=Prince、&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/ISOnrKibvcxHgSnJpwqBeicoWdPz3DheO5mj2nicwgBhf5MALRNQHBcXJ6Qg1vTaMjVpsRmnGPTV3fOxqXChhznfQ/0&openid=oFosP5Uq0wD3hyAmO07jSLMylTwk',
+  // redirect: '/sellerHome?nickName=Prince、&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/ISOnrKibvcxHgSnJpwqBeicoWdPz3DheO5mj2nicwgBhf5MALRNQHBcXJ6Qg1vTaMjVpsRmnGPTV3fOxqXChhznfQ/0&openid=oFosP5Uq0wD3hyAmO07jSLMylTwk',
   component: App,
   meta: {
     keepAlive: true // 需要被缓存
@@ -94,4 +95,8 @@ export default [{
 {
   path: '/updateService',
   component: updateService
+}, 
+{
+  path: '/chooseEntry',
+  component: entry
 }]

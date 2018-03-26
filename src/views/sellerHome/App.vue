@@ -1,23 +1,27 @@
 <template>
   <div class="seller">
-		<Header 
-			:shopData="shopData"
-		/>
-		<List 
-			:shopData="shopData"
-		/>
+		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+			<Header 
+				:shopData="shopData"
+			/>
+			<List 
+				:shopData="shopData"
+			/>
+			<Content v-for="(item, index) in content" :key="index"
+				:name="item.name"
+				:icon="item.icon"
+				:link="item.link"
+			/>
+		</van-pull-refresh>
 
-		 <Content v-for="(item, index) in content" :key="index"
-		 	:name="item.name"
-			:icon="item.icon"
-			:link="item.link"
-		 />
+		 
 		 <!-- 删除店铺信息按钮 慎用 -->
 		 <!-- <button @click="deleteData">删除</button> -->
   </div>
 </template>
 
 <script>
+	import { PullRefresh } from 'vant';
 	import Header from './components/header.vue'
 	import List from './components/list.vue'
 	import Content from './components/content.vue'
@@ -25,12 +29,14 @@
     components: {
 			Header,
 			List,
-			Content
+			Content,
+			[PullRefresh.name]: PullRefresh
 		},
 		data () {
 			return {
 				isRegister: true,
 				state: '',
+				isLoading: false,
 				content: [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
@@ -45,13 +51,24 @@
 			}
 		},
 		async mounted () {
-			this.shopData = JSON.parse(localStorage.getItem('shopData'))
+			let userData = JSON.parse(sessionStorage.getItem('userData'));
+
+			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
+
+			this.shopData = res.data;
 
 			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
 			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
 		},
 		// 删除店铺信息  慎用
 		methods: {
+			async onRefresh() {
+				let userData = JSON.parse(sessionStorage.getItem('userData'));
+				let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
+				this.shopData = res.data;
+				this.$toast('刷新成功');
+				this.isLoading = false;
+			},
 			async deleteData(){
 				let req = {
 					_id: "5ab5b665e705c235f6fa0e52"
