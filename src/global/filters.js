@@ -115,13 +115,13 @@ let filters = {
     // origin 从第一个 { 开始 通过 & 分割
     let urlData = decodeURIComponent(url);
     let origin = urlData.substr(urlData.indexOf('?') + 1).split('&');
+
     let userInfor = {};
 
     for(let userData in origin){
       let originData = origin[userData].split("=")
-      userInfor[originData[0]] = originData[1].replace(/"/g, '');
+      userInfor[originData[0]] = originData[1].replace(/"/g, '').split("/")[0];
     }
-
     //返回一个JSON字符串
     return JSON.stringify(userInfor);
   },
