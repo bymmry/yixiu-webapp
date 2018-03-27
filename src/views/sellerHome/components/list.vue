@@ -9,14 +9,11 @@
 
 <script>
   export default {
+		props: {
+			modules: Array
+		},
 		data () {
 			return {
-				modules: [
-					{ name: '待接单', num: 0, state: 11},
-					{ name: '维修中', num: 0, state: 12 },
-					{ name: '已完成', num: 0, state: 13 },
-					{ name: '浏览量', num: 0, state: 0 }
-				],
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				state: ''
 			}
@@ -28,11 +25,11 @@
 			}
 		},
 		async mounted () {
-			this.modules.slice(0, 3).map( async item => {
-				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
-				item.num = res.data.length;
-			})
-			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
+			// this.modules.slice(0, 3).map( async item => {
+			// 	let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
+			// 	item.num = res.data.length;
+			// })
+			// this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
 		}
   }
 </script>

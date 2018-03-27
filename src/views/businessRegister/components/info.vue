@@ -349,7 +349,7 @@ export default {
 				return;
 			}
 			wait.show();
-			this.$router.push('/wait');
+			this.$router.push('/sellerHome');
 		},
 		start () {
 			this.startPicker.show()

@@ -2,9 +2,8 @@
   <div class="order-item" @click="detail">
     <img :src="data.user.wx.avatarUrl" class="order-item__img" alt="" />
     <div class="order-item__msg">
-      <p>昵称 : {{ data.user.wx.nickName }}</p>
-      <p>城市 : {{ data.user.wx.province }} {{ data.user.wx.city }}</p>
-      <p>维修类型 : {{ data.remark }}</p>
+      <p>昵称 : {{ data.user.name }}</p>
+      <p>维修名称 : {{ data.service[0].name }}</p>
     </div>
 	</div>
 </template>
@@ -13,6 +12,9 @@
 export default {
   props:{
     data: Object
+  },
+  mounted () {
+    console.log(this.data);
   },
   methods: {
     detail () {

@@ -201,6 +201,7 @@ export default {
 				res.code == 200 ? this.prompt(`添加${res.data.name}成功!`, 'correct').show() : alert(res.errMsg);
 			})
 			toast.hide();
+			this.$router.push('/sellerHome');
 		},
 		async updateModel () {
 			this.modelStatus = false;

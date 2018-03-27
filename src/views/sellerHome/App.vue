@@ -7,6 +7,7 @@
 			/>
 			<List 
 				:shopData="shopData"
+				:modules="modules"
 			/>
 			<Content v-for="(item, index) in content" :key="index"
 				:name="item.name"
@@ -26,6 +27,7 @@
 	import Header from './components/header.vue'
 	import List from './components/list.vue'
 	import Content from './components/content.vue'
+	import defaults from '@/assets/default.jpg'
   export default {
     components: {
 			Header,
@@ -48,6 +50,13 @@
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' },
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 				],
+				shop: JSON.parse(localStorage.getItem('shopData'))._id,
+				modules: [
+					{ name: '待接单', num: 0, state: 11},
+					{ name: '维修中', num: 0, state: 12 },
+					{ name: '已完成', num: 0, state: 13 },
+					{ name: '浏览量', num: 0, state: 0 }
+				],
 				shopData: {}
 			}
 		},
@@ -60,20 +69,39 @@
 			let userData = JSON.parse(sessionStorage.getItem('userData'));
 			console.log(userData);
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
-			if(res.code == 200){
-				this.shopData = res.data;
-				console.log(this.shopData);
+			if(res.code !== 200){
+				// this.prompt(res.data, 'error').show();
+				this.shopData = { name: '翼修商家', cover: defaults }
+				return;
 			}
+			this.shopData = res.data;
 
 			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
 			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
 		},
 		// 删除店铺信息  慎用
+		async mounted () {
+			this.modules.slice(0, 3).map( async item => {
+				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
+				item.num = res.data.length;
+			})
+			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
+		},
 		methods: {
 			async onRefresh() {
 				let userData = JSON.parse(sessionStorage.getItem('userData'));
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
-				this.shopData = res.data;
+				if (res.code !== 200) {
+					// this.prompt(res.data, 'error').show();
+					this.shopData = { name: '翼修商家', cover: defaults };
+				} else {
+					this.shopData = res.data;
+				}
+				this.modules.slice(0, 3).map( async item => {
+					let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
+					item.num = res.data.length;
+				})
+				this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
 				this.$toast('刷新成功');
 				this.isLoading = false;
 			},

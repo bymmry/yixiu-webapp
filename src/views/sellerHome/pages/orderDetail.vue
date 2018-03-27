@@ -1,54 +1,63 @@
 <template>
-  <div class="detail">
-		<item-header
-			:name="infoName"
-		/>
-		<div class="user">
-			<img :src="details.user.wx.avatarUrl" class="user__img" alt="" />
-			<div class="user__msg">
-				<p>昵称 : {{ details.user.wx.nickName }}</p>
-				<p>城市 : {{ details.user.wx.province }} {{ details.user.wx.city }}</p>
+  <div class="quality">
+		<div class="header">
+			<div class="back" @click="back"></div>
+			<sicon name="back" scale="3"></sicon>
+			<p class="header__title">订单详情</p>
+		</div>
+		<div class="shadow"></div>
+		<div class="content">
+			<p class="num">
+				<span>翼修维修第xxxxxxx份报告</span>
+				<span>No.956541235787</span>
+			</p>
+			<p class="content__title">{{ details.phoneModel.name }}</p>
+			<p class="content__desc" v-for="(item, index) in details.service" :key="index">
+				{{ item.name }} 
+				<span>/维修问题{{ index+1 }}</span>
+			</p>
+			<img :src="serviceIcon" class="service-icon" alt="">
+			<p class="content__desc">
+				{{ new Date(details.appointment).getFullYear() }}/
+				{{ new Date(details.appointment).getMonth() }}/
+				{{ new Date(details.appointment).getDate() }}  
+				{{ new Date(details.appointment).getHours() }} : 
+				{{ new Date(details.appointment).getMinutes() }}
+				<span>/预约时间</span>
+			</p>
+			<p class="content__desc">{{ details.phoneModel.color[0] }} <span>/颜色</span></p>
+			<p class="content__desc">{{ details.user.name }} <span>/用户名</span></p>
+			<p class="content__desc">{{ details.phone }} <span>/联系方式</span></p>
+			<p class="content__desc">{{ details.serviceWay }} <span>/服务方式</span></p>
+			<p class="content__desc">{{ details.address }} <span>/用户地址</span></p>
+			<!-- <p class="content__desc"> {{ data.info ? data.info.productParam.network.join(',') : null }} <span>/网络制式</span></p> -->
+		</div>
+		
+		<div class="content spec">
+			<sicon name="shandian" scale="6"></sicon>
+			<div class="desc">
+				<p class="desc__title">翼修专业维修</p>
+				<p class="desc__content">为您的手机保驾护航</p>
 			</div>
 		</div>
-		<div class="service">
-			<van-field
-				v-model="details.phoneModel.name"
-				label="手机型号"
-				disabled
-			/>
 
-			<van-field
-				v-model="details.phoneModel.desc"
-				label="描述"
-				disabled
-			/>
+		<div class="content">
+			<div class="expert">
+				<div class="content__sum">
+					<p class="sum__title">用户备注</p>
+					<p class="sum__content">{{ details.remark }}</p>
+				</div>
+			</div>
+		</div>
 
-			<van-field
-				v-model="details.phoneModel.color[0]"
-				label="手机颜色"
-				disabled
-			/>
-
-			<van-field
-				v-model="details.service[0].name"
-				label="维修服务"
-				disabled
-			/>
-
-			<van-field
-				v-model="details.service[0].desc"
-				label="维修详情"
-				disabled
-			/>
-
-			<div v-show="details.state == 12">
+		<div class="content" v-show="details.state == 12">
 				<van-field
 					v-model="details.trackingNumber"
 					label="快递单号"
 				/>
 
 				<div class="info">
-					<p>快递公司</p>
+					<p>快递公司</p>	
 					<cube-select
 						v-model="details.trackingCom"
 						:options="trackingComSec" 
@@ -57,40 +66,49 @@
 
 			</div>
 
-		</div>
 		<div v-if="details.state == 11">
-			<button class="footer" @click="takeOrder">接单</button>
+			<van-button size="large" class="footer" @click="takeOrder">接单</van-button>
 		</div>
 		<div v-else-if="details.state == 12">
-			<button class="footer" @click="finish">完成</button>
+			<van-button size="large" class="footer" @click="finish">完成</van-button>
 		</div>
-  </div>
+	</div>
 </template>
 
 <script>
-import ItemHeader from '../components/itemHeader'
-import { Field } from 'vant'
+import itemHeader from '../components/itemHeader'
+import service from '@/assets/service.png'
+import { Field, Button } from 'vant'
 export default {
-	components: {
-		ItemHeader,
-		[Field.name]: Field
+	props: {
+		data: Object
 	},
-  async mounted () {
-		this.details = JSON.parse(localStorage.getItem('detail'));
-
-		let res = await this.$api.getData('https://m.yixiutech.com/tracking/com');
-		res.data.map(item => {
-			this.trackingComSec.push({ text: item.com, value: item.no })
-		})
+	components: {
+		itemHeader,
+		[Button.name]: Button,
+		[Field.name]: Field
 	},
 	data () {
 		return {
 			details: {},
 			infoName: '订单详情',
-			trackingComSec: []
+			trackingComSec: [],
+			serviceIcon: service
 		}
 	},
-	methods: {
+	async mounted () {
+		this.details = JSON.parse(localStorage.getItem('detail'));
+
+		console.log(this.details);
+		let res = await this.$api.getData('https://m.yixiutech.com/tracking/com');
+		res.data.map(item => {
+			this.trackingComSec.push({ text: item.com, value: item.no })
+		})
+	},
+  methods: {
+		back () {
+			this.$router.go(-1);
+		},
 		async takeOrder () {
 			let data = { _id: this.details._id, state: 12 }
 			const toast = this.$createToast({
@@ -122,55 +140,158 @@ export default {
 </script>
 
 <style scoped>
-.user {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 2%;
-  border-bottom: 1px solid gray;
+
+.header {
+	padding: 8px;
+	display: flex;
+	align-items: center;
+	background: #ffbd5c;
 }
 
-.service span {
-	display: inline-block;
-	width: 150px;
+.service-icon {
+	width: 40%;
+	position: absolute;
+	right: 0;
+	top: 84px;
 }
 
-.user .user__img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  margin-right: 10px;
+.header__title {
+	color: #fff;
+	font-size: 20px;
+	margin-left: 20px;
+	letter-spacing: 4px;
 }
 
-.service {
+.back {
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 8;
+}
+
+.cube-select {
+		width: 60%;
+    margin-left: 30px;
+}
+
+.quality {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background: #eee;
+}
+
+.shadow {
+	width: 100%;
+	height: 150px;
+	position: absolute;
+	left: 0;
+	top: 48px;
+	background: -webkit-linear-gradient(-90deg,rgba(2,181,157,.85) 2%,rgba(22,146,183,.85) 100%);
+	z-index: 0;
+}
+
+.content {
+	width: 82%;
+	position: relative;
+	margin: 20px auto 10px auto;
 	padding: 4%;
+	background: #fff;
+	z-index: 2;
 }
 
 .footer {
-	width: 100%;
-	padding: 4vh;
 	color: #fff;
-	background: #f44;
-	border: none;
-	position: fixed;
-	bottom: 0;
-	z-index: 10;
+	background: red;
+}
+
+.spec {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+.spec .desc {
+	margin-left: 5%;
+}
+
+.content .num {
+	color: gray;
+	font-size: 12px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.content .content__title {
+	font-size: 26px;
+}
+
+
+
+.content .content__desc {
+	font-size: 14px;
+}
+
+.content__desc span {
+	color: gray;
+}
+
+.desc__title {
+	font-size: 20px;
+	color: rgba(2,181,157,.85);
+}
+
+.desc__content {
+	font-size: 14px;
+	color: gray;
+}
+
+.expert {
+	display: flex;
+	justify-content: flex-start;
+	font-size: 12px;
+}
+
+.expert__info {
+	margin-left: 10px;
 }
 
 .info {
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	padding: 0 15px;
-	margin-top: 20px;
+	font-size: 12px;
+	padding: 4%;
+}
+
+.expert__info p {
+	padding: 2px 0;
+}
+
+.info__academic {
+	margin-left: 20px;
+}
+
+.info__address {
+	color: #fff;
+	background: rgba(2,181,157,.85);
+	padding: 4px;
+}
+
+.content__sum .sum__title {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.content__sum .sum__content {
 	font-size: 14px;
 }
 
-.info p {
-	width: 90px;
-}
-
-.info .cube-select {
-	width: 60%;
+.quit {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%);
 }
 </style>

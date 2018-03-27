@@ -8,18 +8,18 @@
 
 		<div class="info__name">
 			<div class="service">
-				<single-select ref="select" v-for="(item, index) in brand.list"
+				<selects ref="select" v-for="(item, index) in brand.list"
 					:type="brand.type"
-					:key="index" 
-					v-on:cancelOther="cancel"
+					:key="index"
 					:data="item.name"
-					:manufacturer="item._id"
+					@sendMsg="sendMsg(index, item.name)"
+					@remove="remove(index, item.name)"
 					:index="index"
 				/>
 			</div>
 		</div>
 
-		<van-field
+		<!-- <van-field
 			v-model="phoneRes.name"
 			label="其他品牌名称"
 			placeholder="若没有想要的,请输入其他品牌名称"
@@ -29,7 +29,7 @@
 			v-model="phoneRes.alias"
 			label="名称的别名"
 			placeholder="若没有想要的,请输入其他品牌名称的别名"
-		/>
+		/> -->
 
 		<!-- <van-field
 			v-model="phoneRes.desc"
@@ -51,14 +51,14 @@
 <script>
 import { Field, Button, Toast } from 'vant'
 import ItemHeader from '../components/itemHeader'
-import singleSelect from '../components/singleSelect'
+import selects from '../components/select'
 
 export default {
   components: {
 		[Field.name]: Field,
 		[Button.name]: Button,
 		ItemHeader,
-		singleSelect
+		selects
 	},
 	data () {
 		return {
@@ -69,6 +69,7 @@ export default {
 				type: 'brand',
 				list: []
 			},
+			phones: [],
 			phoneRes: {
 				name: '',
 				alias: '',
@@ -81,7 +82,7 @@ export default {
 	},
 	async mounted () {
 		const toast = this.$createToast({
-          message: '加载中...'
+			message: '加载中...'
 		})
 		toast.show();
 		let res = await this.$api.getData('https://m.yixiutech.com/phone/manufacturer');
@@ -93,6 +94,18 @@ export default {
 		})
 	},
 	methods: {
+		sendMsg (index) {
+			this.phones.push({
+				name: this.phoneInfo[ index ].name,
+				alias: this.phoneInfo[ index ].alias,
+				shop: this.phoneRes.shop
+			})
+		},
+		remove (index, data) {
+			this.phones.map( (item, index) => {
+				item.name == data ? this.phones.splice(index, 1) : null;
+			})
+		},
 		async cancel (data) {
 			let zData = data.split('&');
 			let type = zData[1];
@@ -117,13 +130,15 @@ export default {
 			this.phoneRes['alias'] = this.phoneInfo[ index ].alias;
 		},
 		async submit () {
-			let phoneRes = await this.$api.sendData('https://m.yixiutech.com/phone/manufacturer', this.phoneRes);
-			if (phoneRes.code !== 200) {
-				this.prompt(phoneRes.errMsg, 'error').show();
-				return;	
-			}
-			this.prompt('添加成功', 'correct').show();
-			this.$emit('updateBrand', true);
+			this.phones.map( async item => {
+				let phoneRes = await this.$api.sendData('https://m.yixiutech.com/phone/manufacturer', item);
+				if (phoneRes.code !== 200) {
+					this.prompt(phoneRes.errMsg, 'error').show();
+					return;	
+				}
+				this.prompt('添加成功', 'correct').show();
+				this.$emit('updateBrand', true);
+			})
 		}
 	}
 }
