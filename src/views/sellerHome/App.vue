@@ -47,6 +47,7 @@
 					{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
 					{ name: '删除已发布二手手机', icon: 'phone', link: '/deletePhone' },
 					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
+					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' },
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 				],
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
@@ -124,7 +125,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5ab8d008d4e7f1497d58d925"
+					_id: "5ab90e04d4e7f1497d58d939"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
