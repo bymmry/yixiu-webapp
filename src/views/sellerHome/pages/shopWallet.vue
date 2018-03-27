@@ -13,6 +13,7 @@
         <!-- </van-pull-refresh> -->
         <div class="funcbtn">
             <button>提现</button>
+            <button>退保证金</button>
         </div>
     </div>
 </template>

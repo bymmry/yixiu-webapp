@@ -9,12 +9,12 @@
 				:shopData="shopData"
 				:modules="modules"
 			/>
+		</van-pull-refresh>
 			<Content v-for="(item, index) in content" :key="index"
 				:name="item.name"
 				:icon="item.icon"
 				:link="item.link"
 			/>
-		</van-pull-refresh>
 
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
@@ -142,5 +142,8 @@
 </script>
 
 <style scoped>
-
+	.seller{
+		width: 100vw;
+		height: 100vh;
+	}
 </style>
