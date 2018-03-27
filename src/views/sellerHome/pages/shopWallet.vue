@@ -33,7 +33,7 @@ export default {
         let userData = JSON.parse(sessionStorage.getItem('userData'));
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user', { openid: userData.wx.openid });
         if(res.code == 200){
-            this.wallentMoney = res.data.money;
+            this.wallentMoney = res.data.money/100;
         }
         toast.hide();
     },
