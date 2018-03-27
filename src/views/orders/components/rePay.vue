@@ -23,6 +23,9 @@
         <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
       </ul>
+      <ul>
+        <li @click="getQuality">质检报告</li>
+      </ul>
     </div>
     <!-- 手机订单 -->
     <div class="information" v-if="orderData.goods.length != 0">
@@ -57,12 +60,17 @@
         <sure-order :nextStepButtonDisabled="false" :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
       </div>
     </div>
+    <!-- 质检报告 -->
+    <cube-popup v-if="orderData" class="quality" type="my-popup" :center="false" ref="getQuality">
+      <quality :data="orderData" v-on:closeQuality="closeQuality"></quality>
+    </cube-popup>
   </div>
 </template>
 
 <script>
   import { CouponCell, CouponList, Popup, Toast, Button, Field, Dialog } from 'vant';
   import sureOrder from "../../common/components/sureOrder"
+  import quality from '../../common/components/quality'
   import {getOrderDetail, cancelOrder} from '../api';
 
   export default {
@@ -108,7 +116,8 @@
       [CouponList.name]: CouponList,
       [Popup.name]: Popup,
       [Toast.name]: Toast,
-      sureOrder
+      sureOrder,
+      quality
     },
     methods: {
       goBack: function () {
@@ -179,6 +188,14 @@
           
         // };
         console.log(this.sureOrderData);
+      },
+      getQuality: function(){
+        let quality = this.$refs.getQuality;
+        quality.show();
+      },
+      closeQuality(){
+        let quality = this.$refs.getQuality;
+        quality.hide();
       }
     }
   };
@@ -279,5 +296,8 @@
   }
   #input div div input{
     text-align: right !important;
+  }
+  .quality{
+    width: 100%;
   }
 </style>
