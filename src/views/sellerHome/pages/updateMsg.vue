@@ -1,167 +1,172 @@
 <template>
-  <div class="info">
-		<item-header 
-			:name="infoName"
-			v-on:backParent="back"
-		/>
+	<div class="container">
+		<div class="info">
+			<item-header 
+				:name="infoName"
+				v-on:backParent="back"
+			/>
 
-	  <img class="info__logo" :src="logo" alt="" />
+			<div class="shadow" v-show="areaStatus"></div>
 
-		<p class="head">身份证正面</p>
+			<img class="info__logo" :src="logo" alt="" />
 
-		<div class="upload">
-			<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[0] ? infos.certificate[0].src : defaults" alt="" />
+			<p class="head">身份证正面</p>
+
+			<div class="upload">
+				<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.certificate[0] ? infos.certificate[0].src : defaults" alt="" />
+			</div>
+
+			<p class="head">身份证反面</p>
+
+			<div class="upload">
+				<input class="upload__select" @change="idcardUpload2($event)" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.certificate[1] ? infos.certificate[1].src : defaults" alt="" />
+			</div>
+
+			<p class="head">营业执照</p>
+
+			<div class="upload">
+				<input class="upload__select" @change="licenseUpload($event)" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.certificate[2] ? infos.certificate[2].src : defaults" alt="" />
+			</div>
+
+			<p class="head">运营资格证书</p>
+
+			<div class="upload">
+				<input class="upload__select" @change="certificateUpload($event)" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.certificate[3] ? infos.certificate[3].src : defaults" alt="" />
+			</div>
+
+			<p class="head">下载协议 <a class="link" href="http://t.cn/RnCHOyk">翼修入驻协议.docx</a></p>
+
+			<p class="links">温馨提示: 如果上述链接点击不能下载，请复制以下链接到浏览器上进行下载!</p>
+
+			<van-field
+				label="翼修协议地址"
+				placeholder="请勿删除协议地址"
+				v-model="linkAddress"
+			/>
+			
+			<p class="head">拍照上传翼修入驻协议</p>
+			
+			<div class="upload">
+				<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
+			</div>
+
+			<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
+
+			<div class="upload">
+				<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
+				<img class="upload__show" :src="infos.cover" alt="" />
+			</div>
+
+			<van-field
+				v-model="infos.qualificationState"
+				label="审核状态"
+				disabled
+			/>
+
+			<van-field
+				v-model="infos.name"
+				label="商铺名称"
+				class="item"
+				placeholder="请输入商铺名称"
+			/>
+
+			<van-field
+				v-model="infos.contactNumber"
+				label="联系电话"
+				placeholder="请输入联系电话"
+			/>
+
+			<!-- <van-field
+				v-model="infos.notice"
+				label="店铺公告"
+				placeholder="请输入输入店铺公告"
+			/> -->
+
+			<van-field
+				v-model="area"
+				label="所在地区"
+				placeholder="请选择所在地区"
+				@click="showArea"
+			/>
+
+			<van-field
+				v-model="infos.address"
+				label="详细地址"
+				placeholder="如街道、楼层、门牌号等"
+			/>
+
+			<van-field
+				v-model="managerPhone"	
+				label="添加管理者"
+				placeholder="请输入管理者的电话号码"
+				@blur="searchId"
+			/>
+
+			<cube-button @click="addM">添加商铺管理者</cube-button>
+
+			<div class="info-item">
+				<p class="info-item__title">开始营业时间</p>
+				<p class="info-item__content">{{ startHour }}</p>
+			</div>
+			
+
+			<cube-button @click="start">选择开始营业时间</cube-button>
+
+			<div class="info-item">
+				<p class="info-item__title">结束营业时间</p>
+				<p class="info-item__content">{{ endHour }}</p>
+			</div>
+
+			<cube-button @click="finish">选择结束营业时间</cube-button>
+
+			<div class="condition" v-for="(item, index) in infos.promotion" :key="index">
+				<van-field
+					v-model="item.condition"
+					class="full-cut"
+					label="满减条件"
+					placeholder="满减条件"
+				/>
+
+				<van-field
+					v-model="item.denomination"
+					class="full-cut"
+					label="满减额度"
+					placeholder="满减额度"
+				/>
+			</div>
+
+			<cube-button @click="add">添加满减条件</cube-button>
+
+			<div class="info-item">
+				<p class="info-item__title">请选择服务方式</p>
+			</div>
+
+			<div class="service">
+				<selects v-for="(item, index) in serviceWay"
+					ref="child"
+					@sendMsg="setData"
+					@remove="removeData"
+					:key="index"
+					:data="item"
+				/>
+			</div>
+
+			<cube-button @click="register">更新</cube-button>
 		</div>
-
-		<p class="head">身份证反面</p>
-
-		<div class="upload">
-			<input class="upload__select" @change="idcardUpload2($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[1] ? infos.certificate[1].src : defaults" alt="" />
-		</div>
-
-		<p class="head">营业执照</p>
-
-		<div class="upload">
-			<input class="upload__select" @change="licenseUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[2] ? infos.certificate[2].src : defaults" alt="" />
-		</div>
-
-		<p class="head">运营资格证书</p>
-
-		<div class="upload">
-			<input class="upload__select" @change="certificateUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[3] ? infos.certificate[3].src : defaults" alt="" />
-		</div>
-
-		<p class="head">下载协议 <a class="link" href="http://t.cn/RnCHOyk">翼修入驻协议.docx</a></p>
-
-		<p class="links">温馨提示: 如果上述链接点击不能下载，请复制以下链接到浏览器上进行下载!</p>
-
-		<van-field
-			label="翼修协议地址"
-			placeholder="请勿删除协议地址"
-			v-model="linkAddress"
-		/>
-		
-		<p class="head">拍照上传翼修入驻协议</p>
-		
-		<div class="upload">
-			<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
-		</div>
-
-		<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
-
-		<div class="upload">
-			<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
-			<img class="upload__show" :src="infos.cover" alt="" />
-		</div>
-
-		<van-field
-			v-model="infos.qualificationState"
-			label="审核状态"
-			disabled
-		/>
-
-		<van-field
-			v-model="infos.name"
-			label="商铺名称"
-			class="item"
-			placeholder="请输入商铺名称"
-		/>
-
-		<van-field
-			v-model="infos.contactNumber"
-			label="联系电话"
-			placeholder="请输入联系电话"
-		/>
-
-		<!-- <van-field
-			v-model="infos.notice"
-			label="店铺公告"
-			placeholder="请输入输入店铺公告"
-		/> -->
-
-		<van-field
-			v-model="area"
-			label="所在地区"
-			placeholder="请选择所在地区"
-			@click="showArea"
-		/>
 
 		<van-area 
-			:area-list="areaList"
-			v-show="areaStatus"
-			@confirm="confirms"
-			@cancel="cancels"
+				:area-list="areaList"
+				v-show="areaStatus"
+				@confirm="confirms"
+				@cancel="cancels"
 			/>
-
-		<van-field
-			v-model="infos.address"
-			label="详细地址"
-			placeholder="如街道、楼层、门牌号等"
-		/>
-
-		<van-field
-			v-model="managerPhone"	
-			label="添加管理者"
-			placeholder="请输入管理者的电话号码"
-			@blur="searchId"
-		/>
-
-		<cube-button @click="addM">添加商铺管理者</cube-button>
-
-		<div class="info-item">
-			<p class="info-item__title">开始营业时间</p>
-			<p class="info-item__content">{{ startHour }}</p>
-		</div>
-		
-
-		<cube-button @click="start">选择开始营业时间</cube-button>
-
-		<div class="info-item">
-			<p class="info-item__title">结束营业时间</p>
-			<p class="info-item__content">{{ endHour }}</p>
-		</div>
-
-		<cube-button @click="finish">选择结束营业时间</cube-button>
-
-		<div class="condition" v-for="(item, index) in infos.promotion" :key="index">
-			<van-field
-				v-model="item.condition"
-				class="full-cut"
-				label="满减条件"
-				placeholder="满减条件"
-			/>
-
-			<van-field
-				v-model="item.denomination"
-				class="full-cut"
-				label="满减额度"
-				placeholder="满减额度"
-			/>
-		</div>
-
-		<cube-button @click="add">添加满减条件</cube-button>
-
-		<div class="info-item">
-			<p class="info-item__title">请选择服务方式</p>
-		</div>
-
-		<div class="service">
-			<selects v-for="(item, index) in serviceWay"
-				ref="child"
-				@sendMsg="setData"
-				@remove="removeData"
-				:key="index"
-				:data="item"
-			/>
-		</div>
-
-		<cube-button @click="register">更新</cube-button>
-  </div>
+	</div>
+  
 </template>
 
 <script>
@@ -394,6 +399,11 @@ export default {
 </script>
 
 <style scoped>
+.container {
+	width: 100%;
+	height: 100%;
+}
+
 .info {
 		width: 100%;
     position: absolute;
@@ -402,6 +412,13 @@ export default {
     transform: translate(-50%);
 		text-align: center;
 		overflow: hidden;
+}
+
+.van-area {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	z-index: 21;
 }
 
 .service {
@@ -482,6 +499,16 @@ export default {
 
 .van-field__control {
 	background: transparent;
+}
+
+.shadow {
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.4);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 20;
 }
 
 .info .head {
