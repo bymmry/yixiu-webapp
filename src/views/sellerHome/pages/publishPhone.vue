@@ -139,8 +139,8 @@ export default {
 			photo: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			src: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			goods: {
-				shop: JSON.parse(localStorage.getItem('shopData'))._id,
-				// shop: '5aa27cf18d78c262b3f19937',
+				// shop: JSON.parse(localStorage.getItem('shopData'))._id,
+				shop: '5ab93879d4e7f1497d58d94e',
 				cover: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 				info: {
 					photo: [{

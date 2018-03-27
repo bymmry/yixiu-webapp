@@ -5,10 +5,10 @@
 		/>
 
 		<div class="filter">
-			<cube-button class="choose-model" @click="showSort">排序</cube-button>
-			<cube-button class="choose-model" @click="showModel">机型</cube-button>
-			<cube-button class="choose-model" @click="showPrice">价格</cube-button>
-			<cube-button class="choose-model" @click="filterType">筛选</cube-button>
+			<cube-button class="choose-model" @click="show">排序</cube-button>
+			<cube-button class="choose-model" @click="show">机型</cube-button>
+			<cube-button class="choose-model" @click="show">价格</cube-button>
+			<cube-button class="choose-model" @click="show">筛选</cube-button>
 		</div>
 			
 		<div v-show="!filterShow">
@@ -51,7 +51,7 @@ export default {
 	},
 	async mounted () {
 		let params = location.href.split('/').pop().split('&');
-		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5aa4a1a3733e266adc724d1a'});
+		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5ab93879d4e7f1497d58d94e'});
 		this.phoneList = res.data;
 		let searchName = decodeURI(params[1]);
 		console.log(this.phoneList);
@@ -72,6 +72,9 @@ export default {
 
 	},
 	methods: {
+		show () {
+			this.functionunavailable();
+		},
 		showSort () {
 			this.$createActionSheet({
         title: '请选择排序方式',

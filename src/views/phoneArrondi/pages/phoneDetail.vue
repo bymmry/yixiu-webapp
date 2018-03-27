@@ -57,11 +57,6 @@ import quality from '../components/quality'
 import product from '../components/product'
 import commit from '../components/commit'
 export default {
-  mounted () {
-    this.data = JSON.parse(sessionStorage.getItem('detail'))
-    this.images = thia.data.info.photo;
-    console.log(this.data);
-  },
   methods: {
     showParam () {
       this.paramStatus = !this.paramStatus;
@@ -101,11 +96,10 @@ export default {
 		})
     toast.show();
     let detail = JSON.parse(sessionStorage.getItem('detail'));
-    console.log(detail);
+    this.images = detail.info.photo
     // let phoneId = location.href.split('/').pop();
     let res = await this.$api.getData('https://m.yixiutech.com/goods/' + detail._id);
     toast.hide();
-    console.log(res)
     this.data = res.data;
     // this.images.push(this.data.cover);
     this.sureOrderData = {
