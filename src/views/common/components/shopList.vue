@@ -293,7 +293,7 @@
 <style scoped>
   .scroll{
     width: 100%;
-    height: 83vh;
+    height: 81vh;
   }
 
   .shopList .shopSort{
