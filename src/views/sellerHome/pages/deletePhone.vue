@@ -57,7 +57,7 @@ export default {
 	data () {
 		return {
 			name: '删除已发布的二手手机',
-			shop: JSON.parse(localStorage.getItem('shopData'))._id,
+			shop: '5ab93879d4e7f1497d58d94e',
 			phoneList: []
 		}
 	},

@@ -32,11 +32,11 @@
 
 <style scoped>
 .swipe {
-  height: 200px;
+  height: 300px;
 }
 
 .van-swipe {
-  height: 200px;
+  height: 300px;
 }
 
 .van-swipe img {

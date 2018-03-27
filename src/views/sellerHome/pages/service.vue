@@ -81,6 +81,7 @@
 			:brandId="brandId"
 			:sysModel="sysModel"
 			:phoneModel="phoneModel"
+			:modelNames="modelNames"
 			:manufacturer="manufacturer"
 			@updateModel="updateModel"
 			@backParent="backParent"

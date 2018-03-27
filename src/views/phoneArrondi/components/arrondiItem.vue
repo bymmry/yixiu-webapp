@@ -21,8 +21,6 @@
 		},
 		methods: {
 			async route () {
-				// let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: this.type, shop: '5aa4a1a3733e266adc724d1a'});
-				// console.log(res);
 				this.$router.push('/phoneList/' + this.type + '&' + this.name);
 			}
 		}
@@ -42,7 +40,7 @@
 }
 
 .arrondi-item .arrondi-item__img {
-	width: 25%;
+	width: 30%;
 	height: 80px;
 	padding-left: 2%;
 }

@@ -13,7 +13,8 @@ export default {
   props: {
 		src: String,
 		name: String,
-		price: String
+		price: String,
+		type: String
 	},
 	methods: {
 		search () {
@@ -35,7 +36,7 @@ export default {
 }
 
 .hotSale-item .hotSale-item__img {
-	width: 40%;
+	width: 50%;
 	height: 80px;
 	display: inline-block;
 	vertical-align: middle;

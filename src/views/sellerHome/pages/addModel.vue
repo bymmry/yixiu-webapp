@@ -71,7 +71,8 @@ export default {
 		brandId: String,
 		sysModel: Array,
 		phoneModel: Array,
-		manufacturer: String
+		manufacturer: String,
+		modelNames: Array
 	},
   components: {
 		[Field.name]: Field,
@@ -92,6 +93,8 @@ export default {
 			this.phoneName.push(item.name);
 			this.phoneInfo.push(item);
 		})
+
+		let own
 	},
 	data () {
 		return {
@@ -158,6 +161,12 @@ export default {
 			this.model.color.push(this.phoneModelColorRes);
 		},
 		async submit () {
+			this.modelNames.map(item => {
+				if (item == this.modelName) {
+					this.prompt('店铺里已添加过同名的型号', 'error').show();
+					return;
+				}
+			})
 			this.model.name = this.modelName;
 			this.model.manufacturer = this.manufacturer;
 			// this.model.color.length == 0 ? 
