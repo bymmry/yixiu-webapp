@@ -41,7 +41,7 @@
         <li v-if="isShowAddress">
           <span class="name">你的地址:</span>
           <span class="value" @click="getAddress">
-            <input readonly="readonly" placeholder="请输入你的地址" v-model="address" />
+            <input class="addressInput" readonly="readonly" placeholder="请输入你的地址" v-model="address" />
           </span>
         </li>
       </ul>
@@ -420,4 +420,10 @@
   #input div div input{
       text-align: right !important;
     }
+  .addressInput{
+    width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+  }
 </style>

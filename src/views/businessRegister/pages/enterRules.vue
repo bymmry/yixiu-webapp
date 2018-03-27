@@ -100,19 +100,19 @@
 
 <script>
 export default {
-	mounted () {
-		let rules = document.getElementsByClassName('rules')[0];
-		let start = null;
-		rules.addEventListener('touchstart', e => {
-			start = e.changedTouches[0].clientX;
-		})
-		rules.addEventListener('touchmove', e => {
-			let touch = e.changedTouches[0].clientX;
-			if (touch > start) {
-				this.$router.push('/sellerHome');
-			}
-		}, false)
-	},
+	// mounted () {
+	// 	let rules = document.getElementsByClassName('rules')[0];
+	// 	let start = null;
+	// 	rules.addEventListener('touchstart', e => {
+	// 		start = e.changedTouches[0].clientX;
+	// 	})
+	// 	// rules.addEventListener('touchmove', e => {
+	// 	// 	let touch = e.changedTouches[0].clientX;
+	// 	// 	if (touch > start) {
+	// 	// 		this.$router.push('/sellerHome');
+	// 	// 	}
+	// 	// }, false)
+	// },
   methods: {
 	  back () {
 		  this.$router.push('/sellerHome');
