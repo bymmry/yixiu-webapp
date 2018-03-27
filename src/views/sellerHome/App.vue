@@ -9,12 +9,12 @@
 				:shopData="shopData"
 				:modules="modules"
 			/>
-		</van-pull-refresh>
 			<Content v-for="(item, index) in content" :key="index"
 				:name="item.name"
 				:icon="item.icon"
 				:link="item.link"
 			/>
+		</van-pull-refresh>
 
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
@@ -40,7 +40,15 @@
 				isRegister: true,
 				state: '',
 				isLoading: false,
-				content: [],
+				content: [
+					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
+					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
+					{ name: '修改手机维修服务', icon: 'update', link: '/updateService' },
+					{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
+					{ name: '删除已发布二手手机', icon: 'phone', link: '/deletePhone' },
+					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
+					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
+				],
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				modules: [
 					{ name: '待接单', num: 0, state: 11},
