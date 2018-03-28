@@ -1,11 +1,10 @@
 <template>
   <div class="detail">
-    <Header 
-      :name="name"
-    />
     <div v-show="!paramStatus && !qualityStatus">
       
-
+      <Header 
+        :name="name"
+      />
       <GoodSwipe 
         :images="images"
       />

@@ -11,7 +11,7 @@
 				<span>翼修维修第xxxxxxx份报告</span>
 				<span>No.956541235787</span>
 			</p>
-			<p class="content__title">{{ details.phoneModel.name }}</p>
+			<!-- <p class="content__title">{{ details.phoneModel.name }}</p>
 			<p class="content__desc" v-for="(item, index) in details.service" :key="index">
 				{{ item.name }} 
 				<span>/维修问题{{ index+1 }}</span>
@@ -29,25 +29,73 @@
 			<p class="content__desc">{{ details.user.name }} <span>/用户名</span></p>
 			<p class="content__desc">{{ details.phone }} <span>/联系方式</span></p>
 			<p class="content__desc">{{ details.serviceWay }} <span>/服务方式</span></p>
-			<p class="content__desc">{{ details.address }} <span>/用户地址</span></p>
-			<!-- <p class="content__desc"> {{ data.info ? data.info.productParam.network.join(',') : null }} <span>/网络制式</span></p> -->
+			<p class="content__desc">{{ details.address }} <span>/用户地址</span></p> -->
+			
+			<van-field
+				v-model="info.name"
+				label="手机"
+				placeholder="请输入手机名称"
+			/>
+
+			<van-field
+				v-model="info.color"
+				label="颜色"
+				placeholder="请输入手机颜色"
+			/>
+
+			<div class="info">
+				<p>容量</p>	
+				<cube-select
+					v-model="info.storage"
+					:options="storages" 
+				/>
+			</div>
+
+			<van-field
+				v-model="info.IMei"
+				label="IM ei"
+				placeholder="请输入IMei"
+			/>
+
+			<div class="box">
+				<p>网络制式</p>
+
+				<div class="service">
+					<selects v-for="(item, index) in networks"
+						:type="networksType"
+						:key="index"
+						@sendMsg="sendMsg"
+						@remove="remove"
+						:data="item"
+						:manufacturer="item._id"
+					/>
+				</div>
+			</div>
+
 		</div>
 		
-		<div class="content spec">
+		<!-- <div class="content spec">
 			<sicon name="shandian" scale="6"></sicon>
 			<div class="desc">
 				<p class="desc__title">翼修专业维修</p>
 				<p class="desc__content">为您的手机保驾护航</p>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="content">
-			<div class="expert">
-				<div class="content__sum">
-					<p class="sum__title">用户备注</p>
-					<p class="sum__content">{{ details.remark }}</p>
-				</div>
-			</div>
+			<van-field
+				v-model="info.conclusion"
+				label="总体质检结论"
+				type="textarea"
+				placeholder="请输入总体质检结论"
+			/>
+
+			<van-field
+				v-model="info.supplement"
+				label="工程师补充"
+				type="textarea"
+				placeholder="请输入工程师补充"
+			/>
 		</div>
 
 		<div class="content" v-show="details.state == 12">
@@ -78,6 +126,7 @@
 <script>
 import itemHeader from '../components/itemHeader'
 import service from '@/assets/service.png'
+import selects from '../components/select'
 import { Field, Button } from 'vant'
 export default {
 	props: {
@@ -86,31 +135,58 @@ export default {
 	components: {
 		itemHeader,
 		[Button.name]: Button,
-		[Field.name]: Field
+		[Field.name]: Field,
+		selects
 	},
 	data () {
 		return {
 			details: {},
 			infoName: '订单详情',
+			networksType: '网络样式',
+			networks: ['联通4G', '移动4G', '电信4G'],
+			storages: ['16G', '32G', '64G', '128G', '256G'],
 			trackingComSec: [],
-			serviceIcon: service
+			serviceIcon: service,
+			info: {
+				name: '',
+				storage: '',
+				color: '',
+				IMei: '',
+				network: [],
+				conclusion: '',
+				supplement: ''
+			}
 		}
 	},
 	async mounted () {
+		window.status = false;
 		this.details = JSON.parse(localStorage.getItem('detail'));
-
-		console.log(this.details);
+		this.details.info ? this.info = this.details.info : null;
 		let res = await this.$api.getData('https://m.yixiutech.com/tracking/com');
-		res.data.map(item => {
+		res.data.map(item => {	
 			this.trackingComSec.push({ text: item.com, value: item.no })
 		})
 	},
   methods: {
+		sendMsg (data) {
+			this.info.network.push(data);
+		},
+		remove (data) {
+			this.info.network.map( (item, index) => {
+				item == data ? this.info.network.splice(index, 1) : null;
+			})
+		},
 		back () {
 			this.$router.go(-1);
 		},
 		async takeOrder () {
-			let data = { _id: this.details._id, state: 12 }
+			for (var key in this.info) {
+				if (this.info[ key ] == '' || this.info[key] == []) {
+					this.prompt('信息未填写完', 'error').show();
+					return;
+				}
+			}
+			let data = { _id: this.details._id, state: 12, info: this.info }
 			const toast = this.$createToast({
 				message: '加载中...'
 			})
@@ -155,6 +231,13 @@ export default {
 	top: 84px;
 }
 
+.service {
+	width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:flex-start;
+}
+
 .header__title {
 	color: #fff;
 	font-size: 20px;
@@ -172,8 +255,8 @@ export default {
 }
 
 .cube-select {
-		width: 60%;
-    margin-left: 30px;
+	width: 60%;
+	margin-left: 20%;
 }
 
 .quality {

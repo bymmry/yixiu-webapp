@@ -111,6 +111,7 @@ import { Field, Button, Uploader } from 'vant'
 import addParams from '../components/addParams'
 import addQuality from '../components/addQuality'
 import addCategory from './addCatagory'
+import selects from '../components/select';
 export default {
 	components: {
 		[Field.name]: Field,

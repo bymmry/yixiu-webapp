@@ -36,7 +36,7 @@ export default {
 }
 
 .hotSale-item .hotSale-item__img {
-	width: 50%;
+	width: 40%;
 	height: 80px;
 	display: inline-block;
 	vertical-align: middle;
