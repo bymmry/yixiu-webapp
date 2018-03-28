@@ -73,7 +73,6 @@
     },
     methods: {
       back () {
-        console.log(123);
         this.location = !this.location;
       },
       onRefresh() {

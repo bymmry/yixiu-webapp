@@ -125,7 +125,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5ab90e04d4e7f1497d58d939"
+					_id: "5aba6efdcb8a365364b118c3"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
