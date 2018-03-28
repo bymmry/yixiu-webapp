@@ -11,7 +11,7 @@
 				<span>翼修维修第xxxxxxx份报告</span>
 				<span>No.956541235787</span>
 			</p>
-			<!-- <p class="content__title">{{ details.phoneModel.name }}</p>
+			<p class="content__title">{{ details.phoneModel.name }}</p>
 			<p class="content__desc" v-for="(item, index) in details.service" :key="index">
 				{{ item.name }} 
 				<span>/维修问题{{ index+1 }}</span>
@@ -29,9 +29,9 @@
 			<p class="content__desc">{{ details.user.name }} <span>/用户名</span></p>
 			<p class="content__desc">{{ details.phone }} <span>/联系方式</span></p>
 			<p class="content__desc">{{ details.serviceWay }} <span>/服务方式</span></p>
-			<p class="content__desc">{{ details.address }} <span>/用户地址</span></p> -->
+			<p class="content__desc">{{ details.address }} <span>/用户地址</span></p>
 			
-			<van-field
+			<!-- <van-field
 				v-model="info.name"
 				label="手机"
 				placeholder="请输入手机名称"
@@ -70,7 +70,7 @@
 						:manufacturer="item._id"
 					/>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 		
@@ -83,7 +83,13 @@
 		</div> -->
 
 		<div class="content">
-			<van-field
+			<div class="expert">
+				<div class="content__sum">
+					<p class="sum__title">用户备注</p>
+					<p class="sum__content">{{ details.remark }}</p>
+				</div>
+			</div>
+			<!-- <van-field
 				v-model="info.conclusion"
 				label="总体质检结论"
 				type="textarea"
@@ -95,7 +101,7 @@
 				label="工程师补充"
 				type="textarea"
 				placeholder="请输入工程师补充"
-			/>
+			/> -->
 		</div>
 
 		<div class="content" v-show="details.state == 12">
