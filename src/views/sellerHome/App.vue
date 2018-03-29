@@ -18,7 +18,7 @@
 
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
-		 <!-- <button @click="deleteData">删除</button> -->
+		 <button @click="deleteData">删除</button>
   </div>
 </template>
 
@@ -125,7 +125,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5abb264fc51cf357b34ef398"
+					_id: "5abb337cc51cf357b34ef3a4"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);

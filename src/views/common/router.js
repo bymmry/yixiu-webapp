@@ -30,6 +30,9 @@ export default [{
   {
     path: '/shop', //商店列表
     component: shop,
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     path: '/shop', //商店列表
