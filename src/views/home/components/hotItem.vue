@@ -1,6 +1,7 @@
 <template>
 	<div class="hot-item" :service="service" @click="route">
-		<sicon :name="icon" scale="3.8"></sicon>
+		<!-- <sicon :name="icon" scale="3.8"></sicon> -->
+		<img :src="img" alt="">
     <br>
     <p>{{name}}</p>
 	</div>
@@ -11,7 +12,8 @@ export default {
   props: {
 		name: String,
 		icon: String,
-		service: String
+		service: String,
+		img: String
 	},
 	methods: {
 		route () {
@@ -29,5 +31,9 @@ export default {
 	font-size: 12px;
   color: #949191;
   margin: 10px 0;
+}
+.hot-item img{
+	width: 35px;
+	height: 35px;
 }
 </style>

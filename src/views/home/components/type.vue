@@ -6,13 +6,22 @@
 				:key="index" 
 				:name="item.name"
         :icon="item.icon"
+        :img="item.img"
 				/>
     </div>
   </div>
 </template>
 
 <script>
-	import TypeItem from './typeItem.vue'
+  import TypeItem from './typeItem.vue'
+  import phone from '@/assets/home/phone.png';
+  import ershoushouji from '@/assets/home/ershoushouji.png';
+  import jiadian from '@/assets/home/jiadian.png';
+  import peijian from '@/assets/home/peijian.png';
+  import shebei from '@/assets/home/shebei.png';
+  import car from '@/assets/home/car.png';
+  import huishou from '@/assets/home/huishou.png';
+  import homeSort from '@/assets/home/homeSort.png';
   export default {
     components: {
 			TypeItem
@@ -21,16 +30,21 @@
     	return {
 				data: [
           
-        ]
+        ],
+        icons:[phone,ershoushouji,jiadian,peijian,shebei,car,huishou,homeSort]
 			}
     },
     async mounted () {
       let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
-      res.data.map(item => {
-        let config = { name: item.name, icon: item.fe.icon };
+      res.data.map((item,index) => {
+        let config = { 
+          name: item.name, 
+          icon: item.fe.icon,
+          img: this.icons[index]
+        };
         this.data.push(config);
       })
-      this.data.push({ name: '其他分类', icon: 'homeSort' })
+      this.data.push({ name: '其他分类', icon: 'homeSort', img: this.icons[7] })
     }
   }
 </script>

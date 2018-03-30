@@ -8,6 +8,7 @@
         :name="item.name"
         :icon="item.fe.icon"
         :service="item.name"
+        :img="item.img"
       />
     </div>
   </div>
@@ -15,6 +16,11 @@
 
 <script>
   import HotItem from './hotItem.vue'
+  import dianchi from '@/assets/home/dianchi.png';
+  import pingmu from '@/assets/home/pingmu.png';
+  import shexiangtou from '@/assets/home/shexiangtou.png';
+  import tingtong from '@/assets/home/tingtong.png';
+  import anjian from '@/assets/home/anjian.png';
   export default {
     components: {
       HotItem
@@ -26,7 +32,8 @@
           fe: {
             icon: "undefined"
           }
-        }
+        },
+        imgData: [dianchi,pingmu,shexiangtou,tingtong,anjian]
       }
     },
     async mounted () {
@@ -48,7 +55,14 @@
       if(showData.length >= 5){
         showData = showData.slice(0, 5);
       }
+      showData = showData.map((item, index) => {
+        let img = { img: this.imgData[index]}
+        return Object.assign({}, item, img);
+      })
       this.data = showData;
+
+      
+      console.log(this.data);
     }
   }
 </script>
