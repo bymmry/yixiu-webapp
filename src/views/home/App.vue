@@ -45,6 +45,8 @@
   import { PullRefresh } from 'vant'
   import location from './pages/location.vue'
   import scroll from '../common/base/scroll'
+  import wx from "weixin-js-sdk";
+
   export default {
     components: {
       scroll,

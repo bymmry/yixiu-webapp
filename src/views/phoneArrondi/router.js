@@ -4,13 +4,22 @@ import phoneList from './pages/phoneList.vue'
 
 export default [{
   path: '/phoneArrondi',
-  component: App
+  component: App,
+  meta: {
+    keepAlive: true // 需要被缓存
+  }
 },
 {
   path: '/phoneDetail',
-  component: phoneDetail
+  component: phoneDetail,
+  meta: {
+    keepAlive: true // 需要被缓存
+  }
 }, 
 {
   path: '/phoneList/:id',
-  component: phoneList
+  component: phoneList,
+  meta: {
+    keepAlive: true // 需要被缓存
+  }
 }]

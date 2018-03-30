@@ -60,9 +60,6 @@
         return Object.assign({}, item, img);
       })
       this.data = showData;
-
-      
-      console.log(this.data);
     }
   }
 </script>
