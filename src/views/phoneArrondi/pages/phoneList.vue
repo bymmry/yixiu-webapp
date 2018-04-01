@@ -4,21 +4,29 @@
 			:name="name"
 		/>
 
-		<div class="filter">
-			<cube-button class="choose-model" @click="show">排序</cube-button>
-			<cube-button class="choose-model" @click="show">机型</cube-button>
-			<cube-button class="choose-model" @click="show">价格</cube-button>
-			<cube-button class="choose-model" @click="show">筛选</cube-button>
+		<div class="filter" v-show="!modelShow">
+			<cube-button class="choose-model" @click="showSort">排序</cube-button>
+			<cube-button class="choose-model" @click="showModel">机型</cube-button>
+			<cube-button class="choose-model" @click="showPrice">价格</cube-button>
+			<cube-button class="choose-model" @click="filterType">筛选</cube-button>
 		</div>
 			
-		<div v-show="!filterShow">
+		<div v-show="!filterShow && !modelShow">
 			<phoneItem v-for="(item ,index) in result" 
 				:key="index"
 				:data="item"
 			/>
 		</div>
 
-		<Filters v-show="filterShow"></Filters>
+		<model-search
+			v-show="modelShow"
+			@hideSearch="hideSearch"
+		/>
+
+		<Filters 
+			v-show="filterShow" 
+			v-on:backPhoneList="backPhoneList"
+		/>
 	</div>
 </template>
 
@@ -26,17 +34,15 @@
 import Header from '../components/header'
 import phoneItem from '../components/phoneItem'
 import Filters from '../components/filter'
-import { Popup } from 'vant'
-const col1Data = [{ text: '剧毒', value: '剧毒'}, { text: '蚂蚁', value: '蚂蚁' }, 
-  { text: '幽鬼', value: '幽鬼' }]
-const col2Data = [{ text: '输出', value: '输出' }, { text: '控制', value: '控制' },
-  { text: '核心', value: '核心'}, { text: '爆发', value: '爆发' }, { text: '辅助', value: '辅助' },
-  { text: '打野', value: '打野' }, { text: '逃生', value: '逃生' }, { text: '先手', value: '先手' }]
+import modelSearch from '../components/modelSearch';
+import { Popup, TreeSelect } from 'vant'
+
 export default {
   components: {
 		Header,
 		phoneItem,
 		Filters,
+		modelSearch,
 		[Popup.name]: Popup
 	},
 	data () {
@@ -44,9 +50,14 @@ export default {
 			name: '商店手机列表',
 			result: [],
 			phoneList: [],
+			modelShow: false,
 			filterShow: false,
+			// 当前搜索的手机搜索结果
+			currentMap: [],
 			sortActive: 0,
-			prices: []
+			priceActive: 0,
+			prices: [],
+			spaceReg: /\s+/g
 		}
 	},
 	async mounted () {
@@ -54,24 +65,46 @@ export default {
 		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5ab93879d4e7f1497d58d94e'});
 		this.phoneList = res.data;
 		let searchName = decodeURI(params[1]);
-		console.log(this.phoneList);
 
 		this.phoneList.map(item => {
-			item.name == searchName ? this.result.push(item) : null;
-			this.prices.push(item.price);
-		})
-
-		this.picker = this.$createPicker({
-      title: '手机型号选择',
-      data: [col1Data, col2Data],
-      onSelect: (selectedVal, selectedIndex, selectedText) => {
-        
-      }
+			if (item.name == searchName) {
+				this.result.push(item);
+				this.currentMap.push(item);
+			} 
 		})
 		
 
 	},
 	methods: {
+		hideSearch (data) {
+			let searchName = data.replace(this.spaceReg, '').toLowerCase();
+			this.result = [];
+			this.phoneList.map(item => {
+				item.name == searchName ? this.result.push(item) : null;
+			})
+			this.modelShow = false;
+		},
+		backPhoneList (data) {
+			let length = 0;
+			this.result = [];
+			for (let key in data) {
+				length++;
+			}
+			let temp = 0;
+			this.phoneList.map(item => {
+				for (let key in data) {
+					if (item.info.productParam[ key ].indexOf(data[ key ]) !== -1) {
+						temp++;
+						if ( temp == length ) {
+							this.result.push(item) 
+						}
+					} else {
+						continue;
+					}
+				}
+			})
+			this.filterShow = false;
+		},
 		show () {
 			this.functionunavailable();
 		},
@@ -89,24 +122,29 @@ export default {
         ],
         onSelect: (item, index) => {
 					this.sortActive = index;
-					console.log(this.phoneList.sort(compare('price')));
+					this.sortActive == 0 ? 
+						this.result = this.result.sort(this.smallToBig('price')) : 
+						this.result = this.result.sort(this.bigToSmall('price'));
         }
       }).show()
 		},
-		compare (prop) {
+		smallToBig (prop) {
 			return function (a, b) {
-				let value1 = a[prop];
-				let value2 = b[prop];
-				return value1 - value2;
+				return a[prop] - b[prop];
+			}
+		},
+		bigToSmall (prop) {
+			return function (a, b) {
+				return a[prop] < b[prop]
 			}
 		},
 		showModel () {
-			this.picker.show();
+			this.modelShow = true;
 		},
 		showPrice () {
       this.$createActionSheet({
         title: '请选择价格区间',
-        active: 0,
+        active: this.priceActive,
         data: [
           {
             content: '0-1499'
@@ -125,7 +163,15 @@ export default {
 					}
         ],
         onSelect: (item, index) => {
-          
+					this.priceActive = index;
+					let lowPrice = item.content.split('-')[0];
+					let highPrice = item.content.split('-')[1];
+					this.result = [];
+					this.currentMap.map(item => {
+						if (item.price > lowPrice && item.price < highPrice) {
+							this.result.push(item);
+						}
+					})
         }
       }).show()
     },

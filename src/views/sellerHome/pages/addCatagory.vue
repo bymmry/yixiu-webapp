@@ -73,7 +73,6 @@ export default {
 			this.categoryName = res.data.map( item => {
 				return item.name;
 			})
-			console.log(this.categoryList);
 			
 		}
 	},

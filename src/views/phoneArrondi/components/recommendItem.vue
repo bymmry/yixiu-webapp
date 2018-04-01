@@ -13,11 +13,24 @@
 			src: String,
 			name: String,
 			price: String,
-			standard: String
+			standard: String,
+			type: String
 		},
 		methods: {
-			search (name) {
-				this.$router.push('/shop?' + name)
+			async search (name) {
+				let data = { type: 'goods', shop: '5ab93879d4e7f1497d58d94e' };
+				let typeId = '';
+				let searchName = this.name.replace(this.spaceReg, '').toLowerCase();
+				let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', data);
+				categoryRes.data.map(item => {
+					item.name == this.type ? typeId = item._id : null;
+				})
+				this.$router.push('/phoneList/' + typeId + '&' + searchName);
+			}
+		},
+		data () {
+			return {
+				spaceReg: /\s+/g
 			}
 		}
   }

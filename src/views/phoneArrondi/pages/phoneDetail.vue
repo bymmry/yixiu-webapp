@@ -20,6 +20,16 @@
       <!-- <Personal 
         :data="data"
       /> -->
+      <div class="box">
+        <p>真机实拍</p>
+        <img 
+          class="image"
+          v-for="(item, index) in images"
+          :key="index"
+          :src="item.url" 
+          alt=""
+        />
+      </div>
 
       <Footer 
         :sureOrderData="sureOrderData"
@@ -39,6 +49,8 @@
       @backDetail="backDetail"
       :data="data"
 		/>
+
+    
     
 
     
@@ -122,4 +134,17 @@ export default {
   height: 8vh;
 }
 
+.box {
+  width: 96%;
+  padding: 2%;
+}
+
+.box p {
+  padding: 2%;
+}
+
+.image {
+  width: 100%;
+  margin-bottom: 10px;
+}
 </style>

@@ -17,8 +17,20 @@ export default {
 		type: String
 	},
 	methods: {
-		search () {
-			this.$router.push('/phoneList/' + this.type + '&' + this.name);
+		async search () {
+			let data = { type: 'goods', shop: '5ab93879d4e7f1497d58d94e' };
+			let typeId = '';
+			let searchName = this.name.replace(this.spaceReg, '').toLowerCase();
+			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', data);
+			categoryRes.data.map(item => {
+				item.name == this.type ? typeId = item._id : null;
+			})
+			this.$router.push('/phoneList/' + typeId + '&' + searchName);
+		}
+	},
+	data () {
+		return {
+			spaceReg: /\s+/g
 		}
 	}
 }
@@ -27,17 +39,17 @@ export default {
 <style scoped>
 .hotSale-item {
 	width: 46%;
-	height: 80px;
+	height: 100px;
 	box-shadow: 0 0 5px;
 	border-radius: 5px;
-	display: inline-block;
+	float: left;
 	border: 1px solid #eee;
 	margin: 10px 5px;
 }
 
 .hotSale-item .hotSale-item__img {
-	width: 40%;
-	height: 80px;
+	width: 36%;
+	margin-top: 8px;
 	display: inline-block;
 	vertical-align: middle;
 }

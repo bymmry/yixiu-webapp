@@ -96,12 +96,12 @@
 			@backToPublish="backToPublish"
 		/>
 
-			<add-category 
-				v-show="categoryStatus"
-				:parentCategory="category"
-				v-on:updateCategory="updateCategory"
-				v-on:backParent="backParent"
-			/>
+		<add-category 
+			v-show="categoryStatus"
+			:parentCategory="category"
+			v-on:updateCategory="updateCategory"
+			v-on:backParent="backParent"
+		/>
 	</div>
 </template>
 
@@ -186,11 +186,9 @@ export default {
 		},
 		addParamInfo (data) {
 			this.goods.info.productParam = data;
-			console.log(data);
 			this.paramStatus = false;
 		},
 		addQualityInfos (data) {
-			console.log(data);
 			this.goods.info.qualityParam = data;
 			this.qualityStatus = false;
 		},

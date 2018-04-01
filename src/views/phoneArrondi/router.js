@@ -1,6 +1,7 @@
 import App from './App'
 import phoneDetail from './pages/phoneDetail.vue'
 import phoneList from './pages/phoneList.vue'
+import toMore from './pages/toMore.vue'
 
 export default [{
   path: '/phoneArrondi',
@@ -11,15 +12,13 @@ export default [{
 },
 {
   path: '/phoneDetail',
-  component: phoneDetail,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  component: phoneDetail
 }, 
 {
   path: '/phoneList/:id',
-  component: phoneList,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  component: phoneList
+}, 
+{
+  path: '/toMore',
+  component: toMore
 }]

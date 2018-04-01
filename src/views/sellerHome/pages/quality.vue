@@ -59,7 +59,7 @@ export default {
 <style scoped>
 .quality {
 	width: 100%;
-	height: 600px;
+	height: 100%;
 	position: relative;
 	background: #eee;
 }

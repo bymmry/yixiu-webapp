@@ -7,6 +7,7 @@
 				:src="item.src"
 				:standard="item.standard"
 				:price="item.price"
+				:type="item.type"
 			/>
 		</div>
   </div>
@@ -14,14 +15,14 @@
 
 <script>
 	import RecommendItem from './recommendItem.vue'
-	import data from '../data/hot.json'
+	import data from '../data/recommend.json'
   export default {
 		components: {
 			RecommendItem
 		},
 		data () {
 			return {
-				data: data[0].data
+				data: data
 			}
 		}
   }
@@ -36,8 +37,7 @@
 .recommend__content {
 	width: 100%;
 	white-space: nowrap;
-	overflow: hidden;
+	overflow-y: hidden;
 	overflow-x: scroll;
-	transition: all 0.2s;
 }
 </style>

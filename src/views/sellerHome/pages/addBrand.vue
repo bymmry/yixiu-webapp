@@ -1,6 +1,10 @@
 <template>
 	<div class="info">
-		<item-header :name="infoName"  v-on:backParent="backParent"/>
+		<item-header 
+			:name="infoName"  
+			v-on:backParent="backParent"
+			v-show="show"
+			/>
 
 		<div class="info__name">
 			<p>品牌名称</p>
@@ -43,7 +47,7 @@
 			placeholder="请输入封面地址"
 		/> -->
 
-		<van-button size="large" @click="submit">确认添加</van-button>
+		<van-button size="large" @click="submit" v-show="show">确认添加</van-button>
 
 	</div>
 </template>
@@ -54,6 +58,9 @@ import ItemHeader from '../components/itemHeader'
 import selects from '../components/select'
 
 export default {
+	props: {
+		show: Boolean
+	},
   components: {
 		[Field.name]: Field,
 		[Button.name]: Button,

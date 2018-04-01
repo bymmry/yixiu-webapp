@@ -1,0 +1,38 @@
+[
+    {
+        "name": "iphone7",
+        "type": "ios",
+        "price": "2250",
+        "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphone7.png"
+    },
+    {
+        "name": "iphone8 PLUS",
+        "type": "ios",
+        "price": "2250",
+        "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphone8plus.png"
+    },
+    {
+        "name": "OPPO R11",
+        "type": "android",
+        "price": "2250",
+        "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/OPPO-R11S.png"
+    },
+    {
+        "name": "小米6",
+        "type": "android",
+        "price": "2250",
+        "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/xiaomi6.png"
+    },
+    {
+        "name": "小米note3黑",
+        "type": "android",
+        "price": "2250",
+        "src": "https//xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/xiaominote3.png"
+    },
+    {
+        "name": "VIVO X20",
+        "type": "android",
+        "price": "2250",
+        "src": "https//xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/VIVOX20.png"
+    }
+]

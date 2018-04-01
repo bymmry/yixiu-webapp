@@ -17,8 +17,14 @@
 				:content="android"
 				:type="androidId"
 			/>
-			<HotSale></HotSale>
-			<Recommend/>
+			<HotSale 
+				:androidType="androidId"
+				:iosType="ios"
+			/>
+			<Recommend
+				:androidType="androidId"
+				:iosType="ios"
+			/>
 			<div class="space"></div>
 		</div>
 	</cube-scroll>

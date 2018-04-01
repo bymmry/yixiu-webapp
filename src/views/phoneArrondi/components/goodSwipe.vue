@@ -2,7 +2,7 @@
   <div class="swipe">
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in images" :key="index">
-        <img v-lazy="image.url" />
+        <img v-lazy="image.url" @click="toMore"/>
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -11,6 +11,12 @@
 <script>
   import { Swipe, SwipeItem, Lazyload } from 'vant';
   export default {
+    methods: {
+      toMore () {
+        sessionStorage.setItem('images', JSON.stringify(this.images))
+        this.$router.push('/toMore');
+      }
+    },
     props: {
       images: Array
     },

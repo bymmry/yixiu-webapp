@@ -45,7 +45,7 @@
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
 					{ name: '修改手机维修服务', icon: 'update', link: '/updateService' },
 					{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
-					{ name: '删除已发布二手手机', icon: 'phone', link: '/deletePhone' },
+					{ name: '删除已发布二手手机', icon: 'delete', link: '/deletePhone' },
 					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' },
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
