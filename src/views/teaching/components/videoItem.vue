@@ -2,7 +2,7 @@
   <div class="videoItem">
       <h3>{{name}}</h3>
       <div class="video">
-          <video :src="videoSrc"></video>
+          <video :src="videoSrc" controls="controls"></video>
       </div>
   </div>
 </template>
