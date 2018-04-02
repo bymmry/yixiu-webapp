@@ -66,6 +66,11 @@
 			}
 		},
 		async created () {
+			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
+			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
+		},
+		// 删除店铺信息  慎用
+		async mounted () {
 			const toast = this.$createToast({
 				txt: '加载中...',
 				type: 'loading'
@@ -100,12 +105,6 @@
 			if (res.data.qualificationState !== '正常') {
 				this.prompt('您的信息还未审核，请稍等', 'error').show();
 			}
-
-			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
-			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
-		},
-		// 删除店铺信息  慎用
-		async mounted () {
 			this.modules.slice(0, 3).map( async item => {
 				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
 				item.num = res.data.length;
