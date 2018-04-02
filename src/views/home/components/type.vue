@@ -22,29 +22,48 @@
   import car from '@/assets/home/car.png';
   import huishou from '@/assets/home/huishou.png';
   import homeSort from '@/assets/home/homeSort.png';
+  import gongchengshi from '@/assets/home/gongchengshi.png';
   export default {
     components: {
 			TypeItem
     },
     data () {
     	return {
-				data: [
-          
+        list: [
+          {name: '手机维修', icon: 'phone'},
+          {name: '精品手机', icon: 'ershoushouji'},
+          {name: '家电维修', icon: 'jiadian'},
+          {name: '手机配件', icon: 'peijian'},
+          {name: '工程师培训', icon: 'gongchengshi'},
+          {name: '汽车维修', icon: 'car'},
+          {name: '手机回收', icon: 'huishou'},
+          {name: '企业设备维护', icon: 'shebei'}
         ],
-        icons:[phone,ershoushouji,jiadian,peijian,shebei,car,huishou,homeSort]
+				data: [
+        ],
+        icons:[phone,ershoushouji,jiadian,peijian,gongchengshi,shebei,car,huishou]
 			}
     },
     async mounted () {
-      let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
-      res.data.map((item,index) => {
+      // let res = await this.$api.getData('https://m.yixiutech.com/category/plate/simple');
+      // res.data.map((item,index) => {
+      //   let config = { 
+      //     name: item.name, 
+      //     icon: item.fe.icon,
+      //     img: this.icons[index]
+      //   };
+      //   this.data.push(config);
+      // })
+      this.list.map((item,index) => {
         let config = { 
           name: item.name, 
-          icon: item.fe.icon,
+          icon: item.icon,
           img: this.icons[index]
         };
         this.data.push(config);
       })
-      this.data.push({ name: '其他分类', icon: 'homeSort', img: this.icons[7] })
+      // this.data = this.list;
+      console.log(this.data);
     }
   }
 </script>

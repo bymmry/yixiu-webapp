@@ -13,7 +13,8 @@ import RetrievePwd from '../views/retrievePwd/router'
 import SellerHome from '../views/sellerHome/router'
 import phoneArrondi from '../views/phoneArrondi/router'
 import orders from '../views/orders/router'
-import App from '../App';
+import App from '../App'
+import teaching from '../views/teaching/router'
 
 Vue.use(Router)
 export default new Router({
@@ -42,6 +43,7 @@ export default new Router({
     ...SellerHome,
     ...phoneArrondi,
     ...orders,
-    ...expressDetails
+    ...expressDetails,
+    ...teaching
   ]
 })
