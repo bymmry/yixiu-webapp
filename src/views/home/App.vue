@@ -28,7 +28,7 @@
       </cube-scroll>
     </div>
     
-
+   
     <location v-on:changeCity="changeCity" v-if="location"  v-on:back="back"/>
   </div>
 </template>
@@ -107,11 +107,11 @@
             _this.city = r.address.city;
             localStorage.setItem('lng', r.point.lng);
             localStorage.setItem('lat', r.point.lat);
-            alert('所在城市:' + r.address.city);
-            alert('经纬度' + r.point.lng + r.point.lat)
+            // alert('所在城市:' + r.address.city);
+            // alert('经纬度' + r.point.lng + r.point.lat)
           }
           else {
-            alert('failed'+this.getStatus());
+            // alert('failed'+this.getStatus());
           }
         },{enableHighAccuracy: true})
       }

@@ -7,7 +7,7 @@
 
 <script>
     import theHeader from './components/header.vue'
-    import videos from './components/videos.vue'
+    import videos from './page/videos.vue'
     export default {
         name: 'app',
         components: {
@@ -20,7 +20,7 @@
 <style>
 .teaching{
     width: 100%;
-    height: 91vh;
+    height: 92vh;
     overflow: hidden;
 }
 </style>

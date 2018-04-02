@@ -32,16 +32,17 @@
         list: [
           {name: '手机维修', icon: 'phone'},
           {name: '精品手机', icon: 'ershoushouji'},
-          {name: '家电维修', icon: 'jiadian'},
           {name: '手机配件', icon: 'peijian'},
-          {name: '工程师培训', icon: 'gongchengshi'},
-          {name: '汽车维修', icon: 'car'},
           {name: '手机回收', icon: 'huishou'},
+          {name: '工程师培训', icon: 'gongchengshi'},
+          {name: '家电维修', icon: 'jiadian'},
+          {name: '汽车维修', icon: 'car'},
           {name: '企业设备维护', icon: 'shebei'}
         ],
 				data: [
         ],
-        icons:[phone,ershoushouji,jiadian,peijian,gongchengshi,shebei,car,huishou]
+        sortData: [{name: '企业设备维护', icon: 'shebei', img: "shebei"}],
+        icons:[phone,ershoushouji,peijian,huishou,gongchengshi,jiadian,car,shebei]
 			}
     },
     async mounted () {

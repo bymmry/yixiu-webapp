@@ -299,6 +299,7 @@
   .shopList .shopSort{
     width: 100%;
     height: 7vh;
+    min-height: 40px;
     line-height: 50px;
     font-size: 13px;
   }

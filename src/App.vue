@@ -12,7 +12,9 @@
       </router-view>
     </div>
     <!--顶部导航-->
-    <navigation></navigation>
+    <div class="nav">
+      <navigation></navigation>
+    </div>
   </div>
 </template>
 
@@ -82,14 +84,18 @@
     left: 0;
     /* height: 97%;
     min-height: 550px; */
-    overflow-y: scroll;
   }
   .van-field input, .van-field textarea{
     text-align: right;
   }
-  /* .appBox{
+  .appBox{
     width: 100%;
-    height: 91.5%;
-    overflow: hidden;
-  } */
+    height: 92%;
+    min-height: 480px;
+    overflow: scroll;
+  }
+  .nav{
+    position: relative;
+    top: 0;
+  }
 </style>
