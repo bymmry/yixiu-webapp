@@ -76,15 +76,15 @@
 				type: 'loading'
 			})
 			toast.show();
-			let userData = this.urlDataTurnObj(window.location.href).openid;
+			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 			// let userData = sessionStorage.getItem('userData');
-			// alert(userData);
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 			if(res.code !== 200){
 				// this.prompt(res.data, 'error').show();
 				this.shopData = { name: '翼修商家', cover: defaults }
 			}
 			this.shopData = res.data;
+			alert(res.data.qualification);
 			if (res.data.qualification) { //已缴纳保证金
 				this.content = [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
