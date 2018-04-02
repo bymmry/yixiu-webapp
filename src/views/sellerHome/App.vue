@@ -52,7 +52,7 @@
 				],
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				modules: [
-					{ name: '待接单', num: 0, state: 11},
+					{ name: '待接', num: 0, state: 11},
 					{ name: '维修中', num: 0, state: 12 },
 					{ name: '已完成', num: 0, state: 13 },
 					{ name: '浏览量', num: 0, state: 0 }
@@ -65,10 +65,10 @@
 				this.shopData = val;
 			}
 		},
-		async created () {
-			// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
-			// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
-		},
+		// async created () {
+		// 	// let data = { shop: '5a9fe2a27c67ee2f8c98c9d5', state: 12 }
+		// 	// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
+		// },
 		// 删除店铺信息  慎用
 		async mounted () {
 			alert(23);
