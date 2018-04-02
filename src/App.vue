@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view v-if="$route.meta.keepAlive">
+    
+    <div class="appBox">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive">
         <!-- 这里是会被缓存的视图组件-->
+        </router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive">
+        <!-- 这里是不被缓存的视图组件-->
       </router-view>
-    </keep-alive>
-    <router-view v-if="!$route.meta.keepAlive">
-      <!-- 这里是不被缓存的视图组件-->
-    </router-view>
-
+    </div>
     <!--顶部导航-->
     <navigation></navigation>
   </div>
@@ -85,4 +87,9 @@
   .van-field input, .van-field textarea{
     text-align: right;
   }
+  /* .appBox{
+    width: 100%;
+    height: 91.5%;
+    overflow: hidden;
+  } */
 </style>
