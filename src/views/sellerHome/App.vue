@@ -102,7 +102,6 @@
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]
 				this.prompt('您还未缴纳保证金，请缴纳保证金', 'error').show();
-				return;
 			}
 			toast.hide();
 
