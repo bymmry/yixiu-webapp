@@ -121,6 +121,7 @@
 <style scoped>
   .bigbox{
     overflow: hidden;
+    height: 91vh;
   }
   .scroll{
 	  width: 100%;
