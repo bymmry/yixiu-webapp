@@ -76,8 +76,11 @@
 				type: 'loading'
 			})
 			toast.show();
-			let userData = sessionStorage.getItem('userData');
+			let userData = this.urlDataTurnObj(window.location.href);
 			alert(userData);
+			alert(location.href);
+			// let userData = sessionStorage.getItem('userData');
+			// alert(userData);
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 			if(res.code !== 200){
 				// this.prompt(res.data, 'error').show();
