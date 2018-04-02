@@ -52,7 +52,7 @@
 				],
 				shop: JSON.parse(localStorage.getItem('shopData'))._id,
 				modules: [
-					{ name: '待接', num: 0, state: 11},
+					{ name: '待接单', num: 0, state: 11},
 					{ name: '维修中', num: 0, state: 12 },
 					{ name: '已完成', num: 0, state: 13 },
 					{ name: '浏览量', num: 0, state: 0 }
@@ -78,7 +78,9 @@
 			})
 			toast.show();
 			let userData = JSON.parse(sessionStorage.getItem('userData'));
+			alert(userData);
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
+			alert(res.code);
 			if(res.code !== 200){
 				// this.prompt(res.data, 'error').show();
 				this.shopData = { name: '翼修商家', cover: defaults }
