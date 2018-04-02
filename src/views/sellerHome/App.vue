@@ -78,14 +78,13 @@
 			toast.show();
 			let userData = JSON.parse(sessionStorage.getItem('userData'));
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
+			alert()
 			if(res.code !== 200){
 				// this.prompt(res.data, 'error').show();
 				this.shopData = { name: '翼修商家', cover: defaults }
-				return;
 			}
 			this.shopData = res.data;
 			if(res.data.qualification){ //已缴纳保证金
-				alert(123);
 				this.content = [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
