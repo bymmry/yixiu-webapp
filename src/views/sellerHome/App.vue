@@ -71,7 +71,6 @@
 		// },
 		// 删除店铺信息  慎用
 		async mounted () {
-			alert(123)
 			const toast = this.$createToast({
 				txt: '加载中...',
 				type: 'loading'

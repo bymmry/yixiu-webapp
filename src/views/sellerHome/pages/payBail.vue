@@ -113,7 +113,7 @@ export default {
   },
   data() {
     return {
-	  totalFee: 0.01,
+	  totalFee: 3000,
     shopId: "",
     name: '缴纳保证金'
     };
