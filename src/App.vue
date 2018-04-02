@@ -61,12 +61,12 @@
     },
     methods: {
       async checkIsShop (userData) {
-        console.log(userData);
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
         if (res.code == 4004) {
           this.$router.push('/enterRules');
           return;
         }
+        sessionStorage.setItem('userData', userData.openid);
         localStorage.setItem('shopData', JSON.stringify(res.data));
         this.$router.push('/sellerHome')
       }

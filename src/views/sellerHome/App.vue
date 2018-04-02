@@ -71,21 +71,18 @@
 		// },
 		// 删除店铺信息  慎用
 		async mounted () {
-			alert(23);
 			const toast = this.$createToast({
 				txt: '加载中...',
 				type: 'loading'
 			})
 			toast.show();
-			let userData = JSON.parse(sessionStorage.getItem('userData'));
+			let userData = sessionStorage.getItem('userData');
 			alert(userData);
-			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
-			alert(res.code);
+			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 			if(res.code !== 200){
 				// this.prompt(res.data, 'error').show();
 				this.shopData = { name: '翼修商家', cover: defaults }
 			}
-			alert(res.data.qualification)
 			this.shopData = res.data;
 			if (res.data.qualification) { //已缴纳保证金
 				this.content = [
