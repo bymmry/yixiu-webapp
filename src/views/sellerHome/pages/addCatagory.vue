@@ -86,9 +86,11 @@ export default {
 		async submit () {
 			this.parentCategory != '' ? this.category.parent = this.parentCategory : null;
 			const toast = this.$createToast({
-				message: '加载中...'
+				txt: '加载中...',
+				type: 'loading'
 			})
 			let type = sessionStorage.getItem('category');
+			window.back = true;
 			this.category.type = type;
 			toast.show();
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category', this.category);

@@ -40,6 +40,7 @@ export default {
 	line-height: 30px;
 	border: 1px solid gray;
 	text-align: center;
+	font-size: 12px;
 	/* margin-bottom: 10px; */
 	margin: 5px 1%;
 }
