@@ -85,6 +85,7 @@
 			}
 			this.shopData = res.data;
 			if(res.data.qualification){ //已缴纳保证金
+				alert(123);
 				this.content = [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
@@ -99,11 +100,13 @@
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]
 				this.prompt('您还未缴纳保证金，请缴纳保证金', 'error').show();
+				return;
 			}
 			toast.hide();
 
 			if (res.data.qualificationState !== '正常') {
 				this.prompt('您的信息还未审核，请稍等', 'error').show();
+				return;
 			}
 			this.modules.slice(0, 3).map( async item => {
 				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
