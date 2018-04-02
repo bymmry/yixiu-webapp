@@ -55,7 +55,7 @@
 				<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
 			</div>
 
-			<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
+			<p class="head">商铺封面</p>
 
 			<div class="upload">
 				<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />

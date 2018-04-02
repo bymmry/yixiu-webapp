@@ -54,7 +54,7 @@
 				<img class="upload__show" :src="protocol" alt="" />
 			</div>
 
-			<p class="head">商铺封面 <span class="link">*封面不能超过300kb哟</span> </p>
+			<p class="head">商铺封面</p>
 
 			<div class="upload">
 				<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
@@ -281,10 +281,6 @@ export default {
 		},
 		coverUpload (event, name) {
 			this.file = event.target.files[0];
-			if (this.file.size > 305644) {
-				this.prompt('图片不能超过300kb哟', 'warn').show();
-				return;
-			}
 			let url = window.URL.createObjectURL(this.file);
 			this.infos.cover = url;
 			this.uploadPic(this.file, 'cover');
