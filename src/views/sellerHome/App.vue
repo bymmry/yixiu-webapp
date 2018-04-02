@@ -77,13 +77,9 @@
 			})
 			toast.show();
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
-
-			alert(userData);
-			
+				
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
-
-			alert(res.data);
 
 			if(res.code !== 200){
 				this.shopData = { name: '翼修商家', cover: defaults }

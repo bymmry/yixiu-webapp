@@ -21,10 +21,7 @@ import entry from './pages/chooseEntry.vue'
 export default [{
   path: '/sellerHome',
   // redirect: '/sellerHome?nickName=Prince、&gender=1&avatarUrl=https://wx.qlogo.cn/mmopen/vi_32/ISOnrKibvcxHgSnJpwqBeicoWdPz3DheO5mj2nicwgBhf5MALRNQHBcXJ6Qg1vTaMjVpsRmnGPTV3fOxqXChhznfQ/0&openid=oFosP5Uq0wD3hyAmO07jSLMylTwk',
-  component: App,
-  meta: {
-    keepAlive: true // 需要被缓存
-  }
+  component: App
 },
 {
   path: '/addBrand',
