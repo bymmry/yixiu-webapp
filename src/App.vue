@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     
-    <div class="appBox">
+    <div v-bind:class="{appBox: active}">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive">
         <!-- 这里是会被缓存的视图组件-->
@@ -38,8 +38,10 @@
       // alert(window.location.href);  
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
+        this.active = false;
       }else {
         this.$router.push("/home");
+        this.active = true;
       }
       
       let pushData = this.reguserinfo(userData);
@@ -60,6 +62,11 @@
       }))
       // console.log(userData);
       // sessionStorage.setItem("userData", userData);
+    },
+    data () {
+      return {
+        active: false
+      }
     },
     methods: {
       async checkIsShop (userData) {

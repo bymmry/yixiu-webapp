@@ -81,11 +81,9 @@
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 
-			if(res.code !== 200){
-				this.shopData = { name: '翼修商家', cover: defaults }
-			} else {
-				this.shopData = res.data;
-			}
+			this.shopData = res.data;
+
+			alert(this.shopData);
 
 			if (res.data.qualification) { //已缴纳保证金
 				this.content = [
@@ -97,7 +95,7 @@
 					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 				];
-			}else { // 未缴纳保证金
+			} else { // 未缴纳保证金
 				this.content = [
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]
@@ -109,7 +107,7 @@
 				this.prompt('您的信息还未审核，请稍等', 'error').show();
 			}
 			this.modules.slice(0, 3).map( async item => {
-				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { type: 0, shop: this.shop, state: item.state });
+				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
 				item.num = res.data.length;
 			})
 			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
@@ -119,11 +117,7 @@
 				let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 
-				if(res.code !== 200){
-					this.shopData = { name: '翼修商家', cover: defaults }
-				} else {
-					this.shopData = res.data;
-				}
+				this.shopData = res.data;
 
 				if (res.data.qualification) { //已缴纳保证金
 					this.content = [
@@ -146,7 +140,7 @@
 					item.num = res.data.length;
 				})
 				this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
-				this.$toast('刷新成功');
+				// this.$toast('刷新成功');
 				this.isLoading = false;
 			},
 			async getMsg () {
