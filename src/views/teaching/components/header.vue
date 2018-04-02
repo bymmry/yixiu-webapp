@@ -14,6 +14,11 @@
 <script>
   export default {
     name: 'theHeader',
+    methods: {
+      back: function () {
+        this.$router.push("/home");
+      }
+    }
   };
 </script>
 
