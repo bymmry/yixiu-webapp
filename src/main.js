@@ -21,6 +21,10 @@ Vue.use(VueLazyLoad, {
   loading: './assets/img/loading.gif'
 })
 
+// 视频播放插件
+import VideoPlayer from 'vue-video-player'
+Vue.use(VideoPlayer);
+
 //移动端300毫秒延迟处理
 import FastClick from 'fastclick'
 FastClick.attach(document.body)
