@@ -125,7 +125,7 @@ export default {
 <style scoped>
     .shopWallet{
         width: 100%;
-        height: 100vh;
+        height: 85vh;
     }
     .shopWallet .navBox{
         width: auto;
