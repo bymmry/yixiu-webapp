@@ -17,6 +17,24 @@
         <sicon name="find-leftArr" scale="1.7" color="#FCFCFC"></sicon>
         &nbsp;首页
       </div>
+      <div class="sign">
+        <div class="rightTag2" @click="sign" v-if="signShow">
+          <div class="iconBox">
+            <sicon name="unsign" scale="2.7" color="#fff"></sicon>
+          </div>
+          <div class="integralBox">
+            签到
+          </div>
+        </div>
+        <div class="rightTag2" v-else>
+          <div class="iconBox">
+            <sicon name="sign" scale="2.5" color="#fff"></sicon>
+          </div>
+          <div class="integralBox">
+            已签到
+          </div>
+        </div>
+      </div>
       <!-- 用户头像及登录注册 -->
       <div class="user-area">
         <div class="user-profile">
@@ -63,10 +81,8 @@
 
 <script>
   //van
-  import { Button } from 'vant';
-  import { NavBar } from 'vant';
-  import { Cell, CellGroup } from 'vant';
-  import { reguser, getuserinforByopenId } from '../common/api'
+  import { NavBar, Button, Cell, CellGroup, Dialog } from 'vant';
+  import { reguser, getuserinforByopenId, updateuserinfo } from '../common/api'
 
   export default {
     data () {
@@ -94,7 +110,8 @@
             nickName: "",
             openid: "",
             province: ""
-          }
+          },
+          signShow:false
         },
         //功能菜单列表
         catalogs:[
@@ -146,6 +163,7 @@
       [NavBar.name]: NavBar,
       [Cell.name]: Cell,
       [CellGroup.name]: CellGroup,
+      [Dialog.name]: Dialog,
     },
     methods: {
       //返回首页
@@ -153,7 +171,7 @@
         this.$router.push({ path: "/home"})
       },
       enterIcons(){
-        this.functionunavailable()
+        // this.functionunavailable()
       },
       //点击功能后进行跳转
       async changepage(url){
@@ -183,10 +201,102 @@
             console.log(err);
           }))
       },
+      updateSign(uppoint,nowDate){
+        let JSONnowDate = JSON.stringify(nowDate)
+        localStorage.setItem("signTime",JSONnowDate);
+
+        updateuserinfo(uppoint)
+        .then(res => {
+          Dialog.alert({
+            message: '签到成功！'
+          }).then(() => {
+            let userData = this.getUserInfo();
+            this.getUserinfo(userData.wx.openid);
+            this.signPD()
+          });
+        },(err => {
+          console.log(err);
+        }))
+      },
+      sign(){
+        let nowDate = new Date();
+        nowDate = [nowDate.getFullYear(),nowDate.getMonth()+1,nowDate.getDate()];
+
+        let JSONoldDate = localStorage.getItem("signTime");
+
+        if (!JSONoldDate) {
+          let uppoint = {
+            _id:this.userInfo._id,
+            points:(parseInt(this.userInfo.points)+5)
+          }
+          this.updateSign(uppoint,nowDate);
+        }else{
+          let oldDate = JSON.parse(JSONoldDate)
+          if (nowDate[0]>oldDate[0]) {
+            let uppoint = {
+              _id:this.userInfo._id,
+              points:(parseInt(this.userInfo.points)+5)
+            }
+            this.updateSign(uppoint,nowDate);
+          }else if(nowDate[0]==oldDate[0]){
+            if (nowDate[1]>oldDate[1]) {
+              let uppoint = {
+                _id:this.userInfo._id,
+                points:(parseInt(this.userInfo.points)+5)
+              }
+              this.updateSign(uppoint,nowDate);
+            }else if(nowDate[1]==oldDate[1]){
+              if (nowDate[2]>oldDate[2]) {
+                let uppoint = {
+                  _id:this.userInfo._id,
+                  points:(parseInt(this.userInfo.points)+5)
+                }
+                this.updateSign(uppoint,nowDate);
+              }else{
+                alert("你已签到过了")
+              }
+            }else{
+              alert("你已签到过了")
+            }
+          }else{
+            alert("你已签到过了")
+          }
+        }
+      },
+      signPD(){
+        let nowDate = new Date();
+        nowDate = [nowDate.getFullYear(),nowDate.getMonth()+1,nowDate.getDate()];
+
+        let JSONoldDate = localStorage.getItem("signTime");
+
+        if (!JSONoldDate) {
+          this.signShow = true;
+        }else{
+          let oldDate = JSON.parse(JSONoldDate)
+          if (nowDate[0]>oldDate[0]) {
+            this.signShow = true;
+          }else if(nowDate[0]==oldDate[0]){
+            if (nowDate[1]>oldDate[1]) {
+              this.signShow = true;
+            }else if(nowDate[1]==oldDate[1]){
+              if (nowDate[2]>oldDate[2]) {
+                this.signShow = true;
+              }else{
+                this.signShow = false;
+              }
+            }else{
+              this.signShow = false;
+            }
+          }else{
+            this.signShow = false;
+          }
+        }
+      }
     },
-    activated() {
+    created() {
       let userData = this.getUserInfo();
-      this.getUserinfo(userData.wx.openid)
+      this.getUserinfo(userData.wx.openid);
+      this.signPD()
     }
   }
 </script>
@@ -223,6 +333,16 @@
     padding-bottom: 10px;
     color: #FCFCFC;
   }
+  .sign{
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px 10px;
+    padding-right: 0;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    color: #FCFCFC;
+  }
   .user-area{
     display: flex;
     flex-direction: flex-start;
@@ -255,6 +375,14 @@
     
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
+  }
+  .rightTag2{
+    display: flex;
+    align-items: center;
+    right: 0;
+    top: 8.5vh;
+    height: 40px;
+    
   }
   .iconBox{
     margin-top: 2px;
