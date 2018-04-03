@@ -74,12 +74,10 @@
 				placeholder="请输入联系电话"
 			/>
 
-			<van-field
-				v-model="area"
-				label="所在地区"
-				placeholder="请选择所在地区"
-				@click="showArea"
-			/>
+      <div class="box">
+        <p>所在地区</p>
+        <div class="area" @click="showArea">{{ area }}</div>
+      </div>
 
 			<van-field
 				v-model="infos.address"
@@ -193,7 +191,7 @@ export default {
 		return {
 			startHour: '',
 			endHour: '',
-			area: '选择身份  选择城市  选择地区',
+			area: '选择省份  选择城市  选择地区',
 			serviceWay: ['用户到店', '上门维修', '快递维修'],
 			logo: logo,
 			areaStatus: false,
@@ -324,7 +322,13 @@ export default {
 			this.infos.promotion.push({condition: '', denomination: ''});
 		},
 		async register () {
-			this.infos.address = this.area + '-' + this.infos.address;
+      this.infos.address = this.area + '-' + this.infos.address;
+      this.infos.certificate.map(item => {
+        if (item.src == 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png') {
+          this.prompt('您还有信息未填写').show();
+          return;
+        }
+      })
 			// for (var key in this.infos) {
 			// 	console.log(this.infos[ key ])
 			// }
@@ -360,10 +364,9 @@ export default {
 
 			let _this = this;
 
-			let geolocation = new BMap.Geolocation();
-			alert(geolocation);
+      let geolocation = new BMap.Geolocation();
+      
 			geolocation.getCurrentPosition(function(r){
-				alert(r);
 				if(this.getStatus() == BMAP_STATUS_SUCCESS){
 					var mk = new BMap.Marker(r.point);
 					map.addOverlay(mk);
@@ -499,6 +502,18 @@ export default {
 	padding: 10px 15px;
 	text-align: left;
 	color: #000;
+}
+
+.box {
+  padding: 2% 7.5%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+
+.box .area {
+  font-size: 14px;
+  margin-left: 14px;
 }
 
 .info .van-uploader {

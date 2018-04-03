@@ -39,7 +39,7 @@
 				</p>
 			</div>
 
-			<!-- <div class="box">
+			<div class="box">
 				<p>选择品牌</p>
 				<div class="service">
 					<single-select ref="select"  v-for="(item, index) in brand.list"
@@ -64,7 +64,7 @@
 						:manufacturer="item._id"
 					/>
 				</div>
-			</div> -->
+			</div>
 
 			<van-button class="submit" size="large" @click="submit">修改</van-button>
 		</div>
@@ -84,12 +84,19 @@ import itemHeader from '../components/itemHeader';
 export default {
   methods: {
 		sendMsg (index) {
-			this.modelRes.push(this.models[ index ]._id);
+			let status = true;
+			this.service.support.map(item => {
+				if (item._id == this.models[ index ]._id) {
+					this.prompt('该服务下已存在相同的手机型号', 'error').show();
+					status = false;
+				}
+			})
+			status && this.modelRes.push(this.models[ index ]);
 		},
 		removeModel (index) {
 			let id = this.models[ index ]._id;
 			this.modelRes.map( (item, index) => {
-				item == id ? this.modelRes.splice(index, 1) : null;
+				item._id == id ? this.modelRes.splice(index, 1) : null;
 			})
 		},
 		async updateBrand () {
@@ -145,6 +152,7 @@ export default {
 				message: '加载中...',
 				type: 'loading'
 			})
+			this.service.support = this.service.support.concat(this.modelRes);
 			toast.show();
 			let serviceRes = await this.$api.sendData('https://m.yixiutech.com/service/update/', this.service);
 			toast.hide();
@@ -157,6 +165,7 @@ export default {
 		}
 	},
 	async mounted () {
+		window.status = false;
 		let data = JSON.parse(sessionStorage.getItem('serviceItem'));
 		this.service = data;
 		this.updateBrand();
