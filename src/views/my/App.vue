@@ -58,7 +58,6 @@
           {{ userInfo.points }} 积分
         </div>
       </div>
-
     </div>
 
     
@@ -382,7 +381,7 @@
     right: 0;
     top: 8.5vh;
     height: 40px;
-    
+
   }
   .iconBox{
     margin-top: 2px;
