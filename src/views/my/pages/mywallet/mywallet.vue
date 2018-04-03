@@ -17,7 +17,6 @@
       
     <!-- </van-pull-refresh> -->
     <div class="funcbtn">
-      <div @click="sign">签到</div>
       <div class="outmoney" @click="enterIcons">兑换</div>
     </div>
   </div>
@@ -26,7 +25,7 @@
 
 <script>
   import { PullRefresh,Button } from 'vant';
-  import { getuserinforByopenId, updateuserinfo } from '../../../common/api'
+  import { getuserinforByopenId } from '../../../common/api'
 
   export default {
     data () {
@@ -56,65 +55,6 @@
         },(err => {
           console.log(err);
         }))
-      },
-      updateSign(uppoint,nowDate){
-        let JSONnowDate = JSON.stringify(nowDate)
-        localStorage.setItem("signTime",JSONnowDate);
-
-        updateuserinfo(uppoint)
-        .then(res => {
-          alert("签到成功！")
-          let userData = this.getUserInfo();
-          this.getUserinfo(userData);
-        },(err => {
-          console.log(err);
-        }))
-      },
-      sign(){
-        let nowDate = new Date();
-        nowDate = [nowDate.getFullYear(),nowDate.getMonth()+1,nowDate.getDate()];
-
-        let JSONoldDate = localStorage.getItem("signTime");
-
-        if (!JSONoldDate) {
-          let uppoint = {
-            _id:this.userinfo._id,
-            points:(parseInt(this.userinfo.points)+5)
-          }
-          this.updateSign(uppoint,nowDate);
-        }else{
-          let oldDate = JSON.parse(JSONoldDate)
-          if (nowDate[0]>oldDate[0]) {
-            let uppoint = {
-              _id:this.userinfo._id,
-              points:(parseInt(this.userinfo.points)+5)
-            }
-            this.updateSign(uppoint,nowDate);
-          }else if(nowDate[0]==oldDate[0]){
-            if (nowDate[1]>oldDate[1]) {
-              let uppoint = {
-                _id:this.userinfo._id,
-                points:(parseInt(this.userinfo.points)+5)
-              }
-              this.updateSign(uppoint,nowDate);
-            }else if(nowDate[1]==oldDate[1]){
-              if (nowDate[2]>oldDate[2]) {
-                let uppoint = {
-                  _id:this.userinfo._id,
-                  points:(parseInt(this.userinfo.points)+5)
-                }
-                this.updateSign(uppoint,nowDate);
-              }else{
-                alert("你已签到过了")
-              }
-            }else{
-              alert("你已签到过了")
-            }
-          }else{
-            alert("你已签到过了")
-          }
-        }
-        // localStorage.removeItem("signTime");
       }
     },
     created() {
