@@ -3,7 +3,6 @@
 		<item-header 
 			:name="infoName"  
 			v-on:backParent="backParent"
-			v-show="show"
 			/>
 
 		<div class="info__name">
@@ -47,7 +46,7 @@
 			placeholder="请输入封面地址"
 		/> -->
 
-		<van-button size="large" @click="submit" v-show="show">确认添加</van-button>
+		<van-button size="large" @click="submit">确认添加</van-button>
 
 	</div>
 </template>

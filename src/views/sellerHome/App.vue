@@ -1,8 +1,7 @@
 <template>
   <div class="seller">
 		<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
-			<Header 
-				v-if="shopData"
+			<Header
 				:shopData="shopData"
 			/>
 			<List 
@@ -79,8 +78,6 @@
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 			userData !== undefined ? localStorage.setItem('openid', userData) : null;
 			let openid = localStorage.getItem('openid');
-			alert(openid);
-			alert(window.location.href);
 				
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
@@ -112,7 +109,7 @@
 				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
 				item.num = res.data.length;
 			})
-			this.modules[3].num = JSON.parse(localStorage.getItem('shopData')).pv;
+			this.modules[3].num = this.shopData.pv;
 		},
 		methods: {
 			async onRefresh() {

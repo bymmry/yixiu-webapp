@@ -256,6 +256,7 @@ export default {
 		},
 		async updateCategory (data) {
 			if ( window.back ) {
+				console.log(123);
 				document.documentElement.scrollTop = 10000
 			}
 			this.categoryStatus = false;
