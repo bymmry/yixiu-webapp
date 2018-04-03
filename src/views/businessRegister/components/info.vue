@@ -361,7 +361,9 @@ export default {
 			let _this = this;
 
 			let geolocation = new BMap.Geolocation();
+			alert(geolocation);
 			geolocation.getCurrentPosition(function(r){
+				alert(r);
 				if(this.getStatus() == BMAP_STATUS_SUCCESS){
 					var mk = new BMap.Marker(r.point);
 					map.addOverlay(mk);
