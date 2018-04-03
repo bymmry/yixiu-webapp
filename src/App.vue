@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     
-    <div v-bind:class="{appBox: active}">
+    <div class="appBox">
       <keep-alive>
         <router-view v-if="$route.meta.keepAlive">
         <!-- 这里是会被缓存的视图组件-->

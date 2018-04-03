@@ -82,6 +82,7 @@
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
 
 			this.shopData = res.data;
+			alert(this.shopData);
 
 			if (res.data.qualification) { //已缴纳保证金
 				this.content = [
