@@ -1,7 +1,8 @@
 <template>
   <div class="header">
-    <img v-if="shopData.cover" class="header__logo" :src="shopData.cover"/>
+    <img class="header__logo" :src="shopData.cover"/>
 		<p>{{ shopData.name }}</p>
+		<p>审核状态:{{ shopData.qualificationState }}</p>
   </div>
 </template>
 

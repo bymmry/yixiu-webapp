@@ -14,7 +14,6 @@
 				:link="item.link"
 			/>
 		</van-pull-refresh>
-
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
 		 <!-- <button @click="deleteData">删除</button> -->
@@ -84,27 +83,26 @@
 
 			this.shopData = res.data;
 
-			if (res.data.qualification) { //已缴纳保证金
-				this.content = [
-					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
-					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
-					{ name: '修改手机维修服务', icon: 'update', link: '/updateService' },
-					{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
-					{ name: '删除已发布二手手机', icon: 'delete', link: '/deletePhone' },
-					{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
-					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
-				];
-			} else { // 未缴纳保证金
-				this.content = [
-					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
-				]
-				this.prompt('您还未缴纳保证金，请缴纳保证金', 'error').show();
+			if (window.isAttestation) {
+				if (res.data.pay) { //已缴纳保证金
+					this.content = [
+						{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
+						{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
+						{ name: '修改手机维修服务', icon: 'update', link: '/updateService' },
+						// { name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
+						// { name: '删除已发布二手手机', icon: 'delete', link: '/deletePhone' },
+						{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
+						{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
+					];
+				} else { // 未缴纳保证金
+					this.content = [
+						{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
+					]
+					this.prompt('您还未缴纳保证金，请缴纳保证金', 'error').show();
+				}
 			}
 			toast.hide();
 
-			if (res.data.qualificationState !== '正常') {
-				this.prompt('您的信息还未审核，请稍等', 'error').show();
-			}
 			this.modules.slice(0, 3).map( async item => {
 				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
 				item.num = res.data.length;
@@ -123,8 +121,8 @@
 						{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 						{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
 						{ name: '修改手机维修服务', icon: 'update', link: '/updateService' },
-						{ name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
-						{ name: '删除已发布二手手机', icon: 'delete', link: '/deletePhone' },
+						// { name: '二手手机交易', icon: 'publish', link: '/publishPhone' },
+						// { name: '删除已发布二手手机', icon: 'delete', link: '/deletePhone' },
 						{ name: '完善信息', icon: 'identification', link: '/updateMsg' },
 						{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 					];
@@ -142,20 +140,10 @@
 				// this.$toast('刷新成功');
 				this.isLoading = false;
 			},
-			async getMsg () {
-				let userData = JSON.parse(sessionStorage.getItem('userData'));
-				let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.wx.openid});
-				if (res.code !== 200) {
-					// this.prompt(res.data, 'error').show();
-					this.shopData = { name: '翼修商家', cover: defaults };
-				} else {
-					this.shopData = res.data;
-				}
-			},
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5abb337cc51cf357b34ef3a4"
+					_id: "5ac26ca4bcbe58709c9bd3e2"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);

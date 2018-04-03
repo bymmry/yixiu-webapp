@@ -35,13 +35,12 @@
       // console.log("App onload--------------------------------------------------->");
       let userData = this.urlDataTurnObj(window.location.href);
       userData = JSON.parse(userData);
-      // alert(window.location.href);  
+      // alert(window.location.href);
+      window.isAttestation = false;
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);
-        this.active = false;
       }else {
         this.$router.push("/home");
-        this.active = true;
       }
       
       let pushData = this.reguserinfo(userData);
@@ -70,12 +69,19 @@
     },
     methods: {
       async checkIsShop (userData) {
+        
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData.openid});
         if (res.code == 4004) {
           this.$router.push('/enterRules');
           return;
         }
+        console.log(res.data);
+        if (res.data.qualificationState !== '正常') {
+          this.$router.push('/wait');
+          return;
+        }
         sessionStorage.setItem('userData', userData.openid);
+        window.isAttestation = true;
         localStorage.setItem('shopData', JSON.stringify(res.data));
         this.$router.push('/sellerHome')
       }

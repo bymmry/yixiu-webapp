@@ -37,7 +37,7 @@
 				<img class="upload__show" :src="certificate" alt="" />
 			</div>
 
-			<p class="head">下载协议 <a class="link" href="http://t.cn/RnCHOyk">翼修入驻协议.docx</a></p>
+			<p class="head">下载协议 <a class="link" href="https://0x9.me/luU5c">翼修入驻协议.docx</a></p>
 
 			<p class="links">温馨提示: 如果上述链接点击不能下载，请手动复制以下地址到浏览器上进行下载!</p>
 
@@ -199,7 +199,7 @@ export default {
 			areaStatus: false,
 			areaList: areaList,
 			files: file,
-			linkAddress: 'http://t.cn/RnCHOyk',
+			linkAddress: 'https://0x9.me/luU5c',
 			file: file,
 			id1: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
 			id2: 'https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/camera.png',
@@ -345,7 +345,7 @@ export default {
 				return;
 			}
 			wait.show();
-			this.$router.push('/sellerHome');
+			this.$router.push('/wait');
 		},
 		start () {
 			this.startPicker.show()

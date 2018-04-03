@@ -10,7 +10,7 @@
 
 			<img class="info__logo" :src="logo" alt="" />
 
-			<p class="head">身份证正面</p>
+			<!-- <p class="head">身份证正面</p>
 
 			<div class="upload">
 				<input class="upload__select" @change="idcardUpload1($event, 'idcard1')" type="file" accept="image/*" />
@@ -53,7 +53,7 @@
 			<div class="upload">
 				<input class="upload__select" @change="protocolUpload($event, 'protocol')" type="file" accept="image/*" />
 				<img class="upload__show" :src="infos.certificate[4] ? infos.certificate[4].src : defaults" alt="" />
-			</div>
+			</div>-->
 
 			<p class="head">商铺封面</p>
 
@@ -61,12 +61,6 @@
 				<input class="upload__select" @change="coverUpload($event)" type="file" accept="image/*" />
 				<img class="upload__show" :src="infos.cover" alt="" />
 			</div>
-
-			<van-field
-				v-model="infos.qualificationState"
-				label="审核状态"
-				disabled
-			/>
 
 			<van-field
 				v-model="infos.name"

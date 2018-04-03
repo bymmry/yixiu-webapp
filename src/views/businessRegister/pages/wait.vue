@@ -1,7 +1,7 @@
 <template>
 	<div class="info">
 		<sicon name="wait" scale="10"></sicon>
-		<p>请等待1 - 2个工作日审核</p>
+		<p>请等待管理员审核,审核结果将以电话的方式通知您</p>
 	</div>
 </template>
 
