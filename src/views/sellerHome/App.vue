@@ -75,11 +75,12 @@
 				txt: '加载中...',
 				type: 'loading'
 			})
-			toast.show();
+			toast.show();ef
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 			localStorage.setItem('openid', userData);
 			let openid = localStorage.getItem('openid');
-			alert(openid);
+			alert(userData);
+			alert(window.location.href);
 				
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
