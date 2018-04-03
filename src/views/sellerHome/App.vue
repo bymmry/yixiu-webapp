@@ -77,12 +77,14 @@
 			})
 			toast.show();
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
+			localStorage.setItem('openid', userData);
+			let openid = localStorage.getItem('openid');
+			alert(openid);
 				
 			// let userData = sessionStorage.getItem('userData');
-			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: userData});
+			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
 
 			this.shopData = res.data;
-			alert(this.shopData);
 
 			if (res.data.qualification) { //已缴纳保证金
 				this.content = [
