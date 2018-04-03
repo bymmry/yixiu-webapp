@@ -112,11 +112,20 @@
         console.log(req);
         getShopListSort(req).then(res => {
           console.log(res.data);
+
           if(res.data.length === 0){
             this.moreText = "没有更多了"
-          }else {
-            this.shopData.push(...res.data);
-            this.showMore = true;
+          }else {   
+            res.data.map((item) => {
+              if(item.qualificationState == "正常"){
+                this.shopData.push(item);
+                
+                // this.shopData.push(...res.data);
+                this.showMore = true;
+              }
+            });
+
+
           }
         }, err => {
           console.log(err);

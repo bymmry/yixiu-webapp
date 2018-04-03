@@ -279,7 +279,12 @@
         this.reqData = req;
         getShopListSort(req).then((res) => { //综合排序请求数据
           console.log(res);
-          this.shopData = res.data;
+          this.shopData = [];
+          res.data.map((item) => {
+            if(item.qualificationState == "正常"){
+              this.shopData.push(item);
+            }
+          });
           Toast.clear();
         }, err => {
           console.log(err);
