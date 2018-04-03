@@ -77,9 +77,9 @@
 			})
 			toast.show();
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
-			localStorage.setItem('openid', userData);
+			userData !== undefined ? localStorage.setItem('openid', userData) : null;
 			let openid = localStorage.getItem('openid');
-			alert(userData);
+			alert(openid);
 			alert(window.location.href);
 				
 			// let userData = sessionStorage.getItem('userData');
