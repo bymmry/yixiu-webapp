@@ -75,7 +75,7 @@
 				txt: '加载中...',
 				type: 'loading'
 			})
-			toast.show();ef
+			toast.show();
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 			localStorage.setItem('openid', userData);
 			let openid = localStorage.getItem('openid');
