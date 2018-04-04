@@ -10,7 +10,6 @@
 		watch: {
 			shopData: function(val) {
 				this.shopData = val;
-				alert(JSON.stringify(val));
 			}
 		},
 		props: {
