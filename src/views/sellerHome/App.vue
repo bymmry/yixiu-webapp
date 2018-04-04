@@ -90,6 +90,8 @@
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
 			this.shopData = res.data;
 			toast.hide();
+			let data = JSON.stringify(this.shopData);
+			alert(data);
 
 			if (res.data.qualificationState !== '正常') {
 				this.waitStatus = true;
@@ -110,6 +112,7 @@
 				];
 			} else { // 未缴纳保证金
 				alert(123);
+
 				this.content = [
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]
@@ -166,7 +169,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5ac4c256bcbe58709c9bd43f"
+					_id: "5ac4c68ebcbe58709c9bd448"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
