@@ -20,7 +20,7 @@
 		/>
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
-		 <!-- <button @click="deleteData">删除</button> -->
+		 <button @click="deleteData">删除</button>
   </div>
 </template>
 
@@ -82,9 +82,9 @@
 			})
 			toast.show();
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
-			console.log(userData);
 			userData !== undefined ? localStorage.setItem('openid', userData) : null;
 			let openid = localStorage.getItem('openid');
+			alert(openid);
 				
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
@@ -98,6 +98,7 @@
 
 
 			if (res.data.pay) { //已缴纳保证金
+				alert(222)
 				this.content = [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
@@ -108,6 +109,7 @@
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 				];
 			} else { // 未缴纳保证金
+				alert(123);
 				this.content = [
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]
@@ -164,7 +166,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5ac493d1bcbe58709c9bd436"
+					_id: "5ac4c256bcbe58709c9bd43f"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
