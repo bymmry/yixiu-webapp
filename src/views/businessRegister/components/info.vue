@@ -164,11 +164,7 @@ import selects from '../../sellerHome/components/select'
 import wx from 'weixin-js-sdk'
 export default {
 	mounted () {
-		wx.getLocation({
-			success: function (res) {
-				alert(res);
-			}
-		})
+		window.status = false;
 		this.startPicker = this.$createPicker({
       title: '选择开始营业时间',
       data: [this.time],

@@ -114,10 +114,10 @@
 				this.prompt('您还未缴纳保证金，请缴纳保证金', 'error').show()
 			}
 
-			this.modules.slice(0, 3).map( async item => {
-				let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
-				item.num = res.data.length;
-			})
+			// this.modules.slice(0, 3).map( async item => {
+			// 	let res = await this.$api.sendData('https://m.yixiutech.com/order/service/filter', { shop: this.shop, state: item.state });
+			// 	item.num = res.data.length;
+			// })
 			this.modules[3].num = this.shopData.pv;
 		},
 		methods: {
@@ -164,7 +164,7 @@
 			async deleteData(){
 				// 删除店铺
 				let req = {
-					_id: "5ac3ae6cbcbe58709c9bd426"
+					_id: "5ac493d1bcbe58709c9bd436"
 				}
 				let res = await this.$api.sendData('https://m.yixiutech.com/shop/delete', req);
 				console.log(res);
