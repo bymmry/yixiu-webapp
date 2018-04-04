@@ -7,6 +7,12 @@
 
 <script>
   export default {
+		watch: {
+			shopData: function(val) {
+				this.shopData = val;
+				alert(JSON.stringify(val));
+			}
+		},
 		props: {
 			shopData: Object
 		}

@@ -75,7 +75,7 @@
 		// 	// let res = await this.$api.sendData('https://yixiu.natappvip.cc/order/service/filter', data);
 		// },
 		// 删除店铺信息  慎用
-		async mounted () {
+		async created () {
 			const toast = this.$createToast({
 				txt: '加载中...',
 				type: 'loading'
@@ -84,14 +84,11 @@
 			let userData = JSON.parse(this.urlDataTurnObj(window.location.href)).openid;
 			userData !== undefined ? localStorage.setItem('openid', userData) : null;
 			let openid = localStorage.getItem('openid');
-			alert(openid);
 				
 			// let userData = sessionStorage.getItem('userData');
 			let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {openid: openid});
 			this.shopData = res.data;
 			toast.hide();
-			let data = JSON.stringify(this.shopData);
-			alert(data);
 
 			if (res.data.qualificationState !== '正常') {
 				this.waitStatus = true;
@@ -100,7 +97,6 @@
 
 
 			if (res.data.pay) { //已缴纳保证金
-				alert(222)
 				this.content = [
 					{ name: '添加手机维修服务', icon: 'fuwu', link: '/service' },
 					{ name: '查看手机服务列表', icon: 'view', link: '/viewServices' },
@@ -111,8 +107,6 @@
 					{ name: '商家钱包', icon: 'wallet', link: '/shopWallet' }
 				];
 			} else { // 未缴纳保证金
-				alert(123);
-
 				this.content = [
 					{ name: '缴纳保证金', icon: 'baozhengjin', link: '/payBail' }
 				]

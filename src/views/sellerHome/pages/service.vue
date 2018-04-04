@@ -255,10 +255,6 @@ export default {
 			this.colors.list = this.models[ index ].color;
 		},
 		async updateCategory (data) {
-			if ( window.back ) {
-				console.log(123);
-				document.documentElement.scrollTop = 10000
-			}
 			this.categoryStatus = false;
 			// let sysCategory = await this.$api.getData('https://m.yixiutech.com/category/phoneRepair');
 			let ownCategory = await this.$api.sendData('https://m.yixiutech.com/category/shop', {type: 'service', shop: this.shop});
