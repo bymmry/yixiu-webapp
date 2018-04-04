@@ -161,8 +161,14 @@ import logo from '@/assets/logo.png'
 import file from '@/assets/file.png'
 import areaList from '../../my/components/data/area.json'
 import selects from '../../sellerHome/components/select'
+import wx from 'weixin-js-sdk'
 export default {
 	mounted () {
+		wx.getLocation({
+			success: function (res) {
+				alert(res);
+			}
+		})
 		this.startPicker = this.$createPicker({
       title: '选择开始营业时间',
       data: [this.time],

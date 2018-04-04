@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div>
 		<div class="info">
 			<item-header 
 				:name="infoName"

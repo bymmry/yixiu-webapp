@@ -75,13 +75,7 @@
           this.$router.push('/enterRules');
           return;
         }
-        console.log(res.data);
-        if (res.data.qualificationState !== '正常') {
-          this.$router.push('/wait');
-          return;
-        }
         sessionStorage.setItem('userData', userData.openid);
-        window.isAttestation = true;
         localStorage.setItem('shopData', JSON.stringify(res.data));
         this.$router.push('/sellerHome')
       }
