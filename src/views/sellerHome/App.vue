@@ -20,7 +20,7 @@
 		/>
 		 
 		 <!-- 删除店铺信息按钮 慎用 -->
-		 <button @click="deleteData">删除</button>
+		 <!-- <button @click="deleteData">删除</button> -->
   </div>
 </template>
 

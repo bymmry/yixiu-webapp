@@ -28,6 +28,7 @@
     width: auto;
     height: 7vh;
     padding: 0 10px;
+    background: #fff;
   }
   .header > div{
     line-height: 7vh;
