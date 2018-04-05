@@ -1,3 +1,5 @@
+import { Toast } from "_vant@0.12.14@vant";
+
 let filters = {
   init(val) {
     return 'filter init'
@@ -178,7 +180,8 @@ let filters = {
     if(typeof userInfoStr === "string"){
       return JSON.parse(userInfoStr);
     }else {
-      alert("未获取到用户信息,请登录后再试");
+      alert("你还未登陆，请先登陆");
+      this.$router.push("/login");
     }
   },
   //

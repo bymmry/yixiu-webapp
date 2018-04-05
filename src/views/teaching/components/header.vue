@@ -7,7 +7,9 @@
       <div class="title">
         <h3>工程师培训</h3>
       </div>
-      <div class="more"></div>
+      <div class="my" @click="toMy">
+        <sicon name="my" scale="2"></sicon>
+      </div>
     </div>
 </template>
 
@@ -17,6 +19,9 @@
     methods: {
       back: function () {
         this.$router.push("/home");
+      },
+      toMy () {
+        console.log("my")
       }
     }
   };
@@ -48,7 +53,7 @@
     text-align: center;
     color: #f85;
   }
-  .header > div.more{
+  .header > div.my{
     flex: 3;
     text-align: center;
   }

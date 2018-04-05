@@ -17,7 +17,7 @@
         <div>
           <no-order v-if="!orderData.length"></no-order>
           <order-item v-else :orders="orderData" :states="state"></order-item>
-        <!-- </van-pull-refresh> -->
+          <!-- </van-pull-refresh> -->
         </div>
       </div>
       <!-- <div class="loadMore">
@@ -32,8 +32,15 @@
   import theHeader from '../common/base/theHeader';
   import noOrder from './components/noOrders';
   import orderItem from './components/ordersItem';
-  import { getOrderList, getMoreOrderList } from './api';
-  import { Toast, PullRefresh, Button } from 'vant';
+  import {
+    getOrderList,
+    getMoreOrderList
+  } from './api';
+  import {
+    Toast,
+    PullRefresh,
+    Button
+  } from 'vant';
 
   export default {
     name: 'app',
@@ -49,15 +56,17 @@
       console.log("activated");
       this.currentIndex = 0;
       let userInfo = this.getUserInfo();
-      let req = {
-        user: userInfo
-      };
-      this.getOrderData(req);
+
+      if (userInfo) {
+        let req = {
+          user: userInfo
+        };
+        this.getOrderData(req);
+      }
     },
     data() {
       return {
-        ordersList: [
-          {
+        ordersList: [{
             name: "全部",
             index: 0
           },
@@ -94,7 +103,7 @@
         this.currentIndex = index;
         let userInfo = this.getUserInfo();
         let state = 0;
-        switch (index){
+        switch (index) {
           case 0:
             state = undefined;
             break;
@@ -125,14 +134,14 @@
         });
         getOrderList(req).then(res => {
           console.log(res);
-          if (res.code === 200){
+          if (res.code === 200) {
             this.moreText = "";
             this.showMore = true;
             this.orderData = res.data;
             this.$toast('刷新成功');
             this.isLoading = false;
             Toast.clear();
-          }else {
+          } else {
             Toast.loading({
               message: '加载失败'
             });
@@ -147,7 +156,7 @@
       onRefresh() {
         let userInfo = this.getUserInfo();
         let filter = this.currentIndex;
-        switch (filter){
+        switch (filter) {
           case 0:
             filter = undefined;
             break;
@@ -170,7 +179,7 @@
         this.getOrderData(req);
 
       },
-      loadMore: function() {
+      loadMore: function () {
         let userInfo = this.getUserInfo();
         this.showMore = false;
         this.nowData += this.orderData.length;
@@ -182,13 +191,13 @@
           user: userInfo,
           filter: this.state
         }
-        let req = Object.assign(reqData,more);
+        let req = Object.assign(reqData, more);
         console.log(req);
         getMoreOrderList(req).then(res => {
           console.log(res.data);
-          if(res.data.length === 0){
+          if (res.data.length === 0) {
             this.moreText = "没有更多了"
-          }else {
+          } else {
             this.orderData.push(...res.data);
             // this.showMore = true;
           }
@@ -198,48 +207,56 @@
       }
     }
   };
+
 </script>
 
 <style scoped>
-  .orders{
+  .orders {
     width: auto;
     height: auto;
   }
-  .orders .header{
+
+  .orders .header {
     width: auto;
     height: 7vh;
   }
-  .orders .ordersRow{
+
+  .orders .ordersRow {
     width: auto;
     height: auto;
   }
-  .orders .ordersRow .ordersTabs{
+
+  .orders .ordersRow .ordersTabs {
     width: auto;
     height: 6vh;
   }
-  .orders .ordersRow .ordersTabs ul{
+
+  .orders .ordersRow .ordersTabs ul {
     width: auto;
     height: 100%;
     display: flex;
     padding-bottom: 2px;
     border-bottom: 1px solid #eee;
   }
-  .orders .ordersRow .ordersTabs ul li{
+
+  .orders .ordersRow .ordersTabs ul li {
     flex: 1;
     text-align: center;
   }
-  .orders .ordersRow .ordersTabs ul li span{
+
+  .orders .ordersRow .ordersTabs ul li span {
     display: inline-block;
     width: auto;
     height: 100%;
     line-height: 6vh;
   }
-  .orders .ordersRow .ordersTabs ul li span.active{
+
+  .orders .ordersRow .ordersTabs ul li span.active {
     color: #fda674;
     border-bottom: 2px solid #fda674;
   }
 
-  .orders .ordersRow .ordersList{
+  .orders .ordersRow .ordersList {
     width: auto;
     padding-top: 2px;
     margin-top: 3px;
@@ -247,18 +264,23 @@
     overflow-y: scroll;
     background-color: #eee;
   }
-  .orders .ordersRow .ordersList> div{
+
+  .orders .ordersRow .ordersList>div {
     height: 100%;
     overflow-y: scroll;
   }
-  .loadMore{
+
+  .loadMore {
     width: auto;
     height: 8vh;
     text-align: center;
     background-color: #eee;
   }
-  .loadMore button{
+
+  .loadMore button {
     width: 60vw;
-    border: 1px solid #fff;  
+    border: 1px solid #fff;
   }
+
 </style>
+
