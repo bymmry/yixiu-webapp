@@ -1,5 +1,8 @@
 <template>
   <div class="login">
+    <div class="logo" @click="backHome">
+      <img class="logoImg" :src="logo" alt="" />
+    </div>
     <h3>Welcome</h3>
     <div class="loginBox">
       <div class="loginDes">
@@ -23,11 +26,19 @@
 </template>
 
 <script>
+  import logo from '@/assets/logo.png'
   export default {
     components: {},
     data() {
       return {
-
+        logo: logo,
+        username: "",
+        password: ""
+      }
+    },
+    methods: {
+      backHome(){
+        this.$router.push("/home");
       }
     }
   }
@@ -54,14 +65,22 @@
     background: linear-gradient(to bottom right, #6bc8b7, #3878cd);
     /* 标准的语法 */
   }
-
+  .login .logo{
+    width: 50%;
+    height: auto;
+    margin: 10% auto;
+  }
+  .login .logo img{
+    width: 100%;
+    height: auto;
+  }
   .login h3 {
     font-size: 45px;
     color: #fff;
     width: 100%;
     height: auto;
     text-align: center;
-    margin-top: 40%;
+    margin-top: 5%;
   }
   .login .loginBox{
     width: auto;
@@ -84,7 +103,7 @@
   .login .loginBox .loginDes input{
     width: 150px;
     height: 20px;
-    /* border: none; */
+    border: none;
     float: right;
     background: none;
     border-bottom: 1px solid #fff;
