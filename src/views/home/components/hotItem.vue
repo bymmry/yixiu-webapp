@@ -33,7 +33,8 @@ export default {
   margin: 10px 0;
 }
 .hot-item img{
-	width: 30px;
-	height: 30px;
+	margin: 0 auto;
+	width: auto;
+	height: 25px;
 }
 </style>
