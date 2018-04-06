@@ -22,13 +22,17 @@
         <span>忘记密码?</span>|<span @click="toRegister">立即注册</span>
       </div>
     </div>
+    <wx-login class="wxLogin"></wx-login>
   </div>
 </template>
 
 <script>
   import logo from '@/assets/logo.png'
+  import wxLogin from './components/wxLogin.vue'
   export default {
-    components: {},
+    components: {
+      wxLogin
+    },
     data() {
       return {
         logo: logo,
@@ -88,7 +92,7 @@
   .login .loginBox{
     width: auto;
     height: auto;
-    margin-top: 15%;
+    margin-top: 10%;
   }
   .login .loginBox .loginDes{
     margin: 0 auto;
@@ -131,5 +135,9 @@
   .login .buttons .register span{
     display: inline-block;
     padding: 5px;
+  }
+  .wxLogin{
+    position: absolute;
+    bottom: 5vh;
   }
 </style>
