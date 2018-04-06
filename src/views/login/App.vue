@@ -19,7 +19,7 @@
         <button>立即登录</button>
       </div>
       <div class="register">
-        <span>忘记密码?</span>|<span>立即注册</span>
+        <span>忘记密码?</span>|<span @click="toRegister">立即注册</span>
       </div>
     </div>
   </div>
@@ -39,6 +39,9 @@
     methods: {
       backHome(){
         this.$router.push("/home");
+      },
+      toRegister(){
+        this.$router.push("/register");
       }
     }
   }
