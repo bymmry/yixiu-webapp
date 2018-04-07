@@ -1,5 +1,5 @@
 import toOrders from './components/toOrders';
-import repay from './components/rePay';
+import orderDetail from './components/orderDetail';
 export default[
   {
     path: '/toOrders', //
@@ -7,7 +7,7 @@ export default[
     children: [
       {
         path: ":id", //
-        component: repay
+        component: orderDetail
       }
     ],
     meta: {

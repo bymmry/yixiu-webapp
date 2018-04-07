@@ -1,12 +1,18 @@
 <template>
   <div class="chooseInfos">
     <div class="information">
+      <duv class="title">
+        <h3>订单信息</h3>
+      </duv>
       <ul>
         <li>
           <span class="name">手机信息</span>
           <span class="value">{{chooseData.brand.val}} {{chooseData.model.val}} {{chooseData.color.val}}</span>
         </li>
-        <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
+        <li>
+          <span class="name">维修选项</span>
+          <span class="value">{{serverList}}</span>
+        </li>
         <li>
           <span class="name">手机号</span>
           <span class="value">
@@ -29,12 +35,7 @@
         <li>
           <span class="name">服务方式</span>
           <span class="value">
-            <cube-select
-              class="valueBorder"
-              v-model="serWay"
-              placeholder="请选择服务方式"
-              :options="theServiceWay"
-              @change="selectServiceWay">
+            <cube-select class="valueBorder" v-model="serWay" placeholder="请选择服务方式" :options="theServiceWay" @change="selectServiceWay">
             </cube-select>
           </span>
         </li>
@@ -67,37 +68,27 @@
         />
       </div> -->
       <div class="coupon">
-        <van-coupon-cell
-          :coupons="coupons"
-          :chosen-coupon="chosenCoupon"
-          @click="showList = true"
-        />
+        <van-coupon-cell :coupons="coupons" :chosen-coupon="chosenCoupon" @click="showList = true" />
         <!-- 优惠券列表 -->
         <van-popup v-model="showList" position="bottom">
-          <van-coupon-list
-            :coupons="coupons"
-            :chosen-coupon="chosenCoupon"
-            :disabled-coupons="disabledCoupons"
-            @change="onChange"
-            @exchange="onExchange"
-          />
+          <van-coupon-list :coupons="coupons" :chosen-coupon="chosenCoupon" :disabled-coupons="disabledCoupons" @change="onChange"
+            @exchange="onExchange" />
         </van-popup>
+      </div>
+
+      <div class="kuaidiInfo" v-if="isShowAddressInfo">
+        <span>注：你已选择快递维修，请尽快下单并发货，并在订单详情中填写你的快递信息</span>
       </div>
     </div>
     <div class="stepButton">
       <div class="stepPrev">
         <van-button @click="goBack" bottom-action>
-          <sicon name="back" scale="1.8"></sicon><span>上一步</span>
+          <sicon name="back" scale="1.8"></sicon>
+          <span>上一步</span>
         </van-button>
       </div>
       <div class="stepNext">
-        <sure-order 
-          :sureOrderData="sureOrderData" 
-          :data="chooseData" 
-          :TotalFee="TotalFee" 
-          :serverId="serverId"
-          :nextStepButtonDisabled="nextStepButtonDisabled"
-          ></sure-order>
+        <sure-order :sureOrderData="sureOrderData" :data="chooseData" :TotalFee="TotalFee" :serverId="serverId" :nextStepButtonDisabled="nextStepButtonDisabled"></sure-order>
         <!--<van-button @click="nextStep" bottom-action>-->
         <!--<sicon name="nextStep" scale="1.8"></sicon><span>确认下单</span>-->
         <!--</van-button>-->
@@ -107,7 +98,14 @@
 </template>
 
 <script>
-  import { CouponCell, CouponList, Popup, Toast, Button, Field } from 'vant';
+  import {
+    CouponCell,
+    CouponList,
+    Popup,
+    Toast,
+    Button,
+    Field
+  } from 'vant';
   import sureOrder from "../sureOrder"
   import theAddress from '../theAddress'
   const coupon = {
@@ -131,7 +129,7 @@
         coupons: [coupon],
         disabledCoupons: [coupon],
         shopServer: [],
-        sureOrderData: {}, 
+        sureOrderData: {},
         payment: 0, //实付金额
         TotalFee: 0,
         phoneNumber: "", // 电话号码
@@ -144,7 +142,8 @@
         remack: "", //备注
         isShowAddress: false,
         address: "",
-        nextStepButtonDisabled: true
+        nextStepButtonDisabled: true,
+        isShowAddressInfo: false
       }
     },
     props: {
@@ -175,7 +174,7 @@
       let pro = servers.map(function (val) {
         return val.name;
       });
-      for(let i=0; i<servers.length; i++){
+      for (let i = 0; i < servers.length; i++) {
         this.payment += servers[i].price;
       }
       this.TotalFee = this.payment;
@@ -200,22 +199,22 @@
         return val;
       },
       phoneNumber: function (val) {
-        let reg=/^1[345789]\d{9}$/ ;
-        if (reg.test(val)){
+        let reg = /^1[345789]\d{9}$/;
+        if (reg.test(val)) {
           this.errorMessage = "";
           this.setOrderData();
-        }else {
+        } else {
           this.errorMessage = "手机号格式错误";
         }
       },
       serverId: function (val) {
         return val;
       },
-      address: function(val){
+      address: function (val) {
         this.setOrderData();
         return val;
       },
-      time: function(val){
+      time: function (val) {
         this.setOrderData();
       }
     },
@@ -236,20 +235,26 @@
       onChange(index) {
         this.showList = false;
         this.chosenCoupon = index;
-        if (index !== -1){
-          this.TotalFee = this.payment - this.coupons[index].value/100;
-        }else {
+        if (index !== -1) {
+          this.TotalFee = this.payment - this.coupons[index].value / 100;
+        } else {
           this.TotalFee = this.payment;
         }
       },
       onExchange(code) {
         this.coupons.push(this.coupon);
       },
-      selectServiceWay: function(value, index, text) {
-        if(value == "线上快递" || value == "上门维修" || value == "快递维修"){
+      selectServiceWay: function (value, index, text) {
+        if (value == "线上快递" || value == "上门维修" || value == "快递维修") {
+
+          if (value == "线上快递" || value == "快递维修"){
+            this.isShowAddressInfo = true;
+            this.$toast("你已选择快递维修，请尽快下单并发货，并在订单详情中填写你的快递信息");
+          }
           this.isShowAddress = true;
-        }else {
+        } else {
           this.isShowAddress = false;
+          this.isShowAddressInfo = false;
         }
         this.setOrderData();
       },
@@ -257,35 +262,35 @@
         let shopId = this.$route.params.id;
         let userInfo = this.getUserInfo();
 
-        if(this.phoneNumber != "" && this.serWay != "" && this.timeNum != ""){
-          if(this.isShowAddress == true && this.address == ""){
+        if (this.phoneNumber != "" && this.serWay != "" && this.timeNum != "") {
+          if (this.isShowAddress == true && this.address == "") {
             this.nextStepButtonDisabled = true;
-          }else {
+          } else {
             this.nextStepButtonDisabled = false;
           }
-        }else{
+        } else {
           this.nextStepButtonDisabled = true;
         }
 
         this.sureOrderData = {
-          type: 0,//订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
+          type: 0, //订单类型 0.纯服务类型 1.服务和商品类型 2.纯商品类型
           user: userInfo._id,
           shop: shopId,
-          serviceWay: this.serWay,//服务方式 1.上门服务 2.自行到店
-          phone: this.phoneNumber,//联系电话
-          address: this.address,//联系人地址
+          serviceWay: this.serWay, //服务方式 1.上门服务 2.自行到店
+          phone: this.phoneNumber, //联系电话
+          address: this.address, //联系人地址
           // goods: this.shopId,//商品列表
           appointment: this.timeNum,
-          service: this.serverId,//服务列表
-          phoneModel: this.chooseData.model.data._id,//
+          service: this.serverId, //服务列表
+          phoneModel: this.chooseData.model.data._id, //
           // card:[""],//优惠券列表
-          remark: this.remack,//备注
+          remark: this.remack, //备注
           paymentType: 0, //付款方式 0:在线支付(目前只支持) 1:线下支付 2:修好后支付
-          price: this.payment*100,//总金额(优惠前金额)
-          payment: this.TotalFee*100//实付金额
+          price: this.payment * 100, //总金额(优惠前金额)
+          payment: this.TotalFee * 100 //实付金额
         }
       },
-      showTimePicker: function(){
+      showTimePicker: function () {
         const d = new Date();
         const time = d.valueOf() + 1 * 60 * 60 * 1000;
         const timePicker = this.$createTimePicker({
@@ -314,38 +319,59 @@
         timePicker.setTime(time)
         timePicker.show()
       },
-      getAddress: function(){
+      getAddress: function () {
         let address = this.$refs.getAddress;
         address.show();
       },
-      getTheAddress: function(address){
+      getTheAddress: function (address) {
         console.log(address);
 
         this.address = address.info;
         let add = this.$refs.getAddress;
         add.hide();
       },
-      cancle: function(){
+      cancle: function () {
         let address = this.$refs.getAddress;
         address.hide();
       }
     }
   };
+
 </script>
 
 <style scoped>
-  .chooseInfos .information{
-    width: auto;
-    height: auto;
-    max-height: 44vh;
+  .chooseInfos .information {
+    position: fixed;
+    top: 10vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    min-height: 480px;
+    background: #fff;
+    max-height: 400vh;
     overflow-y: scroll;
   }
-  .chooseInfos .information ul{
+
+  .chooseInfos .information .title {
+    width: auto;
+    text-align: center;
+  }
+
+  .chooseInfos .information .title h3 {
+    width: auto;
+    color: #fd9153;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .chooseInfos .information ul {
     width: 100%;
     border-top: 1px solid #e5e5e5;
     border-bottom: 1px solid #e5e5e5;
   }
-  .chooseInfos .information ul li{
+
+  .chooseInfos .information ul li {
     width: auto;
     margin: 0 15px;
     height: 40px;
@@ -354,76 +380,103 @@
     color: #393939;
     border-bottom: 1px solid #e5e5e5;
   }
-  .chooseInfos .information ul li:last-child{
+
+  .chooseInfos .information ul li:last-child {
     border: none;
   }
-  .chooseInfos .information ul li span{
+
+  .chooseInfos .information ul li span {
     display: inline-block;
   }
 
-  .chooseInfos .information ul li span.value{
+  .chooseInfos .information ul li span.value {
     float: right;
   }
-  .chooseInfos .information ul li span .valueBorder{
+
+  .chooseInfos .information ul li span .valueBorder {
     padding-right: 28px;
-    color: red!important;
+    color: red !important;
   }
-  .chooseInfos .information ul li span .valueBorder::after{
+
+  .chooseInfos .information ul li span .valueBorder::after {
     border: none;
     /* width: 150px; */
     /* color: #eee; */
     /* border: 1px solid #eee; */
   }
-  .chooseInfos .information ul li span.value input{
+
+  .chooseInfos .information ul li span.value input {
     text-align: right;
   }
-  .chooseInfos .information ul li span.errorMessage{
+
+  .chooseInfos .information ul li span.errorMessage {
     position: relative;
     /*top: 20px;*/
     float: right;
     color: red;
   }
-  .chooseInfos .information ul li span.value button{
+
+  .chooseInfos .information ul li span.value button {
     height: 40px;
     background-color: #fff;
     color: #000;
     font-size: 13px;
   }
-  .chooseInfos .information ul li span.value select{
-    border: none;
-   }
 
-  .chooseInfos .stepButton{
+  .chooseInfos .information ul li span.value select {
+    border: none;
+  }
+
+  .chooseInfos .stepButton {
     width: 100%;
     display: flex;
-    position: absolute;
+    position: fixed;
+    z-index: 100;
     bottom: 5px;
   }
-  .chooseInfos .stepButton > div{
+
+  .chooseInfos .stepButton>div {
     width: 100%;
     flex: 1;
     padding: 0 5px;
   }
-  .chooseInfos .stepButton > div button{
+
+  .chooseInfos .stepButton>div button {
     border-radius: 4px;
   }
-  .chooseInfos .stepButton > div.stepPrev button{
+
+  .chooseInfos .stepButton>div.stepPrev button {
     background-color: #4a4c5b;
   }
-  .chooseInfos .stepButton > div button svg{
+
+  .chooseInfos .stepButton>div button svg {
     vertical-align: middle;
     margin-right: 10px;
   }
-  .chooseInfos .stepButton > div button span{
+
+  .chooseInfos .stepButton>div button span {
     vertical-align: middle;
   }
-  #input div div input{
-      text-align: right !important;
-    }
-  .addressInput{
+
+  #input div div input {
+    text-align: right !important;
+  }
+
+  .addressInput {
     width: 220px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space:nowrap;
+    white-space: nowrap;
+  }
+  .kuaidiInfo{
+    width: auto;
+    height: auto;
+  }
+  .kuaidiInfo span{
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    color: #aaa;
   }
 </style>
+

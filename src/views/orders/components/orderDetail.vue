@@ -22,6 +22,10 @@
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
+        <li v-if="orderData.state == 11" @click="showWuliuInfo">
+          <span class="name wuliu">点击完善物流信息</span>
+          <span class="value"></span>
+        </li>
       </ul>
       <ul>
         <li v-if="orderData.state == 13" @click="getQuality">质检报告</li>
@@ -64,6 +68,13 @@
     <cube-popup v-if="orderData" class="quality" type="my-popup" :center="false" ref="getQuality">
       <quality :data="orderData" v-on:closeQuality="closeQuality"></quality>
     </cube-popup>
+
+    <!-- 填写物流信息 -->
+    <cube-popup class="logistics" type="my-popup" :mask="true" ref="wuluInfo">
+      <get-logistics></get-logistics>
+      <cube-button class="logisticsButtons" @click="sureWuliu">确定</cube-button>
+      <cube-button class="logisticsButtons" @click="cancleWuliu">取消</cube-button>
+    </cube-popup>
   </div>
 </template>
 
@@ -72,6 +83,7 @@
   import sureOrder from "../../common/components/sureOrder"
   import quality from '../../common/components/quality'
   import {getOrderDetail, cancelOrder} from '../api';
+  import getLogistics from './getLogistics.vue'
 
   export default {
     name: 're-pay',
@@ -117,7 +129,8 @@
       [Popup.name]: Popup,
       [Toast.name]: Toast,
       sureOrder,
-      quality
+      quality,
+      getLogistics
     },
     methods: {
       goBack: function () {
@@ -196,6 +209,17 @@
       closeQuality(){
         let quality = this.$refs.getQuality;
         quality.hide();
+      },
+      showWuliuInfo() {
+        let wuliu = this.$refs.wuluInfo;
+        wuliu.show();
+      },
+      sureWuliu(){
+
+      },
+      cancleWuliu(){
+        let wuliu = this.$refs.wuluInfo;
+        wuliu.hide();
       }
     }
   };
@@ -299,5 +323,14 @@
   }
   .quality{
     width: 100%;
+  }
+  .wuliu{
+    color: #f85;
+  }
+  .logistics{
+  }
+  .logistics .logisticsButtons{
+    width: 50%;
+    float: left;
   }
 </style>
