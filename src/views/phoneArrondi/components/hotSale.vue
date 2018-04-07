@@ -1,6 +1,6 @@
 <template>
   <div class="hot-sale">
-		<p class="hot-sale__title">品牌特卖</p>
+		<p class="hot-sale__title">品牌热卖</p>
     <van-tabs :active="active">
 			<van-tab v-for="(brandItem, index) in hotSale" :title="brandItem.name" :key="index">
 					<HotSaleItem v-for="(item, index) in hotSale[index].data" :key="index"
