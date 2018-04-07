@@ -112,6 +112,9 @@
 
     watch: {
       orders: function (val) {
+        
+      console.log("==============================>")
+      console.log(val);
         this.setData();
         this.moreText = "";
         if (val.length >= 10){
@@ -121,7 +124,6 @@
       }
     },
     mounted() {
-      console.log(this.orders);
       this.setData();
     },
     methods: {

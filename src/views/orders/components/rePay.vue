@@ -24,7 +24,7 @@
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
       </ul>
       <ul>
-        <li @click="getQuality">质检报告</li>
+        <li v-if="orderData.state == 13" @click="getQuality">质检报告</li>
       </ul>
     </div>
     <!-- 手机订单 -->

@@ -15,7 +15,7 @@
       <div class="ordersList">
         <!-- <van-pull-refresh class="ordersListRefresh" v-model="isLoading" @refresh="onRefresh"> -->
         <div>
-          <no-order v-if="!orderData.length"></no-order>
+          <no-order v-if="orderData.length == 0"></no-order>
           <order-item v-else :orders="orderData" :states="state"></order-item>
           <!-- </van-pull-refresh> -->
         </div>
@@ -138,7 +138,7 @@
             this.moreText = "";
             this.showMore = true;
             this.orderData = res.data;
-            this.$toast('刷新成功');
+            // this.$toast('刷新成功');
             this.isLoading = false;
             Toast.clear();
           } else {

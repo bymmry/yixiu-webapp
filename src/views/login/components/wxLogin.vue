@@ -6,6 +6,7 @@
 </template>
 
 <script>
+const appid = 'wx92877f3243727d9b';
 export default {
   data () {
     return {
@@ -15,8 +16,9 @@ export default {
   components: {},
   methods: {
     async wechatLogin(){
-      let code = await this.$api.getData('https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx09e56891c8a3ff17&redirect_uri=https%3A%2F%2Fm.yixiutech.com%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect');
+      let code = await this.$api.getData(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`);
       console.log(code);
+      alert(code);
     }
   }
 }
