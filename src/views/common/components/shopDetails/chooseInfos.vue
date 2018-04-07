@@ -246,7 +246,7 @@
         this.coupons.push(this.coupon);
       },
       selectServiceWay: function(value, index, text) {
-        if(value == "线上快递" || value == "上门维修"){
+        if(value == "线上快递" || value == "上门维修" || value == "快递维修"){
           this.isShowAddress = true;
         }else {
           this.isShowAddress = false;
