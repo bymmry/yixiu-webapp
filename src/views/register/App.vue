@@ -6,19 +6,19 @@
     <div class="registerBox">
       <div class="registerDes">
         <!-- <sicon name="phone" scale="2"></sicon> -->
-        <input type="text" placeholder="手机号码">
+        <input type="text" placeholder="手机号码" v-model="phoneNumber">
       </div>
       <div class="registerDes">
-        <input class="phonePassword" type="text" placeholder="验证码">
-        <input class="sendPassword" type="button" value="发送验证码">
+        <input class="phonePassword" type="text" placeholder="验证码" v-model="validateNumber">
+        <input @click="getValidate" ref="validate" class="sendPassword" type="button" :value=Validate>
       </div>
       <div class="registerDes">
         <!-- <sicon name="phone" scale="2"></sicon> -->
-        <input type="text" placeholder="密码">
+        <input type="password" placeholder="密码" v-model="password">
       </div>
       <div class="buttons">
       <div class="registerButton">
-        <button>立即注册</button>
+        <input @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="立即注册">
       </div>
       <div class="login">
         <span @click="toLogin">已有账号，返回登录</span>
@@ -30,6 +30,7 @@
 
 <script>
   import logo from '@/assets/logo.png'
+  import md5 from 'js-md5'; //MD5加密
   export default {
     components: {},
     mounted: function () {
@@ -37,7 +38,13 @@
     },
     data() {
       return {
-        logo: logo
+        logo: logo,
+        phoneNumber: "",
+        Validate: "发送验证码",
+        validateNumber: "",
+        password: "",
+        isShowRegister: 0,
+        isReadonly: 'readonly'
       }
     },
     methods: {
@@ -46,6 +53,43 @@
       },
       toLogin(){
         this.$router.push("/login");
+      },
+      async getValidate(){//获取验证码
+        if(this.phoneNumber.length != 11){
+          alert("请输入正确的电话号码")
+        }else{
+          let res = await this.$api.sendData(`https://m.yixiutech.com/sms/send`, {"mobile": this.phoneNumber});
+          if (res.code == 200){
+            this.Validate = "验证码已发送"
+            this.$refs.validate.readonly = 'readonly';
+            this.$refs.validate.style.color = "#aaa";
+            this.validateNumber = res.data;
+            this.isShowRegister = 1;
+            this.isReadonly = '';
+          }
+        }
+      },
+      async register(){
+        if(this.validateNumber == ""){
+          this.$toast("请填写手机和密码");
+        }else{
+          let that = this;
+          let data = {
+            "mobile": that.phoneNumber,
+            "password": md5(that.password),//不要明文传输,用md5加密
+          }
+          console.log(data);
+          let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
+          if(res.code == 200){
+            this.$toast("注册成功，即将返回登录");
+            setTimeout(() => {
+              this.$router.push("/login");
+            }, 1000);
+          }else{
+            this.$toast(res.errMsg);
+          }
+        }
+        
       }
     }
   }
@@ -74,7 +118,7 @@
   }
   .register .logo{
     width: 50%;
-    height: auto;
+    height: 100px;
     margin: 10% auto;
   }
   .register .logo img{
@@ -117,13 +161,19 @@
     width: auto;
     text-align: center;
   }
-  .register .buttons .registerButton button{
-    width: 140px;
-    margin: 20px auto;
+  .register .buttons .registerButton input{
+    text-align: center;
+    width: 80vw;
+    margin: 10px auto;
+    padding: 15px 0;
     border: none;
-    background: none;
-    color: #fff;
+    background: #fff;
+    color: #eee;
+    border-radius: 5px;
     font-size: 23px;
+  }
+  .register .buttons .registerButton input.sure{
+    color: #3878cd;
   }
   .register .buttons .login{
     text-align: center;

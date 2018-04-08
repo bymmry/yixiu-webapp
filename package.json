@@ -12,8 +12,10 @@
   "dependencies": {
     "axios": "^0.18.0",
     "better-scroll": "^0.1.15",
+    "crypto": "^1.0.1",
     "cube-ui": "^1.5.0",
     "fastclick": "^1.0.6",
+    "js-md5": "^0.7.3",
     "lrz": "^4.9.40",
     "vant": "^0.12.11",
     "vue": "^2.5.2",

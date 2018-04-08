@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="buttons">
-      <div class="loginButton">
+      <div @click="loginNow" class="loginButton">
         <button>立即登录</button>
       </div>
       <div class="register">
@@ -29,6 +29,7 @@
 <script>
   import logo from '@/assets/logo.png'
   import wxLogin from './components/wxLogin.vue'
+  import md5 from 'js-md5'; //MD5加密
   export default {
     components: {
       wxLogin
@@ -46,6 +47,22 @@
       },
       toRegister(){
         this.$router.push("/register");
+      },
+      async loginNow(){
+        let that = this;
+        let data = {
+          "username":that.username,//这里填手机号,用这个字段名称是为了以后可以拓展
+          "password":md5(that.password)//注册的时候用什么加密,这里就用什么加密方式,不要明文
+        }
+
+        let res = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
+        console.log(res);
+        if(res.code == 200){
+          this.$toast('登录成功');
+          this.$router.push("/my");
+        }else{
+          this.$toast(res.errMsg);
+        }
       }
     }
   }
@@ -120,11 +137,14 @@
     text-align: center;
   }
   .login .buttons .loginButton button{
-    width: 140px;
-    margin: 20px auto;
+    text-align: center;
+    width: 80vw;
+    margin: 10px auto;
+    padding: 15px 0;
     border: none;
-    background: none;
-    color: #fff;
+    background: #fff;
+    color: #3878cd;
+    border-radius: 5px;
     font-size: 23px;
   }
   .login .buttons .register{
