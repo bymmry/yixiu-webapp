@@ -12,9 +12,6 @@
 
 <script>
 export default {
-	mounted () {
-		console.log(this.data);
-	},
 	props: {
 		data: Object
 	},

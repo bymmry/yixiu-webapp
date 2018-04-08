@@ -55,11 +55,22 @@
 
 			let iosList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.ios, shop: '5ab93879d4e7f1497d58d94e'});
 			
-			iosList.code == 200 ? this.iphone = iosList.data.slice(0, 4) : alert('网络错误, 请稍后重试!');	
+			if (iosList.code == 200) {
+				this.iphone = iosList.data.slice(0, 4);
+				this.iphone.map(item => {
+					item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
+				})
+			}
+			console.log(this.iphone);
 
 			let androidList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.androidId, shop: '5ab93879d4e7f1497d58d94e'})
-			
-			androidList.code == 200 ? this.android = androidList.data.slice(0, 4) : alert('网络错误, 请稍后重试!');
+
+			if (androidList.code == 200) {
+				this.android = androidList.data.slice(0, 4);
+				this.android.map(item => {
+					item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
+				})
+			}
 
 			// let list = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: this.category, shop: '5aa4a1a3733e266adc724d1a'});
 			// this.data = res.data;
@@ -85,8 +96,8 @@
 		},
 		data () {
 			return {
-				iosTitle: '二手iPhone直销店',
-				androidTitle: '二手Android直销店',
+				iosTitle: 'iPhone热卖',
+				androidTitle: '安卓热卖',
 				name: '精品手机',
 				iphone: [],
 				android: [],

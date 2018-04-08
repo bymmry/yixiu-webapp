@@ -63,7 +63,11 @@ export default {
 	async mounted () {
 		let params = location.href.split('/').pop().split('&');
 		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5ab93879d4e7f1497d58d94e'});
-		this.phoneList = res.data;
+		res.data.map(item => {
+			let temp = item;
+			temp.cover = temp.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
+			this.phoneList.push(temp);
+		})
 		let searchName = decodeURI(params[1]);
 
 		this.phoneList.map(item => {
