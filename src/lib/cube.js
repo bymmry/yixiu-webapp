@@ -14,7 +14,8 @@ import {
   Scroll,
   Slide,
   Select,
-  Upload
+  Upload,
+  Input
   // IndexList,
 } from 'cube-ui'
 
@@ -34,5 +35,6 @@ export default {
     Vue.use(Upload)
     Vue.use(TimePicker)
     Vue.use(Popup)
+    Vue.use(Input)
   }
 }

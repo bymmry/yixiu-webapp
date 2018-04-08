@@ -72,7 +72,7 @@
     <!-- 填写物流信息 -->
     <cube-popup class="logistics" type="my-popup" :mask="true" ref="wuluInfo">
       <get-logistics></get-logistics>
-      <cube-button class="logisticsButtons" @click="sureWuliu">确定</cube-button>
+      <cube-button class="logisticsButtons sure" @click="sureWuliu">确定</cube-button>
       <cube-button class="logisticsButtons" @click="cancleWuliu">取消</cube-button>
     </cube-popup>
   </div>
@@ -327,7 +327,9 @@
   .wuliu{
     color: #f85;
   }
-  .logistics{
+  .logistics .sure{
+    background: #f85;
+    color: #fff;
   }
   .logistics .logisticsButtons{
     width: 50%;
