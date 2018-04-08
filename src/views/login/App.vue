@@ -59,6 +59,8 @@
         console.log(res);
         if(res.code == 200){
           this.$toast('登录成功');
+          let userData = JSON.stringify(res.data);
+          sessionStorage.setItem("userData", userData);
           this.$router.push("/my");
         }else{
           this.$toast(res.errMsg);

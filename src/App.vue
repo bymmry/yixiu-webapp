@@ -46,6 +46,7 @@
       let pushData = this.reguserinfo(userData);
       // console.log(pushData)
       reguser(pushData).then(res => {
+        console.log(res);
         //注册成功
         // console.log(res)
         // if (Data !== {} && Data !== null) {
