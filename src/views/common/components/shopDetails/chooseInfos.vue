@@ -432,7 +432,7 @@
     display: flex;
     position: fixed;
     z-index: 100;
-    bottom: 5px;
+    bottom: 9vh;
   }
 
   .chooseInfos .stepButton>div {
