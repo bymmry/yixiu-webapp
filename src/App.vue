@@ -54,24 +54,24 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
             let userInfo = this.initUserInfo(res);
 
             //测试环境
-            if (process.env.NODE_ENV === 'development') {
-              userInfo = {
-                headimgurl: res.headimgurl || '',//用户头像
-                name: res.nickname || '测试环境',
-                email: res.email || '', //邮箱
-                mobile: res.mobile || '', //手机号
-                wx: {
-                  openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg',
-                  nickname: res.nickname || '测试环境'
-                }, //微信信息:如openid,昵称和头像链接等等
-              }
-              console.log("===========================================>")
-              console.log(userInfo);
-            }
+            // if (process.env.NODE_ENV === 'development') {
+            //   userInfo = {
+            //     headimgurl: res.headimgurl || '',//用户头像
+            //     name: res.nickname || '测试环境',
+            //     email: res.email || '', //邮箱
+            //     mobile: res.mobile || '', //手机号
+            //     wx: {
+            //       openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg2',
+            //       nickname: res.nickname || '测试环境'
+            //     }, //微信信息:如openid,昵称和头像链接等等
+            //   }
+            //   console.log("===========================================>")
+            //   console.log(userInfo);
+            // }
 
             //根据openid判断是否注册
             let register = {
@@ -79,7 +79,7 @@
               'wx.openid': userInfo.wx.openid
             }
             let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-            alert(JSON.stringify(isRegister));
+            // alert(JSON.stringify(isRegister));
             console.log(isRegister.data);
             if (isRegister.data.length == 0){
               //注册
