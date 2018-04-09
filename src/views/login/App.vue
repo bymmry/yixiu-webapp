@@ -22,7 +22,7 @@
         <span @click="forgetPassword">忘记密码?</span>|<span @click="toRegister">立即注册</span>
       </div>
     </div>
-    <wx-login class="wxLogin"></wx-login>
+    <wx-login v-if="false" class="wxLogin"></wx-login>
   </div>
 </template>
 

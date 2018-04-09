@@ -187,8 +187,8 @@ let filters = {
         }
         return user;
       }else {
-        alert("你还未登陆，请先登陆");
-        this.$router.push("/login");
+        // alert("你还未登陆，请先登陆");
+        // this.$router.push("/login");
       }
     
     
