@@ -46,7 +46,7 @@
             <router-link id="register" to="/register">注册</router-link>
           </div>
           <div class="usermessage username" v-else>
-            {{ userInfo.wx.name }}
+            {{ userInfo.wx.nickname }}
           </div>
         </div>
 

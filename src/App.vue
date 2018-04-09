@@ -54,6 +54,7 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
+            alert(JSON.stringify(res));
             let userInfo = this.initUserInfo(res);
 
             //cheshi
@@ -64,7 +65,7 @@
                 email: res.email || '', //邮箱
                 mobile: res.mobile || '', //手机号
                 wx: {
-                  openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg1',
+                  openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg',
                   nickname: res.nickname || '测试环境'
                 }, //微信信息:如openid,昵称和头像链接等等
               }
