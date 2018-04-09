@@ -54,10 +54,10 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            alert(JSON.stringify(res));
+            // alert(JSON.stringify(res));
             let userInfo = this.initUserInfo(res);
 
-            //cheshi
+            //测试环境
             if (process.env.NODE_ENV === 'development') {
               userInfo = {
                 headimgurl: res.headimgurl || '',//用户头像
@@ -73,11 +73,13 @@
               console.log(userInfo);
             }
 
+            //根据openid判断是否注册
             let register = {
               collection: "User",
               'wx.openid': userInfo.wx.openid
             }
             let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
+            alert(JSON.stringify(isRegister));
             console.log(isRegister.data);
             if (isRegister.data.length == 0){
               //注册
