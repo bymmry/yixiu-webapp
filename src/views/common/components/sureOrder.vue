@@ -89,12 +89,13 @@
         });
 
       },
-      _pay: function (payInfo, res) {
+      async _pay(payInfo, res) {
         let isWxMini;
         // console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
         if(isWxMini){
+          //小程序环境
           console.log(isWxMini);
           let jumpUrl = encodeURIComponent(window.location.origin);
           let path = `/pages/wxpay/wxpay?payInfo=${JSON.stringify(payInfo)}&jumpUrl=${jumpUrl}&orderId=${res._id}`;
@@ -102,7 +103,16 @@
             url: path
           });
         }else {
-          alert("非小程序环境");
+          //非小程序环境
+          let userData = this.getUserInfo();//获取用户信息
+          
+          let req = {
+            total_fee: TotalFee*100,
+            openid: userData.wx.openid,
+            trade_type: 'MWEB'
+          }
+          alert(JSON.stringify(req));
+          let res = await this.$api.sendData('https://api.mch.weixin.qq.com/wx/order/sign', req);
         }
       }
     }

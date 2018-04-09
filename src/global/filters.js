@@ -179,7 +179,13 @@ let filters = {
     let userInfoStr = sessionStorage.getItem("userData");
     if(userInfoStr != 'undefined'){
       if(typeof userInfoStr === "string"){
-        return JSON.parse(userInfoStr);
+        userInfo = JSON.parse(userInfoStr);
+        if(userInfo._id){
+          return userInfo;
+        }else{
+          alert("你还未登陆，请先登陆");
+          this.$router.push("/login");
+        }
       }else {
         alert("你还未登陆，请先登陆");
         this.$router.push("/login");
