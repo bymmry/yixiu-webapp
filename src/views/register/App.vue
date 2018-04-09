@@ -107,7 +107,9 @@
           } else {
             this.$toast(res.errMsg);
           }
-        } else {
+        } else if(this.validateSure != this.validateNumber){
+          this.$toast("验证码错误");
+        }else if(this.validateNumber == ""){
           this.$toast("请输入验证码");
         }
 

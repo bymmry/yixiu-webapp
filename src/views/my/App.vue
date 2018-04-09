@@ -38,7 +38,7 @@
         <!-- 用户头像及登录注册 -->
         <div class="user-area">
           <div class="user-profile">
-            <img :src="userInfo.headimgurl">
+            <img :src="userInfo.wx.headimgurl">
           </div>
           <div class="usermessage" v-if="!loggedin">
             <router-link id="login" to="/login">登录</router-link>
@@ -46,7 +46,7 @@
             <router-link id="register" to="/register">注册</router-link>
           </div>
           <div class="usermessage username" v-else>
-            {{ userInfo.name }}
+            {{ userInfo.wx.name }}
           </div>
         </div>
 
