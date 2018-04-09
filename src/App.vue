@@ -87,6 +87,7 @@
               this.$router.push("/register");
             }else{
               //更新用户信息
+              userInfo = isRegister.data[0];
               let update = {
                 collection: "User",
                 find: {
@@ -98,20 +99,8 @@
                 }
               }
               // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
-            }
+            
             sessionStorage.setItem("userData", JSON.stringify(userInfo));
-            console.log();
-            if(userInfo.wx.openid){
-              let reqUser = {
-                collection: 'User',
-                find: {
-                  _id: ''
-                },
-                update:{
-                  wx: userInfo.wx
-                }
-              }
-              // let ri = await this.$api.sendData("https://m.yixiutech.com/sql/update", reqUser);
               this.$toast("微信自动登录成功");
             }
             
