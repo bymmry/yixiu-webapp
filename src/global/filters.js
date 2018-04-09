@@ -177,11 +177,12 @@ let filters = {
   //获取用户信息
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
-    alert(userInfoStr);
+    // alert(userInfoStr);
       if(typeof userInfoStr === "string"){
         let user = JSON.parse(userInfoStr);
-        if(user.data.length == 0){
-          alert("你还有注册，请先注册");
+        
+        if(user.data){
+          alert("你还未注册，请先注册");
           this.$router.push("/register");
         }
         return user;
