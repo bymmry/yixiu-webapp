@@ -334,8 +334,8 @@
       let userData = this.getUserInfo();
       console.log("==================================>");
       console.log(userData);
-      alert(JSON.stringify(userData));
-      this.initUserInfo(userData);
+      alert(userData);
+      // this.initUserInfo(userData);
       this.getUserinfo(userData.wx.openid);
       this.signPD()
     }

@@ -49,11 +49,9 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            alert(res);
             let useInfo = this.initUserInfo(res);
             sessionStorage.setItem("userData", JSON.stringify(useInfo));
             this.$toast("微信自动登录成功");
-            alert(useInfo);
           } else {
 
           }

@@ -177,7 +177,6 @@ let filters = {
   //获取用户信息
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
-    console.log(userInfoStr);
     if(userInfoStr != 'undefined'){
       if(typeof userInfoStr === "string"){
         return JSON.parse(userInfoStr);
@@ -186,7 +185,8 @@ let filters = {
         this.$router.push("/login");
       }
     }else{
-      alert("没有用户信息");
+      // alert("你还未登陆，请先登陆");
+      // this.$router.push("/login");
     }
     
   },
