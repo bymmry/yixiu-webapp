@@ -178,7 +178,7 @@ let filters = {
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
     console.log(userInfoStr);
-    if(userInfoStr){
+    if(userInfoStr != 'undefined'){
       if(typeof userInfoStr === "string"){
         return JSON.parse(userInfoStr);
       }else {
