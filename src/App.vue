@@ -48,9 +48,9 @@
         if (userData.state) {
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
-            let wxInfo = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            console.log(wxInfo);
-            alert(JSON.stringify(wxInfo));
+            let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
+            let useInfo = this.initUserInfo(res);
+            sessionStorage.setItem("userData", useInfo);
           } else {
 
           }
@@ -106,6 +106,24 @@
         sessionStorage.setItem('userData', userData.openid);
         localStorage.setItem('shopData', JSON.stringify(res.data));
         this.$router.push('/sellerHome')
+      },
+      initUserInfo(data) { //初始化用户信息
+        const information = {
+          headimgurl: data.headimgurl || '',//用户头像
+          name: data.nickName || '翼修用户', //用户名称
+          email: data.email || '', //邮箱
+          mobile: data.mobile || '', //手机号
+          password: data.password || '', //密码
+          isSys: data.isSys || false, //是否是系统管理员
+          role: data.role || [], //如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
+          wx: data, //微信信息:如openid,昵称和头像链接等等
+          parent: data.parent || 0
+        }
+        if (information.parent === 0) {
+          delete information.parent
+        }
+
+        return information;
       }
     }
   }
