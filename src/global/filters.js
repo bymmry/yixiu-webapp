@@ -180,7 +180,7 @@ let filters = {
     alert(userInfoStr);
       if(typeof userInfoStr === "string"){
         let user = JSON.parse(userInfoStr);
-        if(user.data == ""){
+        if(user.data.length == 0){
           alert("你还有注册，请先注册");
           this.$router.push("/register");
         }

@@ -111,7 +111,7 @@
             openid: userData.wx.openid,
             trade_type: 'MWEB'
           }
-          let res = await this.$api.sendData('https://api.mch.weixin.qq.com/wx/order/sign', req);
+          let res = await this.$api.sendData('https://m.yixiutech.com/wx/order/sign', req);
 
           alert(JSON.stringify(res));
         }
