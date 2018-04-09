@@ -15,6 +15,11 @@
     <div class="nav">
       <navigation></navigation>
     </div>
+    <div class="phoneNum">
+      <cube-popup type="my-popup" ref="myPopup">
+        My Popup Content 1
+      </cube-popup>
+    </div>
   </div>
 </template>
 
@@ -49,43 +54,61 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            let useInfo = this.initUserInfo(res);
+            let userInfo = this.initUserInfo(res);
+
+            //cheshi
+            if (process.env.NODE_ENV === 'development') {
+              userInfo = {
+                headimgurl: res.headimgurl || '',//用户头像
+                name: res.nickname || '测试环境',
+                email: res.email || '', //邮箱
+                mobile: res.mobile || '', //手机号
+                wx: {
+                  openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg1',
+                  nickname: res.nickname || '测试环境'
+                }, //微信信息:如openid,昵称和头像链接等等
+              }
+              console.log("===========================================>")
+              console.log(userInfo);
+            }
+
             let register = {
               collection: "User",
-              'wx.openid': useInfo.wx.openid
+              'wx.openid': userInfo.wx.openid
             }
-            let isRegister = this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-            if (isRegister == 'ok'){
-              //绑定
-              alert("请绑定手机号");
-              this.$router.push("/my/information");
+            let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
+            console.log(isRegister.data);
+            if (isRegister.data.length == 0){
+              //注册
+              alert("你还没有注册，请先注册")
+              this.$router.push("/register");
             }else{
               //更新用户信息
               let update = {
                 collection: "User",
                 find: {
-                  _id: useInfo._id
+                  _id: userInfo._id
                 },
                 update: {
-                  name: useInfo.name,
-                  wx: useInfo.wx
+                  name: userInfo.name,
+                  wx: userInfo.wx
                 }
               }
-              let updateInfo = this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+              // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
             }
-            sessionStorage.setItem("userData", JSON.stringify(useInfo));
+            sessionStorage.setItem("userData", JSON.stringify(userInfo));
             console.log();
-            if(useInfo.wx.openid){
+            if(userInfo.wx.openid){
               let reqUser = {
                 collection: 'User',
                 find: {
                   _id: ''
                 },
                 update:{
-                  wx: useInfo.wx
+                  wx: userInfo.wx
                 }
               }
-              let ri = this.$api.sendData("https://m.yixiutech.com/sql/update", reqUser);
+              // let ri = await this.$api.sendData("https://m.yixiutech.com/sql/update", reqUser);
               this.$toast("微信自动登录成功");
             }
             
@@ -120,7 +143,7 @@
 
 
       } else { // 不带参数
-
+        
       }
 
       // console.log(userData);
