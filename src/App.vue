@@ -50,7 +50,7 @@
             sessionStorage.setItem("code", userData.code);
             let wxInfo = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
             console.log(wxInfo);
-            alert(wxInfo.code);
+            alert(wxInfo);
           } else {
 
           }
