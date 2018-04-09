@@ -50,13 +50,42 @@
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
             let useInfo = this.initUserInfo(res);
+            let register = {
+              collection: "User",
+              'wx.openid': useInfo.wx.openid
+            }
+            let isRegister = this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
+            if (isRegister == 'ok'){
+              //绑定
+              alert("请绑定手机号");
+              this.$router.push("/my/information");
+            }else{
+              //更新用户信息
+              let update = {
+                collection: "User",
+                find: {
+                  _id: useInfo._id
+                },
+                update: {
+                  name: useInfo.name,
+                  wx: useInfo.wx
+                }
+              }
+              let updateInfo = this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+            }
             sessionStorage.setItem("userData", JSON.stringify(useInfo));
             console.log();
             if(useInfo.wx.openid){
               let reqUser = {
-                wx: useInfo.wx
+                collection: 'User',
+                find: {
+                  _id: ''
+                },
+                update:{
+                  wx: useInfo.wx
+                }
               }
-              let ri = this.$api.sendData("https://m.yixiutech.com/User", reqUser);
+              let ri = this.$api.sendData("https://m.yixiutech.com/sql/update", reqUser);
               this.$toast("微信自动登录成功");
             }
             
