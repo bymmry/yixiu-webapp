@@ -332,11 +332,12 @@
     },
     created() {
       let userData = this.getUserInfo();
-      console.log("==================================>");
       console.log(userData);
-      alert(userData);
+      alert(JSON.stringify(userData));
+      this.userInfo = userData;
+      this.loggedin = true;
       // this.initUserInfo(userData);
-      this.getUserinfo(userData.wx.openid);
+      // this.getUserinfo(userData.wx.openid);
       this.signPD()
     }
   }
