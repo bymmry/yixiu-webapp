@@ -18,8 +18,8 @@ import teaching from '../views/teaching/router'
 
 Vue.use(Router)
 export default new Router({
-  // mode: 'history',
-  base: '/webapp/',
+  mode: 'history',
+  base: '/yixiuwebapp/',
   routes: [
     {
       path: '/',

@@ -16,9 +16,9 @@ export default {
   components: {},
   methods: {
     async wechatLogin(){
-      let code = await this.$api.getData(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`);
-      console.log(code);
-      alert(code);
+      // let code = await this.$api.getData(`https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`);
+      // console.log(code);
+      // alert(code);
     }
   }
 }

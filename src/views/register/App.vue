@@ -41,7 +41,8 @@
         logo: logo,
         phoneNumber: "",
         Validate: "发送验证码",
-        validateNumber: "",
+        validateNumber: "", //验证码
+        validate: "", //验证码
         password: "",
         isShowRegister: 0,
         isReadonly: 'readonly'
@@ -63,16 +64,19 @@
             this.Validate = "验证码已发送"
             this.$refs.validate.readonly = 'readonly';
             this.$refs.validate.style.color = "#aaa";
-            this.validateNumber = res.data;
+            // this.validateNumber = res.data;
+            this.validateSure = res.data;
             this.isShowRegister = 1;
             this.isReadonly = '';
+          }else{
+            this.$toast(res.errMsg);
           }
         }
       },
       async register(){
-        if(this.validateNumber == ""){
+        if(this.password == "" || this.phoneNumber == ""){
           this.$toast("请填写手机和密码");
-        }else{
+        }else if(this.validateSure == this.validateNumber){
           let that = this;
           let data = {
             "mobile": that.phoneNumber,
@@ -88,6 +92,8 @@
           }else{
             this.$toast(res.errMsg);
           }
+        }else{
+          this.$toast("请输入验证码");
         }
         
       }
