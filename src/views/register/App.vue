@@ -17,13 +17,13 @@
         <input type="password" placeholder="密码" v-model="password">
       </div>
       <div class="buttons">
-      <div class="registerButton">
-        <input @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="立即注册">
+        <div class="registerButton">
+          <input type="button" @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="立即注册">
+        </div>
+        <div class="login">
+          <span @click="toLogin">已有账号，返回登录</span>
+        </div>
       </div>
-      <div class="login">
-        <span @click="toLogin">已有账号，返回登录</span>
-      </div>
-    </div>
     </div>
   </div>
 </template>
@@ -49,18 +49,20 @@
       }
     },
     methods: {
-      backHome(){
+      backHome() {
         this.$router.push("/home");
       },
-      toLogin(){
+      toLogin() {
         this.$router.push("/login");
       },
-      async getValidate(){//获取验证码
-        if(this.phoneNumber.length != 11){
+      async getValidate() { //获取验证码
+        if (this.phoneNumber.length != 11) {
           alert("请输入正确的电话号码")
-        }else{
-          let res = await this.$api.sendData(`https://m.yixiutech.com/sms/send`, {"mobile": this.phoneNumber});
-          if (res.code == 200){
+        } else {
+          let res = await this.$api.sendData(`https://m.yixiutech.com/sms/send`, {
+            "mobile": this.phoneNumber
+          });
+          if (res.code == 200) {
             this.Validate = "验证码已发送"
             this.$refs.validate.readonly = 'readonly';
             this.$refs.validate.style.color = "#aaa";
@@ -68,34 +70,34 @@
             this.validateSure = res.data;
             this.isShowRegister = 1;
             this.isReadonly = '';
-          }else{
+          } else {
             this.$toast(res.errMsg);
           }
         }
       },
-      async register(){
-        if(this.password == "" || this.phoneNumber == ""){
+      async register() {
+        if (this.password == "" || this.phoneNumber == "") {
           this.$toast("请填写手机和密码");
-        }else if(this.validateSure == this.validateNumber){
+        } else if (this.validateSure == this.validateNumber) {
           let that = this;
           let data = {
             "mobile": that.phoneNumber,
-            "password": md5(that.password),//不要明文传输,用md5加密
+            "password": md5(that.password), //不要明文传输,用md5加密
           }
           console.log(data);
           let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
-          if(res.code == 200){
+          if (res.code == 200) {
             this.$toast("注册成功，即将返回登录");
             setTimeout(() => {
               this.$router.push("/login");
             }, 1000);
-          }else{
+          } else {
             this.$toast(res.errMsg);
           }
-        }else{
+        } else {
           this.$toast("请输入验证码");
         }
-        
+
       }
     }
   }
@@ -122,27 +124,32 @@
     background: linear-gradient(to bottom right, #6bc8b7, #3878cd);
     /* 标准的语法 */
   }
-  .register .logo{
+
+  .register .logo {
     width: 50%;
     height: 100px;
     margin: 10% auto;
   }
-  .register .logo img{
+
+  .register .logo img {
     width: 100%;
     height: auto;
   }
-  .register .registerBox{
+
+  .register .registerBox {
     width: auto;
     height: auto;
     margin-top: 15%;
   }
-  .register .registerBox .registerDes{
+
+  .register .registerBox .registerDes {
     margin: 20px auto;
     width: 80vw;
     height: 30px;
     border-bottom: 1px solid #fff;
   }
-  .register .registerBox .registerDes input{
+
+  .register .registerBox .registerDes input {
     width: 80vw;
     padding-left: 10px;
     height: 30px;
@@ -150,24 +157,29 @@
     border: none;
     background: none;
   }
-  .register .registerBox .registerDes input::-webkit-input-placeholder{
+
+  .register .registerBox .registerDes input::-webkit-input-placeholder {
     color: #fff;
   }
-  .register .registerBox .registerDes input.phonePassword{
+
+  .register .registerBox .registerDes input.phonePassword {
     width: 40vw;
 
   }
-  .register .registerBox .registerDes input.sendPassword{
+
+  .register .registerBox .registerDes input.sendPassword {
     width: 30vw;
     font-size: 12px;
     float: right;
-    
+
   }
-  .register .buttons .registerButton{
+
+  .register .buttons .registerButton {
     width: auto;
     text-align: center;
   }
-  .register .buttons .registerButton input{
+
+  .register .buttons .registerButton input {
     text-align: center;
     width: 80vw;
     margin: 10px auto;
@@ -178,17 +190,21 @@
     border-radius: 5px;
     font-size: 23px;
   }
-  .register .buttons .registerButton input.sure{
+
+  .register .buttons .registerButton input.sure {
     color: #3878cd;
   }
-  .register .buttons .login{
+
+  .register .buttons .login {
     text-align: center;
     color: #fff;
     font-size: 13px;
   }
-  .register .buttons .login span{
+
+  .register .buttons .login span {
     display: inline-block;
     padding: 5px;
   }
 
 </style>
+

@@ -28,7 +28,7 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
       </div>
       <div class="buttons" v-if="isShowSure">
         <div class="registerButton">
-          <input @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="确认修改">
+          <input type="button" @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="确认修改">
         </div>
       </div>
     </div>
