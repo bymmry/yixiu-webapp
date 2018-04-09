@@ -100,8 +100,8 @@
               }
               // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
             
-            sessionStorage.setItem("userData", JSON.stringify(userInfo));
-              this.$toast("微信自动登录成功");
+              sessionStorage.setItem("userData", JSON.stringify(userInfo));
+              this.$toast("成功");
             }
             
           } else {
