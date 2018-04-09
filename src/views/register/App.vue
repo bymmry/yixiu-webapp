@@ -10,7 +10,11 @@
       </div>
       <div class="registerDes">
         <input class="phonePassword" type="text" placeholder="验证码" v-model="validateNumber">
-        <input @click="getValidate" ref="validate" class="sendPassword" type="button" :value=Validate>
+        <button @click="getCode(formData)" class="sendPassword" :disabled="!show" ref="validate">
+          <span v-show="show">获取验证码</span>
+          <span v-show="!show" class="count">{{count}} s</span>
+        </button>
+        <!-- <input @click="getValidate" ref="validate" class="sendPassword" type="button" :value=Validate> -->
       </div>
       <div class="registerDes">
         <!-- <sicon name="phone" scale="2"></sicon> -->
@@ -31,6 +35,7 @@
 <script>
   import logo from '@/assets/logo.png'
   import md5 from 'js-md5'; //MD5加密
+  const TIME_COUNT = 60;
   export default {
     components: {},
     mounted: function () {
@@ -44,7 +49,14 @@
         validateNumber: "", //验证码
         validate: "", //验证码
         password: "",
-        isShowRegister: 0
+        isShowRegister: 0,
+        formData: {
+          phone:'',
+          code:'',
+        },
+        show: true,
+        count: '',
+        timer: null,
       }
     },
     methods: {
@@ -54,17 +66,32 @@
       toLogin() {
         this.$router.push("/login");
       },
+      getCode(formData){
+        if (!this.timer) {
+          this.getValidate();
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.$refs.validate.style.color = "#3878cd";
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000)
+        }
+      },
       async getValidate() { //获取验证码
         if (this.phoneNumber.length != 11) {
           alert("请输入正确的电话号码")
         } else {
+          this.$refs.validate.style.color = "#aaa";
           let res = await this.$api.sendData(`https://m.yixiutech.com/sms/send`, {
             "mobile": this.phoneNumber
           });
           if (res.code == 200) {
-            this.Validate = "验证码已发送"
-            this.$refs.validate.readonly = 'readonly';
-            this.$refs.validate.style.color = "#aaa";
             // this.validateNumber = res.data;
             this.validateSure = res.data;
             this.isShowRegister = 1;
@@ -180,8 +207,13 @@
 
   }
 
-  .register .registerBox .registerDes input.sendPassword {
+  .register .registerBox .registerDes button.sendPassword {
     width: 30vw;
+    height: 25px;
+    border: 1px solid #eee;
+    background: #fff;
+    color: #3878cd;
+    border-radius: 5px;
     font-size: 12px;
     float: right;
 

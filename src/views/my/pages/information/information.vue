@@ -428,7 +428,7 @@
     created() {
       let userData = this.getUserInfo();
       console.log(userData);
-      alert(JSON.stringify(userData));
+      // alert(JSON.stringify(userData));
       this.userInfo.email = userData.email || "";
       this.userInfo.mobile = userData.mobile || "";
       this.userInfo.name = userData.wx.nickname;

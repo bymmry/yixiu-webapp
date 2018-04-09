@@ -54,7 +54,7 @@
           if (userData.state == 123) { //公众号进入
             sessionStorage.setItem("code", userData.code);
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            // alert(JSON.stringify(res));
+            alert(JSON.stringify(res));
             let userInfo = this.initUserInfo(res);
 
             //测试环境
@@ -79,7 +79,7 @@
               'wx.openid': userInfo.wx.openid
             }
             let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-            // alert(JSON.stringify(isRegister));
+            alert(JSON.stringify(isRegister));
             console.log(isRegister.data);
             if (isRegister.data.length == 0){
               //注册
