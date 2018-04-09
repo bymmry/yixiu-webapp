@@ -1,9 +1,9 @@
 <template>
   <div class="chooseInfos">
     <div class="information">
-      <duv class="title">
+      <div class="title">
         <h3>订单信息</h3>
-      </duv>
+      </div>
       <ul>
         <li>
           <span class="name">手机信息</span>
@@ -169,6 +169,9 @@
       }
     },
     mounted() {
+      let userData = this.getUserInfo();
+      this.phoneNumber = userData.mobile;
+
       this.theServiceWay = this.serviceWay;
       let servers = this.chooseData.problem.data;
       let pro = servers.map(function (val) {
@@ -345,7 +348,7 @@
     top: 10vh;
     left: 0;
     right: 0;
-    bottom: 0;
+    bottom: 8vh;
     z-index: 99;
     min-height: 480px;
     background: #fff;

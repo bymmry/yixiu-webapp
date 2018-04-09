@@ -107,12 +107,13 @@
           let userData = this.getUserInfo();//获取用户信息
           
           let req = {
-            total_fee: TotalFee*100,
+            total_fee: this.TotalFee*100,
             openid: userData.wx.openid,
             trade_type: 'MWEB'
           }
-          alert(JSON.stringify(req));
           let res = await this.$api.sendData('https://api.mch.weixin.qq.com/wx/order/sign', req);
+
+          alert(JSON.stringify(res));
         }
       }
     }

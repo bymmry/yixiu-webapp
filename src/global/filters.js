@@ -177,6 +177,7 @@ let filters = {
   //获取用户信息
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
+    alert(userInfoStr);
     if(userInfoStr != 'undefined'){
       if(typeof userInfoStr === "string"){
        return JSON.parse(userInfoStr);
