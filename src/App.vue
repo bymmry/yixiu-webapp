@@ -51,6 +51,7 @@
             let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
             let useInfo = this.initUserInfo(res);
             sessionStorage.setItem("userData", useInfo);
+            this.$toast("微信自动登录成功");
           } else {
 
           }
