@@ -427,7 +427,7 @@
     },
     created() {
       let userData = this.getUserInfo();
-
+      console.log(userData);
       this.getUserinfo(userData);
     }
   }
