@@ -333,7 +333,7 @@
     created() {
       let userData = this.getUserInfo();
       console.log(userData);
-      alert(JSON.stringify(userData));
+      // alert(JSON.stringify(userData));
       this.userInfo = userData;
       this.loggedin = true;
       // this.initUserInfo(userData);

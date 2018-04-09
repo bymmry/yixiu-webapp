@@ -18,7 +18,7 @@
       </div>
       <div class="buttons">
         <div class="registerButton">
-          <input type="button" @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="立即注册">
+          <input type="button" @click="register" :class="{'sure': isShowRegister == 1}" value="立即注册">
         </div>
         <div class="login">
           <span @click="toLogin">已有账号，返回登录</span>
@@ -44,8 +44,7 @@
         validateNumber: "", //验证码
         validate: "", //验证码
         password: "",
-        isShowRegister: 0,
-        isReadonly: 'readonly'
+        isShowRegister: 0
       }
     },
     methods: {
@@ -69,7 +68,6 @@
             // this.validateNumber = res.data;
             this.validateSure = res.data;
             this.isShowRegister = 1;
-            this.isReadonly = '';
           } else {
             this.$toast(res.errMsg);
           }
