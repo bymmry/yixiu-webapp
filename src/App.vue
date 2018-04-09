@@ -57,7 +57,6 @@
                 wx: useInfo.wx
               }
               let ri = this.$api.sendData("https://m.yixiutech.com/User", reqUser);
-              alert(JSON.stringify(ri))
               this.$toast("微信自动登录成功");
             }
             

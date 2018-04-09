@@ -428,7 +428,12 @@
     created() {
       let userData = this.getUserInfo();
       console.log(userData);
-      this.getUserinfo(userData);
+      alert(JSON.stringify(userData));
+      this.userInfo.email = userData.email || "";
+      this.userInfo.mobile = userData.mobile || "";
+      this.userInfo.name = userData.name;
+      this.id = userData._id;
+      // this.getUserinfo(userData);
     }
   }
 </script>
