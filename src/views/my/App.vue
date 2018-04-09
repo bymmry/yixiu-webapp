@@ -38,7 +38,7 @@
         <!-- 用户头像及登录注册 -->
         <div class="user-area">
           <div class="user-profile">
-            <img :src="userInfo.wx.avatarUrl">
+            <img :src="userInfo.headimgurl">
           </div>
           <div class="usermessage" v-if="!loggedin">
             <router-link id="login" to="/login">登录</router-link>

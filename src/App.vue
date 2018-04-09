@@ -111,7 +111,7 @@
       initUserInfo(data) { //初始化用户信息
         const information = {
           headimgurl: data.headimgurl || '',//用户头像
-          name: data.nickName || '翼修用户', //用户名称
+          name: data.nickname || '翼修用户', //用户名称
           email: data.email || '', //邮箱
           mobile: data.mobile || '', //手机号
           password: data.password || '', //密码
