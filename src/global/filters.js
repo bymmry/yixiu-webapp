@@ -178,18 +178,18 @@ let filters = {
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
     alert(userInfoStr);
-    if(userInfoStr != 'undefined'){
       if(typeof userInfoStr === "string"){
-       return JSON.parse(userInfoStr);
-       
+        let user = JSON.parse(userInfoStr);
+        if(user.data == ""){
+          alert("你还有注册，请先注册");
+          this.$router.push("/register");
+        }
+        return user;
       }else {
         alert("你还未登陆，请先登陆");
         this.$router.push("/login");
       }
-    }else{
-      // alert("你还未登陆，请先登陆");
-      // this.$router.push("/login");
-    }
+    
     
   },
   //
