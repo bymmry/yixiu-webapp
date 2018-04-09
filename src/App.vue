@@ -83,10 +83,12 @@
             console.log(isRegister.data);
             if (isRegister.data.length == 0){
               //注册
+              sessionStorage.setItem("userData", JSON.stringify(userInfo));
               alert("你还没有注册，请先注册")
               this.$router.push("/register");
             }else{
               //更新用户信息
+              // alert("else 已注册");
               userInfo = isRegister.data[0];
               let update = {
                 collection: "User",

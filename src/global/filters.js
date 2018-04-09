@@ -181,7 +181,7 @@ let filters = {
       if(typeof userInfoStr === "string"){
         let user = JSON.parse(userInfoStr);
         
-        if(user.data){
+        if(user.data || userInfoStr == 'undefined'){
           alert("你还未注册，请先注册");
           this.$router.push("/register");
         }
