@@ -177,12 +177,18 @@ let filters = {
   //获取用户信息
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
-    if(typeof userInfoStr === "string"){
-      return JSON.parse(userInfoStr);
-    }else {
-      alert("你还未登陆，请先登陆");
-      this.$router.push("/login");
+    console.log(userInfoStr);
+    if(userInfoStr){
+      if(typeof userInfoStr === "string"){
+        return JSON.parse(userInfoStr);
+      }else {
+        alert("你还未登陆，请先登陆");
+        this.$router.push("/login");
+      }
+    }else{
+      alert("没有用户信息");
     }
+    
   },
   //
   getGreatCircleDistance: function(lat1,lng1,lat2,lng2){
