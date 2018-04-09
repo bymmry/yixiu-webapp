@@ -19,7 +19,7 @@
         <button>立即登录</button>
       </div>
       <div class="register">
-        <span>忘记密码?</span>|<span @click="toRegister">立即注册</span>
+        <span @click="forgetPassword">忘记密码?</span>|<span @click="toRegister">立即注册</span>
       </div>
     </div>
     <wx-login class="wxLogin"></wx-login>
@@ -65,6 +65,9 @@
         }else{
           this.$toast(res.errMsg);
         }
+      },
+      forgetPassword(){
+        this.$router.push("/forget");
       }
     }
   }

@@ -35,7 +35,7 @@
       // console.log("App onload--------------------------------------------------->");
       let userData = this.urlDataTurnObj(window.location.href);
       userData = JSON.parse(userData);
-      // alert(window.location.href);
+      alert(window.location.href);
       window.isAttestation = false;
       if (location.href.indexOf('sellerHome') !== -1) {
         this.checkIsShop(userData);

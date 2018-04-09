@@ -18,16 +18,16 @@
       }
     },
     created(){
-      console.log(window.location.href);
-      const url = window.location.href;
-      const seller = url.split("#")[1].split("/")[1].split("?")[0];
-      console.log(seller);
-      if(seller == "sellerHome" || seller == "businessRegister" || seller == "addBrand" || seller == "addModel" || seller == "addCatagory" || seller == "addService" || seller == "publishPhone" || seller == "orderDetail" || seller == "updateMsg" || seller == 'enterRules' || seller == 'addServices' || seller == 'service' || seller == 'updateService' || seller == 'wait' || seller == 'phoneDetail') {
-        this.isShowNav = false;
-      }
-      if (url.indexOf('orderList') !== -1 || url.indexOf('orderDetail') !== -1) {
-        this.isShowNav = false;
-      }
+      // console.log(window.location.href);
+      // const url = window.location.href;
+      // const seller = url.split("/")[1].split("?")[0];
+      // console.log(seller);
+      // if(seller == "sellerHome" || seller == "businessRegister" || seller == "addBrand" || seller == "addModel" || seller == "addCatagory" || seller == "addService" || seller == "publishPhone" || seller == "orderDetail" || seller == "updateMsg" || seller == 'enterRules' || seller == 'addServices' || seller == 'service' || seller == 'updateService' || seller == 'wait' || seller == 'phoneDetail') {
+      //   this.isShowNav = false;
+      // }
+      // if (url.indexOf('orderList') !== -1 || url.indexOf('orderDetail') !== -1) {
+      //   this.isShowNav = false;
+      // }
     }
   };
 </script>
