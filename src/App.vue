@@ -184,6 +184,7 @@
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         // alert(JSON.stringify(res));
         if(res.openid){
+          sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
         }else{
@@ -195,6 +196,9 @@
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");
         // alert(JSON.stringify(userData));
+        if(userData.openid){
+          sessionStorage.setItem("openid", userData.openid);
+        }
         console.log(userData);
         let userInfo = initInfo(userData);
         console.log(userInfo);

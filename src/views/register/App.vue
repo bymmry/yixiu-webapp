@@ -102,7 +102,10 @@
       },
       async register() {
         // let userData = this.getUserInfo();
+        let openid = sessionStorage.getItem("openid");
+        let userInfoStr = sessionStorage.getItem("userData");
         
+
         if (this.password == "" || this.phoneNumber == "") {
           this.$toast("请填写手机和密码");
         } else if (this.validateSure == this.validateNumber) {
@@ -111,13 +114,18 @@
             "mobile": that.phoneNumber,
             "password": md5(that.password)
           }
-          if(userData.wx.openid){
-            let da = {
-               //不要明文传输,用md5加密
-              wx: userData.wx
+
+          if(typeof userInfoStr === "string"){
+            let user = JSON.parse(userInfoStr);
+            if(user){
+              let da = {
+                //不要明文传输,用md5加密
+                wx: userData.wx
+              }
+              data = Object.assign({}, da, data);
             }
-            data = Object.assign({}, da, data);
           }
+          
           
           let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
           if (res.code == 200) {
