@@ -38,7 +38,9 @@
     },
     async created() {
       let winUrl = window.location.href;
-      // let winUrl = decodeURIComponent(window.location.href);
+      alert(winUrl);
+      winUrl = decodeURIComponent(window.location.href);
+      alert(winUrl);
       //带参数
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
