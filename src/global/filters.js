@@ -122,7 +122,8 @@ let filters = {
 
     for(let userData in origin){
       let originData = origin[userData].split("=")
-      userInfor[originData[0]] = originData[1].replace(/"/g, '').split("/")[0];
+      // userInfor[originData[0]] = originData[1].replace(/"/g, '').split("/")[0];
+      userInfor[originData[0]] = originData[1];
     }
     //返回一个JSON字符串
     return JSON.stringify(userInfor);
