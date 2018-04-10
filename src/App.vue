@@ -45,7 +45,6 @@
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
         userData = JSON.parse(userData);
-        console.log(userData);
 
         /**
          * 根据state判断入口
@@ -53,7 +52,6 @@
          * state=123 公众号入口
          * 
          */
-
         if (userData.state) {
           if (userData.state == 123) { //公众号进入
             this.initGZHInfo(userData);
@@ -182,14 +180,13 @@
         // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        // alert(JSON.stringify(res));
+        alert(JSON.stringify(res));
         if(res.openid){
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
         }else{
-          alert("你还未注册，请先注册");
-          this.$router.push("/register");
+          this.$toast("账号信息有误");
         }
         
       },

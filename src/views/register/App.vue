@@ -130,6 +130,7 @@
           let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
           if (res.code == 200) {
             this.$toast("注册成功");
+            sessionStorage.setItem("userData", JSON.stringify(res.data));
             setTimeout(() => {
               this.$router.push("/my");
             }, 1000);
