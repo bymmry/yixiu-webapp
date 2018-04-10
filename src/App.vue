@@ -153,18 +153,18 @@
         }else{
           //更新用户信息
           // alert("else 已注册");
-          userInfo = isRegister.data[0];
+          // users = isRegister.data[0];
           let update = {
             collection: "User",
             find: {
               _id: userInfo._id
             },
             update: {
-              name: userInfo.name,
+              name: userInfo.wx.nickname,
               wx: userInfo.wx
             }
           }
-          // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+          let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
         
           sessionStorage.setItem("userData", JSON.stringify(userInfo));
           this.$toast("成功");
@@ -198,7 +198,9 @@
       async initXCXInfo(userData){ //小程序进入
         alert("小程序进入");
         alert(JSON.stringify(userData));
-        let userInfo = this.initInfo(userData);
+        console.log(userData);
+        let userInfo = initInfo(userData);
+        console.log(userInfo);
         this.isUserRegister(userInfo);
 
         function initInfo(data){
