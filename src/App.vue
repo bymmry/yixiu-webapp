@@ -39,6 +39,7 @@
     async created() {
       let winUrl = window.location.href;
       //带参数
+      alert(winUrl);
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
         userData = JSON.parse(userData);
