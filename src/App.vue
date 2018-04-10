@@ -142,7 +142,6 @@
           'wx.openid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-        alert(JSON.stringify(isRegister));
         // alert(JSON.stringify(isRegister));
         console.log(isRegister.data);
         if (isRegister.data.length == 0){
@@ -151,27 +150,36 @@
           alert("你还没有注册，请先注册")
           this.$router.push("/register");
         }else{
-          //更新用户信息
-          // alert("else 已注册");
-          // users = isRegister.data[0];
-          let update = {
-            collection: "User",
-            find: {
-              _id: userInfo._id
-            },
-            update: {
-              name: userInfo.wx.nickname,
-              wx: userInfo.wx
+          userInfo = isRegister.data[isRegister.data.length - 1];
+          if(userInfo.mobile == ""){
+            alert("你还未注册，请先注册");
+            this.$router.push("/register");
+          }else{
+            //更新用户信息
+            // alert("else 已注册");
+            // users = isRegister.data[0];
+            let update = {
+              collection: "User",
+              find: {
+                _id: userInfo._id
+              },
+              update: {
+                name: userInfo.wx.nickname,
+                mobile: userInfo.mobile,
+                wx: userInfo.wx
+              }
             }
+            console.log(update);
+            let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+          
+            sessionStorage.setItem("userData", JSON.stringify(userInfo));
+            this.$toast("成功");
           }
-          let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
-        
-          sessionStorage.setItem("userData", JSON.stringify(userInfo));
-          this.$toast("成功");
+         
         }
       },
       async initGZHInfo(userData){ //公众号好用户初始化
-        alert("公众号进入");
+        // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         // alert(JSON.stringify(res));
@@ -196,8 +204,8 @@
         this.isUserRegister(userInfo);
       },
       async initXCXInfo(userData){ //小程序进入
-        alert("小程序进入");
-        alert(JSON.stringify(userData));
+        // alert("小程序进入");
+        // alert(JSON.stringify(userData));
         console.log(userData);
         let userInfo = initInfo(userData);
         console.log(userInfo);

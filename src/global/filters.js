@@ -165,7 +165,8 @@ let filters = {
   },
   emailReg(str){
     //邮箱验证
-    const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    // const reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
+    const reg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/
     const result = reg.test(str);
     return result
   },
@@ -181,8 +182,12 @@ let filters = {
     // alert(userInfoStr);
       if(typeof userInfoStr === "string"){
         let user = JSON.parse(userInfoStr);
-        
+        console.log(user);
         if(user.data || userInfoStr == 'undefined'){
+          alert("你还未注册，请先注册");
+          this.$router.push("/register");
+        }
+        if(user.mobile == ""){
           alert("你还未注册，请先注册");
           this.$router.push("/register");
         }
