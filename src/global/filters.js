@@ -185,10 +185,10 @@ let filters = {
       this.$router.push("/register");
       return;
     }else if(typeof userInfoStr === "string"){
-      alert(userInfoStr);
+      // alert(userInfoStr);
       let user = JSON.parse(userInfoStr);
-      if(user.data || user.mobile || user.mobile == ""){
-        // alert("你还未注册，请先注册");
+      if(user.data || user.mobile == ""){
+        alert("你还未注册，请先注册");
         this.$router.push("/register");
       }else {
         return user;
