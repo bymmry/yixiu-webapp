@@ -101,7 +101,7 @@
         }
       },
       async register() {
-        let userData = this.getUserInfo();
+        // let userData = this.getUserInfo();
         
         if (this.password == "" || this.phoneNumber == "") {
           this.$toast("请填写手机和密码");
@@ -111,23 +111,19 @@
             "mobile": that.phoneNumber,
             "password": md5(that.password)
           }
-          console.log(userData.wx.openid)
           if(userData.wx.openid){
-            console.log("if")
             let da = {
                //不要明文传输,用md5加密
               wx: userData.wx
             }
-            console.log(da);
             data = Object.assign({}, da, data);
           }
           
-          console.log(data);
           let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
           if (res.code == 200) {
-            this.$toast("注册成功，即将返回登录");
+            this.$toast("注册成功");
             setTimeout(() => {
-              this.$router.push("/login");
+              this.$router.push("/my");
             }, 1000);
           } else {
             this.$toast(res.errMsg);
