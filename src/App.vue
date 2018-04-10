@@ -140,15 +140,18 @@
           'wx.openid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-        alert(JSON.stringify(isRegister));
+        // alert(JSON.stringify(isRegister));
         console.log(isRegister.data);
         if (isRegister.data.length == 0){
           //注册
+          // alert("data.length = 0")
           sessionStorage.setItem("userData", JSON.stringify(userInfo));
           alert("你还没有注册，请先注册")
           this.$router.push("/register");
         }else{
+          // alert("data.length != 0");
           userInfo = isRegister.data[isRegister.data.length - 1];
+          // alert(userInfo)
           if(userInfo.mobile == ""){
             alert("你还未注册，请先注册");
             this.$router.push("/register");
@@ -171,7 +174,7 @@
             let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
           
             sessionStorage.setItem("userData", JSON.stringify(userInfo));
-            this.$toast("成功");
+            this.$toast("自动登录成功");
           }
          
         }
