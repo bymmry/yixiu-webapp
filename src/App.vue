@@ -182,10 +182,12 @@
         // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        // alert(JSON.stringify(res));
-        let userInfo = this.initUserInfo(res);
-
-        this.isUserRegister(userInfo);
+        alert(JSON.stringify(res));
+        if(res.code == 200){
+          let userInfo = this.initUserInfo(res);
+          this.isUserRegister(userInfo);
+        }
+        
       },
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");

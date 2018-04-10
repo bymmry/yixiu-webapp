@@ -180,20 +180,33 @@ let filters = {
   getUserInfo: function () {
     let userInfoStr = sessionStorage.getItem("userData");
     // alert(userInfoStr);
-      if(typeof userInfoStr === "string"){
-        let user = JSON.parse(userInfoStr);
-        console.log(user);
-        if(user.data || userInfoStr == 'undefined'){
-          alert("你还未注册，请先注册");
-          this.$router.push("/register");
-        }
-        return user;
-      }else if(userInfoStr == 'undefined' || userInfoStr == undefined){
+    if(userInfoStr == 'undefined' || userInfoStr == undefined){
+      alert("你还未注册，请先注册");
+      this.$router.push("/register");
+      return;
+    }else if(typeof userInfoStr === "string"){
+      let user = JSON.parse(userInfoStr);
+      if(user.data || user.mobile){
         alert("你还未注册，请先注册");
         this.$router.push("/register");
-        // alert("你还未登陆，请先登陆");
-        // this.$router.push("/login");
+      }else {
+        return user;
       }
+    }
+      // if(typeof userInfoStr === "string"){
+      //   let user = JSON.parse(userInfoStr);
+      //   console.log(user);
+      //   if(user.data || userInfoStr == 'undefined'){
+      //     alert("你还未注册，请先注册");
+      //     this.$router.push("/register");
+      //   }
+      //   return user;
+      // }else if(userInfoStr == 'undefined' || userInfoStr == undefined){
+      //   alert("你还未注册，请先注册");
+      //   this.$router.push("/register");
+      //   // alert("你还未登陆，请先登陆");
+      //   // this.$router.push("/login");
+      // }
     
     
   },

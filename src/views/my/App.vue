@@ -330,7 +330,11 @@
         this.loggedin = true;
       }
     },
-    created() {
+    // created() {
+    //   let userData = this.getUserInfo();
+      
+    // },
+    activated(){
       let userData = this.getUserInfo();
       console.log(userData);
       // alert(JSON.stringify(userData));
@@ -339,9 +343,6 @@
       // this.initUserInfo(userData);
       // this.getUserinfo(userData.wx.openid);
       this.signPD()
-    },
-    activated(){
-      let userData = this.getUserInfo();
     }
   }
 
