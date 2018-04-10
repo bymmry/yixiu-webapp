@@ -37,77 +37,28 @@
       // mainApp
     },
     async created() {
-      let winUrl = window.location.href;
+      let winUrl = decodeURIComponent(window.location.href);
       //带参数
-      alert(winUrl);
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
         userData = JSON.parse(userData);
-        // alert(window.location.href);
         console.log(userData);
 
         /**
          * 根据state判断入口
+         * state=1 小程序入口
+         * state=123 公众号入口
          * 
          */
 
         if (userData.state) {
           if (userData.state == 123) { //公众号进入
-            sessionStorage.setItem("code", userData.code);
-            let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-            // alert(JSON.stringify(res));
-            let userInfo = this.initUserInfo(res);
-
-            //测试环境
-            // if (process.env.NODE_ENV === 'development') {
-            //   userInfo = {
-            //     headimgurl: res.headimgurl || '',//用户头像
-            //     name: res.nickname || '测试环境',
-            //     email: res.email || '', //邮箱
-            //     mobile: res.mobile || '', //手机号
-            //     wx: {
-            //       openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg2',
-            //       nickname: res.nickname || '测试环境'
-            //     }, //微信信息:如openid,昵称和头像链接等等
-            //   }
-            //   console.log("===========================================>")
-            //   console.log(userInfo);
-            // }
-
-            //根据openid判断是否注册
-            let register = {
-              collection: "User",
-              'wx.openid': userInfo.wx.openid
-            }
-            let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-            // alert(JSON.stringify(isRegister));
-            console.log(isRegister.data);
-            if (isRegister.data.length == 0){
-              //注册
-              sessionStorage.setItem("userData", JSON.stringify(userInfo));
-              alert("你还没有注册，请先注册")
-              this.$router.push("/register");
-            }else{
-              //更新用户信息
-              // alert("else 已注册");
-              userInfo = isRegister.data[0];
-              let update = {
-                collection: "User",
-                find: {
-                  _id: userInfo._id
-                },
-                update: {
-                  name: userInfo.name,
-                  wx: userInfo.wx
-                }
-              }
-              // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+            this.initGZHInfo(userData);
             
-              sessionStorage.setItem("userData", JSON.stringify(userInfo));
-              this.$toast("成功");
-            }
+          }else if(userData.state == 1){ //小程序入口
+            this.initXCXInfo(userData);
             
-          } else {
+          }else{
 
           }
         } else {
@@ -180,6 +131,66 @@
         }
 
         return information;
+      },
+      async initGZHInfo(userData){ //公众号好用户初始化
+        alert("公众号进入");
+        sessionStorage.setItem("code", userData.code);
+        let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
+        // alert(JSON.stringify(res));
+        let userInfo = this.initUserInfo(res);
+
+        //测试环境
+        // if (process.env.NODE_ENV === 'development') {
+        //   userInfo = {
+        //     headimgurl: res.headimgurl || '',//用户头像
+        //     name: res.nickname || '测试环境',
+        //     email: res.email || '', //邮箱
+        //     mobile: res.mobile || '', //手机号
+        //     wx: {
+        //       openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg2',
+        //       nickname: res.nickname || '测试环境'
+        //     }, //微信信息:如openid,昵称和头像链接等等
+        //   }
+        //   console.log("===========================================>")
+        //   console.log(userInfo);
+        // }
+
+        //根据openid判断是否注册
+        let register = {
+          collection: "User",
+          'wx.openid': userInfo.wx.openid
+        }
+        let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
+        // alert(JSON.stringify(isRegister));
+        console.log(isRegister.data);
+        if (isRegister.data.length == 0){
+          //注册
+          sessionStorage.setItem("userData", JSON.stringify(userInfo));
+          alert("你还没有注册，请先注册")
+          this.$router.push("/register");
+        }else{
+          //更新用户信息
+          // alert("else 已注册");
+          userInfo = isRegister.data[0];
+          let update = {
+            collection: "User",
+            find: {
+              _id: userInfo._id
+            },
+            update: {
+              name: userInfo.name,
+              wx: userInfo.wx
+            }
+          }
+          // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+        
+          sessionStorage.setItem("userData", JSON.stringify(userInfo));
+          this.$toast("成功");
+        }
+      },
+      async initXCXInfo(userData){ //小程序进入
+        alert("小程序进入");
+        alert(JSON.stringify(userData));
       }
     }
   }
