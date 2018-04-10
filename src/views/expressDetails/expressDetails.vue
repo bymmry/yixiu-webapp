@@ -71,6 +71,7 @@
     },
     created() {
       let res = this.$route.params.res;
+      console.log(res);
       this.gettheemail(res);
     }
   }

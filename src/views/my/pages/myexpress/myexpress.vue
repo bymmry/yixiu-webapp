@@ -57,7 +57,7 @@
     methods: {
       //导航栏 前往个人中心
       prepage(){
-        this.$router.push({ path: "/my" })
+        this.$router.back();
       },
       //显示选择快递公司
       showChose(){

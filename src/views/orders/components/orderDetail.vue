@@ -6,7 +6,10 @@
         <span>返回</span>
       </div>
     </div>
-    <h3>订单详情<span v-if="orderData.state == 100">（订单已取消）</span></h3>
+    <h3>订单详情
+      <span v-if="orderData.state == 100">（订单已取消）</span>
+      <span v-if="orderData.state == 11 && !orderData.trackingCom">（未完善物流）</span>
+      </h3>
     <!-- 维修订单 -->
     <div class="information" v-if="orderData.goods.length == 0">
       <ul>
@@ -22,8 +25,12 @@
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
-        <li v-if="orderData.state == 11" @click="showWuliuInfo">
+        <li v-if="orderData.state == 11 && !orderData.trackingCom" @click="showWuliuInfo">
           <span class="name wuliu">点击完善物流信息</span>
+          <span class="value"></span>
+        </li>
+        <li v-if="orderData.state == 11 && orderData.trackingCom" @click="showWuliuDes">
+          <span class="name wuliu">点击查看物流信息</span>
           <span class="value"></span>
         </li>
       </ul>
@@ -71,9 +78,12 @@
 
     <!-- 填写物流信息 -->
     <cube-popup class="logistics" type="my-popup" :mask="true" ref="wuluInfo">
-      <get-logistics></get-logistics>
-      <cube-button class="logisticsButtons sure" @click="sureWuliu">确定</cube-button>
-      <cube-button class="logisticsButtons" @click="cancleWuliu">取消</cube-button>
+      <get-logistics v-on:returnSelect="logisticsClose"></get-logistics>
+    </cube-popup>
+
+    <!-- 查看物流信息 -->
+    <cube-popup class="logistics" type="my-popup" :mask="true" ref="wuluDes">
+
     </cube-popup>
   </div>
 </template>
@@ -83,7 +93,8 @@
   import sureOrder from "../../common/components/sureOrder"
   import quality from '../../common/components/quality'
   import {getOrderDetail, cancelOrder} from '../api';
-  import getLogistics from './getLogistics.vue'
+  import getLogistics from './getLogistics.vue';
+  import { getemail } from '../../common/api'
 
   export default {
     name: 're-pay',
@@ -105,6 +116,7 @@
       
       getOrderDetail(id).then(res => {
         this.orderData = res.data;
+        console.log(this.orderData.trackingCom);
         
         this.telContactNumber = `tel:${this.orderData.shop.contactNumber}`;
         console.log(this.orderData);
@@ -216,12 +228,41 @@
         let wuliu = this.$refs.wuluInfo;
         wuliu.show();
       },
-      sureWuliu(){
-
+      showWuliuDes(){
+        //487275089743
+        let finddata = {
+          com: this.orderData.trackingCom,
+          no: this.orderData.trackingNumber.replace(/\s/g,"")
+        };
+        console.log(finddata);
+        getemail(finddata)
+          .then(res => {
+            if (res.errMsg) {
+              Toast.fail(res.errMsg);
+            }else{
+              this.$router.push({ name: "expressDetails" ,params: { res: res }})
+            }
+          },(err => {
+            console.log(err);
+          }))
       },
-      cancleWuliu(){
-        let wuliu = this.$refs.wuluInfo;
-        wuliu.hide();
+      async logisticsClose(data){
+        console.log(data);
+        if(data.val == "close"){
+          let wuliu = this.$refs.wuluInfo;
+          wuliu.hide();
+        }else if(data.val == "sure"){
+          let req = {
+            _id: this.id,
+            trackingCom: data.data.company,
+            trackingNumber: data.data.val
+          }
+          let res = await this.$api.sendData(`https://m.yixiutech.com/order/update`, req);
+          console.log(res);
+          if(res.code == 200){
+            this.$toast("物流信息添加成功");
+          }
+        }
       }
     }
   };
