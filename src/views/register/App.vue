@@ -120,7 +120,7 @@
             if(user){
               let da = {
                 //不要明文传输,用md5加密
-                wx: userData.wx
+                wx: user.wx
               }
               data = Object.assign({}, da, data);
             }
