@@ -142,6 +142,7 @@
           'wx.openid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
+        alert(JSON.stringify(isRegister));
         // alert(JSON.stringify(isRegister));
         console.log(isRegister.data);
         if (isRegister.data.length == 0){
