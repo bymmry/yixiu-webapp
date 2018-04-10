@@ -187,10 +187,6 @@ let filters = {
           alert("你还未注册，请先注册");
           this.$router.push("/register");
         }
-        if(user.mobile == ""){
-          alert("你还未注册，请先注册");
-          this.$router.push("/register");
-        }
         return user;
       }else if(userInfoStr == 'undefined' || userInfoStr == undefined){
         alert("你还未注册，请先注册");
