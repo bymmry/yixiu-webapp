@@ -51,6 +51,14 @@
       nextStepButtonDisabled: {
         type: Boolean,
         default: true
+      },
+      orderId: {
+        type: String,
+        default: ""
+      },
+      state: {
+        type: Number,
+        default: 0
       }
     },
     watch: {
@@ -67,22 +75,28 @@
     methods: {
       sureOrder: function () {
         let orderData = this.sureOrderData;
-
-        console.log(orderData);
-
         //  确认下单
         Dialog.confirm({
           title: '是否立即支付',
         }).then(() => {
           // on confirm
           console.log(orderData);
-          sureOrder(orderData).then((res) => {
-            console.log(res);
-            if(res.code == 200){
-              // console.log(this.data);
-              this._pay(orderData, res.data);
+          if(this.state == 10){ // 已付款订单
+            let data = {
+              _id: this.orderId
             }
-          });
+            this._pay(orderData, data);
+          
+          }else{
+            sureOrder(orderData).then((res) => {
+              console.log(res);
+              if(res.code == 200){
+                // console.log(this.data);
+                this._pay(orderData, res.data);
+              }
+            });
+          }
+          
         }).catch(() => {
           // on cancel
           console.log("取消");
@@ -109,9 +123,9 @@
           let req = {
             total_fee: this.TotalFee*100,
             openid: userData.wx.openid,
-            trade_type: 'MWEB'
+            trade_type: 'JSAPI'
           }
-          let res = await this.$api.sendData('https://m.yixiutech.com/wx/order/sign', req);
+          let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
           alert(JSON.stringify(res));
         }

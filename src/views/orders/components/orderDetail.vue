@@ -61,7 +61,7 @@
         </van-button>
       </div>
       <div class="stepNext" v-if="orderData.state == 10">
-        <sure-order :nextStepButtonDisabled="false" :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
+        <sure-order :state="orderData.state" :orderId="id" :nextStepButtonDisabled="false" :sureOrderData="sureOrderData" :TotalFee="orderData.payment/100"></sure-order>
       </div>
     </div>
     <!-- 质检报告 -->
@@ -94,12 +94,14 @@
         serverList: "",
         orderData: undefined,
         goodsId: [],
-        telContactNumber: ""
+        telContactNumber: "",
+        id: ""
       }
     },
     created() {
       let that = this;
       let id = this.$route.params.id;
+      this.id = id;
       
       getOrderDetail(id).then(res => {
         this.orderData = res.data;
