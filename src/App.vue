@@ -37,7 +37,8 @@
       // mainApp
     },
     async created() {
-      let winUrl = decodeURIComponent(window.location.href);
+      let winUrl = window.location.href;
+      // let winUrl = decodeURIComponent(window.location.href);
       //带参数
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
@@ -57,7 +58,7 @@
             
           }else if(userData.state == 1){ //小程序入口
             this.initXCXInfo(userData);
-            
+
           }else{
 
           }
@@ -116,8 +117,8 @@
       },
       initUserInfo(data) { //初始化用户信息
         const information = {
-          headimgurl: data.headimgurl || '',//用户头像
-          name: data.nickname || '翼修用户', //用户名称
+          headimgurl: data.headimgurl || data.avatarUrl || '',//用户头像
+          name: data.nickname || data.nickName || '翼修用户', //用户名称
           email: data.email || '', //邮箱
           mobile: data.mobile || '', //手机号
           password: data.password || '', //密码
@@ -132,29 +133,7 @@
 
         return information;
       },
-      async initGZHInfo(userData){ //公众号好用户初始化
-        alert("公众号进入");
-        sessionStorage.setItem("code", userData.code);
-        let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        // alert(JSON.stringify(res));
-        let userInfo = this.initUserInfo(res);
-
-        //测试环境
-        // if (process.env.NODE_ENV === 'development') {
-        //   userInfo = {
-        //     headimgurl: res.headimgurl || '',//用户头像
-        //     name: res.nickname || '测试环境',
-        //     email: res.email || '', //邮箱
-        //     mobile: res.mobile || '', //手机号
-        //     wx: {
-        //       openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg2',
-        //       nickname: res.nickname || '测试环境'
-        //     }, //微信信息:如openid,昵称和头像链接等等
-        //   }
-        //   console.log("===========================================>")
-        //   console.log(userInfo);
-        // }
-
+      async isUserRegister(userInfo){
         //根据openid判断是否注册
         let register = {
           collection: "User",
@@ -188,9 +167,36 @@
           this.$toast("成功");
         }
       },
+      async initGZHInfo(userData){ //公众号好用户初始化
+        alert("公众号进入");
+        sessionStorage.setItem("code", userData.code);
+        let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
+        // alert(JSON.stringify(res));
+        let userInfo = this.initUserInfo(res);
+
+        //测试环境
+        // if (process.env.NODE_ENV === 'development') {
+        //   userInfo = {
+        //     headimgurl: res.headimgurl || '',//用户头像
+        //     name: res.nickname || '测试环境',
+        //     email: res.email || '', //邮箱
+        //     mobile: res.mobile || '', //手机号
+        //     wx: {
+        //       openid: 'oqLwK0zk2lsx2W-M0i1WDC_ClCeg2',
+        //       nickname: res.nickname || '测试环境'
+        //     }, //微信信息:如openid,昵称和头像链接等等
+        //   }
+        //   console.log("===========================================>")
+        //   console.log(userInfo);
+        // }
+
+        this.isUserRegister(userInfo);
+      },
       async initXCXInfo(userData){ //小程序进入
         alert("小程序进入");
         alert(JSON.stringify(userData));
+        let userInfo = this.initUserInfo(userData);
+        this.isUserRegister(userInfo);
       }
     }
   }
