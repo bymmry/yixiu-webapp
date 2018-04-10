@@ -339,6 +339,9 @@
       // this.initUserInfo(userData);
       // this.getUserinfo(userData.wx.openid);
       this.signPD()
+    },
+    activated(){
+      let userData = this.getUserInfo();
     }
   }
 

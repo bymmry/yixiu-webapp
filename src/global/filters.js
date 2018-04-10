@@ -186,7 +186,7 @@ let filters = {
           this.$router.push("/register");
         }
         return user;
-      }else if(userInfoStr == 'undefined'){
+      }else if(userInfoStr == 'undefined' || userInfoStr == undefined){
         alert("你还未注册，请先注册");
         this.$router.push("/register");
         // alert("你还未登陆，请先登陆");
