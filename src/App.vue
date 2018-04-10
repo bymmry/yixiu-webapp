@@ -182,10 +182,13 @@
         // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        alert(JSON.stringify(res));
-        if(res.code == 200){
+        // alert(JSON.stringify(res));
+        if(res.openid){
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
+        }else{
+          alert("你还未注册，请先注册");
+          this.$router.push("/register");
         }
         
       },
