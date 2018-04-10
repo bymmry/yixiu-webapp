@@ -119,8 +119,8 @@
       },
       initUserInfo(data) { //初始化用户信息
         const information = {
-          headimgurl: data.headimgurl || data.avatarUrl || '',//用户头像
-          name: data.nickname || data.nickName || '翼修用户', //用户名称
+          headimgurl: data.headimgurl || '',//用户头像
+          name: data.nickname || '翼修用户', //用户名称
           email: data.email || '', //邮箱
           mobile: data.mobile || '', //手机号
           password: data.password || '', //密码
@@ -197,8 +197,26 @@
       async initXCXInfo(userData){ //小程序进入
         alert("小程序进入");
         alert(JSON.stringify(userData));
-        let userInfo = this.initUserInfo(userData);
+        let userInfo = this.initInfo(userData);
         this.isUserRegister(userInfo);
+
+        function initInfo(data){
+          const user = {
+            headimgurl: data.headimgurl || data.avatarUrl || '',//用户头像
+            name: data.nickname || data.nickName || '翼修用户', //用户名称
+            email: data.email || '', //邮箱
+            mobile: data.mobile || '', //手机号
+            password: data.password || '', //密码
+            isSys: data.isSys || false, //是否是系统管理员
+            role: data.role || [], //如[{name:'普通用户',power:1000},{name:'商家',power,2000}]
+            wx: {
+              openid: data.openid,
+              nickname: data.nickName || '翼修用户',
+              headimgurl: data.avatarUrl || ''
+            }, //微信信息:如openid,昵称和头像链接等等
+          }
+          return user;
+        }
       }
     }
   }
