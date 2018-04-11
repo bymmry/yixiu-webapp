@@ -26,14 +26,12 @@
 <script>
   import navigation from './views/common/components/navigation';
   // import mainApp from './views/common/App';
-  const toast = this.$createToast({
-    txt: 'Loading...',
-    mask: true,
-    time: 25000
-  })
   import {
     reguser
   } from './views/common/api'
+
+  
+  var toast;
   export default {
     name: 'App',
     components: {
@@ -43,7 +41,11 @@
     async created() {
       // let winUrl = window.location.href;
       // alert(winUrl);
-      
+      toast = this.$createToast({
+        txt: 'Loading...',
+        mask: true,
+        time: 25000
+      })
       toast.show();
       let winUrl = decodeURIComponent(window.location.href);
       // alert(winUrl);
