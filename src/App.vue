@@ -199,10 +199,12 @@
         alert(JSON.stringify(res));
         if(res.openid){
           //获取在不同的微信公众号或者小程序获取到的openid
+          let openids = [];
+          openids.push(userData.openid);
           let op = {
             collection:'User',
             wxopenid: {
-              $elemMatch: res.openid
+              '$in': openids
             }
           }
           let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
