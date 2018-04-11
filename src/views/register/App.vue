@@ -102,47 +102,54 @@
       },
       async register() {
         // let userData = this.getUserInfo();
-        let openid = sessionStorage.getItem("openid");
-        let userInfoStr = sessionStorage.getItem("userData");
+        if(JSON.parse(sessionStorage.getItem("openid"))){
+          let openid = JSON.parse(sessionStorage.getItem("openid"));
+          let userInfoStr = sessionStorage.getItem("userData");
         
 
-        if (this.password == "" || this.phoneNumber == "") {
-          this.$toast("请填写手机和密码");
-        } else if (this.validateSure == this.validateNumber) {
-          let that = this;
-          let data = {
-            wxopenid: openid,
-            "mobile": that.phoneNumber,
-            "password": md5(that.password)
-          }
-
-          if(typeof userInfoStr === "string"){
-            let user = JSON.parse(userInfoStr);
-            if(user){
-              let da = {
-                //不要明文传输,用md5加密
-                wx: user.wx
-              }
-              data = Object.assign({}, da, data);
+          if (this.password == "" || this.phoneNumber == "") {
+            this.$toast("请填写手机和密码");
+          } else if (this.validateSure == this.validateNumber) {
+            let that = this;
+            let openids = [];
+            openids.push(openid.openid);
+            let data = {
+              wxopenid: openids,
+              "mobile": that.phoneNumber,
+              "password": md5(that.password)
             }
+
+            if(typeof userInfoStr === "string"){
+              let user = JSON.parse(userInfoStr);
+              if(user){
+                let da = {
+                  //不要明文传输,用md5加密
+                  wx: user.wx
+                }
+                data = Object.assign({}, da, data);
+              }
+            }
+            
+            alert(JSON.stringify(data));
+            let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
+            console.log(res);
+            alert(JSON.stringify(res))
+            if (res.code == 200) {
+              this.$toast("注册成功");
+              sessionStorage.setItem("userData", JSON.stringify(res.data));
+              setTimeout(() => {
+                this.$router.push("/my");
+              }, 1000);
+            } else {
+              this.$toast(res.errMsg);
+            }
+          } else if(this.validateSure != this.validateNumber){
+            this.$toast("验证码错误");
+          }else if(this.validateNumber == ""){
+            this.$toast("请输入验证码");
           }
-          
-          
-          let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
-          if (res.code == 200) {
-            this.$toast("注册成功");
-            sessionStorage.setItem("userData", JSON.stringify(res.data));
-            setTimeout(() => {
-              this.$router.push("/my");
-            }, 1000);
-          } else {
-            this.$toast(res.errMsg);
-          }
-        } else if(this.validateSure != this.validateNumber){
-          this.$toast("验证码错误");
-        }else if(this.validateNumber == ""){
-          this.$toast("请输入验证码");
         }
+        
 
       }
     }

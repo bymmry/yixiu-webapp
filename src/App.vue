@@ -194,7 +194,6 @@
         */
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
-        sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         alert(JSON.stringify(res));
         if(res.openid){
@@ -212,7 +211,7 @@
           alert(JSON.stringify(op));
           alert(JSON.stringify(wxopenids));
 
-          sessionStorage.setItem("openid", res.openid);
+          sessionStorage.setItem("openid", JSON.stringify({openid:res.openid, name: "公众号"}));
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
         }else{
@@ -239,7 +238,7 @@
         // console.log(wxopenids);
         // alert(JSON.stringify(wxopenids));
         if(userData.openid){
-          sessionStorage.setItem("openid", userData.openid);
+          sessionStorage.setItem("openid", JSON.stringify({openid:userData.openid, name: "小程序"}));
           //初始化用户信息
           let userInfo = initInfo(userData);
           //判断用户是否注册
