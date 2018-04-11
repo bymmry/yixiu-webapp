@@ -26,7 +26,11 @@
 <script>
   import navigation from './views/common/components/navigation';
   // import mainApp from './views/common/App';
-
+  const toast = this.$createToast({
+    txt: 'Loading...',
+    mask: true,
+    time: 25000
+  })
   import {
     reguser
   } from './views/common/api'
@@ -39,13 +43,14 @@
     async created() {
       // let winUrl = window.location.href;
       // alert(winUrl);
+      
+      toast.show();
       let winUrl = decodeURIComponent(window.location.href);
       // alert(winUrl);
       //带参数
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);
         userData = JSON.parse(userData);
-
         /**
          * 根据state判断入口
          * state=1 小程序入口
@@ -141,6 +146,8 @@
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
         // alert(JSON.stringify(isRegister));
+        
+        toast.hide();
         console.log(isRegister.data);
         if (isRegister.data.length == 0){
           //注册
@@ -228,9 +235,9 @@
         // alert(JSON.stringify(wxopenids));
         if(userData.openid){
           sessionStorage.setItem("openid", userData.openid);
-          console.log(userData);
+          //初始化用户信息
           let userInfo = initInfo(userData);
-          console.log(userInfo);
+          //判断用户是否注册
           this.isUserRegister(userInfo);
         }
         
