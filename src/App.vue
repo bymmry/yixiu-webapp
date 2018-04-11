@@ -155,15 +155,15 @@
           //注册
           // alert("data.length = 0")
           sessionStorage.setItem("userData", JSON.stringify(userInfo));
-          alert("你还没有注册，请先注册")
-          this.$router.push("/register");
+          alert("你还未登录，请先登录");
+          this.$router.push("/login");
         }else{
           // alert("data.length != 0");
           userInfo = isRegister.data[isRegister.data.length - 1];
           // alert(userInfo)
           if(userInfo.mobile == ""){
-            alert("你还未注册，请先注册");
-            this.$router.push("/register");
+            alert("你还未登录，请先登录");
+            this.$router.push("/login");
           }else{
             //更新用户信息
             // alert("else 已注册");
@@ -211,7 +211,7 @@
           alert(JSON.stringify(op));
           alert(JSON.stringify(wxopenids));
 
-          sessionStorage.setItem("openid", JSON.stringify({openid:res.openid, name: "公众号"}));
+          sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
         }else{
@@ -238,7 +238,7 @@
         // console.log(wxopenids);
         // alert(JSON.stringify(wxopenids));
         if(userData.openid){
-          sessionStorage.setItem("openid", JSON.stringify({openid:userData.openid, name: "小程序"}));
+          sessionStorage.setItem("openid", userData.openid);
           //初始化用户信息
           let userInfo = initInfo(userData);
           //判断用户是否注册

@@ -102,8 +102,8 @@
       },
       async register() {
         // let userData = this.getUserInfo();
-        if(JSON.parse(sessionStorage.getItem("openid"))){
-          let openid = JSON.parse(sessionStorage.getItem("openid"));
+        if(sessionStorage.getItem("openid")){
+          let openid = sessionStorage.getItem("openid");
           let userInfoStr = sessionStorage.getItem("userData");
         
 
@@ -111,11 +111,7 @@
             this.$toast("请填写手机和密码");
           } else if (this.validateSure == this.validateNumber) {
             let that = this;
-            let openids = {
-              wxopenid: openid.openid
-            };
             let data = {
-              $addToset: openids,
               "mobile": that.phoneNumber,
               "password": md5(that.password)
             }
@@ -142,7 +138,17 @@
                 this.$router.push("/my");
               }, 1000);
             } else {
-              this.$toast(res.errMsg);
+              // if(code == 4001){
+              //   let req = {
+              //     collection:'User',
+              //     '$addToSet': {
+              //       wxopenid: openid.openid
+              //     }
+              //   }
+              //   let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, req);
+              // }else{
+                this.$toast(res.errMsg);
+              // }
             }
           } else if(this.validateSure != this.validateNumber){
             this.$toast("验证码错误");

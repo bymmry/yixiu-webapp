@@ -50,17 +50,44 @@
       },
       async loginNow(){
         let that = this;
+        let openid = sessionStorage.getItem("openid");
+
         let data = {
           "username":that.username,//这里填手机号,用这个字段名称是为了以后可以拓展
           "password":md5(that.password)//注册的时候用什么加密,这里就用什么加密方式,不要明文
         }
 
+        //登录
         let res = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
         console.log(res);
         if(res.code == 200){
-          this.$toast('登录成功');
-          let userData = JSON.stringify(res.data);
-          sessionStorage.setItem("userData", userData);
+          //若已有账号 更新wxopenid
+          if(res.data.wxopenid.length > 0){
+            let req = {
+              collection:'User',
+              find: {
+                _id: res.data._id
+              },
+              update: {
+                '$addToSet': {
+                  wxopenid: openid
+                }
+              }
+            }
+            let openidreturn = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, req);
+            //wxopenid更新成功
+            if(openidreturn.code == 200){
+              let newRes = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
+              let newUserData = JSON.stringify(newRes.data);
+              sessionStorage.setItem("userData", newUserData);
+            }
+            
+          }else{
+            let userData = JSON.stringify(res.data);
+            sessionStorage.setItem("userData", userData);
+          }
+
+          this.$toast("登录成功");
           this.$router.push("/my");
         }else{
           this.$toast(res.errMsg);

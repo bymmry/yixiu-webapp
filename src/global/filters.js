@@ -181,15 +181,15 @@ let filters = {
     let userInfoStr = sessionStorage.getItem("userData");
     // alert(userInfoStr);
     if(userInfoStr == 'undefined' || userInfoStr == undefined){
-      alert("你还未注册，请先注册");
-      this.$router.push("/register");
+      alert("你还未登录，请先登录");
+      this.$router.push("/login");
       return;
     }else if(typeof userInfoStr === "string"){
       // alert(userInfoStr);
       let user = JSON.parse(userInfoStr);
       if(user.data || user.mobile == ""){
-        alert("你还未注册，请先注册");
-        this.$router.push("/register");
+        alert("你还未登录，请先登录");
+        this.$router.push("/login");
       }else {
         return user;
       }
