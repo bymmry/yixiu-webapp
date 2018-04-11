@@ -209,6 +209,7 @@
           }
           let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
           console.log(wxopenids);
+          alert(JSON.stringify(op));
           alert(JSON.stringify(wxopenids));
 
           sessionStorage.setItem("openid", res.openid);
