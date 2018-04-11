@@ -179,6 +179,10 @@
          
         }
       },
+      /**
+        *公众号进入
+        *公众号好用户初始化
+        */
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
@@ -204,19 +208,23 @@
         }
         
       },
+      /**
+        *小程序进入
+        */
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");
         // alert(JSON.stringify(userData));
         //获取在不同的微信公众号或者小程序获取到的openid
-        // let op = {
-        //   collection:'User',
-        //   wxopenid: {
-        //     $elemMatch: userData.openid
-        //   }
-        // }
-        // let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
-        // console.log(wxopenids);
-        // alert(JSON.stringify(wxopenids));
+        let op = {
+          collection:'User',
+          wxopenid: {
+            $elemMatch: userData.openid
+          }
+        }
+        alert(userData.openid);
+        let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
+        console.log(wxopenids);
+        alert(JSON.stringify(wxopenids));
         if(userData.openid){
           sessionStorage.setItem("openid", userData.openid);
         }
