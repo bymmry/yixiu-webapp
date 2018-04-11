@@ -199,15 +199,15 @@
         // alert(JSON.stringify(res));
         if(res.openid){
           //获取在不同的微信公众号或者小程序获取到的openid
-          // let op = {
-          //   collection:'User',
-          //   wxopenid: {
-          //     $elemMatch: res.openid
-          //   }
-          // }
-          // let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
-          // console.log(wxopenids);
-          // alert(JSON.stringify(wxopenids));
+          let op = {
+            collection:'User',
+            wxopenid: {
+              $elemMatch: res.openid
+            }
+          }
+          let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
+          console.log(wxopenids);
+          alert(JSON.stringify(wxopenids));
 
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
