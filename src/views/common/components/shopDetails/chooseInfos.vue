@@ -433,9 +433,9 @@
   .chooseInfos .stepButton {
     width: 100%;
     display: flex;
-    position: fixed;
+    position: absolute;
     z-index: 100;
-    bottom: 9vh;
+    bottom: 1vh;
   }
 
   .chooseInfos .stepButton>div {

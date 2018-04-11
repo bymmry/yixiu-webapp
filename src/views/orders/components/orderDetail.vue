@@ -261,7 +261,10 @@
           console.log(res);
           if(res.code == 200){
             this.$toast("物流信息添加成功");
+          }else{
+            this.$toast(res);
           }
+          wuliu.hide();
         }
       }
     }
