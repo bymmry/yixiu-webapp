@@ -196,7 +196,7 @@
         // alert("公众号进入");
         sessionStorage.setItem("code", userData.code);
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        // alert(JSON.stringify(res));
+        alert(JSON.stringify(res));
         if(res.openid){
           //获取在不同的微信公众号或者小程序获取到的openid
           let op = {
