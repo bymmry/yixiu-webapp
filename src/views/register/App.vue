@@ -111,10 +111,11 @@
             this.$toast("请填写手机和密码");
           } else if (this.validateSure == this.validateNumber) {
             let that = this;
-            let openids = [];
-            openids.push(openid.openid);
+            let openids = {
+              wxopenid: openid.openid
+            };
             let data = {
-              wxopenid: openids,
+              $addToset: openids,
               "mobile": that.phoneNumber,
               "password": md5(that.password)
             }
