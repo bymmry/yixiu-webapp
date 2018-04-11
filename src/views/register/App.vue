@@ -111,6 +111,7 @@
         } else if (this.validateSure == this.validateNumber) {
           let that = this;
           let data = {
+            wxopenid: openid,
             "mobile": that.phoneNumber,
             "password": md5(that.password)
           }

@@ -213,26 +213,27 @@
         */
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");
-        // alert(JSON.stringify(userData));
+        alert(JSON.stringify(userData));
         //获取在不同的微信公众号或者小程序获取到的openid
-        let op = {
-          collection:'User',
-          wxopenid: {
-            $elemMatch: userData.openid
-          }
-        }
-        alert(userData.openid);
-        let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
-        console.log(wxopenids);
-        alert(JSON.stringify(wxopenids));
+        // let openids = [];
+        // openids.push(userData.openid);
+        // let op = {
+        //   collection:'User',
+        //   wxopenid: {
+        //     '$in': openids
+        //   }
+        // }
+        // let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
+        // console.log(wxopenids);
+        // alert(JSON.stringify(wxopenids));
         if(userData.openid){
           sessionStorage.setItem("openid", userData.openid);
+          console.log(userData);
+          let userInfo = initInfo(userData);
+          console.log(userInfo);
+          this.isUserRegister(userInfo);
         }
-        console.log(userData);
-        let userInfo = initInfo(userData);
-        console.log(userInfo);
-        this.isUserRegister(userInfo);
-
+        
         function initInfo(data){
           const user = {
             headimgurl: data.headimgurl || data.avatarUrl || '',//用户头像
