@@ -17,6 +17,29 @@
           <sicon name="find-leftArr" scale="1.7" color="#FCFCFC"></sicon>
           &nbsp;首页
         </div>
+        <!-- 用户头像及登录注册 -->
+        <div class="user-area">
+          <div class="user-profile">
+            <img :src="userInfo.wx.headimgurl">
+          </div>
+          <div class="usermessage" v-if="!loggedin">
+            <router-link id="login" to="/login">登录</router-link>
+            <div>|</div>
+            <router-link id="register" to="/register">注册</router-link>
+          </div>
+          <div class="usermessage username" v-else>
+            {{ userInfo.wx.nickname }}
+            <div class="rightTag" @click="enterIcons">
+              <div class="iconBox">
+                <sicon name="my-icons" scale="1.7" color="#fff"></sicon>
+              </div>
+              <div class="integralBox">
+                {{ userInfo.points }} 积分
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div class="sign">
           <div class="rightTag2" @click="sign" v-if="signShow">
             <div class="iconBox">
@@ -33,29 +56,6 @@
             <div class="integralBox">
               已签到
             </div>
-          </div>
-        </div>
-        <!-- 用户头像及登录注册 -->
-        <div class="user-area">
-          <div class="user-profile">
-            <img :src="userInfo.wx.headimgurl">
-          </div>
-          <div class="usermessage" v-if="!loggedin">
-            <router-link id="login" to="/login">登录</router-link>
-            <div>|</div>
-            <router-link id="register" to="/register">注册</router-link>
-          </div>
-          <div class="usermessage username" v-else>
-            {{ userInfo.wx.nickname }}
-          </div>
-        </div>
-
-        <div class="rightTag" @click="enterIcons">
-          <div class="iconBox">
-            <sicon name="my-icons" scale="2.7" color="#fff"></sicon>
-          </div>
-          <div class="integralBox">
-            {{ userInfo.points }} 积分
           </div>
         </div>
       </div>
@@ -388,15 +388,17 @@
 
   .sign {
     position: absolute;
-    top: 0;
+    display: flex;
+    align-items: center;
+    top: 8.5vh;
     right: 0;
-    padding: 15px 10px;
-    padding-right: 0;
-    padding-top: 3px;
-    padding-bottom: 10px;
     color: #FCFCFC;
-  }
+    height: 35px;
+    background-image: linear-gradient(90deg, rgba(53, 53, 53, 0.2) 0%, rgba(53, 53, 53, 0.1) 100%);
 
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+  }
   .user-area {
     display: flex;
     flex-direction: flex-start;
@@ -420,18 +422,16 @@
     width: 100%;
     height: 100%;
   }
-
+  
   .rightTag {
     position: absolute;
     display: flex;
     align-items: center;
-    right: 0;
-    top: 8.5vh;
-    height: 40px;
-    background-image: linear-gradient(90deg, rgba(53, 53, 53, 0.2) 0%, rgba(53, 53, 53, 0.1) 100%);
-
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
+    /*left: -10px;*/
+    top: 3.5vh;
+    /*right: 0;*/
+    /*top: 8.5vh;*/
+    /*height: 40px;*/
   }
 
   .rightTag2 {
@@ -473,6 +473,7 @@
   }
 
   .username {
+    position: relative;
     justify-content: center;
     font-size: 6vw;
   }
