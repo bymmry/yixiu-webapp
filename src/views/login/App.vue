@@ -60,7 +60,7 @@
         //登录
         let res = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
         console.log(res);
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if(res.code == 200){
           //若已有账号 更新wxopenid
           if(res.data.wxopenid.length > 0){
@@ -84,11 +84,11 @@
                 }
               }
             }
-            alert(JSON.stringify(req));
+            // alert(JSON.stringify(req));
             if(req){
               let openidreturn = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, req);
               //wxopenid更新成功
-              alert(JSON.stringify(openidreturn));
+              // alert(JSON.stringify(openidreturn));
               if(openidreturn.code == 200){
                 let newRes = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
                 let newUserData = JSON.stringify(newRes.data);

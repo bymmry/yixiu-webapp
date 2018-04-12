@@ -130,10 +130,10 @@
               }
             }
             
-            alert(JSON.stringify(data));
+            // alert(JSON.stringify(data));
             let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
             console.log(res);
-            alert(JSON.stringify(res))
+            // alert(JSON.stringify(res))
             if (res.code == 200) {
               this.$toast("注册成功");
               sessionStorage.setItem("userData", JSON.stringify(res.data));

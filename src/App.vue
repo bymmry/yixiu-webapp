@@ -152,7 +152,7 @@
           // 'wxopenid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-        alert(JSON.stringify(isRegister));
+        // alert(JSON.stringify(isRegister));
         
         toast.hide();
         console.log(isRegister.data);
@@ -200,7 +200,7 @@
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if(res.openid){
           //获取在不同的微信公众号或者小程序获取到的openid
           // let openids = [];
@@ -229,7 +229,7 @@
         */
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");
-        alert(JSON.stringify(userData));
+        // alert(JSON.stringify(userData));
         //获取在不同的微信公众号或者小程序获取到的openid
         // let openids = [];
         // openids.push(userData.openid);
