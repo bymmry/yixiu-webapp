@@ -7,7 +7,8 @@ export default[
     component: teaching,
     children: [
       {
-        path: ":id", //
+        path: "/teaching/videoDetail", //
+        name: "videoDetail",
         component: videoDetail
       }
     ],

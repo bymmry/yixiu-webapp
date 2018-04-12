@@ -2,12 +2,15 @@
 <template>
   <transition name="slide">
     <div class="videoDetail">
+      <div class="video" ref="videoBox">
+        <video ref="video" :src="introduceData.info.video"></video>
+      </div>
       <div class="title">
         <div class="closeBox" @click="goback">
           <sicon name="close" scale="1.7"></sicon>
         </div>
         <div class="des">
-          <p>全网最热IPhone X 维修教程</p>
+          <p>{{introduceData.desc}}</p>
         </div>
         <div class="buttonBox" @click="tryToWatch">
           <div class="buttonClick">
@@ -22,14 +25,22 @@
       <div class="content">
         <class-introduce
           v-if="nowType == 1"
-          :introduce="introduceData.introduce" 
+          :introduce="introduceData.desc" 
           :type="introduceData.type" 
-          :time="introduceData.time"
+          :time="introduceData.info.time"
           :number="introduceData.number"
         ></class-introduce>
-        <div
-          v-if="nowType == 2"
-        >请购买后查看</div>
+        <div v-if="nowType == 2" class="classChapter">
+          <class-chapter 
+            v-if="classChapterData.length != 0"
+            v-for="(cla, index) in classChapterData"
+            :key="index"
+            :name="cla.name"
+            :index="cla.index"
+            :claId="cla._id"
+            :train="introduceData._id"
+          ></class-chapter>
+        </div>
       </div>
       <div class="buyClass">
         <div class="money"><span>￥368.00</span></div>
@@ -43,8 +54,9 @@
 
 <script>
   import menuTab from '../components/menuTab'
-  import classIntroduce from '../components/classIntroduce';
+  import classIntroduce from '../components/classIntroduce'
   import tryWatch from '@/assets/tryWatch.png'
+  import classChapter from '../components/classChapter.vue';
   export default {
     data() {
       return {
@@ -57,36 +69,75 @@
             type: 2
           }
         ],
-        introduceData: {
-          introduce: "面试必备，入门就是最新版本，让你快速掌握修手机",
-          type: "初级",
-          time: "20",
-          number: 2526
-        },
+        introduceData: {},
+        levelType: "",
         nowType: 1,
-        tryWatch: tryWatch
+        tryWatch: tryWatch,
+        classChapterData: []
       };
     },
 
     components: {
       menuTab,
-      classIntroduce
+      classIntroduce,
+      classChapter
     },
-
+    created(){
+      let data = this.$route.params.data;
+      console.log(data);
+      if(data._id){
+        this.introduceData = data;
+        switch (data.level)
+        {
+          case "0":
+            this.introduceData.type = "初级"
+            break;
+          case "1":
+            this.introduceData.type = "中级"
+            break;
+          case "2":
+            this.introduceData.type = "高级"
+            break;
+          default:
+            console.log("err");
+            break;
+        }
+        this.getClassDesData(data._id);
+      }
+    },
     methods: {
       goback: function () {
         this.$router.back();
       },
       getList(item) {
-        console.log(item);
         this.nowType = item.type;
       },
       tryToWatch() {
-        const toast = this.$createToast({
-          txt: '试看',
-          time: 1300
-        })
-        toast.show();
+        // const toast = this.$createToast({
+        //   txt: '试看',
+        //   time: 1300
+        // })
+        // toast.show();
+        let player = this.$refs.video;
+        let videoBox = this.$refs.videoBox;
+        console.log(player);
+        if (player.paused){
+          // videoBox.style.zIndex = 115;
+          player.play();
+          // oBtn.value = "Pause";
+        }
+        
+      },
+      async getClassDesData(id){
+        let req = {
+          collection: "TrainChapter",
+          train: id
+        };
+        let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
+        if(res.code == 200){
+          this.classChapterData = res.data;
+        }
+        console.log(res);
       }
     }
 
@@ -115,11 +166,21 @@
     z-index: 15;
     background: #f1f5f6;
   }
-
+  .videoDetail .video{
+    position: fixed;
+    width: 100%;
+    height: 30vh;
+    overflow: hidden;
+    top: 0;
+    z-index: 105;
+    height: 30vh;
+  }
   .videoDetail .title {
     height: 30vh;
-    background-color: #3055be;
+    /* background-color: #3055be; */
     color: #fff;
+    position: relative;
+    z-index: 110;
   }
 
   .videoDetail .title .closeBox {
@@ -169,12 +230,24 @@
 
   .videoDetail .menu {
     width: 100%;
-    height: 40px;
+    height: 6vh;
   }
 
   .videoDetail .content {
     position: relative;
-    top: 0;
+    border-top: 1vh solid #eee;
+    top: 0vh;
+    padding-top: 1vh;
+    height: 54vh;
+    background-color: #fff;
+  }
+  .videoDetail .content .classChapter{
+    /* border-top: 1vh solid #eee; */
+    width: auto;
+    height: 54vh;
+    padding: 0 15px;
+    padding-bottom: 2vh;
+    overflow-y: scroll;
   }
   .videoDetail .buyClass{
     display: flex;
@@ -183,6 +256,7 @@
     width: 100%;
     height: 8vh;
     background: #fff;
+    border-top: 1px solid #eee;
   }
   .videoDetail .buyClass > div.money{
     flex: 5;

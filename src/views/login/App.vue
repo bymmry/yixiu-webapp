@@ -7,7 +7,7 @@
     <div class="loginBox">
       <div class="loginDes">
         <span>用户名</span>
-        <input type="text" placeholder="" v-model="username">
+        <input type="text" placeholder="手机号" v-model="username">
       </div>
       <div class="loginDes">
         <span>密码</span>

@@ -22,9 +22,32 @@
     props: {
       cover: String,
       name: String,
-      type: String,
+      level: String,
       number: Number,
       fee: Number
+    },
+    data(){
+      return {
+        type: ""
+      }
+    },
+    mounted(){
+      console.log(this.level);
+      switch (this.level)
+      {
+        case "0":
+          this.type = "初级"
+          break;
+        case "1":
+          this.type = "中级"
+          break;
+        case "2":
+          this.type = "高级"
+          break;
+        default:
+          console.log("err");
+          break;
+      }
     }
   }
 
@@ -46,7 +69,7 @@
   }
   .classList .cover .img{
     width: 100%;
-    height: auto;
+    height: 50%;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -56,6 +79,7 @@
   }
   .classList .cover .img img{
     width: 100%;
+    height: auto;
   }
   .classList .content {
     flex: 2;

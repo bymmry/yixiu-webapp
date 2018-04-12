@@ -35,7 +35,7 @@ export default {
 .classIntroduce{
   width: 80%;
   height: auto;
-  margin: 10px auto;
+  margin: 0 auto;
   padding: 10px;
   background-color: #fff;
   box-shadow: 0 2px 6px #d4e5f8;

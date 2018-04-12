@@ -35,7 +35,8 @@
 <style scoped>
 .menu{
 	width: 100%;
-  height: 40px;
+  height: 6vh;
+  min-height: 40px;
   background-color: #fff;
   color: #4891e4;
 }

@@ -12,11 +12,11 @@
       <class-list 
         v-for="(item, index) in classListData" 
         :key="index" 
-        :cover="item.cover" 
+        :cover="item.info.cover"
         :name="item.name" 
-        :type="item.type" 
+        :level="item.level" 
         :number="item.number"
-        :fee="item.fee"
+        :fee="item.price/100"
         v-on:click.native="gotoVideoDetail(item)"
         ></class-list>
     </cube-scroll>
@@ -46,46 +46,46 @@
           }
         ],
         currentIndex: 0,
-        classListData: [ //课程列表
-          {
-            _id: '0001',
-            cover: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/gcs.jpg',
-            name: '更换手机零部件从入门到精通',
-            type: '初级',
-            number: 288,
-            fee: 0
-          },
-          {
-            _id: '0002',
-            cover: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/gcs.jpg',
-            name: '更换手机零部件从入门到精通',
-            type: '初级',
-            number: 288,
-            fee: 360000
-          },
-          {
-            _id: '0003',
-            cover: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/gcs.jpg',
-            name: '更换手机零部件从入门到精通',
-            type: '初级',
-            number: 288,
-            fee: 360000
-          }
-        ]
+        classListData: []//课程列表
       }
+    },
+    created(){
+      this.getClassListData(0);
     },
     methods: {
       getClass(index) {
         this.currentIndex = index;
+        this.getClassListData(index)
+
       },
       gotoVideoDetail(item){ // 跳转至商品详情页
-        console.log(item);
         this.$router.push({
-          path: `/teaching/${item._id}`,
+          // path: `/teaching/videoDetail`,
+          name: "videoDetail",
           params: {
-            id: item._id
+            data: item
           }
         })
+      },
+      async getClassListData(level){
+        
+        let req = {
+          collection: "Train",
+          level: level
+        }
+        const toast = this.$createToast({
+				  txt: '加载中...',
+				  type: 'loading'
+        });
+        toast.show();
+        let res = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, req);
+        toast.hide();
+        if(res.code == 200){
+          if(res.data.length == 0){
+            this.$toast("暂无此类型的视频");
+          }
+          this.classListData = res.data;
+        }
       }
     }
   }
