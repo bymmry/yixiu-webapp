@@ -111,9 +111,12 @@
             this.$toast("请填写手机和密码");
           } else if (this.validateSure == this.validateNumber) {
             let that = this;
+            let nowopenid = [];
+            nowopenid.push(openid);
             let data = {
               "mobile": that.phoneNumber,
-              "password": md5(that.password)
+              "password": md5(that.password),
+              wxopenid: nowopenid
             }
 
             if(typeof userInfoStr === "string"){
