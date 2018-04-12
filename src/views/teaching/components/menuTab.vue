@@ -2,8 +2,8 @@
 <template>
   <div class="menu">
     <ul>
-      <li @click="change(item,index)" v-for="(item, index) in list" :key="index">
-        <span :data-index="index" :class="{'active': currentIndex === index}">{{item.name}}</span>
+      <li @click="change(item,index)" v-for="(item, index) in list" :key="index" :class="{'active': currentIndex === index}">
+        <span :data-index="index">{{item.name}}</span>
       </li>
     </ul>
   </div>
@@ -56,10 +56,11 @@
   margin: 0 auto;
   display: inline-block;
 }
-.menu ul li span.active{
-  
-  border-bottom: 3px solid #4891e4;
-  border-radius: 3px;
+.menu ul li.active{
+  background: #4891e4;
+  color: #fff;
+  /* border-bottom: 3px solid #4891e4; */
+  /* border-radius: 3px; */
 }
 
 </style>
