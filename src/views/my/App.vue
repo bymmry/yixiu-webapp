@@ -28,9 +28,10 @@
             <router-link id="register" to="/register">注册</router-link>
           </div>
           <div class="usermessage username" v-else>
-            {{ userInfo.wx.nickname }}
+            <span class="userNameText">{{ userInfo.wx.nickname }}</span>
+            <div class="line"></div>
             <div class="rightTag" @click="enterIcons">
-              <div class="iconBox">
+              <div class="iconBox iconCoins">
                 <sicon name="my-icons" scale="1.7" color="#fff"></sicon>
               </div>
               <div class="integralBox">
@@ -390,7 +391,7 @@
     position: absolute;
     display: flex;
     align-items: center;
-    top: 8.5vh;
+    top: 15vw;
     right: 0;
     color: #FCFCFC;
     height: 35px;
@@ -424,14 +425,9 @@
   }
   
   .rightTag {
-    position: absolute;
     display: flex;
     align-items: center;
-    /*left: -10px;*/
-    top: 3.5vh;
-    /*right: 0;*/
-    /*top: 8.5vh;*/
-    /*height: 40px;*/
+    margin-left: -3vw;
   }
 
   .rightTag2 {
@@ -448,6 +444,9 @@
     margin-left: 8px;
     margin-right: 8px;
   }
+  .iconCoins{
+    margin-top: 0px;
+  }
 
   .integralBox {
     font-size: 15px;
@@ -458,12 +457,10 @@
   .usermessage {
     display: flex;
     margin-left: 5vw;
-    margin-top: 13px;
+    /*margin-top: 13px;*/
     min-width: 25vw;
     max-width: 75vw;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    
     color: #FCFCFC;
     font-size: 5vw;
   }
@@ -473,14 +470,30 @@
   }
 
   .username {
+    display: flex;
+    flex-direction: column;
     position: relative;
     justify-content: center;
     font-size: 6vw;
+    max-width: 50vw;
+    margin-top: -3vw;
+  }
+  .userNameText{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .user-menu {
     padding-bottom: 30px;
   }
-
+  .line{
+    width: 100%;
+    height: 1px;
+    margin-top: 3px;
+    margin-left: -5px;
+    margin-bottom: 3px;
+    background-image: linear-gradient(120deg, rgba(251, 250, 250, 0.5) 0%, rgba(238, 239, 240,0) 100%);
+  }
 </style>
 
