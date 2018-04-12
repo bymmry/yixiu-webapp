@@ -142,9 +142,14 @@
       },
       async isUserRegister(userInfo){
         //根据openid判断是否注册
+        let nowopenid = [userInfo.wx.openid];
+        nowopenid.push()
         let register = {
           collection: "User",
-          'wx.openid': userInfo.wx.openid
+          wxopenid: {
+            '$in': nowopenid
+          }
+          // 'wxopenid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
         alert(JSON.stringify(isRegister));

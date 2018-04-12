@@ -63,25 +63,35 @@
         if(res.code == 200){
           //若已有账号 更新wxopenid
           if(res.data.wxopenid.length > 0){
-            let req = {
-              collection:'User',
-              find: {
-                _id: res.data._id
-              },
-              update: {
-                '$addToSet': {
-                  wxopenid: openid
+            console.log(res.data);
+            let req;
+            for(let i=0; i< res.data.wxopenid.length; i++){
+              if(openid == res.data.wxopenid[i]){
+                alert("该账号已添加");
+                break;
+              }else{
+                req = {
+                  collection:'User',
+                  find: {
+                    _id: res.data._id
+                  },
+                  update: {
+                    '$addToSet': {
+                      wxopenid: openid
+                    }
+                  }
                 }
               }
             }
-            let openidreturn = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, req);
-            //wxopenid更新成功
-            if(openidreturn.code == 200){
-              let newRes = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
-              let newUserData = JSON.stringify(newRes.data);
-              sessionStorage.setItem("userData", newUserData);
+            if(req){
+              let openidreturn = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, req);
+              //wxopenid更新成功
+              if(openidreturn.code == 200){
+                let newRes = await this.$api.sendData(`https://m.yixiutech.com/login`, data);
+                let newUserData = JSON.stringify(newRes.data);
+                sessionStorage.setItem("userData", newUserData);
+              }
             }
-            
           }else{
             let userData = JSON.stringify(res.data);
             sessionStorage.setItem("userData", userData);
