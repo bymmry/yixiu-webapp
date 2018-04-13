@@ -23,7 +23,7 @@
           </ul>
           <!-- <p>{{classData.desc}}</p> -->
           <h3>简介：</h3>
-          <p class="desc">"积分iOS大件大事就覅偶的三附近的沙拉酱坲下午见来看的撒佛山大飞机临时卡的房间哦的三极乐空间了卡士大夫"</p>
+          <p class="desc">{{classData.desc}}</p>
         </div>
         <div class="classChapter" v-if="nowType == 2">
           <cube-scroll :data="classChapterData" class="scroll">
