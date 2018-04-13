@@ -77,10 +77,13 @@ export default {
         toast.show();
         console.log(player)
         player.play();
-        if(player.loadedmetadata){
-          alert(player.loadedmetadata);
+        player.addEventListener("loadedmetadata", function()
+          {
+          //SomeJavaScriptCode
+          
           toast.hide();
-        }
+          }
+        );
         
       }
       
