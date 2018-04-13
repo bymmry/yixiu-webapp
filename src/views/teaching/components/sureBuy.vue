@@ -26,6 +26,7 @@ export default {
   methods: {
     buyClass(){
       //  确认下单
+      let userData = this.getUserInfo();
       Dialog.confirm({
         title: '是否立即支付',
       }).then(() => {
@@ -34,6 +35,7 @@ export default {
         let payInfo = {
           payment: this.totalFee,
           id: this.id,
+          userId: userData._id,
           type: 2
         }
         this.pay(payInfo);
