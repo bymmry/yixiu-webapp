@@ -38,12 +38,12 @@
 	import Arrondi from './components/arrondi.vue'
 	import Recommend from './components/recommend.vue'
 	import HotSale from './components/hotSale.vue'
+	import phone from './data/phone.json'
   export default {
 		async mounted () {
 
-			// let addCategory = await this.$api.sendData('https://m.yixiutech.com/category', {type: 'goods', name: 'android', shop: '5ab93879d4e7f1497d58d94e', parent: '5aba57d8cb8a365364b118ac'})
-
 			let categoryRes = await this.$api.sendData('https://m.yixiutech.com/category/shop', { type: 'goods', shop: '5ab93879d4e7f1497d58d94e' });
+			
 			categoryRes.data.map(item => {
 				if (item.name == 'ios') {
 					this.ios = item._id;
@@ -53,24 +53,25 @@
 				}
 			})
 
-			let iosList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.ios, shop: '5ab93879d4e7f1497d58d94e'});
+
+
+			// let iosList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.ios, shop: '5ab93879d4e7f1497d58d94e'});
 			
-			if (iosList.code == 200) {
-				this.iphone = iosList.data.slice(0, 4);
-				this.iphone.map(item => {
-					item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
-				})
-			}
-			console.log(this.iphone);
+			// if (iosList.code == 200) {
+			// 	this.iphone = iosList.data.slice(0, 4);
+			// 	this.iphone.map(item => {
+			// 		item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
+			// 	})
+			// }
 
-			let androidList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.androidId, shop: '5ab93879d4e7f1497d58d94e'})
+			// let androidList = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', {category: this.androidId, shop: '5ab93879d4e7f1497d58d94e'})
 
-			if (androidList.code == 200) {
-				this.android = androidList.data.slice(0, 4);
-				this.android.map(item => {
-					item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
-				})
-			}
+			// if (androidList.code == 200) {
+			// 	this.android = androidList.data.slice(0, 4);
+			// 	this.android.map(item => {
+			// 		item.cover = item.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
+			// 	})
+			// }
 
 			// let list = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category/', { category: this.category, shop: '5aa4a1a3733e266adc724d1a'});
 			// this.data = res.data;
@@ -99,8 +100,8 @@
 				iosTitle: 'iPhone热卖',
 				androidTitle: '安卓热卖',
 				name: '精品手机',
-				iphone: [],
-				android: [],
+				iphone: phone.ios,
+				android: phone.android,
 				androidId: '',
 				ios: ''
 			}

@@ -1,0 +1,14 @@
+{
+    "ios": [
+        { "name": "iPhoneX", "price": 7850 , "primeCost": 8850, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphoneX.png" },
+        { "name": "iphone8 PLUS", "price": 5645 , "primeCost": 6350, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphone8plus.png" },
+        { "name": "iphone7", "price": 4236 , "primeCost": 5600, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphone7.png" },
+        { "name": "iphone6s", "price": 3699, "primeCost": 4530, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/iphone6s.png" }
+    ],
+    "android": [
+        { "name": "华为P10", "price": 3488, "primeCost": 6650, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/huaweiP10.png" },
+        { "name": "VIVO X20", "price": 3320, "primeCost": 4830, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/VIVOX20.png" },
+        { "name": "小米MIX2", "price": 2900, "primeCost": 4500, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/xiaomiMIX2.png" },
+        { "name": "OPPO-R11S", "price": 2299 , "primeCost": 3800, "src": "https://xuhaichao-1253369066.cos.ap-chengdu.myqcloud.com/OPPO-R11S.png" }
+    ]
+}

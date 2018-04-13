@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import App from './App'
 
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  ak: 'Kd6A7YiZccDlgzFaz71DAxFhQziojKUT'
+})
 
 //vue的全局资源filters、mixins、directives
 import global from './global'

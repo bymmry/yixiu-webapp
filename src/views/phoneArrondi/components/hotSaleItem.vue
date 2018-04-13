@@ -49,7 +49,9 @@ export default {
 
 .hotSale-item .hotSale-item__img {
 	width: 36%;
+	height: 84px;
 	margin-top: 8px;
+	margin-left: 4%;
 	display: inline-block;
 	vertical-align: middle;
 }
@@ -60,7 +62,7 @@ export default {
 }
 
 .hotSale-item__content p:nth-child(1) {
-	font-size: 14px;
+	font-size: 12px;
 }
 
 .hotSale-item__content p:nth-child(2) {
