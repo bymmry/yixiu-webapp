@@ -112,6 +112,7 @@
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);
             map.panTo(r.point);
+            alert(r.address)
             _this.city = r.address.city;
             sessionStorage.setItem('nowcity', _this.city);
             localStorage.setItem('lng', r.point.lng);
@@ -122,7 +123,7 @@
           else {
             // alert('failed'+this.getStatus());
           }
-        },{enableHighAccuracy: true})
+        },{enableHighAccuracy: true})  
       }
     }
   }

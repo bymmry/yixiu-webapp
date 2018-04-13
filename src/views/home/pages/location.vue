@@ -65,7 +65,7 @@
 <style scoped>
   .scroll{
     width: 100%;
-    height: 91vh;
+    height: 77vh;
   }
   .space {
     width: 100%;
@@ -73,8 +73,10 @@
   }
 
 .position__item {
-  padding: 5%; 
-  width: 90%;
+  margin-left: 3vw;
+  padding-top: 1vh;
+  height: 5vh;
+  width: 97%;
   font-size: 18px;
   border-bottom: 1px solid #eee;
 }

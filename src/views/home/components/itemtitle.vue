@@ -1,14 +1,23 @@
 <template>
 	<div class="position__title">
-		<span>您正在看：{{city}}</span>
-		<div class="choseArea">
+		<span>您正在：{{city}}</span>
+		<!-- <div class="choseArea">
 			<div>选择县区</div>
 			<sicon name="local-down" scale="1.3"></sicon>
-		</div>
+		</div> -->
+		<baidu-map class="map" center="北京">
+		    <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true" @locationSuccess="test"></bm-geolocation>
+		  </baidu-map>
 	</div>
 </template>
 
 <script>
+import Vue from 'vue'
+import BaiduMap from 'vue-baidu-map'
+Vue.use(BaiduMap, {
+  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
+  ak: '4cdmmdF0fyNMf6pSEtWuZMDRrYBBzsLc'
+})
 export default {
 	data(){
 		return {
@@ -16,7 +25,10 @@ export default {
 		}
 	},
 	methods: {
-
+		test(point, AddressComponent, marker){
+			console.log(point)
+			alert(AddressComponent)
+		}
 	},
 	created(){
 		this.city = sessionStorage.getItem('nowcity');
@@ -27,7 +39,7 @@ export default {
 <style scoped>
 .position__title {
 	background: #fff;
-	height: 5vh;
+	/*height: 5vh;*/
 	padding: 8px;
 	padding-left: 4vw;
 	font-weight: 700;
@@ -57,5 +69,8 @@ export default {
 	margin-left: 20px;
 	letter-spacing: 4px;
 }
-
+.map {
+  width: 100%;
+  height: 300px;
+}
 </style>
