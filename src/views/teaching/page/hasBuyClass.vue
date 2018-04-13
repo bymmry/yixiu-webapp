@@ -39,21 +39,45 @@ export default {
   components: {
     classList
   },
-  async created(){
+  async activated(){
     let userData = this.getUserInfo();
     let req = {
       collection: "TrainUser",
       user: userData._id
     }
     let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
-    console.log(res);
+    if(res.code == 200){
+      this.getVideoList(res.data);
+    }
   },
   methods: {
     back: function () {
       this.$router.push("/teaching");
     },
+    async getVideoList(data){
+      if(data.length > 0){
+        // for(let i=0; i < data.length; i++){
+        //   let train
+        // }
+        data.map((item) => {
+          let req = {
+            collection: "Train",
+            _id: item.train
+          }
+          this.getVideoData(req).then(res => {
+            this.classListData = res;
+          })
+        })
+      }
+    },
+    async getVideoData(req){
+      let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
+      if(res.code == 200){
+        return res.data;
+      }
+    },
     gotoVideoDetail(){
-      
+
     }
   }
 }
