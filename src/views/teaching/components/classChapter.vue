@@ -14,7 +14,9 @@ import { fadegettracking } from '../../common/api';
             @click="showVideo(item, i)"
           ><sicon name="action" scale="1.3"></sicon><span>{{index}}-{{i+1}}&nbsp;{{item.name}}</span>
           <div class="video">
-            <video ref="video" :src="videoSrc"></video>
+            <video ref="video">
+              <source :src="videoSrc" type="video/mp4" />
+            </video>
           </div>
           </li>
         </ul>
@@ -70,20 +72,16 @@ export default {
       this.videoSrc = item.url;
       if(this.videoSrc != ""){
         const toast = this.$createToast({
-          txt: '加载中...',
+          txt: '视频加载中，请稍候...',
           type: 'loading',
-          time: 25000
+          time: 5000
         });
         toast.show();
-        console.log(player)
         player.play();
-        player.addEventListener("loadedmetadata", function()
-          {
-          //SomeJavaScriptCode
-          
+        player.onloadedmetadata = () => {
+          console.log("play")
           toast.hide();
-          }
-        );
+        }
         
       }
       
