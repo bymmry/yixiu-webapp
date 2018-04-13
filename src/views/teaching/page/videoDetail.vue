@@ -176,8 +176,10 @@
     height: 30vh;
   }
   .videoDetail .video video{
+    display: block;
     width: auto;
     height: 100%;
+    margin: 0 auto;
   }
   .videoDetail .title {
     height: 30vh;
