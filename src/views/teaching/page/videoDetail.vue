@@ -7,7 +7,7 @@
       </div>
       <div class="title">
         <div class="closeBox" @click="goback">
-          <sicon name="close" scale="1.7"></sicon>
+          <sicon name="close" scale="2.5" color="#ff0000"></sicon>
         </div>
         <div class="des">
           <p>{{introduceData.desc}}</p>

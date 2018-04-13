@@ -1,27 +1,64 @@
 <template>
-    <div class="header">
-      <div class="back" @click="back">
-        <sicon name="back" scale="1.7"></sicon>
-        <span>返回</span>
-      </div>
-      <div class="title">
-        <h3>工程师培训</h3>
-      </div>
-      <div class="my" @click="toMy">
-        <sicon name="my" scale="2"></sicon>
-      </div>
+  <div class="header">
+    <div class="back" @click="back">
+      <sicon name="back" scale="1.7"></sicon>
+      <span>返回</span>
     </div>
+    <div class="title">
+      <h3>工程师培训</h3>
+    </div>
+    <div class="my" @click="toMy">
+      <sicon name="my" scale="2"></sicon>
+    </div>
+    <cube-popup :mask="true" :center="true" type="my-popup" ref="myInfo">
+      <div class="myInfo">
+        <div class="myInfotitle">
+          <h3>我的信息</h3>
+          <span @click="closeMy">
+            <sicon name="close" scale="2.0" color="#ff0000"></sicon>
+          </span>
+        </div>
+        <ul>
+          <li @click="toMyClass">已购课程</li>
+          <li>收藏课程</li>
+        </ul>
+      </div>
+    </cube-popup>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'theHeader',
+    data(){
+      return {
+        isShowMyInfo:true
+      }
+    },
     methods: {
       back: function () {
-        this.$router.push("/home");
+        this.$router.back();
       },
       toMy () {
+        let myInfo = this.$refs.myInfo;
+        myInfo.show();
+        // if(this.isShowMyInfo){
+        //   this.isShowMyInfo = !this.isShowMyInfo;
+        //   myInfo.show();
+        // }else{
+        //   this.isShowMyInfo = !this.isShowMyInfo;
+        //   myInfo.hide();
+        // }
         console.log("my")
+      },
+      closeMy(){
+        console.log("close")
+        let myInfo = this.$refs.myInfo;
+        myInfo.hide();
+      },
+      toMyClass(){
+        console.log("toMyClass")
+        this.$router.push("/hasBuy")
       }
     }
   };
@@ -56,5 +93,40 @@
   .header > div.my{
     flex: 3;
     text-align: center;
+    /* position: relative; */
+  }
+  .header .myInfo{
+    width: 70vw;
+    height: 160px;
+    /* height: auto; */
+    border: 1px solid #eee;
+    border-top: none;
+    background: #fff;
+  }
+  .header .myInfotitle{
+    border-bottom: 1px solid #eee;
+  }
+  .header .myInfotitle span{
+    float: right;
+    margin-right: 10px;
+  }
+  .header .myInfo h3{
+    display: inline-block;
+    width: auto;
+    height: 59px;
+    line-height: 60px;
+    padding: 0 10px;
+    color: #0090fd;
+  }
+  .header .myInfo ul{
+    width: auto;
+    height: 60px;
+    padding: 0 25px;
+  }
+  .header .myInfo ul li{
+    height: 49px;
+    line-height: 50px;
+    font-size: 13px;
+    border-bottom: 1px solid #eee;
   }
 </style>

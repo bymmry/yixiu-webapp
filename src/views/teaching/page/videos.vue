@@ -75,7 +75,8 @@
         }
         const toast = this.$createToast({
 				  txt: '加载中...',
-				  type: 'loading'
+          type: 'loading',
+          time: 25000
         });
         toast.show();
         let res = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, req);

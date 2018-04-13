@@ -11,11 +11,16 @@ import { fadegettracking } from '../../common/api';
           <li 
             v-for="(item,i) in videoDes"
             :key="i"
-            @click="showVideo"
-          ><sicon name="action" scale="1.3"></sicon><span>{{index}}-{{i+1}}&nbsp;{{item.name}}</span></li>
+            @click="showVideo(item, i)"
+          ><sicon name="action" scale="1.3"></sicon><span>{{index}}-{{i+1}}&nbsp;{{item.name}}</span>
+          <div class="video">
+            <video ref="video" :src="videoSrc"></video>
+          </div>
+          </li>
         </ul>
       </li>
     </ul>
+    
   </div>
 </template>
 
@@ -24,7 +29,8 @@ export default {
   data () {
     return {
       videoDes: [],
-      isShowVideoDes: false
+      isShowVideoDes: false,
+      videoSrc: ""
     };
   },
 
@@ -55,12 +61,15 @@ export default {
           this.videoDes = res.data;
           toast.hide();
         }
-        console.log(res);
       }
       
     },
-    showVideo(){
-      console.log("showVide");
+    showVideo(item, i){
+      console.log(item, i);
+      let player = this.$refs.video[i];
+      this.videoSrc = item.url;
+      console.log(player)
+      player.play();
     }
   }
 }
@@ -96,5 +105,13 @@ export default {
 .classChapterDes > ul > li > ul >li span{
   vertical-align: middle;
   margin-left: 10px;
+}
+.video{
+  width: 100%;
+  height: 0px;
+}
+.video video{
+  width: 100%;
+  height: 0px;
 }
 </style>
