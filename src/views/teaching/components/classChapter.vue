@@ -77,8 +77,8 @@ export default {
         toast.show();
         console.log(player)
         player.play();
-        if(player.play){
-          alert("play");
+        if(player.loadedmetadata){
+          alert(player.loadedmetadata);
           toast.hide();
         }
         
