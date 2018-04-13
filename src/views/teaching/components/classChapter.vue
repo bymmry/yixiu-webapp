@@ -68,8 +68,22 @@ export default {
       console.log(item, i);
       let player = this.$refs.video[i];
       this.videoSrc = item.url;
-      console.log(player)
-      player.play();
+      if(this.videoSrc != ""){
+        const toast = this.$createToast({
+          txt: '加载中...',
+          type: 'loading',
+          time: 25000
+        });
+        toast.show();
+        console.log(player)
+        player.play();
+        if(player.play){
+          alert("play");
+          toast.hide();
+        }
+        
+      }
+      
     }
   }
 }
@@ -87,14 +101,16 @@ export default {
   height: auto;
 }
 .classChapterDes > ul > li{
-  /* height: 30px; */
+  height: auto;
   line-height: 30px;
   color: #777;
+
 }
 .classChapterDes > ul > li >ul {
   width: auto;
 }
 .classChapterDes > ul > li > ul >li {
+  height: 30px;
   padding: 0 20px;
   font-size: 13px;
   color: #4891e4;
@@ -109,6 +125,7 @@ export default {
 .video{
   width: 100%;
   height: 0px;
+  overflow: hidden;
 }
 .video video{
   width: 100%;
