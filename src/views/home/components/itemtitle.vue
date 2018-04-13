@@ -27,7 +27,7 @@ export default {
 	methods: {
 		test(point, AddressComponent, marker){
 			console.log(point)
-			alert(AddressComponent)
+			alert(JSON.Stringify(AddressComponent))
 		}
 	},
 	created(){
