@@ -53,7 +53,7 @@
   width: auto;
   height: 37px;
   line-height: 37px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   display: inline-block;
 }
 .menu ul li.active{
