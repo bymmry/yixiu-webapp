@@ -17,7 +17,7 @@
         v-for="(item, index) in classListData" 
         :key="index" 
         :cover="item.info.cover"
-        :name="item.name" 
+        :name="item.name+'（已购）'" 
         :level="item.level" 
         :number="item.number"
         :fee="item.price/100"
