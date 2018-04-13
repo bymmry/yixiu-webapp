@@ -108,6 +108,8 @@
         // console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
+        payInfo = Object.assign({}, payInfo, {type: 1});
+
         if(isWxMini){
           //小程序环境
           console.log(isWxMini);

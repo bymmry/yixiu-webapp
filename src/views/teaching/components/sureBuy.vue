@@ -33,7 +33,8 @@ export default {
         console.log(this.totalFee, this.id);
         let payInfo = {
           payment: this.totalFee,
-          id: this.id
+          id: this.id,
+          type: 2
         }
         this.pay(payInfo);
       }).catch(() => {
