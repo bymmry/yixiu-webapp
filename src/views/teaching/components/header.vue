@@ -57,8 +57,10 @@
         myInfo.hide();
       },
       toMyClass(){
-        console.log("toMyClass")
-        this.$router.push("/hasBuy")
+        console.log("toMyClass");
+        let myInfo = this.$refs.myInfo;
+        myInfo.hide();
+        this.$router.push("/hasBuy");
       }
     }
   };

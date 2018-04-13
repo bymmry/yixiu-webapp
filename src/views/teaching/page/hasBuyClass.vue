@@ -29,6 +29,7 @@
 
 <script>
 import classList from '../components/classList';
+let toast;
 export default {
   data () {
     return {
@@ -45,6 +46,12 @@ export default {
       collection: "TrainUser",
       user: userData._id
     }
+    toast = this.$createToast({
+      txt: '加载中...',
+      type: 'loading',
+      time: 25000
+    });
+    toast.show();
     let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
     if(res.code == 200){
       this.getVideoList(res.data);
@@ -52,9 +59,10 @@ export default {
   },
   methods: {
     back: function () {
-      this.$router.push("/teaching");
+      this.$router.back();
     },
     async getVideoList(data){
+      this.classListData = [];
       if(data.length > 0){
         // for(let i=0; i < data.length; i++){
         //   let train
@@ -65,8 +73,11 @@ export default {
             _id: item.train
           }
           this.getVideoData(req).then(res => {
-            this.classListData = res;
+            res.map(i =>{
+              this.classListData.push(i);
+            })
           })
+          toast.hide();
         })
       }
     },
@@ -76,8 +87,8 @@ export default {
         return res.data;
       }
     },
-    gotoVideoDetail(){
-
+    gotoVideoDetail(item){
+      console.log(item);
     }
   }
 }
@@ -93,6 +104,10 @@ export default {
     right: 0;
     z-index: 115;
     background: #fff;
+  }
+  .buyClass .scroll{
+    width: auto;
+    height: 92vh;
   }
   .header{
     display: flex;
