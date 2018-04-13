@@ -15,7 +15,7 @@ import { fadegettracking } from '../../common/api';
           ><sicon name="action" scale="1.3"></sicon><span>{{index}}-{{i+1}}&nbsp;{{item.name}}</span>
           <div class="video">
             <video ref="video">
-              <source :src="videoSrc" type="video/mp4" />
+              <source :src="item.url" type="video/mp4" />
             </video>
           </div>
           </li>
