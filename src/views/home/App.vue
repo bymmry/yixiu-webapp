@@ -86,9 +86,17 @@
       changeCity (data) {
         this.city = data;
         this.location = !this.location;
+        if (!localStorage.getItem('recentCity')) {
+          let recentCity = [this.city];
+          localStorage.setItem('recentCity', JSON.stringify(recentCity));
+        }else{
+          let recentCity = JSON.parse(localStorage.getItem('recentCity'));
+        }
+        sessionStorage.setItem('nowcity', this.city);
+        
       },
       showMsg (data) {
-        console.log(data);
+        // console.log(data);
         this.location = !this.location;
       },
       initPosition () {
@@ -105,6 +113,7 @@
             map.addOverlay(mk);
             map.panTo(r.point);
             _this.city = r.address.city;
+            sessionStorage.setItem('nowcity', _this.city);
             localStorage.setItem('lng', r.point.lng);
             localStorage.setItem('lat', r.point.lat);
             // alert('所在城市:' + r.address.city);

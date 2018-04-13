@@ -17,7 +17,7 @@
   export default {
     components: {
       Header,
-      PositionItem
+      PositionItem,
     },
     data () {
       return {
