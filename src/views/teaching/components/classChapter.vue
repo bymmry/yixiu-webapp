@@ -82,6 +82,9 @@ export default {
           console.log("play")
           toast.hide();
         }
+        player.error = () => {
+          this.$toast("视频加载失败，请点击重新加载");
+        }
         
       }
       

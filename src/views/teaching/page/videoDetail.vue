@@ -43,10 +43,10 @@
         </div>
       </div>
       <div class="buyClass">
-        <div class="money"><span>￥368.00</span></div>
-        <div class="button">
-          <button>立即购买</button>
-        </div>
+        <sure-buy 
+          :totalFee="introduceData.price"
+          :id="introduceData._id"
+        ></sure-buy>
       </div>
     </div>
   </transition>
@@ -57,6 +57,7 @@
   import classIntroduce from '../components/classIntroduce'
   import tryWatch from '@/assets/tryWatch.png'
   import classChapter from '../components/classChapter.vue';
+  import sureBuy from '../components/sureBuy.vue';
   export default {
     data() {
       return {
@@ -80,7 +81,8 @@
     components: {
       menuTab,
       classIntroduce,
-      classChapter
+      classChapter,
+      sureBuy
     },
     created(){
       let data = this.$route.params.data;
@@ -264,27 +266,6 @@
     background: #fff;
     border-top: 1px solid #eee;
   }
-  .videoDetail .buyClass > div.money{
-    flex: 5;
-    color: #ff2b44;
-  }
-  .videoDetail .buyClass > div.money span{
-    display: inline-block;
-    margin-left: 20px;
-    font-size: 18px;
-    width: auto;
-    height: 8vh;
-    line-height: 8vh;
-  }
-  .videoDetail .buyClass > div.button{
-    flex: 2;
-  }
-  .videoDetail .buyClass > div.button button{
-    width: 100%;
-    height: 100%;
-    border: none;
-    background-color: #f01414;
-    color: #fff;
-  }
+ 
 </style>
 
