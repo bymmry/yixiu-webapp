@@ -112,7 +112,7 @@
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);
             map.panTo(r.point);
-            alert(JSON.Stringify(r.address))
+            alert(JSON.stringify(r.address))
             _this.city = r.address.city;
             sessionStorage.setItem('nowcity', _this.city);
             localStorage.setItem('lng', r.point.lng);
