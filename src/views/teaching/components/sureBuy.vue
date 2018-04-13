@@ -10,6 +10,7 @@
 
 <script>
 import { Dialog } from 'vant';
+import wx from "weixin-js-sdk";
 export default {
   data () {
     return {
