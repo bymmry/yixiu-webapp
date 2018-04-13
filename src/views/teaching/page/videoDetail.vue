@@ -175,6 +175,10 @@
     z-index: 105;
     height: 30vh;
   }
+  .videoDetail .video video{
+    width: auto;
+    height: 100%;
+  }
   .videoDetail .title {
     height: 30vh;
     /* background-color: #3055be; */

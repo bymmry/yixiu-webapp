@@ -73,13 +73,14 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    
-    border-radius: 5px;
-    overflow: hidden;
   }
   .classList .cover .img img{
-    width: 100%;
-    height: auto;
+    display: block;
+    border-radius: 5px;
+    overflow: hidden;
+    width: auto;
+    height: 100%;
+    margin: 0 auto;
   }
   .classList .content {
     flex: 2;
