@@ -1,7 +1,7 @@
 <!-- 已购买课程详细信息 -->
 <template>
   <transition name="slide">
-
+    <div>123</div>
   </transition>
 </template>
 

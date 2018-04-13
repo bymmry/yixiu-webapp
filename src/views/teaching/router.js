@@ -1,6 +1,6 @@
 import teaching from './App'
 import videoDetail from './page/videoDetail'
-import hasBuyClass from './page/hasBuyClass';
+import hasBuyClass from './page/hasBuyClass'
 
 export default[
   {
