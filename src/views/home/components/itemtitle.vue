@@ -1,23 +1,17 @@
 <template>
 	<div class="position__title">
-		<span>您正在：{{city}}</span>
+		<span class="positionTitle">您正在：</span>
+		<span class="position">{{city}}</span>
 		<!-- <div class="choseArea">
 			<div>选择县区</div>
 			<sicon name="local-down" scale="1.3"></sicon>
 		</div> -->
-		<baidu-map class="map" center="北京">
-		    <bm-geolocation anchor="BMAP_ANCHOR_BOTTOM_RIGHT" :showAddressBar="true" :autoLocation="true" @locationSuccess="test"></bm-geolocation>
-		  </baidu-map>
+
 	</div>
 </template>
 
 <script>
-import Vue from 'vue'
-import BaiduMap from 'vue-baidu-map'
-Vue.use(BaiduMap, {
-  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
-  ak: '4cdmmdF0fyNMf6pSEtWuZMDRrYBBzsLc'
-})
+
 export default {
 	data(){
 		return {
@@ -25,13 +19,12 @@ export default {
 		}
 	},
 	methods: {
-		test(point, AddressComponent, marker){
-			console.log(point)
-			alert(JSON.stringify(AddressComponent))
-		}
+
 	},
 	created(){
-		this.city = sessionStorage.getItem('nowcity');
+		let cityData = JSON.parse(sessionStorage.getItem('nowposition'));
+		// console.log(cityData)
+		this.city = cityData.province+cityData.city+cityData.district+cityData.street;
 	}
 }
 </script>
@@ -39,13 +32,12 @@ export default {
 <style scoped>
 .position__title {
 	background: #fff;
-	/*height: 5vh;*/
+	height: 5vh;
 	padding: 8px;
 	padding-left: 4vw;
 	font-weight: 700;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 	border-bottom: 1px solid #d8d8d8;
 	font-size: 4vw;
 }
@@ -72,5 +64,11 @@ export default {
 .map {
   width: 100%;
   height: 300px;
+}
+.position{
+	line-height: 5vw;
+}
+.positionTitle{
+	min-width: 16vw;
 }
 </style>

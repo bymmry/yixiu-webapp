@@ -112,9 +112,9 @@
             var mk = new BMap.Marker(r.point);
             map.addOverlay(mk);
             map.panTo(r.point);
-            alert(JSON.stringify(r.address))
             _this.city = r.address.city;
             sessionStorage.setItem('nowcity', _this.city);
+            sessionStorage.setItem('nowposition', JSON.stringify(r.address));
             localStorage.setItem('lng', r.point.lng);
             localStorage.setItem('lat', r.point.lat);
             // alert('所在城市:' + r.address.city);
