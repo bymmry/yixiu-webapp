@@ -89,6 +89,12 @@ export default {
     },
     gotoVideoDetail(item){
       console.log(item);
+      this.$router.push({
+        name: "hasBuyClassDes",
+        params: {
+          data: item
+        }
+      })
     }
   }
 }

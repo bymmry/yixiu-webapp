@@ -1,6 +1,7 @@
 import teaching from './App'
 import videoDetail from './page/videoDetail'
-import hasBuyClass from './page/hasBuyClass'
+import hasBuyClass from './page/hasBuyClass';
+import hasBuyClassDes from './page/hasBuyClassDes.vue';
 
 export default[
   {
@@ -21,6 +22,13 @@ export default[
     path: "/hasBuy", //
     name: "hasBuyClass",
     component: hasBuyClass,
+    children: [
+      {
+        path: "/hasBuy/hasBuyClassDes", //
+        name: "hasBuyClassDes",
+        component: hasBuyClassDes
+      },
+    ],
     meta: {
       keepAlive: true // 需要被缓存
     }

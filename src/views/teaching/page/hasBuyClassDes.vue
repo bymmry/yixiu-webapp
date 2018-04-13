@@ -13,7 +13,10 @@ export default {
   },
 
   components: {},
-
+  created(){
+    let data = this.$route.params;
+      console.log(data);
+  }
 }
 
 </script>
