@@ -29,18 +29,19 @@ export default {
       Dialog.confirm({
         title: '是否立即支付',
       }).then(() => {
-      // on confirm
-      console.log(this.totalFee, this.id);
-      let payInfo = {
-        payment: this.totalFee,
-        id: this.id
-      }
+        // on confirm
+        console.log(this.totalFee, this.id);
+        let payInfo = {
+          payment: this.totalFee,
+          id: this.id
+        }
+        this.pay(payInfo);
       }).catch(() => {
         // on cancel
         console.log("取消");
       });
     },
-    async pay(){
+    async pay(payInfo){
       let isWxMini;
       // console.log(data);
       isWxMini = window.__wxjs_environment === 'miniprogram';
