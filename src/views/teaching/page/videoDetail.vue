@@ -31,6 +31,7 @@
           :number="introduceData.number"
         ></class-introduce>
         <div v-if="nowType == 2" class="classChapter">
+          <cube-scroll :data="classChapterData" class="scroll">
           <class-chapter 
             v-if="classChapterData.length != 0"
             v-for="(cla, index) in classChapterData"
@@ -40,6 +41,7 @@
             :claId="cla._id"
             :train="introduceData._id"
           ></class-chapter>
+          </cube-scroll>
         </div>
       </div>
       <div class="buyClass">
@@ -252,10 +254,14 @@
   .videoDetail .content .classChapter{
     /* border-top: 1vh solid #eee; */
     width: auto;
-    height: 54vh;
+    height: 52vh;
     padding: 0 15px;
     padding-bottom: 2vh;
     overflow-y: scroll;
+  }
+  .videoDetail .content .classChapter .scroll{
+    bottom: 0;
+    height: 52vh;
   }
   .videoDetail .buyClass{
     display: flex;

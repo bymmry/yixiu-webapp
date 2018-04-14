@@ -24,6 +24,7 @@
         v-on:click.native="gotoVideoDetail(item)"
         ></class-list>
     </cube-scroll>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -88,7 +89,6 @@ export default {
       }
     },
     gotoVideoDetail(item){
-      console.log(item);
       this.$router.push({
         name: "hasBuyClassDes",
         params: {
@@ -114,6 +114,7 @@ export default {
   .buyClass .scroll{
     width: auto;
     height: 92vh;
+    bottom: 0;
   }
   .header{
     display: flex;

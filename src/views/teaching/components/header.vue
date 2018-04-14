@@ -13,14 +13,14 @@
     <cube-popup :mask="true" :center="true" type="my-popup" ref="myInfo">
       <div class="myInfo">
         <div class="myInfotitle">
-          <h3>我的信息</h3>
+          <h3>我的课程</h3>
           <span @click="closeMy">
             <sicon name="close" scale="2.0" color="#ff0000"></sicon>
           </span>
         </div>
         <ul>
           <li @click="toMyClass">已购课程</li>
-          <li>收藏课程</li>
+          <li @click="toMyLove">收藏课程</li>
         </ul>
       </div>
     </cube-popup>
@@ -61,6 +61,11 @@
         let myInfo = this.$refs.myInfo;
         myInfo.hide();
         this.$router.push("/hasBuy");
+      },
+      toMyLove(){
+        this.$toast("该功能即将开放");
+        let myInfo = this.$refs.myInfo;
+        myInfo.hide();
       }
     }
   };

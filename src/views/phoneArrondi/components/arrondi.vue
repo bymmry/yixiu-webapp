@@ -5,10 +5,10 @@
 			<ArrondiItem v-for="(item, index) in content" 
 				:key="index"
 				:name="item.name"
-				:src="item.cover"
+				:src="item.src"
 				:price="item.price"
 				:type="type"
-				:primeCost="item.info ? item.info.primeCost : defaultPrice"
+				:primeCost="item.primeCost"
 			/>
 		</div>
   </div>

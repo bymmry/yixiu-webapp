@@ -41,6 +41,7 @@
 	width: 33%;
 	text-align: center;
 	display: inline-block;
+	font-size: 14px;
 }
 
 .recommend-item .recommend-item__img {

@@ -41,7 +41,8 @@ export default {
     name: String,
     claId: String,
     train: String,
-    index: Number
+    index: Number,
+    state: String
   },
   methods: {
     async getClassDestail(val){
@@ -67,26 +68,31 @@ export default {
       
     },
     showVideo(item, i){
-      console.log(item, i);
-      let player = this.$refs.video[i];
-      this.videoSrc = item.url;
-      if(this.videoSrc != ""){
-        const toast = this.$createToast({
-          txt: '视频加载中，请稍候...',
-          type: 'loading',
-          time: 5000
-        });
-        toast.show();
-        player.play();
-        player.onloadedmetadata = () => {
-          console.log("play")
-          toast.hide();
+      if(this.state == "hasBuy"){
+        console.log(item, i);
+        let player = this.$refs.video[i];
+        this.videoSrc = item.url;
+        if(this.videoSrc != ""){
+          const toast = this.$createToast({
+            txt: '视频加载中，请稍候...',
+            type: 'loading',
+            time: 5000
+          });
+          toast.show();
+          player.play();
+          player.onloadedmetadata = () => {
+            console.log("play")
+            toast.hide();
+          }
+          player.error = () => {
+            this.$toast("视频加载失败，请点击重新加载");
+          }
+          
         }
-        player.error = () => {
-          this.$toast("视频加载失败，请点击重新加载");
-        }
-        
+      }else{
+        this.$toast("请先购买此视频");
       }
+      
       
     }
   }

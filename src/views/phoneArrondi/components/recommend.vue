@@ -29,9 +29,10 @@
 </script>
 
 <style scoped>
+
 .recommend__title {
 	text-align: center;
-	padding: 10px 0;
+	padding: 20px 0;
 }
 
 .recommend__content {

@@ -15,7 +15,7 @@
 			src: String,
 			name: String,
 			price: Number,
-			primeCost: String,
+			primeCost: Number,
 			icon: String,
 			type: String
 		},
@@ -52,6 +52,7 @@
 
 .arrondi-item__content .arrondi-item__name {
 	padding: 2%;
+	font-size: 12px;
 	width: 96%;
 	display: flex;
 	align-items: center;
@@ -59,13 +60,13 @@
 
 .arrondi-item__price {
 	color: red;
-	font-size: 18px;
+	font-size: 16px;
 	display: inline-block;
 }
 
 .arrondi-item__primeCost{
 	color:gray;
-	font-size: 14px;
+	font-size: 12px;
 	text-decoration: line-through;
 	display: inline-block;
 	margin-left: 2%;
