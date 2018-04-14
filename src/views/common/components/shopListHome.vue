@@ -234,8 +234,8 @@
         let shopId = shop._id;
         if(shopId){
           this.$router.push({
-            // path: `/shop/${shop._id}`,
-            path: `/theShopDes/${shop._id}`,
+            path: `/shop/${shop._id}`,
+            // path: `/theShopDes/${shop._id}`,
             params: {
               id: shopId
             }
