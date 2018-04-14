@@ -136,28 +136,30 @@
       }
     },
     created() {
-      let shopId = this.$route.params.id;
-      if (!shopId) {
-        this.$router.push('/home');
-        return
-      }
-      if(shopId){
-        getShopData(shopId).then((res) => {
-          console.log(res);
-          if (!res.data._id) {
-            this.$router.push('/home');
-            return
-          }
-          if(res.code === 200){
-            this.shopInfo = res.data;
-            this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
-            this.serviceWays = this.shopInfo.serviceWay;
-            console.log(...this.serviceWays)
-          }
-        }, function (err) {
-          console.log(err);
-        })
-      }
+      console.log(this.$route.params);
+      this.shopInfo = this.$route.params.data;
+      // let shopId = shopData._id;
+      // if (!shopId) {
+      //   this.$router.push('/home');
+      //   return
+      // }
+      // if(shopId){
+      //   getShopData(shopId).then((res) => {
+      //     console.log(res);
+      //     if (!res.data._id) {
+      //       this.$router.push('/home');
+      //       return
+      //     }
+      //     if(res.code === 200){
+      //       this.shopInfo = res.data;
+      //       this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
+      //       this.serviceWays = this.shopInfo.serviceWay;
+      //       console.log(...this.serviceWays)
+      //     }
+      //   }, function (err) {
+      //     console.log(err);
+      //   })
+      // }
     },
     methods: {
       back: function () {

@@ -262,7 +262,7 @@
         this.setOrderData();
       },
       setOrderData: function () {
-        let shopId = this.$route.params.id;
+        let shopId = this.$route.params.data._id;
         let userInfo = this.getUserInfo();
 
         if (this.phoneNumber != "" && this.serWay != "" && this.timeNum != "") {

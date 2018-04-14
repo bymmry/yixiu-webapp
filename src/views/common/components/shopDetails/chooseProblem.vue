@@ -95,7 +95,7 @@
     },
     methods: {
       getPhoneProblem: function () { //获取父元素列表
-        let shopId = this.$route.params.id;
+        let shopId = this.$route.params.data._id;
         getPhoneProblem(shopId).then((res) => {
           if(res.code === 200){
             this.items = res.data;

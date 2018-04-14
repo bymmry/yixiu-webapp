@@ -52,7 +52,7 @@
         this.$emit("goBackPrevStep", true)
       },
       getModel: function (id) {
-        let shopId = this.$route.params.id;
+        let shopId = this.$route.params.data._id;
         let req = {
           shop: shopId,//店铺id
           manufacturer: id//手机品牌id

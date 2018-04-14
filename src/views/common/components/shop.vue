@@ -36,17 +36,16 @@
             </div>
           </div>
           <div class="about">
-            <h3>评价</h3>
-            <h4>服务评价</h4>
-            <h4>服务评价</h4>
-            <h4>服务评价</h4>
-            <h4>服务评价</h4>
-            <h4>服务评价</h4>
-            <h4>服务评价</h4>
+            <h3><span>评价</span></h3>
+            <h4>服务评价（0）</h4>
+            <div class="aboutDes">
+              暂无评价
+            </div>
 
           </div>
         </div>
       </cube-scroll>
+      <cube-button @click="gotoDes" class="buttons">点我开始修机</cube-button>
     </div>
   </transition>
 </template>
@@ -83,7 +82,7 @@
             console.log(this.shopInfo);
             this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
             this.serviceWays = this.shopInfo.serviceWay;
-            this.distance = that.getDistance(this.shopInfo.position);
+            this.distance = that.getDistance(this.shopInfo);
             console.log(...this.serviceWays)
           }
         }, function (err) {
@@ -93,11 +92,23 @@
     },
     methods: {
       back(){
-        this.$router.push("/home");
+        this.$router.back();
+      },
+      gotoDes(){
+        this.$router.push({
+          name: "shopContent",
+          params: {
+            data: this.shopInfo
+          }
+        })
       },
       getDistance(val){
+        let that = this;
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
         if(val.position){
             let dis = parseInt(this.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
+            console.log(dis);
             if(dis >= 1000){
               if(dis >= 9999999){
                 dis = "太远啦"
@@ -139,7 +150,7 @@
   }
   .scroll {
     width: 100%;
-    height: 100vh;
+    height: 90vh;
   }
 
   .shop {
@@ -168,6 +179,7 @@
   .shop .shopContent {
     width: 100%;
     height: auto;
+    margin-top: 10px;
   }
 
   .shop .shopContent .shopImg {
@@ -269,6 +281,27 @@
     background: #eee;
     color: #888888;
   }
+  .shop .shopContent .about h3 span{
+    position: relative;
+  }
+  .shop .shopContent .about h3 span::before{
+    content: "";
+    width: 20px;
+    height: 1px;
+    border-top: 1px solid #888888;
+    position: absolute;
+    left: -30px;
+    top: 6px;
+  }
+  .shop .shopContent .about h3 span::after{
+    content: "";
+    width: 20px;
+    height: 1px;
+    border-top: 1px solid #888888;
+    position: absolute;
+    margin-left: 10px;
+    top: 6px;
+  }
 
   .shop .shopContent .about h4 {
     width: auto;
@@ -276,6 +309,15 @@
     line-height: 50px;
     padding-left: 10px;
   }
-
+  .shop .shopContent .about .aboutDes{
+    width: auto;
+    height: auto;
+    padding: 20px 15px;
+  }
+  .buttons{
+    position: fixed;
+    bottom: 0;
+    background: #0084fd;
+  }
 </style>
 
