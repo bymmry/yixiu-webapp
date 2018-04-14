@@ -32,7 +32,7 @@
             <div class="otherInfo">
               <span>评分：{{shopInfo.score}}</span>
               <span>成交单: </span>
-              <span></span>
+              <span>{{distance}}</span>
             </div>
           </div>
           <div class="about">
@@ -58,13 +58,15 @@
       return {
         shopInfo: {},
         telContactNumber: "",
-        serviceWays: []
+        serviceWays: [],
+        distance: ""
       };
     },
 
     components: {},
     created(){
       let shopId = this.$route.params.id;
+      let that = this;
       if (!shopId) {
         this.$router.push('/home');
         return
@@ -81,6 +83,7 @@
             console.log(this.shopInfo);
             this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
             this.serviceWays = this.shopInfo.serviceWay;
+            this.distance = that.getDistance(this.shopInfo.position);
             console.log(...this.serviceWays)
           }
         }, function (err) {
@@ -91,6 +94,24 @@
     methods: {
       back(){
         this.$router.push("/home");
+      },
+      getDistance(val){
+        if(val.position){
+            let dis = parseInt(this.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
+            if(dis >= 1000){
+              if(dis >= 9999999){
+                dis = "太远啦"
+              }else{
+                dis = parseInt(dis/1000);
+                dis = `${dis}km`;
+              }
+            }else{
+              dis = `${dis}m`;
+            }
+            return dis;
+          }else{
+            return "未知";
+          }
       }
     }
   }
@@ -226,6 +247,12 @@
     line-height: 30px;
     font-size: 13px;
     color: #727272;
+  }
+  .shop .shopContent .shopDes .otherInfo>span:nth-child(2){
+    text-align: center;
+  }
+  .shop .shopContent .shopDes .otherInfo>span:nth-child(3){
+    text-align: right;
   }
 
   .shop .shopContent .about {
