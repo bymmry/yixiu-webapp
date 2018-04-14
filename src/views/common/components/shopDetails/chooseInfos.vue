@@ -434,7 +434,7 @@
     width: 100%;
     display: flex;
     position: absolute;
-    z-index: 50;
+    z-index: 180;
     bottom: 1vh;
   }
 
@@ -482,8 +482,9 @@
     color: #aaa;
   }
   .couponPopup{
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    top: 0;
+    bottom: 40vh;
   }
 </style>
 

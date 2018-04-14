@@ -1,39 +1,47 @@
 <!-- 店铺详情页 -->
 <template>
   <transition name="slide">
-    <div>
-      <span class="back">
-        <sicon name="back" scale="2.5"></sicon>
+    <div class="shopBox">
+      <span @click="back" class="back">
+        <sicon name="back" scale="2.5" color="#fff"></sicon>
       </span>
       <cube-scroll class="scroll shop">
         <div class="shopContent">
           <div class="shopImg">
-            <img src="" alt="">
+            <img :src="shopInfo.cover" alt="">
           </div>
           <div class="shopDes">
-            <h3>shopname</h3>
+            <h3><sicon name="shop" scale="2.0" color="#0084fd"></sicon><span>{{shopInfo.name}}</span></h3>
+            <!-- <p>均价</p> -->
             <ul>
               <li>营业时间：
-                <span></span>
+                <span v-if="shopInfo.businessHours">{{shopInfo.businessHours[0]}}</span>
               </li>
               <li>联系方式：
-                <span></span>
+                <span><a :href="telContactNumber">{{shopInfo.contactNumber}}</a></span>
               </li>
               <li>服务方式：
-                <span></span>
+                <span v-for="(ser,i) in serviceWays" :key="i">{{ser}}/</span>
               </li>
             </ul>
-            <p>位置：
-              <span></span>
+            <p class="address">
+              <sicon name="address" scale="2.0" color="#0084fd"></sicon>
+              <span>位置：</span>
+              <span class="addressDes">{{shopInfo.address}}</span>
             </p>
             <div class="otherInfo">
-              <span>评价：</span>
-              <span>成交单</span>
+              <span>评分：{{shopInfo.score}}</span>
+              <span>成交单: </span>
               <span></span>
             </div>
           </div>
           <div class="about">
             <h3>评价</h3>
+            <h4>服务评价</h4>
+            <h4>服务评价</h4>
+            <h4>服务评价</h4>
+            <h4>服务评价</h4>
+            <h4>服务评价</h4>
             <h4>服务评价</h4>
 
           </div>
@@ -44,13 +52,47 @@
 </template>
 
 <script>
+  import { getShopData } from '../api'
   export default {
     data() {
-      return {};
+      return {
+        shopInfo: {},
+        telContactNumber: "",
+        serviceWays: []
+      };
     },
 
     components: {},
-
+    created(){
+      let shopId = this.$route.params.id;
+      if (!shopId) {
+        this.$router.push('/home');
+        return
+      }
+      if(shopId){
+        getShopData(shopId).then((res) => {
+          console.log(res);
+          if (!res.data._id) {
+            this.$router.push('/home');
+            return
+          }
+          if(res.code === 200){
+            this.shopInfo = res.data;
+            console.log(this.shopInfo);
+            this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
+            this.serviceWays = this.shopInfo.serviceWay;
+            console.log(...this.serviceWays)
+          }
+        }, function (err) {
+          console.log(err);
+        })
+      }
+    },
+    methods: {
+      back(){
+        this.$router.push("/home");
+      }
+    }
   }
 
 </script>
@@ -65,10 +107,18 @@
   .slide-leave-to {
     transform: translate3d(100%, 0, 0)
   }
-
+  .shopBox{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    z-index: 50;
+  }
   .scroll {
     width: 100%;
-    height: 91vh;
+    height: 100vh;
   }
 
   .shop {
@@ -101,16 +151,18 @@
 
   .shop .shopContent .shopImg {
     width: 100%;
-    height: 300px;
+    height: 260px;
   }
 
   .shop .shopContent .shopImg img {
+    display: block;
     height: 100%;
     width: auto;
     margin: 0 auto;
   }
 
   .shop .shopContent .shopDes {
+    border-top: 8px solid #f4f4f4;
     width: auto;
     height: auto;
     padding: 0 10px;
@@ -120,6 +172,10 @@
     width: 100%;
     height: 50px;
     line-height: 50px;
+  }
+  .shop .shopContent .shopDes h3 svg, .shop .shopContent .shopDes h3 span{
+    vertical-align: middle;
+    margin-right: 10px;
   }
 
   .shop .shopContent .shopDes>ul {
@@ -131,21 +187,32 @@
     width: auto;
     height: 30px;
     line-height: 30px;
-    color: #686868
+    color: #686868;
+    font-size: 15px;
   }
-
-  .shop .shopContent .shopDes>ul>li span {
+  .shop .shopContent .shopDes>ul>li span{
+    font-size: 13px;
+  }
+  .shop .shopContent .shopDes>ul>li span:first-child {
     margin-left: 10px;
   }
 
-  .shop .shopContent .shopDes p {
+  .shop .shopContent .shopDes p.address {
     width: auto;
-    height: 45px;
-    line-height: 45px;
+    height: auto;
+    line-height: 55px;
     color: #2a2a2a;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    font-size: 15px;
+  }
+  .shop .shopContent .shopDes p.address svg, .shop .shopContent .shopDes p.address span{
+    vertical-align: middle;
+    /* margin-right: 10px; */
+  }
+  .shop .shopContent .shopDes p.address span.addressDes{
+    font-size: 12px;
   }
 
   .shop .shopContent .shopDes .otherInfo {
@@ -157,6 +224,8 @@
   .shop .shopContent .shopDes .otherInfo>span {
     flex: 1;
     line-height: 30px;
+    font-size: 13px;
+    color: #727272;
   }
 
   .shop .shopContent .about {

@@ -41,7 +41,7 @@
         </li>
       </ul>
     </div>
-    <div @click="selectShop"
+    <div 
          class="shopDes"
          ref="shopDes">
       <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
@@ -231,12 +231,11 @@
         this.getShopList(req);
       },
       selectShop: function (shop) {
-        console.log(shop);
         let shopId = shop._id;
         if(shopId){
           this.$router.push({
-            path: `/shop/${shop._id}`,
-            // path: `/theShopDes/${shop._id}`,
+            // path: `/shop/${shop._id}`,
+            path: `/theShopDes/${shop._id}`,
             params: {
               id: shopId
             }
