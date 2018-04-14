@@ -44,5 +44,12 @@ export default new Router({
     ...orders,
     ...expressDetails,
     ...teaching
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+      return {
+        selector: to.hash
+      }
+    }
+  }
 })
