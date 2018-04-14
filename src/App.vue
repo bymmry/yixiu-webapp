@@ -202,7 +202,7 @@
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         alert(JSON.stringify(res));
         if(res.openid){
-          alert(JSON.stringify(res.openid));
+          // alert(JSON.stringify(res.openid));
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
