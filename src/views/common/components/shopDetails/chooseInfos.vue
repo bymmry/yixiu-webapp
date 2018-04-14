@@ -482,6 +482,8 @@
     color: #aaa;
   }
   .couponPopup{
+    position: fixed;
+    bottom: 0;
   }
 </style>
 
