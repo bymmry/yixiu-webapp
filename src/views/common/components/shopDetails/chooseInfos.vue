@@ -70,7 +70,7 @@
       <div class="coupon">
         <van-coupon-cell :coupons="coupons" :chosen-coupon="chosenCoupon" @click="showList = true" />
         <!-- 优惠券列表 -->
-        <van-popup v-model="showList" position="bottom">
+        <van-popup class="couponPopup" v-model="showList" position="bottom">
           <van-coupon-list :coupons="coupons" :chosen-coupon="chosenCoupon" :disabled-coupons="disabledCoupons" @change="onChange"
             @exchange="onExchange" />
         </van-popup>
@@ -434,7 +434,7 @@
     width: 100%;
     display: flex;
     position: absolute;
-    z-index: 100;
+    z-index: 50;
     bottom: 1vh;
   }
 
@@ -480,6 +480,8 @@
     padding: 10px;
     font-size: 12px;
     color: #aaa;
+  }
+  .couponPopup{
   }
 </style>
 

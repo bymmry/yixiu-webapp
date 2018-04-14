@@ -128,9 +128,15 @@
             openid: userData.wx.openid,
             trade_type: 'JSAPI'
           }
-          let res = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
+          let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
           alert(JSON.stringify(res));
+          if (res.data.data.errMsg == "requestPayment:ok"){
+            this.$toast("支付成功");
+            
+          }else{
+            this.$toast("支付失败");
+          }
         }
       }
     }
