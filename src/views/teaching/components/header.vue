@@ -37,7 +37,7 @@
     },
     methods: {
       back: function () {
-        this.$router.back();
+        this.$router.push("/home");
       },
       toMy () {
         let myInfo = this.$refs.myInfo;

@@ -14,6 +14,7 @@
     </div>
     <cube-scroll :data="classListData" class="scroll">
       <class-list 
+        v-if="classListData.length != 0"
         v-for="(item, index) in classListData" 
         :key="index" 
         :cover="item.info.cover"
@@ -23,6 +24,13 @@
         :fee="item.price/100"
         v-on:click.native="gotoVideoDetail(item)"
         ></class-list>
+        <div 
+          v-if="classListData.length == 0"
+          class="withoutClass"
+          >
+          <p>你还没有购买课程哦</p>
+          <cube-button class="toTeaching" @click="toTeaching">点我购买课程</cube-button>
+        </div>
     </cube-scroll>
     <router-view></router-view>
   </div>
@@ -60,7 +68,10 @@ export default {
   },
   methods: {
     back: function () {
-      this.$router.back();
+      this.$router.push("/teaching");
+    },
+    toTeaching(){
+      this.$router.push("/teaching");
     },
     async getVideoList(data){
       this.classListData = [];
@@ -146,5 +157,16 @@ export default {
     flex: 3;
     text-align: center;
     /* position: relative; */
+  }
+  .withoutClass{
+    margin-top: 20%;
+    text-align: center;
+  }
+  .withoutClass p{
+    height: 50px;
+  }
+  .withoutClass .toTeaching{
+    width: 50vw;
+    margin: 0 auto;
   }
 </style>

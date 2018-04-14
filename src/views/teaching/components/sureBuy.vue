@@ -74,8 +74,28 @@ export default {
           trade_type: 'JSAPI'
         }
         let res = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
-
+        
         alert(JSON.stringify(res));
+        if (sign.data.data.errMsg == "requestPayment:ok"){
+          paySuccess(payInfo);
+        }else{
+          this.$toast("支付失败");
+        }
+      }
+    },
+    async paySuccess(payInfo){
+      let req = {
+        collection: "TrainUser",
+        state: "hasBuy",
+        user: payInfo.userId,
+        train: payInfo.id
+      }
+      let res = await this.$api.sendData('https://m.yixiutech.com/sql/add', req);
+      if(res.code == 200){
+        this.$toast("支付成功");
+        this.$router.push("/hasBuy");
+      }else{
+        this.$toast("支付失败");
       }
     }
   }

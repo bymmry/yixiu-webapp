@@ -1,3 +1,4 @@
+<!-- 手机类商品下单 -->
 <template>
   <div class="sureOrder">
     <van-button @click="sureOrder" :disabled="nextStepButtonDisabled" bottom-action>
@@ -128,15 +129,23 @@
             openid: userData.wx.openid,
             trade_type: 'JSAPI'
           }
-          let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+          let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
-          alert(JSON.stringify(res));
-          if (res.data.data.errMsg == "requestPayment:ok"){
-            this.$toast("支付成功");
-            
+          alert(JSON.stringify(sign));
+          if (sign.data.data.errMsg == "requestPayment:ok"){
+            paySuccess(res._id);
           }else{
             this.$toast("支付失败");
           }
+        }
+      },
+      async paySuccess(id){
+        let res = await this.$api.getData(`${config.url}/order/paySuccess/${id}`);
+        if(res.code == 200){
+          this.$toast("支付成功");
+          this.$router.push("/orders");
+        }else{
+          this.$toast("支付失败");
         }
       }
     }
