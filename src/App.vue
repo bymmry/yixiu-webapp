@@ -173,19 +173,22 @@
             //更新用户信息
             // alert("else 已注册");
             // users = isRegister.data[0];
-            let update = {
-              collection: "User",
-              find: {
-                _id: userInfo._id
-              },
-              update: {
-                name: userInfo.wx.nickname,
-                mobile: userInfo.mobile,
-                wx: userInfo.wx
+            if(userInfo._id){
+              let update = {
+                collection: "User",
+                find: {
+                  '_id': userInfo._id
+                },
+                update: {
+                  name: userInfo.wx.nickname,
+                  mobile: userInfo.mobile,
+                  wx: userInfo.wx
+                }
               }
+              console.log(update);
+              let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
             }
-            console.log(update);
-            let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+            
           
             sessionStorage.setItem("userData", JSON.stringify(userInfo));
             this.$toast("自动登录成功");
@@ -200,7 +203,7 @@
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if(res.openid){
           // alert(JSON.stringify(res.openid));
           sessionStorage.setItem("openid", res.openid);
