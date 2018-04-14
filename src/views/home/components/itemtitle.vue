@@ -32,8 +32,8 @@ export default {
 <style scoped>
 .position__title {
 	background: #fff;
-	height: 5vh;
-	padding: 8px;
+	height: 8vh;
+	/*padding: 8px;*/
 	padding-left: 4vw;
 	font-weight: 700;
 	display: flex;
