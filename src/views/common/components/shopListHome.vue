@@ -236,6 +236,7 @@
         if(shopId){
           this.$router.push({
             path: `/shop/${shop._id}`,
+            // path: `/theShopDes/${shop._id}`,
             params: {
               id: shopId
             }
