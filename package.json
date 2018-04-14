@@ -19,6 +19,7 @@
     "lrz": "^4.9.40",
     "vant": "^0.12.11",
     "vue": "^2.5.2",
+    "vue-baidu-map": "^0.21.3",
     "vue-img-loader": "^0.2.1",
     "vue-router": "^3.0.1",
     "vue-svg-icon": "^1.2.9",
