@@ -127,7 +127,7 @@
             openid: userData.wx.openid,
             trade_type: 'JSAPI'
           }
-          let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+          let res = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
 
           alert(JSON.stringify(res));
         }

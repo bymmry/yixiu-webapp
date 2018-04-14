@@ -40,6 +40,7 @@
             :index="cla.index"
             :claId="cla._id"
             :train="introduceData._id"
+            :isfree="free"
           ></class-chapter>
           </cube-scroll>
         </div>
@@ -76,7 +77,8 @@
         levelType: "",
         nowType: 1,
         tryWatch: tryWatch,
-        classChapterData: []
+        classChapterData: [],
+        free: false
       };
     },
 
@@ -91,6 +93,11 @@
       console.log(data);
       if(data._id){
         this.introduceData = data;
+        if(this.introduceData.price == 0){
+          this.free = true;
+        }else{
+          this.free = false;
+        }
         switch (data.level)
         {
           case "0":
@@ -122,14 +129,19 @@
         //   time: 1300
         // })
         // toast.show();
-        let player = this.$refs.video;
-        let videoBox = this.$refs.videoBox;
-        console.log(player);
-        if (player.paused){
-          // videoBox.style.zIndex = 115;
-          player.play();
-          // oBtn.value = "Pause";
+        if(this.introduceData.info.video == ""){
+          this.$toast("商家暂没有添加试看视频")
+        }else{
+          let player = this.$refs.video;
+          let videoBox = this.$refs.videoBox;
+          console.log(player);
+          if (player.paused){
+            // videoBox.style.zIndex = 115;
+            player.play();
+            // oBtn.value = "Pause";
+          }
         }
+        
         
       },
       async getClassDesData(id){

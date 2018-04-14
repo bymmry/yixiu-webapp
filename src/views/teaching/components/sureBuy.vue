@@ -1,9 +1,15 @@
 <!-- 下单 -->
 <template>
   <div class="sureBuy">
-    <div class="money"><span>￥{{totalFee/100}}</span></div>
-    <div class="button">
+    <div class="money">
+      <span v-if="totalFee != 0">￥{{totalFee/100}}</span>
+      <span v-if="totalFee == 0">该视频免费</span>
+    </div>
+    <div class="button" v-if="totalFee != 0">
       <button @click="buyClass">立即购买</button>
+    </div>
+    <div class="button" v-if="totalFee == 0">
+      <button>免费</button>
     </div>
   </div>
 </template>
@@ -65,7 +71,7 @@ export default {
           openid: userData.wx.openid,
           trade_type: 'JSAPI'
         }
-        let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+        let res = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
 
         alert(JSON.stringify(res));
       }

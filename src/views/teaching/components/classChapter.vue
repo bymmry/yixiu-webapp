@@ -42,7 +42,11 @@ export default {
     claId: String,
     train: String,
     index: Number,
-    state: String
+    state: String,
+    isfree: {
+      type: Boolean,
+      default: false
+    }
   },
   methods: {
     async getClassDestail(val){
@@ -68,7 +72,7 @@ export default {
       
     },
     showVideo(item, i){
-      if(this.state == "hasBuy"){
+      if(this.state == "hasBuy" || this.isfree){
         console.log(item, i);
         let player = this.$refs.video[i];
         this.videoSrc = item.url;
