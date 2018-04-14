@@ -106,6 +106,7 @@
       },
       async _pay(payInfo, res) {
         let isWxMini;
+        let openid = sessionStorage.getItem("openid");
         // console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
@@ -113,7 +114,7 @@
 
         if(isWxMini){
           //小程序环境
-          alert("小程序环境")
+          // alert("小程序环境")
           let jumpUrl = encodeURIComponent(window.location.origin);
           let path = `/pages/wxpay/wxpay?payInfo=${JSON.stringify(payInfo)}&jumpUrl=${jumpUrl}&orderId=${res._id}`;
           wx.miniProgram.navigateTo({
@@ -121,22 +122,24 @@
           });
         }else {
           //非小程序环境
-          alert("非小程序环境")
-          let userData = this.getUserInfo();//获取用户信息
-          
-          let req = {
-            total_fee: this.TotalFee*100,
-            openid: userData.wx.openid,
-            trade_type: 'JSAPI'
-          }
-          let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+          // alert("非小程序环境")
+          if(openid){
+            alert(openid);
+            let req = {
+              total_fee: this.TotalFee*100,
+              openid: openid,
+              trade_type: 'JSAPI'
+            }
+            let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
-          alert(JSON.stringify(sign));
-          if (sign.data.data.errMsg == "requestPayment:ok"){
-            paySuccess(res._id);
-          }else{
-            this.$toast("支付失败");
+            alert(JSON.stringify(sign));
+            if (sign.data.data.errMsg == "requestPayment:ok"){
+              paySuccess(res._id);
+            }else{
+              this.$toast("支付失败");
+            }
           }
+          
         }
       },
       async paySuccess(id){
