@@ -104,6 +104,7 @@
         // let userData = this.getUserInfo();
         if(sessionStorage.getItem("openid")){
           let openid = sessionStorage.getItem("openid");
+          // alert(openid);
           let userInfoStr = sessionStorage.getItem("userData");
         
 

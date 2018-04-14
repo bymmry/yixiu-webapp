@@ -5,6 +5,7 @@ import find from '../find/App'
 import toShop from '../common/components/toShop';
 import shopDetail from '../common/components/shopDetail';
 import shop from '../common/components/shopList';
+import theShopDes from '../common/components/shop';
 
 export default [{
   path: '/orders',
@@ -41,6 +42,19 @@ export default [{
       {
         path: ":id", //商家详情
         component: shopDetail
+      }
+    ],
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
+  },
+  {
+    path: '/theShopDes',
+    component: toShop,
+    children: [
+      {
+        path: ":id", //商家详情
+        component: theShopDes
       }
     ],
     meta: {

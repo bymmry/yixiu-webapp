@@ -165,7 +165,7 @@
         }else{
           // alert("data.length != 0");
           userInfo = isRegister.data[isRegister.data.length - 1];
-          // alert(userInfo)
+          // alert(JSON.stringify(userInfo))
           if(userInfo.mobile == ""){
             alert("你还未登录，请先登录");
             this.$router.push("/login");
@@ -200,8 +200,9 @@
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        // alert(JSON.stringify(res));
+        alert(JSON.stringify(res));
         if(res.openid){
+          // alert(JSON.stringify(res.openid));
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
