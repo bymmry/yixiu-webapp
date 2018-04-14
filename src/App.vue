@@ -165,7 +165,7 @@
         }else{
           // alert("data.length != 0");
           userInfo = isRegister.data[isRegister.data.length - 1];
-          // alert(userInfo)
+          alert(JSON.stringify(userInfo))
           if(userInfo.mobile == ""){
             alert("你还未登录，请先登录");
             this.$router.push("/login");
@@ -185,7 +185,7 @@
               }
             }
             console.log(update);
-            let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+            // let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
           
             sessionStorage.setItem("userData", JSON.stringify(userInfo));
             this.$toast("自动登录成功");

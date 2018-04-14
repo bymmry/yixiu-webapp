@@ -104,7 +104,7 @@
         // let userData = this.getUserInfo();
         if(sessionStorage.getItem("openid")){
           let openid = sessionStorage.getItem("openid");
-          alert(openid);
+          // alert(openid);
           let userInfoStr = sessionStorage.getItem("userData");
         
 
@@ -131,8 +131,8 @@
               }
             }
             
-            alert(JSON.stringify(data));
-            // let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
+            // alert(JSON.stringify(data));
+            let res = await this.$api.sendData(`https://m.yixiutech.com/reg`, data);
             console.log(res);
             // alert(JSON.stringify(res))
             if (res.code == 200) {
