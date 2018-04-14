@@ -112,7 +112,7 @@
 
         if(isWxMini){
           //小程序环境
-          console.log(isWxMini);
+          alert("小程序环境")
           let jumpUrl = encodeURIComponent(window.location.origin);
           let path = `/pages/wxpay/wxpay?payInfo=${JSON.stringify(payInfo)}&jumpUrl=${jumpUrl}&orderId=${res._id}`;
           wx.miniProgram.navigateTo({
@@ -120,6 +120,7 @@
           });
         }else {
           //非小程序环境
+          alert("非小程序环境")
           let userData = this.getUserInfo();//获取用户信息
           
           let req = {
