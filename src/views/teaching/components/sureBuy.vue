@@ -78,7 +78,7 @@ export default {
         let sign = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
         
         if(openid){
-            alert(openid);
+            // alert(openid);
             let req = {
               total_fee: this.TotalFee*100,
               openid: openid,
