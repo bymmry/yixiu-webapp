@@ -171,8 +171,11 @@
   overflow: scroll;
 }
 .navBox a{
-  margin-bottom: 1vh;
+  display: inline-block;
+  width: 100%;
+  padding-bottom: 2vh;
   font-size: 2vh;
+  text-align: center;
   color: rgb(97, 149, 247);
 }
 </style>
