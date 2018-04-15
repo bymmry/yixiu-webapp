@@ -11,7 +11,7 @@
 
     <div class="pointbtn">
       <van-button type="default" @click="close">返回</van-button>
-      <van-button type="primary" @click="changePoint">更改</van-button>
+      <van-button type="primary" @click="changePoint" :disabled="changed">更改</van-button>
     </div>
   </div>
 </template>
@@ -30,7 +30,8 @@ import { Button } from 'vant';
         nlng:null,
         nlat:null,
         ncity:"",
-        ncityData:""
+        ncityData:"",
+        changed:true
       }
     },
     mounted(){
@@ -51,7 +52,8 @@ import { Button } from 'vant';
         var geoc = new BMap.Geocoder();
 
         var point2,marker2;
-        map.addEventListener("click", (e) =>{
+        map.addEventListener("tap", (e) =>{
+          this.changed = false;
           map.removeOverlay(marker2);
           this.nlng = e.point.lng;
           this.nlat = e.point.lat;
