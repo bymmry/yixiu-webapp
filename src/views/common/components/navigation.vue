@@ -19,9 +19,12 @@
     },
     created(){
       // console.log(window.location.href);
-      // const url = window.location.href;
-      // const seller = url.split("/")[1].split("?")[0];
+      const url = window.location.href;
+      const seller = url.split("/")[1].split("?")[0];
       // console.log(seller);
+      if (url.indexOf('phoneDetail') !== -1 || url.indexOf('order') !== -1) {
+        this.isShowNav = false;
+      }
       // if(seller == "sellerHome" || seller == "businessRegister" || seller == "addBrand" || seller == "addModel" || seller == "addCatagory" || seller == "addService" || seller == "publishPhone" || seller == "orderDetail" || seller == "updateMsg" || seller == 'enterRules' || seller == 'addServices' || seller == 'service' || seller == 'updateService' || seller == 'wait' || seller == 'phoneDetail') {
       //   this.isShowNav = false;
       // }

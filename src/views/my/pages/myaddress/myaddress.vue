@@ -26,6 +26,7 @@
         :list="list"
         @add="onAdd"
         @edit="onEdit"
+        @select="onSelect"
         v-if="!ifchange"
       />
     </van-pull-refresh>
@@ -86,6 +87,12 @@
       changeAddress
     },
     methods: {
+      onSelect (item, index) {
+        if (window.selectAddress) {
+          sessionStorage.setItem('address', JSON.stringify(item));
+          this.$router.push('/order');
+        }
+      },
       //刷新
       onRefresh() {
         setTimeout(() => {
@@ -98,6 +105,10 @@
       },
       //导航栏 前往个人中心
       prepage(){
+        if (window.selectAddress) {
+          this.$router.push('/order');
+          return;
+        }
         this.$router.push({ path: "/my" })
       },
       //添加新的地址

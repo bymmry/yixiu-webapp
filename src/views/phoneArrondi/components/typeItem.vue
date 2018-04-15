@@ -1,6 +1,6 @@
 <template>
   <div class="type__item" @click="route">
-      <sicon :name="icon" scale="3.8"></sicon>
+      <img :src="icon"  :class="classes" alt="" />
       <br>
       <p>{{name}}</p>
   </div>
@@ -11,11 +11,18 @@
   export default {
     props: {
       name: String,
-      icon: String
+      icon: String,
+      src: String,
+      type: String,
+      classes: String
     },
     methods: {
       route () {
-        this.functionunavailable();
+        if (this.type) {
+          this.$router.push('/phoneList/' + sessionStorage.getItem(this.type));
+          return;
+        }
+        this.$router.push(this.src);
       }
     }
   }
@@ -29,5 +36,13 @@
 	font-size: 12px;
   color: #949191;
   margin: 10px 0;
+}
+
+.img {
+  width: 50px;
+}
+
+.imgSpec {
+  width: 24px;
 }
 </style>

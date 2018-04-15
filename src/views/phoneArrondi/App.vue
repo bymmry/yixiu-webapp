@@ -6,7 +6,7 @@
 				:name="name"
 			/>
 			<Swipe></Swipe>
-			<Type />
+			<Type/>
 			<Arrondi
 				:title="iosTitle"
 				:content="iphone"
@@ -47,9 +47,11 @@
 			categoryRes.data.map(item => {
 				if (item.name == 'ios') {
 					this.ios = item._id;
+					sessionStorage.setItem('ios', this.ios);
 				}
 				if (item.name == 'android') {
 					this.androidId = item._id;
+					sessionStorage.setItem('android', this.androidId);
 				}
 			})
 

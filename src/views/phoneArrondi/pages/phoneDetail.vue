@@ -49,10 +49,6 @@
       @backDetail="backDetail"
       :data="data"
 		/>
-
-    
-    
-
     
     <div class="space"></div>
 	</div>
@@ -129,14 +125,21 @@ export default {
 </script>
 
 <style scoped>
+.detail {
+  background: rgb(248, 247, 247);
+}
+
 .space {
   width: 100%;
   height: 8vh;
 }
 
 .box {
-  width: 96%;
+  width: 92%;
   padding: 2%;
+  margin: 0 auto;
+  border-radius: 5px;
+  background: #fff;
 }
 
 .box p {

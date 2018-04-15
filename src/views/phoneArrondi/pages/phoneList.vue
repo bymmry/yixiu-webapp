@@ -68,16 +68,31 @@ export default {
 			temp.cover = temp.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
 			this.phoneList.push(temp);
 		})
+		
 		let searchName = decodeURI(params[1]);
 
+		if (searchName != 'undefined') {
+			this.phoneList.map(item => {
+				if (item.name == searchName) {
+					this.result.push(item);
+					this.currentMap.push(item);
+				} 
+			})
+			return;
+		}
+
+		// 安卓上新和ios上新,不带型号名称的
 		this.phoneList.map(item => {
-			if (item.name == searchName) {
+			if (item.category == params[0]) {
 				this.result.push(item);
 				this.currentMap.push(item);
 			} 
 		})
 		
-
+		this.result.sort((a, b) => {
+			return a.createdAt - b.createdAt;
+		})
+		
 	},
 	methods: {
 		hideSearch (data) {

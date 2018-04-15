@@ -6,13 +6,20 @@
 				:key="index" 
 				:name="item.name"
         :icon="item.icon"
+        :src="item.src"
+        :type="item.type && item.type"
+        :classes="item.classes"
 				/>
     </div>
   </div>
 </template>
 
 <script>
-	import TypeItem from './typeItem.vue'
+  import TypeItem from './typeItem.vue'
+  import iphone from '@/assets/iphone.png';
+  import android from '@/assets/android.png';
+  import answer from '@/assets/answer.png';
+  import youhuiquan from '@/assets/youhuiquan.png';
   export default {
     components: {
 			TypeItem
@@ -20,10 +27,10 @@
     data () {
     	return {
 				data: [
-          { name: '今日上新', icon: 'shangxin' },
-          { name: '手机评测', icon: 'pingce' },
-          { name: 'ipad精选', icon: 'ipad' },
-          { name: '优惠券', icon: 'youhuiquan' }
+          { name: '苹果上新', icon: iphone, src: '', type: 'ios', classes: 'img' },
+          { name: '安卓上新', icon: android, src: '', type: 'android', classes: 'img'  },
+          { name: '手机问答', icon: answer, src: '/find/question', classes: 'imgSpec'  },
+          { name: '优惠券', icon: youhuiquan, src: '/coupon', classes: 'img'  }
         ]
 			}
     },
