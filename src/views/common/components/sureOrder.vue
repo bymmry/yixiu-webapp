@@ -137,6 +137,7 @@
                 WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', sign.data,
                     function(wxres){     
+                      alert(JSON.stringify(wxres));
                         if(wxres.err_msg == "get_brand_wcpay_request:ok" ) {
                           that.paySuccess(res._id);
                         }else{
