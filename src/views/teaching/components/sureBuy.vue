@@ -120,6 +120,7 @@ export default {
       if(res.code == 200){
         this.$toast("支付成功");
         this.$router.push("/hasBuy");
+        // this.$router.push("/yixiuwebapp/hasBuy");
       }else{
         this.$toast("支付失败");
       }

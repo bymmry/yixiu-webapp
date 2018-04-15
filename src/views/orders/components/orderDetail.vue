@@ -248,9 +248,8 @@
           }))
       },
       async logisticsClose(data){
-        console.log(data);
+        let wuliu = this.$refs.wuluInfo;
         if(data.val == "close"){
-          let wuliu = this.$refs.wuluInfo;
           wuliu.hide();
         }else if(data.val == "sure"){
           let req = {
