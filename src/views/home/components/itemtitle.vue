@@ -1,5 +1,7 @@
 <template>
 	<div class="position__title">
+		<div class="wbg"></div>
+		<div></div>
 		<span class="positionTitle">您正在：</span>
 		<span class="position">{{city}}</span>
 		<!-- <div class="choseArea">
@@ -31,6 +33,7 @@ export default {
 
 <style scoped>
 .position__title {
+	position: relative;
 	background: #fff;
 	height: 8vh;
 	/*padding: 8px;*/
@@ -40,6 +43,13 @@ export default {
 	align-items: center;
 	border-bottom: 1px solid #d8d8d8;
 	font-size: 4vw;
+}
+.wbg{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	margin-left:-4vw;
 }
 .choseArea{
 	font-size: 3.5vw;
@@ -67,8 +77,10 @@ export default {
 }
 .position{
 	line-height: 5vw;
+	z-index: 10;
 }
 .positionTitle{
 	min-width: 16vw;
+	z-index: 10;
 }
 </style>
