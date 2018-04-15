@@ -60,7 +60,7 @@ export default {
 	width: 100%;
 	height: 800px;
 	position: relative;
-	background: #eee;
+	background: rgb(248, 247, 247);
 }
 
 .shadow {
