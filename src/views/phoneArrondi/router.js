@@ -5,6 +5,8 @@ import toMore from './pages/toMore.vue'
 import order from './pages/order.vue'
 import coupon from './pages/coupon.vue'
 import shopCar from './pages/shopCar.vue'
+import quality from './components/quality.vue'
+import product from './components/product.vue'
 
 export default [{
   path: '/phoneArrondi',
@@ -36,4 +38,12 @@ export default [{
 {
   path: '/shopCar',
   component: shopCar
+},
+{
+  path: '/quality',
+  component: quality
+},
+{
+  path: '/product',
+  component: product
 }]

@@ -1,5 +1,8 @@
 <template>
 	<div class="product">
+		<item-header
+			:name="name"
+		/>
 		<p class="title">详细参数</p>
 		<div class="item">
 			<p class="item__title">基础参数</p>
@@ -80,21 +83,23 @@
 
 <script>
 import parameter from '../data/parameter.json'
+import itemHeader from '../components/header'
 export default {
-	props: {
-		data: Object
-	},
 	mounted () {
-		console.log(this.data);
+		this.data = JSON.parse(sessionStorage.getItem('info'));
+	},
+	components: {
+		itemHeader
 	},
   data () {
 		return {
-			
+			data: {},
+			name: '产品参数'
 		}
 	},
 	methods: {
 		back () {
-			this.$emit('backDetail', true);
+			this.$router.go(-1);
 		}
 	}
 }

@@ -36,9 +36,7 @@
       />
     </div>
 
-    
-
-    <product 
+    <!-- <product 
 			v-show="paramStatus"
       @backDetail="backDetail"
       :data="data"
@@ -48,7 +46,7 @@
 			v-show="qualityStatus"
       @backDetail="backDetail"
       :data="data"
-		/>
+		/> -->
     
     <div class="space"></div>
 	</div>
@@ -66,10 +64,14 @@ import commit from '../components/commit'
 export default {
   methods: {
     showParam () {
-      this.paramStatus = !this.paramStatus;
+      // this.paramStatus = !this.paramStatus;
+      sessionStorage.setItem('info', JSON.stringify(this.data));
+      this.$router.push('/product');
     },
     showQuality () {
-      this.qualityStatus = !this.qualityStatus;
+      sessionStorage.setItem('info', JSON.stringify(this.data));
+      this.$router.push('/quality');
+      // this.qualityStatus = !this.qualityStatus;
     },
     backDetail () {
       this.paramStatus = false;

@@ -1,5 +1,8 @@
 <template>
   <div class="quality">
+	  <item-header
+			:name="name"
+		/>
 		<div class="shadow"></div>
 		<div class="content">
 			<p class="num">
@@ -16,8 +19,8 @@
 		<div class="content spec">
 			<sicon name="shandian" scale="6"></sicon>
 			<div class="desc">
-				<p class="desc__title">极速打款</p>
-				<p class="desc__content">买家确认购买后, 优品发货后您将立刻收到货款</p>
+				<p class="desc__title">翼修</p>
+				<p class="desc__content">为您的手机保驾护航</p>
 			</div>
 		</div>
 
@@ -43,13 +46,23 @@
 </template>
 
 <script>
+import itemHeader from '../components/header'
 export default {
-	props: {
-		data: Object
+	components: {
+		itemHeader
+	},
+	mounted () {
+		this.data = JSON.parse(sessionStorage.getItem('info'))
+	},
+	data () {
+		return {
+			name: '质检报告',
+			data: {}
+		}
 	},
   methods: {
 		back () {
-			this.$emit('backDetail', true);
+			this.$router.go(-1);
 		}
 	}
 }
@@ -58,7 +71,7 @@ export default {
 <style scoped>
 .quality {
 	width: 100%;
-	height: 800px;
+	height: 100%;
 	position: relative;
 	background: rgb(248, 247, 247);
 }
@@ -68,7 +81,7 @@ export default {
 	height: 150px;
 	position: absolute;
 	left: 0;
-	top: -20px;
+	top: 46px;
 	background: -webkit-linear-gradient(-90deg,rgba(2,181,157,.85) 2%,rgba(22,146,183,.85) 100%);
 	z-index: 0;
 }
@@ -84,8 +97,12 @@ export default {
 
 .spec {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-start;
 	align-items: center;
+}
+
+.spec .desc {
+	margin-left: 10%;
 }
 
 .content .num {
