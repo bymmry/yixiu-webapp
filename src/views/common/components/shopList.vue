@@ -35,8 +35,8 @@
             <div class="filter">
               <div class="list"><van-checkbox v-model="filterData.score">评分最高</van-checkbox></div>
               <div class="list"><van-checkbox v-model="filterData.serviceFinishTime">速度最快</van-checkbox></div>
-              <div class="list"><van-checkbox v-model="filterData.serviceFinishCount">修的最好</van-checkbox></div>
-              <div class="list"><van-checkbox v-model="filterData.price">价格最低</van-checkbox></div>
+              <!-- <div class="list"><van-checkbox v-model="filterData.serviceFinishCount">修的最好</van-checkbox></div> -->
+              <!-- <div class="list"><van-checkbox v-model="filterData.price">价格最低</van-checkbox></div> -->
               <div class="list"><van-checkbox v-model="filterData.distance">距离最近</van-checkbox></div>
               <div class="list"><van-checkbox v-model="filterData.pv">浏览量最高</van-checkbox></div>
               <div>
