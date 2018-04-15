@@ -126,6 +126,9 @@
           // alert("非小程序环境")
           if(openid){
             // alert(openid);
+            // 
+            history.pushState(null,null,"/yixiuwebapp/payInfo");
+
             let req = {
               total_fee: this.TotalFee*100,
               openid: openid,
