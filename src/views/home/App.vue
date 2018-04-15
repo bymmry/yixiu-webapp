@@ -100,6 +100,7 @@
         this.location = !this.location;
       },
       initPosition () {
+        /*
         let map = new BMap.Map("allmap");
         let point = new BMap.Point(116.331398,39.897445);
         map.centerAndZoom(point,12);
@@ -124,26 +125,23 @@
             // alert('failed'+this.getStatus());
           }
         },{enableHighAccuracy: true})  
+*/
+        var map = new BMap.Map("allmap");
+          var point = new BMap.Point(116.331398,39.897445);
+          map.centerAndZoom(point,12);
 
-        // navigator.geolocation.getCurrentPosition(function (position) {
-
-        //   //得到html5定位结果
-        //   var x = position.coords.longitude;
-        //   var y = position.coords.latitude;
-
-        //   alert(x+" "+y)
-        //   // //由于html5定位的结果是国际标准gps，所以from=1，to=5
-        //   // //下面的代码并非实际是这样，这里只是提供一个思路
-        //   // BMap.convgps(x, y, 1, 5, function (convRst) {
-        //   //     var point = new BMap.Point(convRst.x, convRst.y);
-
-        //   //     //这个部分和上面的代码是一样的
-        //   //     var marker = new BMap.Marker(point);
-        //   //     map.addOverlay(marker);
-        //   //     map.panTo(point);
-        //   // })
-
-        // })
+          var geolocation = new BMap.Geolocation();
+          geolocation.getCurrentPosition(function(r){
+            if(this.getStatus() == BMAP_STATUS_SUCCESS){
+              var mk = new BMap.Marker(r.point);
+              map.addOverlay(mk);
+              map.panTo(r.point);
+              alert('您的位置：'+r.point.lng+','+r.point.lat);
+            }
+            else {
+              alert('failed'+this.getStatus());
+            }        
+          },{enableHighAccuracy: true})
       }
     }
   }
