@@ -1,13 +1,5 @@
 <template>
   <div class="listView" ref="listView">
-    <!-- <cube-scroll 
-            class="ordersScroll" 
-            :options="options" 
-            :data="shopData" 
-            ref="scroll" 
-            @pulling-down="onPullingDown"
-            @pulling-up="loadMore">
-    <div> -->
     <div v-if="shopData.length"
       class="shopMain"
       @click="selectItem(item)"
@@ -22,17 +14,9 @@
         <p>
           <span>评分{{item.score}}</span>
           <span>成交{{item.serviceFinishCount}}单</span>
+          <span class="theDistance" v-if="distances">{{distances[i]}}</span>
         </p>
-        <p>均价￥{{item.price}}</p>
-      </div>
-      <div class="shopMainOther">
-        <div class="more"><sicon name="more" scale="1.5"></sicon></div>
-        <div class="shopMainOtherInfo">
-          <span v-if="distances">{{item.serviceFinishTime}}分钟 | {{distances[i]}}</span>
-        </div>
-        <div class="shopMainOtherType">
-          <span v-for="(ser,s) in serWays[i]" :key="s">{{ser}} </span>
-        </div>
+        <p class="shopMainOtherType"><span v-for="(ser,s) in serWays[i]" :key="s">{{ser}}</span></p>
       </div>
     </div>
     <div class="loadMore">
@@ -144,12 +128,14 @@
           if(val.position){
             let dis = parseInt(that.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
             if(dis >= 1000){
-              if(dis >= 9999999){
-                dis = "太远啦"
-              }else{
-                dis = parseInt(dis/1000);
-                dis = `${dis}km`;
-              }
+              // if(dis >= 9999999){
+              //   dis = "太远啦"
+              // }else{
+              //   dis = parseInt(dis/1000);
+              //   dis = `${dis}km`;
+              // }
+              dis = parseInt(dis/1000);
+              dis = `${dis}km`;
             }else{
               dis = `${dis}m`;
             }
@@ -187,7 +173,7 @@
     display: inline-block;
   }
   .listView .shopMain .shopMainImg{
-    flex: 1;
+    flex: 2;
     padding-right: 10px;
   }
   .listView .shopMain .shopMainImg img{
@@ -195,7 +181,7 @@
     height: 100%;
   }
   .listView .shopMain .shopMainContent{
-    flex: 1.5;
+    flex: 5;
     height: 100%;
   }
   .listView .shopMain .shopMainContent h3{
@@ -218,7 +204,7 @@
   .listView .shopMain .shopMainContent span{
     margin-right: 10px;
   }
-  .listView .shopMain .shopMainOther{
+  /* .listView .shopMain .shopMainOther{
     flex: 1;
   }
   .listView .shopMain .shopMainOther > div{
@@ -229,18 +215,21 @@
   }
   .listView .shopMain .shopMainOther > div.shopMainOtherInfo span{
     line-height: 28px;
-  }
-  .listView .shopMain .shopMainOther > div.shopMainOtherType{
-    width: 80px;
+  } */
+  .listView .shopMain .shopMainContent > p.shopMainOtherType{
+    width: auto;
     position: relative;
     right: 0;
-     overflow:hidden;
+    overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
   }
-  .listView .shopMain .shopMainOther > div.shopMainOtherType span{
+  .listView .shopMain .shopMainContent > p.shopMainOtherType span{
     line-height: 28px;
     color: #eea17a;
+  }
+  .theDistance{
+    float: right;
   }
 
   .loadMore{

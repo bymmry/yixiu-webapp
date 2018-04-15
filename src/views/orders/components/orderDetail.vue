@@ -8,7 +8,7 @@
     </div>
     <h3>订单详情
       <span v-if="orderData.state == 100">（订单已取消）</span>
-      <span v-if="orderData.state == 11 && !orderData.trackingCom">（未完善物流）</span>
+      <span v-if="orderData.state == 11 && !orderData.trackingCom && orderData.serviceWay == '快递维修'">（未完善物流）</span>
       </h3>
     <!-- 维修订单 -->
     <div class="information" v-if="orderData.goods.length == 0">
@@ -21,15 +21,16 @@
         <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
         <li><span class="name">手机颜色</span><span class="value">{{...orderData.phoneModel.color}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
+        <li><span class="name">服务方式</span><span class="value">{{orderData.serviceWay}}</span></li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
         <li><span class="name">订单总额</span><span class="value">￥{{orderData.payment/100}}元</span></li>
-        <li v-if="orderData.state == 11 && !orderData.trackingCom" @click="showWuliuInfo">
+        <li v-if="orderData.state == 11 && !orderData.trackingCom && orderData.serviceWay == '快递维修'" @click="showWuliuInfo">
           <span class="name wuliu">点击完善物流信息</span>
           <span class="value"></span>
         </li>
-        <li v-if="orderData.state == 11 && orderData.trackingCom" @click="showWuliuDes">
+        <li v-if="orderData.state == 11 && orderData.trackingCom && orderData.serviceWay == '快递维修'" @click="showWuliuDes">
           <span class="name wuliu">点击查看物流信息</span>
           <span class="value"></span>
         </li>

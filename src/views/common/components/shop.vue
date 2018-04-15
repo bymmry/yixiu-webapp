@@ -31,7 +31,7 @@
             </p>
             <div class="otherInfo">
               <span>评分：{{shopInfo.score}}</span>
-              <span>成交单: </span>
+              <span>成交单: {{shopInfo.serviceFinishCount}}</span>
               <span>{{distance}}</span>
             </div>
           </div>
