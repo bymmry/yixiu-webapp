@@ -57,7 +57,7 @@ export default {
 
       if(isWxMini){
         //小程序环境
-        alert("小程序环境")
+        // alert("小程序环境")
         let jumpUrl = encodeURIComponent(window.location.origin);
         let path = `/pages/wxpay/wxpay?payInfo=${JSON.stringify(payInfo)}&jumpUrl=${jumpUrl}`;
         wx.miniProgram.navigateTo({
@@ -65,22 +65,15 @@ export default {
         });
       }else {
         //非小程序环境
-        alert("非小程序环境")
+        // alert("非小程序环境")
         // let userData = this.getUserInfo();//获取用户信息
         let openid = sessionStorage.getItem("openid");
         let that = this;
         
-        let req = {
-          total_fee: this.totalFee,
-          openid: userData.wx.openid,
-          trade_type: 'JSAPI'
-        }
-        let sign = await this.$api.sendData('https://m.yixiutech.com/wx/gzh/order/sign', req);
-        
         if(openid){
             // alert(openid);
             let req = {
-              total_fee: this.TotalFee*100,
+              total_fee: this.totalFee,
               openid: openid,
               trade_type: 'JSAPI'
             }
