@@ -177,4 +177,7 @@
   text-align: center;
   color: rgb(97, 149, 247);
 }
+.position {
+  z-index: 100;
+}
 </style>
