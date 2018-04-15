@@ -25,7 +25,6 @@
       }
     },
     created() {
-      console.log("00000000000000000000000")
       let shopId = this.$route.params.data._id;
       getPhoneBrand(shopId).then((res) => {
         if(res.code === 200){
