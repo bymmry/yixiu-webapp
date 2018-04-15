@@ -108,17 +108,6 @@
   } from 'vant';
   import sureOrder from "../sureOrder"
   import theAddress from '../theAddress'
-  const coupon = {
-    available: 1,
-    discount: 0,
-    denominations: 150,
-    origin_condition: 0,
-    reason: '',
-    value: 150,
-    // name: '优惠券',
-    start_at: 1489104000,
-    end_at: 1514592000
-  };
   export default {
     name: 'choose-infos',
     data() {
@@ -126,8 +115,8 @@
         coupon: {},
         showList: false,
         chosenCoupon: -1,
-        coupons: [coupon],
-        disabledCoupons: [coupon],
+        coupons: [],
+        disabledCoupons: [],
         shopServer: [],
         sureOrderData: {},
         payment: 0, //实付金额
@@ -168,8 +157,12 @@
         }
       }
     },
+    created(){
+      
+    },
     mounted() {
       let userData = this.getUserInfo();
+
       this.phoneNumber = userData.mobile;
 
       this.theServiceWay = this.serviceWay;
@@ -182,6 +175,30 @@
       }
       this.TotalFee = this.payment;
       this.serverList = pro.join("/");
+      let that = this;
+      let shopCoupon = this.$route.params.data.promotion;
+      that.coupons = [];
+      that.disabledCoupons = [];
+
+      shopCoupon.map(item => {
+        let cou = {
+          origin_condition: item.condition,
+          denominations: item.denomination,
+          value: item.denomination,
+          name: item.name,
+          start_at: 1514800000,
+          end_at: 1514592000
+        }
+        if(item.condition <= that.TotalFee*100){
+          if(item.name.indexOf("维修") != -1){
+            that.coupons.push(cou);
+          }else{
+            that.disabledCoupons.push(cou);
+          }
+        }else{
+          that.disabledCoupons.push(cou);
+        }
+      })
       this.setOrderData();
 
     },
