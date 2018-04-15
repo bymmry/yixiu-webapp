@@ -137,10 +137,10 @@
                 WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', sign.data,
                     function(wxres){     
-                      alert(JSON.stringify(res));
-                      alert(JSON.stringify(payInfo));
+                      // alert(JSON.stringify(res));
+                      // alert(JSON.stringify(payInfo));
                         if(wxres.err_msg == "get_brand_wcpay_request:ok" ) {
-                          that.paySuccess(res.id);
+                          that.paySuccess(res._id);
                         }else{
                           that.$toast("支付失败");
                         }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
@@ -163,6 +163,7 @@
         }
       },
       async paySuccess(id){
+        alert(id);
         let res = await this.$api.getData(`${config.url}/order/paySuccess/${id}`);
         if(res.code == 200){
           this.$toast("支付成功");
