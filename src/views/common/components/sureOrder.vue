@@ -163,8 +163,8 @@
         }
       },
       async paySuccess(id){
-        alert(id);
         let res = await this.$api.getData(`${config.url}/order/paySuccess/${id}`);
+        alert(JSON.stringify(res));
         if(res.code == 200){
           this.$toast("支付成功");
           this.$router.push("/orders");
