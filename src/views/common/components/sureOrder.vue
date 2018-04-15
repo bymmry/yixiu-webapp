@@ -170,7 +170,7 @@
         // alert(JSON.stringify(res));
         if(res.code == 200){
           this.$toast("支付成功");
-          this.$router.push("/yixiuwebapp/orders");
+          this.$router.push("/orders");
         }else{
           this.$toast("支付失败");
         }
