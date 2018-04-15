@@ -40,8 +40,9 @@ export default {
 .hotSale-item {
 	width: 46%;
 	height: 100px;
-	box-shadow: 0 0 5px;
+	box-shadow: 0 2px 6px #d4e5f8;
 	border-radius: 5px;
+	background-color: #fff;
 	float: left;
 	border: 1px solid #eee;
 	margin: 10px 5px;

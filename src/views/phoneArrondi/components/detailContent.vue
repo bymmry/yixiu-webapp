@@ -82,7 +82,7 @@ export default {
 
 .content__price {
 	padding: 2%;
-	border-bottom: 1px solid rgb(248, 247, 247);
+	border-bottom: 1px solid #f1f5ff;
 }
 
 .content__price span:nth-child(1) {
@@ -129,7 +129,7 @@ export default {
 .content__item {
 	padding: 2% 4%;
 	font-size: 14px;
-	border-bottom: 1px solid rgb(248, 247, 247);
+	border-bottom: 1px solid #f1f5ff;
 	position: relative;
 }
 

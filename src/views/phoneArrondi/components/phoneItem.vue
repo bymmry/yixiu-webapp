@@ -34,7 +34,7 @@ export default {
 	display: flex;
 	align-items: center;
 	padding: 4%;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid #f1f5ff;
 }
 
 .phone .phone__img {
@@ -49,7 +49,6 @@ export default {
 .phone-msg .phone-msg__name {
 	padding: 5px 0;
 	font-size: 16px;
-	font-weight: bold;
 }
 
 .phone-msg .phone-msg__desc {
@@ -71,7 +70,8 @@ export default {
 }
 
 .save  span {
-	padding: 4px 20px;
+	padding: 4px 16px;
+	font-size: 12px;
 	color: #fff;
 	background: #fe6547;
 }

@@ -62,18 +62,21 @@ export default {
 	},
 	async mounted () {
 		let params = location.href.split('/').pop().split('&');
-		let res = await this.$api.sendData('https://m.yixiutech.com/goods/shop/category', {category: params[0], shop: '5ab93879d4e7f1497d58d94e'});
+
+		let res = await this.$api.sendData('https://m.yixiutech.com/sql/find', {collection: 'Goods'});
+
 		res.data.map(item => {
 			let temp = item;
 			temp.cover = temp.cover.replace('bymm.oss-cn-shenzhen.aliyuncs.com', 'oss.yixiutech.com');
 			this.phoneList.push(temp);
 		})
 		
-		let searchName = decodeURI(params[1]);
+		let searchName = decodeURI(params[1]).toLowerCase();
 
 		if (searchName != 'undefined') {
 			this.phoneList.map(item => {
-				if (item.name == searchName) {
+				let itemName = item.name.toLowerCase();
+				if (itemName == searchName) {
 					this.result.push(item);
 					this.currentMap.push(item);
 				} 
@@ -214,7 +217,7 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	padding: 0.4em 0;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid #f1f5ff;
 }
 
 .select option {
