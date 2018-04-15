@@ -52,7 +52,7 @@ import { Button } from 'vant';
         var geoc = new BMap.Geocoder();
 
         var point2,marker2;
-        map.addEventListener("tap", (e) =>{
+        map.addEventListener("touchend", (e) =>{
           this.changed = false;
           map.removeOverlay(marker2);
           this.nlng = e.point.lng;
