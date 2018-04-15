@@ -6,18 +6,21 @@
         <video ref="video" :src="introduceData.info.video"></video>
       </div>
       <div class="title">
-        <div class="closeBox" @click="goback">
-          <sicon name="close" scale="2.5" color="#ff0000"></sicon>
-        </div>
-        <div class="des">
-          <p>{{introduceData.desc}}</p>
-        </div>
-        <div class="buttonBox" @click="tryToWatch">
-          <div class="buttonClick">
-            <img :src="tryWatch" alt="">
+        <span class="closeBox" @click="goback">
+          <sicon name="back" scale="2.5" color="#fff"></sicon>
+        </span>
+        <div class="box">
+          <div class="des">
+            <p>{{introduceData.desc}}</p>
           </div>
-          <span>试看</span>
+          <div class="buttonBox" @click="tryToWatch">
+            <div class="buttonClick">
+              <img :src="tryWatch" alt="">
+            </div>
+            <span>试看</span>
+          </div>
         </div>
+        
       </div>
       <div class="menu">
         <menu-tab :list="listData" v-on:returnListClick="getList"></menu-tab>
@@ -206,10 +209,26 @@
   }
 
   .videoDetail .title .closeBox {
-    height: 3vh;
-    padding: 2vh;
+    position: absolute;
+    display: block;
+    width: 40px;
+    height: 40px;
+    background: #aeb3b4;
+    opacity: 0.7;
+    border-radius: 50%;
+    top: 15px;
+    left: 15px;
+    z-index: 300;
   }
-
+  .videoDetail .title .closeBox svg{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-60%) translateY(-50%);
+  }
+  .videoDetail .title .box{
+    padding-top: 6vh;
+  }
   .videoDetail .title .des,
   .videoDetail .title .buttonBox {
     padding-top: 20px;
