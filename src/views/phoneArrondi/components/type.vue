@@ -28,7 +28,7 @@
     	return {
 				data: [
           { name: '苹果上新', icon: iphone, src: '', type: 'ios', classes: 'img1' },
-          { name: '安卓上新', icon: android, src: '', type: 'android', classes: 'img2'  },
+          { name: '安卓上新', icon: android, src: '', type: 'android', classes: 'img'  },
           { name: '手机问答', icon: answer, src: '/find/question', classes: 'imgSpec'  },
           { name: '优惠券', icon: youhuiquan, src: '/coupon', classes: 'img'  }
         ]
