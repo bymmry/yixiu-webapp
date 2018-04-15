@@ -118,11 +118,12 @@
           signShow: false
         },
         //功能菜单列表
-        catalogs: [{
-            name: "优惠券",
-            icon: "gold-coin",
-            url: "my/mycoupus"
-          },
+        catalogs: [
+          // {
+          //   name: "优惠券",
+          //   icon: "gold-coin",
+          //   url: "my/mycoupus"
+          // },
           {
             name: "个人信息",
             icon: "contact",
@@ -133,11 +134,11 @@
             icon: "pending-payment",
             url: "my/mywallet"
           },
-          {
-            name: "我的收藏",
-            icon: "like-o",
-            url: ""
-          },
+          // {
+          //   name: "我的收藏",
+          //   icon: "like-o",
+          //   url: ""
+          // },
           {
             name: "我的地址",
             icon: "location",
