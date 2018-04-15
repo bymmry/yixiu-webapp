@@ -118,7 +118,7 @@
             localStorage.setItem('lng', r.point.lng);
             localStorage.setItem('lat', r.point.lat);
             // alert('所在城市:' + r.address.city);
-            alert('经纬度' + r.point.lng + r.point.lat)
+            // alert('经纬度' + r.point.lng + r.point.lat)
           }
           else {
             // alert('failed'+this.getStatus());
