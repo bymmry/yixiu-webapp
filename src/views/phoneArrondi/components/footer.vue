@@ -59,4 +59,8 @@ export default {
 .van-goods-action {
 	z-index: 20;
 }
+
+.icon {
+	background-color: red;
+}
 </style>

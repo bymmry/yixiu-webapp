@@ -117,7 +117,6 @@ export default {
 	async mounted () {
 		this.detail = JSON.parse(sessionStorage.getItem('detail'));
 		let user = JSON.parse(sessionStorage.getItem('userData'));
-		console.log(this.detail)
 
 		let address = sessionStorage.getItem('address');
 		this.address = JSON.parse(address);
@@ -128,14 +127,16 @@ export default {
 			type: 2, // 商品类型
 			user: user._id, // 所属用户标识，用户id
 			shop: this.detail.shop, // 商铺标识，商铺id
-			phone: this.address.tel,   // 联系电话
-			address: this.address.address, // 地址
+			phone: this.address ? this.address.tel : '',   // 联系电话
+			address: this.address ? this.address.address : '', // 地址
 			goods: [this.detail._id], // 商品列表 ObjectId
 			remark: '', // 备注
 			paymentType: 0, // 在线支付
-			price: this.detail.price, // 总金额(优惠券前额金额)
-			payment: this.detail.price // 实付金额
+			price: Number(this.detail.price), // 总金额(优惠券前额金额)
+			payment: Number(this.detail.price) // 实付金额
 		}
+
+		console.log(this.sureOrderData);
 	},
   components: {
 		itemHeader,
@@ -153,7 +154,7 @@ export default {
 	data () {
 		return {
 			name: '确认订单',
-			showList: true,
+			showList: false,
 			imageURL: iphoneX,
 			chosenCoupon: -1,
 			coupons: [coupon],

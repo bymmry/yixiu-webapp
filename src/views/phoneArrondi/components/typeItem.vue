@@ -39,10 +39,18 @@
 }
 
 .img {
-  width: 50px;
+  width: 30px;
+}
+
+.img1 {
+  width: 38px;
+}
+
+.img2 {
+  width: 34px;
 }
 
 .imgSpec {
-  width: 24px;
+  width: 18px;
 }
 </style>
