@@ -171,7 +171,8 @@
 .navBox a{
   display: inline-block;
   width: 100%;
-  padding-bottom: 2vh;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
   font-size: 2vh;
   text-align: center;
   color: rgb(97, 149, 247);
