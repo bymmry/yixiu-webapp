@@ -9,7 +9,7 @@ import myaddress from './pages/myaddress/myaddress'
 import mywallet from './pages/mywallet/mywallet'
 import myexpress from './pages/myexpress/myexpress'
 import feedback from './pages/feedback/feedback'
-import test from './pages/test/test'
+import callphone from './pages/callphone/callphone'
 
 export default [
 {
@@ -62,8 +62,8 @@ export default [
   // }
 },
 {
-  path: '/my/test',
-  component: test,
+  path: '/my/callphone',
+  component: callphone,
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }

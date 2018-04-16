@@ -71,7 +71,7 @@
       </div>
 
     </cube-scroll>
-    <p class="callphone canchose">客服热线：<span>13110222556</span></p>
+    
   </div>
 </template>
 
@@ -155,6 +155,11 @@
             name: "问题反馈",
             icon: "question",
             url: "my/feedback"
+          },
+          {
+            name: "客户热线",
+            icon: "phone",
+            url: "my/callphone"
           },
           // {
           //   name: "测试",
@@ -498,13 +503,18 @@
     background-image: linear-gradient(120deg, rgba(251, 250, 250, 0.5) 0%, rgba(238, 239, 240,0) 100%);
   }
   .callphone{
-    text-align: center;
+    display: flex;
+    align-items: center;
+    padding: 10px 13px;
     padding-bottom: 20px;
-    font-size: 4vw;
-    color: #606470;
+    font-size: 14px;
+    color: #333;
+  }
+  .callphone svg{
+    margin-right: 3.5px;
   }
   .callphone span{
-    font-size: 5vw;
+    margin-left: 2vw;
   }
   .canchose{
     -moz-user-select: text;
