@@ -69,7 +69,9 @@
           />
         </van-cell-group>
       </div>
+
     </cube-scroll>
+    <p class="callphone canchose">客服热线：<span>13110222556</span></p>
   </div>
 </template>
 
@@ -364,6 +366,7 @@
     padding: 0.3vh 0vw 5vh 0vw;
     background: #fff;
     height: 91vh;
+    overflow: hidden;
   }
 
   .topblank {
@@ -458,10 +461,8 @@
   .usermessage {
     display: flex;
     margin-left: 5vw;
-    /*margin-top: 13px;*/
     min-width: 25vw;
     max-width: 75vw;
-    
     color: #FCFCFC;
     font-size: 5vw;
   }
@@ -495,6 +496,20 @@
     margin-left: -5px;
     margin-bottom: 3px;
     background-image: linear-gradient(120deg, rgba(251, 250, 250, 0.5) 0%, rgba(238, 239, 240,0) 100%);
+  }
+  .callphone{
+    text-align: center;
+    padding-bottom: 20px;
+    font-size: 4vw;
+    color: #606470;
+  }
+  .callphone span{
+    font-size: 5vw;
+  }
+  .canchose{
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    user-select: text;
   }
 </style>
 
