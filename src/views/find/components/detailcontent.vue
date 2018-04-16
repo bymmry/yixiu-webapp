@@ -217,7 +217,7 @@
 <style scoped>
   .questionBox-container{
     position: relative;
-    padding: 8.6px 0;
+    padding: 1.5vh 0;
     padding-bottom: 0;
     border-top: 0.1vh solid #e0deec;
     border-bottom: 0.1vh solid #e0deec;
