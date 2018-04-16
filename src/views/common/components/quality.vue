@@ -1,10 +1,10 @@
 <template>
-  <div class="quality" v-if="data">
+  <div class="quality">
     <div class="shadow"></div>
     <div class="content">
       <p class="num">
-        <span>翼修维修第8888份报告</span>
-        <span>No.956541235787</span>
+        <span>翼修维修</span>
+        <span>{{data.shop.contactNumber}}</span>
       </p>
       <p class="content__title">{{ data.info ? data.info.name : null }}</p>
       <p class="content__desc">{{ data.info ? data.info.storage : null }}
@@ -16,7 +16,7 @@
       <p class="content__desc">354*****56
         <span>/imei</span>
       </p>
-      <p class="content__desc"> {{ data.info ? data.info.network.join(',') : null }}
+      <p class="content__desc" v-if="data.info.network"> {{ data.info ? data.info.network.join(',') : null }}
         <span>/网络制式</span>
       </p>
     </div>

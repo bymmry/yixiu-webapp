@@ -69,7 +69,8 @@
         default: function () {
           return {}
         }
-      }
+      },
+      shopNum: Number
     },
     watch: {
       shopData: function (val) {
@@ -83,11 +84,15 @@
     components: {
       [Button.name]: Button
     },
+    activated() {
+      this.nowData = 0;
+    },
     methods: {
       selectItem: function (item) {
         this.$emit("select", item);
       },
       loadMore: function () {
+        this.nowData = this.shopNum;
         this.showMore = false;
         this.nowData += this.shopData.length;
         //ajax请求
@@ -129,22 +134,21 @@
         let lat = localStorage.getItem('lat');
         this.distances = data.map(function (val) {
           if(val.position){
-            let dis = parseInt(that.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
-            if(dis >= 1000){
-              // if(dis >= 9999999){
-              //   dis = "太远啦"
-              // }else{
-              //   dis = parseInt(dis/1000);
-              //   dis = `${dis}km`;
-              // }
-              dis = parseInt(dis/1000);
-              dis = `${dis}km`;
+            if(val.position.lat == "" || val.position.lng == ""){
+              return 999999;
             }else{
-              dis = `${dis}m`;
+              let dis = parseInt(that.getGreatCircleDistance(val.position.lat, val.position.lng, lat, lng));
+              if(dis >= 1000){
+                dis = parseInt(dis/1000);
+                dis = `${dis}km`;
+              }else{
+                dis = `${dis}m`;
+              }
+              return dis;
             }
-            return dis;
+            
           }else{
-            return "未知";
+            return 999999;
           }
         });
 
