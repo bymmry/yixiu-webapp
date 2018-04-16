@@ -74,7 +74,7 @@
     </div>
     <!-- 质检报告 -->
     <cube-popup v-if="orderData" class="quality" type="my-popup" :center="false" ref="getQuality">
-      <quality :data="orderData" v-on:closeQuality="closeQuality"></quality>
+      <quality :data="orderData.info" v-on:closeQuality="closeQuality"></quality>
     </cube-popup>
 
     <!-- 填写物流信息 -->

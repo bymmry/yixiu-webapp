@@ -16,7 +16,10 @@
           <span>成交{{item.serviceFinishCount}}单</span>
           <span class="theDistance" v-if="distances">{{distances[i]}}</span>
         </p>
-        <p class="shopMainOtherType"><span v-for="(ser,s) in serWays[i]" :key="s">{{ser}}</span></p>
+        <p class="shopMainOtherType">
+          <!-- <span v-for="(ser,s) in serWays[i]" :key="s">{{ser}}</span> -->
+          <span>{{item.address}}</span>
+        </p>
       </div>
     </div>
     <div class="loadMore">
@@ -217,7 +220,7 @@
     line-height: 28px;
   } */
   .listView .shopMain .shopMainContent > p.shopMainOtherType{
-    width: auto;
+    width: 180px;
     position: relative;
     right: 0;
     overflow:hidden;
