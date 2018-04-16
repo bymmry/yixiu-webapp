@@ -226,6 +226,7 @@
   .questionBox-content{
     position: relative;
     padding: 0 4vw;
+    margin-top: 1vh;
   }
   .questionBox-shadow{
     position: absolute;
