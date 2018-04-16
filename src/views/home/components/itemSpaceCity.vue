@@ -82,6 +82,19 @@ export default {
 			this.recentCity.unshift(this.city);
 			localStorage.setItem('recentCity', JSON.stringify(recentCityData));
 		}
+
+		for(let i in this.recentCity){
+			if (this.recentCity[i]=="成都") {
+				if (this.recentCity[i+1]) {
+					this.recentCity[i] = this.recentCity[i+1]
+					i++
+				}else{
+					delete this.recentCity[i];
+					this.recentCity.length = this.recentCity.length-1;
+					break;
+				}
+			}
+		}
 	}
 }
 </script>
