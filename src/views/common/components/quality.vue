@@ -3,20 +3,20 @@
     <div class="shadow"></div>
     <div class="content">
       <p class="num">
-        <span>翼修优品第8888份报告</span>
+        <span>翼修维修第8888份报告</span>
         <span>No.956541235787</span>
       </p>
-      <p class="content__title">{{ data.name }}</p>
-      <p class="content__desc">{{ data.info ? data.info.productParam.storage : null }}
+      <p class="content__title">{{ data.info ? data.info.name : null }}</p>
+      <p class="content__desc">{{ data.info ? data.info.storage : null }}
         <span>/容量</span>
       </p>
-      <p class="content__desc">{{ data.info ? data.info.productParam.color : null }}
+      <p class="content__desc">{{ data.info ? data.info.color : null }}
         <span>/颜色</span>
       </p>
       <p class="content__desc">354*****56
         <span>/imei</span>
       </p>
-      <p class="content__desc"> {{ data.info ? data.info.productParam.network.join(',') : null }}
+      <p class="content__desc"> {{ data.info ? data.info.network.join(',') : null }}
         <span>/网络制式</span>
       </p>
     </div>
@@ -24,8 +24,8 @@
     <div class="content spec">
       <sicon name="shandian" scale="6"></sicon>
       <div class="desc">
-        <p class="desc__title">极速打款</p>
-        <p class="desc__content">买家确认购买后, 优品发货后您将立刻收到货款</p>
+        <p class="desc__title">翼修</p>
+        <p class="desc__content">为您的手机保驾护航</p>
       </div>
     </div>
 
@@ -33,18 +33,19 @@
       <div class="expert">
         <sicon name="zhijian" scale="3"></sicon>
         <div class="expert__info">
-          <p>{{ data.info ? data.info.qualityParam.name : null }}
-            <span class="info__academic">{{ data.info ? data.info.qualityParam.academicTitle : null }}</span>
+          <p>{{ data.info ? data.info.name : null }}
+            <span class="info__academic" v-if="data.info.academicTitle">{{ data.info ? data.info.academicTitle : null }}</span>
           </p>
           <p>
-            <span class="info__address">{{ data.info ? data.info.qualityParam.agency : null }}</span>
+            <span class="info__address" v-if="data.info.agency">{{ data.info ? data.info.agency : null }}</span>
           </p>
-          <p>已检测 {{ data.info ? data.info.qualityParam.num : null }} 台机器</p>
+          <p v-if="data.info.num">已检测 {{ data.info ? data.info.num : null }} 台机器</p>
         </div>
       </div>
       <div class="content__sum">
         <p class="sum__title">总体质检结论</p>
-        <p class="sum__content">{{ data.info ? data.info.qualityParam.sum : null }}</p>
+        <p class="sum__content" v-if="data.info.conclusion">{{ data.info ? data.info.conclusion : null }}</p>
+        <p class="sum__content" v-if="data.info.supplement">{{ data.info ? data.info.supplement : null }}</p>
       </div>
     </div>
 
@@ -75,7 +76,7 @@
         serviceIcon: service
       }
     },
-    async mounted() {
+    async created() {
 
       console.log(this.data);
       let res = await this.$api.getData('https://m.yixiutech.com/tracking/com');
@@ -89,38 +90,6 @@
     methods: {
       closeQuality() {
         this.$emit("closeQuality");
-      },
-      async takeOrder() {
-        let data = {
-          _id: this.details._id,
-          state: 12
-        }
-        const toast = this.$createToast({
-          message: '加载中...'
-        })
-        toast.show();
-        let res = await this.$api.sendData('https://m.yixiutech.com/order/update', data);
-        toast.hide();
-        if (res.code == 200) {
-          this.prompt('接单成功', 'success').show();
-          this.$router.go(-1)
-        }
-      },
-      async finish() {
-        let data = {
-          _id: this.details._id,
-          state: 13
-        }
-        const toast = this.$createToast({
-          message: '加载中...'
-        })
-        toast.show();
-        let res = await this.$api.sendData('https://m.yixiutech.com/order/update', data);
-        toast.hide();
-        if (res.code == 200) {
-          this.prompt('接单成功', 'success').show();
-          this.$router.go(-1)
-        }
       }
     }
   }

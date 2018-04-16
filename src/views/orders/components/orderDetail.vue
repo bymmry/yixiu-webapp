@@ -9,17 +9,18 @@
     <h3>订单详情
       <span v-if="orderData.state == 100">（订单已取消）</span>
       <span v-if="orderData.state == 11 && !orderData.trackingCom && orderData.serviceWay == '快递维修'">（未完善物流）</span>
+      <span v-if="orderData.state == 13">（订单已完成）</span>
       </h3>
     <!-- 维修订单 -->
     <div class="information" v-if="orderData.goods.length == 0">
-      <ul>
+      <ul v-if="orderData.state != 13">
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
         <li>
           <span class="name">商家电话</span>
           <span class="value"><a :href="telContactNumber">{{orderData.shop.contactNumber}}</a></span>
           </li>
         <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
-        <li><span class="name">手机颜色</span><span class="value">{{...orderData.phoneModel.color}}</span></li>
+        <li><span class="name">手机颜色</span><span class="value">{{orderData.phoneModel.color.join(",")}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
         <li><span class="name">服务方式</span><span class="value">{{orderData.serviceWay}}</span></li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
@@ -35,8 +36,10 @@
           <span class="value"></span>
         </li>
       </ul>
-      <ul>
-        <li v-if="orderData.state == 13" @click="getQuality">质检报告</li>
+      <ul v-if="orderData.state == 13">
+        <li>{{orderData.phoneModel.name}}/￥{{orderData.payment/100}}元</li>
+        <li style="color: #f85" @click="getAbout">点击进行评价</li>
+        <li style="color: #f85" @click="getQuality">质检报告</li>
       </ul>
     </div>
     <!-- 手机订单 -->
@@ -74,7 +77,7 @@
     </div>
     <!-- 质检报告 -->
     <cube-popup v-if="orderData" class="quality" type="my-popup" :center="false" ref="getQuality">
-      <quality :data="orderData.info" v-on:closeQuality="closeQuality"></quality>
+      <quality :data="orderData" v-on:closeQuality="closeQuality"></quality>
     </cube-popup>
 
     <!-- 填写物流信息 -->
@@ -216,6 +219,9 @@
           
         // };
         console.log(this.sureOrderData);
+      },
+      getAbout(){
+        this.$toast("即将到来");
       },
       getQuality: function(){
         let quality = this.$refs.getQuality;
