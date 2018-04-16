@@ -21,7 +21,7 @@
       <div class="myinfo-message">
         <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
           <div class="myinfo-message-tag textright">{{ info.name }}</div>
-          <div class="myinfo-message-data">{{ info.tag }}</div>
+          <div class="myinfo-message-data canchose">{{ info.tag }}</div>
         </div>
       </div>
     </div>
@@ -118,5 +118,10 @@
     min-width: 70%;
     display: flex;
     color: #333;
+  }
+  .canchose{
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    user-select: text;
   }
 </style>
