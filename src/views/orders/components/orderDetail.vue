@@ -39,7 +39,7 @@
       </ul>
       <ul v-if="orderData.state == 13">
         <li>{{orderData.phoneModel.name}}/￥{{orderData.payment/100}}元</li>
-        <li v-if="orderData.comment == ''" style="color: #f85" @click="getAbout">点击进行评价</li>
+        <li v-if="orderData.comment == '' || !orderData.comment" style="color: #f85" @click="getAbout">点击进行评价</li>
         <li style="color: #f85" @click="getQuality">质检报告</li>
       </ul>
       <div class="comment" v-if="orderData.state == 13 && orderData.comment != '' && orderData.info.score">
@@ -299,6 +299,7 @@
 
       },
       async sureCommon(re){
+        let comment = this.$refs.comment;
         // console.log(re);
         let req = {
           collection: "Order",
@@ -313,6 +314,11 @@
         console.log(req);
         let res = await this.$api.sendData("https://m.yixiutech.com/sql/update", req);
         console.log(res);
+        if(res.code == 200){
+          this.$toast("评论成功");
+          this.$router.push("/orders");
+        }
+        comment.hide();
       }
     }
   };

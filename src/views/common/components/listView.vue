@@ -109,7 +109,7 @@
             this.moreText = "没有更多了"
           }else {   
             res.data.map((item) => {
-              if(item.qualificationState == "正常"){
+              if(item.qualification){
                 this.shopData.push(item);
                 
                 // this.shopData.push(...res.data);

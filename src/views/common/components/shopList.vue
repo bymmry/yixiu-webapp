@@ -286,7 +286,7 @@
           res.data.map((item) => {
             let dis = this.getDistance(item);
             item = Object.assign({}, item, {distance: dis});
-            if(item.qualificationState == "正常"){
+            if(item.qualification){
               this.shopData.push(item);
             }
           });
