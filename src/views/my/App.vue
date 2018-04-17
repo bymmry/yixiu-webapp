@@ -35,7 +35,7 @@
                 <sicon name="my-icons" scale="1.7" color="#fff"></sicon>
               </div>
               <div class="integralBox">
-                {{ userInfo.points }} 积分
+                {{ userInfo.points }} 翼豆
               </div>
             </div>
           </div>
@@ -132,7 +132,7 @@
             url: "my/information"
           },
           {
-            name: "我的积分",
+            name: "我的翼豆",
             icon: "pending-payment",
             url: "my/mywallet"
           },
@@ -224,7 +224,7 @@
         updateuserinfo(uppoint)
           .then(res => {
             Dialog.alert({
-              message: '签到成功！'
+              message: '签到成功！ +5 翼豆'
             }).then(() => {
               let userData = this.getUserInfo();
               this.getUserinfo(userData.wx.openid);
