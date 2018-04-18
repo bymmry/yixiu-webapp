@@ -100,8 +100,8 @@
     padding-top: 0;
   }
   h2{
-    font-size: 5vw;
-    margin-top: 1vh;
+    font-size: 6vw;
+    margin-top: 3vh;
     margin-bottom: 1vh;
     text-align: center;
   }
@@ -125,12 +125,13 @@
   }
   h3{
     font-weight: 700;
-    font-size: 4vw;
+    font-size: 4.5vw;
     margin-top: 1vh;
   }
   p{
     margin-top: 1vh;
     font-size: 600;
+    font-size: 4vw;
   }
   .canchose{
     -moz-user-select: text;
