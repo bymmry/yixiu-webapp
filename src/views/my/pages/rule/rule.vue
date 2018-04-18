@@ -29,7 +29,9 @@
         </ul>
       </div>
       <div class="line"></div>
-      <h3>免责声明</h3>
+      <div class="BFC">
+        <h3>免责声明</h3>
+      </div>
       <div class="BFC">
         <ul>
           <li>(1) 维修故障点之外的故障不予保修。</li>
@@ -43,7 +45,9 @@
       </div>
       
       <div class="line"></div>
-      <h3>【关于维修费用】</h3>
+      <div class="BFC">
+        <h3>【关于维修费用】</h3>
+      </div>
       <p>您支付的维修费用由两部分构成：零配件费用和维修工程师的服务费。</p>
       <p>以上条款最终解释权归翼修平台所有。</p>
     </div>
@@ -92,7 +96,7 @@
     margin-top: 45.6px;
   }
   .contant{
-    padding: 80px 3vw;
+    padding: 80px 4vw;
     padding-top: 0;
   }
   h2{
@@ -122,6 +126,7 @@
   h3{
     font-weight: 700;
     font-size: 4vw;
+    margin-top: 1vh;
   }
   p{
     margin-top: 1vh;
