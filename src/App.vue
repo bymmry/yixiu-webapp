@@ -63,10 +63,15 @@
           if (userData.state == 123) { //公众号进入
             this.initGZHInfo(userData);
             
-          }else if(userData.state == 1){ //小程序入口
+          }
+          else if(userData.state == 1){ //小程序入口
             this.initXCXInfo(userData);
 
-          }else{
+          }
+          else if(userData.state == 2){ //app入口
+            alert("app进入");
+          }
+          else{
 
           }
         } else {
