@@ -10,6 +10,7 @@ import mywallet from './pages/mywallet/mywallet'
 import myexpress from './pages/myexpress/myexpress'
 import feedback from './pages/feedback/feedback'
 import callphone from './pages/callphone/callphone'
+import rule from './pages/rule/rule'
 
 export default [
 {
@@ -64,6 +65,13 @@ export default [
 {
   path: '/my/callphone',
   component: callphone,
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
+},
+{
+  path: '/my/rule',
+  component: rule,
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }

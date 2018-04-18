@@ -120,7 +120,7 @@ export default {
 .cityBtn{
 	display: inline-block;
 	width: 28%;
-	height: 28px;
+	min-height: 28px;
 	text-align: center;
 	line-height: 34px;
 	padding-bottom: 5px; 

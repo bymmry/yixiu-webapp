@@ -152,6 +152,11 @@
             url: "my/myexpress"
           },
           {
+            name: "翼修全国维修联保规范",
+            icon: "pending-orders",
+            url: "my/rule"
+          },
+          {
             name: "问题反馈",
             icon: "question",
             url: "my/feedback"
