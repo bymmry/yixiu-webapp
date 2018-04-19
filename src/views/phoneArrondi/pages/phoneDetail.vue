@@ -29,6 +29,8 @@
           :src="item.url" 
           alt=""
         />
+        <h1 class="title">服务保证</h1>
+        <img :src="promise" class="photo" alt="" />
       </div>
 
       <Footer 
@@ -61,6 +63,7 @@ import GoodSwipe from '../components/goodSwipe'
 import quality from '../components/quality'
 import product from '../components/product'
 import commit from '../components/commit'
+import promise from '@/assets/promise.png'
 export default {
   methods: {
     showParam () {
@@ -93,6 +96,7 @@ export default {
       name: '手机详情',
       data: {},
       sureOrderData: {},
+      promise: promise,
       images: [],
       paramStatus: false,
       qualityStatus: false
@@ -131,6 +135,12 @@ export default {
   background: rgb(248, 247, 247);
 }
 
+.photo {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .space {
   width: 100%;
   height: 8vh;
@@ -146,6 +156,14 @@ export default {
 
 .box p {
   padding: 2%;
+}
+
+.title {
+  text-align: center;
+  font-size: 16px;
+  color: #f56b0e;
+  letter-spacing: 2px;
+  padding: 5% 0;
 }
 
 .image {
