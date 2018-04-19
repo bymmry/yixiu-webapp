@@ -9,17 +9,19 @@
     <h3>订单详情
       <span v-if="orderData.state == 100">（订单已取消）</span>
       <span v-if="orderData.state == 11 && !orderData.trackingCom && orderData.serviceWay == '快递维修'">（未完善物流）</span>
+      <span v-if="orderData.state == 13">（订单已完成）</span>
       </h3>
     <!-- 维修订单 -->
     <div class="information" v-if="orderData.goods.length == 0">
-      <ul>
+      <ul v-if="orderData.state != 13">
         <li><span class="name">商家</span><span class="value">{{orderData.shop.name}}</span></li>
+        <li><span class="name">商家地址</span><span class="value" style="font-size: 12px">{{orderData.shop.address}}</span></li>
         <li>
           <span class="name">商家电话</span>
           <span class="value"><a :href="telContactNumber">{{orderData.shop.contactNumber}}</a></span>
           </li>
         <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
-        <li><span class="name">手机颜色</span><span class="value">{{...orderData.phoneModel.color}}</span></li>
+        <li><span class="name">手机颜色</span><span class="value">{{orderData.phoneModel.color.join(",")}}</span></li>
         <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
         <li><span class="name">服务方式</span><span class="value">{{orderData.serviceWay}}</span></li>
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
@@ -35,9 +37,19 @@
           <span class="value"></span>
         </li>
       </ul>
-      <ul>
-        <li v-if="orderData.state == 13" @click="getQuality">质检报告</li>
+      <ul v-if="orderData.state == 13">
+        <li>{{orderData.phoneModel.name}}/￥{{orderData.payment/100}}元</li>
+        <li v-if="orderData.comment == '' || !orderData.comment" style="color: #f85" @click="getAbout">点击进行评价</li>
+        <li style="color: #f85" @click="getQuality">质检报告</li>
       </ul>
+      <div class="comment" v-if="orderData.state == 13 && orderData.comment != '' && orderData.info.score">
+        <ul>
+          <li>评价（已评价）</li>
+          <p v-if="orderData.info.score">评分：{{orderData.info.score}}</p>
+          <p>评价：{{orderData.comment}}</p>
+        </ul>
+        
+      </div>
     </div>
     <!-- 手机订单 -->
     <div class="information" v-if="orderData.goods.length != 0">
@@ -86,6 +98,11 @@
     <cube-popup class="logistics" type="my-popup" :mask="true" ref="wuluDes">
 
     </cube-popup>
+
+    <!-- 填写评价信息 -->
+    <cube-popup class="logistics" type="my-popup" :mask="true" ref="comment">
+      <comment v-on:closeCommon="closeCommon"></comment>
+    </cube-popup>
   </div>
 </template>
 
@@ -95,6 +112,7 @@
   import quality from '../../common/components/quality'
   import {getOrderDetail, cancelOrder} from '../api';
   import getLogistics from './getLogistics.vue';
+  import comment from './comment.vue';
   import { getemail } from '../../common/api'
 
   export default {
@@ -117,10 +135,8 @@
       
       getOrderDetail(id).then(res => {
         this.orderData = res.data;
-        console.log(this.orderData.trackingCom);
         
         this.telContactNumber = `tel:${this.orderData.shop.contactNumber}`;
-        console.log(this.orderData);
         let servers = this.orderData.service;
         let pro = servers.map(function (val) {
           return val.name;
@@ -145,7 +161,8 @@
       [Toast.name]: Toast,
       sureOrder,
       quality,
-      getLogistics
+      getLogistics,
+      comment
     },
     methods: {
       goBack: function () {
@@ -266,6 +283,42 @@
           }
           wuliu.hide();
         }
+      },
+      getAbout(){
+        let comment = this.$refs.comment;
+        comment.show();
+        // this.$toast("即将到来");
+      },
+      closeCommon(re){
+        let comment = this.$refs.comment;
+        if(re == "close"){
+          comment.hide();
+        }else{
+          this.sureCommon(re);
+        }
+
+      },
+      async sureCommon(re){
+        let comment = this.$refs.comment;
+        // console.log(re);
+        let req = {
+          collection: "Order",
+          find: {
+            _id: this.id
+          },
+          update: {
+            info: Object.assign({}, this.orderData.info, {score: re.score}),
+            comment: re.comment
+          }
+        }
+        console.log(req);
+        let res = await this.$api.sendData("https://m.yixiutech.com/sql/update", req);
+        console.log(res);
+        if(res.code == 200){
+          this.$toast("评论成功");
+          this.$router.push("/orders");
+        }
+        comment.hide();
       }
     }
   };
@@ -380,5 +433,8 @@
   .logistics .logisticsButtons{
     width: 50%;
     float: left;
+  }
+  .comment ul p{
+    padding: 5px 15px;
   }
 </style>

@@ -35,7 +35,7 @@
                 <sicon name="my-icons" scale="1.7" color="#fff"></sicon>
               </div>
               <div class="integralBox">
-                {{ userInfo.points }} 积分
+                {{ userInfo.points }} 翼豆
               </div>
             </div>
           </div>
@@ -69,7 +69,9 @@
           />
         </van-cell-group>
       </div>
+
     </cube-scroll>
+    
   </div>
 </template>
 
@@ -130,7 +132,7 @@
             url: "my/information"
           },
           {
-            name: "我的积分",
+            name: "我的翼豆",
             icon: "pending-payment",
             url: "my/mywallet"
           },
@@ -150,9 +152,19 @@
             url: "my/myexpress"
           },
           {
+            name: "翼修全国维修联保规范",
+            icon: "pending-orders",
+            url: "my/rule"
+          },
+          {
             name: "问题反馈",
             icon: "question",
             url: "my/feedback"
+          },
+          {
+            name: "客户热线",
+            icon: "phone",
+            url: "my/callphone"
           },
           // {
           //   name: "测试",
@@ -217,7 +229,7 @@
         updateuserinfo(uppoint)
           .then(res => {
             Dialog.alert({
-              message: '签到成功！'
+              message: '签到成功！ +5 翼豆'
             }).then(() => {
               let userData = this.getUserInfo();
               this.getUserinfo(userData.wx.openid);
@@ -364,6 +376,7 @@
     padding: 0.3vh 0vw 5vh 0vw;
     background: #fff;
     height: 91vh;
+    overflow: hidden;
   }
 
   .topblank {
@@ -458,10 +471,8 @@
   .usermessage {
     display: flex;
     margin-left: 5vw;
-    /*margin-top: 13px;*/
     min-width: 25vw;
     max-width: 75vw;
-    
     color: #FCFCFC;
     font-size: 5vw;
   }
@@ -495,6 +506,25 @@
     margin-left: -5px;
     margin-bottom: 3px;
     background-image: linear-gradient(120deg, rgba(251, 250, 250, 0.5) 0%, rgba(238, 239, 240,0) 100%);
+  }
+  .callphone{
+    display: flex;
+    align-items: center;
+    padding: 10px 13px;
+    padding-bottom: 20px;
+    font-size: 14px;
+    color: #333;
+  }
+  .callphone svg{
+    margin-right: 3.5px;
+  }
+  .callphone span{
+    margin-left: 2vw;
+  }
+  .canchose{
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    user-select: text;
   }
 </style>
 

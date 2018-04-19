@@ -37,9 +37,10 @@
           </div>
           <div class="about">
             <h3><span>评价</span></h3>
-            <h4>服务评价（0）</h4>
+            <h4>服务评价（<span v-if="comments.length != 0">{{comments.length}}</span> <span v-else>0</span>）</h4>
             <div class="aboutDes">
-              暂无评价
+              <span v-if="comments.length == 0">暂无评价</span>
+              <comment v-if="comments.length != 0" :comment="comments"></comment>
             </div>
 
           </div>
@@ -52,17 +53,21 @@
 
 <script>
   import { getShopData } from '../api'
+  import comment from './comment'
   export default {
     data() {
       return {
         shopInfo: {},
         telContactNumber: "",
         serviceWays: [],
-        distance: ""
+        distance: "",
+        comments: []
       };
     },
 
-    components: {},
+    components: {
+      comment
+    },
     created(){
       let shopId = this.$route.params.id;
       let that = this;
@@ -88,6 +93,8 @@
         }, function (err) {
           console.log(err);
         })
+
+        this.getComment(shopId);
       }
     },
     methods: {
@@ -123,6 +130,30 @@
           }else{
             return "未知";
           }
+      },
+      async getComment(id){
+        let userData = this.getUserInfo();
+        let req = {
+          collection: "Order",
+          shop: id
+        }
+
+        let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
+        if(res.code == 200){
+          res.data.map(item => {
+            if(item.comment && item.info.score){
+              let com = {
+                comment: item.comment,
+                score: item.info.score,
+                user: item.user
+              }
+              this.comments.push(com);
+            }
+          })
+
+          // console.log(this.comments);
+        }
+
       }
     }
   }
@@ -312,7 +343,7 @@
   .shop .shopContent .about .aboutDes{
     width: auto;
     height: auto;
-    padding: 20px 15px;
+    /* padding: 10px 0; */
   }
   .buttons{
     position: fixed;

@@ -22,7 +22,7 @@
     <div @click="selectShop"
          class="shopDes"
          ref="shopDes">
-      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData"></list-view>
+      <list-view @select="selectShop" :shopData="shopData" :reqData="reqData" :shopNum="shopNum"></list-view>
     </div>
     <div class="space"></div>
     </cube-scroll>
@@ -46,7 +46,7 @@
                   <van-cell><van-radio v-model="radio" name="3">线上快递</van-radio></van-cell>
                 </van-cell-group>
               </div>
-              <van-button @click.stop="chooseMainType" @click="sureFliter">确定</van-button>
+              <van-button @click="sureFliter">确定</van-button>
             </div>
           </van-popup>
   </div>
@@ -85,6 +85,7 @@
     data() {
       return {
         shopData: [],
+        shopNum: 0,
         actions: [
           {
             name: '综合排序',
@@ -162,6 +163,7 @@
     },
     methods: {
       chooseMainType: function (index) {
+        this.shopNum = 0;
         let filterShop = {};
         this.currentIndex = index;
         if (index === 0){ //综合排序
@@ -267,6 +269,7 @@
           skip: 0//跳过几个数据,系统默认为0
         };
 
+        this.getShopList(filterShop);
         function BooleanToNum(bool) {
           return bool ? 1: -1;
         }
@@ -279,18 +282,50 @@
         this.reqData = "";
         this.reqData = req;
         getShopListSort(req).then((res) => { //综合排序请求数据
-          console.log(res);
           this.shopData = [];
           res.data.map((item) => {
-            if(item.qualificationState == "正常"){
+            let dis = this.getDistance(item);
+            item = Object.assign({}, item, {distance: dis});
+            if(item.qualification){
               this.shopData.push(item);
             }
           });
+          
+          //排序 ， 距离
+          if(req.distance == 1){
+            console.log(this.shopData);
+            this.shopData = this.shopData.sort(compare("distance"));
+            console.log(this.shopData);
+            
+
+            function compare(property){
+              return function(a,b){
+                let value1 = a[property];
+                let value2 = b[property];
+                return value1 - value2;
+              }
+            }
+          }
+          
           Toast.clear();
         }, err => {
           console.log(err);
         });
         // Toast.clear();
+      },
+      getDistance: function(data){
+        if(data.position){
+          let lng = localStorage.getItem('lng');
+          let lat = localStorage.getItem('lat');
+          if(data.position.lat == "" || data.position.lng == ""){
+            return 999999
+          }else{
+            return parseInt(this.getGreatCircleDistance(data.position.lat, data.position.lng, lat, lng))
+          }
+        }else{
+          return 999999
+        }
+        
       }
     }
   };
