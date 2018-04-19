@@ -19,9 +19,9 @@
       <div class="row-line"></div>
       <!-- 个人信息详细部分 -->
       <div class="myinfo-message">
-        <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
+        <div v-for="(info,index) in userInfoItem " :key="index" class="myinfo-message-item">
           <div class="myinfo-message-tag textright">{{ info.name }}</div>
-          <div class="myinfo-message-data canchose">{{ info.tag }}</div>
+          <div class="myinfo-message-data canchose"><a :href="`tel:${info.tag}`">{{ info.tag }}</a></div>
         </div>
       </div>
     </div>
