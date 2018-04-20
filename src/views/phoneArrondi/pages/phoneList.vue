@@ -63,6 +63,7 @@ export default {
 	async mounted () {
 		let params = location.href.split('/').pop().split('&');
 
+
 		let res = await this.$api.sendData('https://m.yixiutech.com/sql/find', {collection: 'Goods'});
 
 		res.data.map(item => {
@@ -84,12 +85,20 @@ export default {
 			return;
 		}
 
+
 		// 安卓上新和ios上新,不带型号名称的
 		this.phoneList.map(item => {
-			if (item.category == params[0]) {
-				this.result.push(item);
-				this.currentMap.push(item);
-			} 
+			if (window.type !== 'ios') {
+				if (item.name.toLowerCase().indexOf('iphone') == -1) {
+					this.result.push(item);
+					this.currentMap.push(item);
+				}
+			} else {
+				if (item.name.toLowerCase().indexOf('iphone') !== -1) {
+					this.result.push(item);
+					this.currentMap.push(item);
+				}
+			}
 		})
 		
 		this.result.sort((a, b) => {

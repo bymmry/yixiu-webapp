@@ -20,6 +20,7 @@
       route () {
         if (this.type) {
           this.$router.push('/phoneList/' + sessionStorage.getItem(this.type));
+          window.type = this.type;
           return;
         }
         this.$router.push(this.src);
