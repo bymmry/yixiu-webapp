@@ -20,10 +20,10 @@
           <span class="name">商家电话</span>
           <span class="value"><a :href="telContactNumber">{{orderData.shop.contactNumber}}</a></span>
           </li>
-        <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}}</span></li>
-        <li><span class="name">手机颜色</span><span class="value">{{orderData.phoneModel.color.join(",")}}</span></li>
-        <li><span class="name">维修选项</span><span class="value">{{serverList}}</span></li>
-        <li><span class="name">服务方式</span><span class="value">{{orderData.serviceWay}}</span></li>
+        <li><span class="name">手机型号</span><span class="value">{{orderData.phoneModel.name}} / {{orderData.phoneModel.color[0]}}</span></li>
+        <!-- <li><span class="name">手机颜色</span><span class="value">{{orderData.phoneModel.color.join(",")}}</span></li> -->
+        <li><span class="name">维修选项</span><span class="value">{{serverList}} / {{orderData.serviceWay}}</span></li>
+        <!-- <li><span class="name">服务方式</span><span class="value">{{orderData.serviceWay}}</span></li> -->
         <li><span class="name">买家电话</span><span class="value">{{orderData.phone}}</span></li>
         <li><span class="name">留言</span><span class="value">{{orderData.remark}}</span></li>
         <li v-if="orderData.address != ''"><span class="name">买家联系地址</span><span class="value">{{orderData.address}}</span></li>
@@ -32,13 +32,14 @@
           <span class="name wuliu">点击完善物流信息</span>
           <span class="value"></span>
         </li>
-        <li v-if="orderData.state == 11 && orderData.trackingCom && orderData.serviceWay == '快递维修'" @click="showWuliuDes">
+        <li v-if="orderData.state == 11 && orderData.trackingCom && orderData.serviceWay == '快递维修'" @click="showWuliuDes(0)">
           <span class="name wuliu">点击查看物流信息</span>
           <span class="value"></span>
         </li>
       </ul>
       <ul v-if="orderData.state == 13">
         <li>{{orderData.phoneModel.name}}/￥{{orderData.payment/100}}元</li>
+        <li v-if="orderData.info.trackingCom || orderData.info.trackingCom != ''" style="color: #f85" @click="showWuliuDes(1)">点击查看物流信息</li>
         <li v-if="orderData.comment == '' || !orderData.comment" style="color: #f85" @click="getAbout">点击进行评价</li>
         <li style="color: #f85" @click="getQuality">质检报告</li>
       </ul>
@@ -246,12 +247,25 @@
         let wuliu = this.$refs.wuluInfo;
         wuliu.show();
       },
-      showWuliuDes(){
+      showWuliuDes(index){
         //487275089743
         let finddata = {
-          com: this.orderData.trackingCom,
-          no: this.orderData.trackingNumber.replace(/\s/g,"")
+          com: '',
+          no: ''
         };
+        //买家寄出
+        if(index == 0){
+          finddata = {
+            com: this.orderData.trackingCom,
+            no: this.orderData.trackingNumber.replace(/\s/g,"")
+          };
+        }else if(index == 1){
+          finddata = {
+            com: this.orderData.info.trackingCom,
+            no: this.orderData.info.trackingNumber.replace(/\s/g,"")
+          };
+        }
+        
         console.log(finddata);
         getemail(finddata)
           .then(res => {

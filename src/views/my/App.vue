@@ -166,6 +166,11 @@
             icon: "phone",
             url: "my/callphone"
           },
+          {
+            name: "分享",
+            icon: "share",
+            url: "my/share"
+          },
           // {
           //   name: "测试",
           //   icon: "question",
@@ -216,7 +221,7 @@
         getuserinforByopenId(openid)
           .then(res => {
             this.userInfo = res.data
-            console.log(res.data);
+            // console.log(res.data);
             this.loggedin = true;
           }, (err => {
             console.log(err);
@@ -315,7 +320,6 @@
       },
       initUserInfo(userData) {
         // this.userInfo = res.data
-        console.log()
         let data = {
           createdAt: userData.createdAt,
           email: userData.email || '',
@@ -350,7 +354,7 @@
     // },
     activated(){
       let userData = this.getUserInfo();
-      console.log(userData);
+      // console.log(userData);
       // alert(JSON.stringify(userData));
       this.userInfo = userData;
       this.loggedin = true;

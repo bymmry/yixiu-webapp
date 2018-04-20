@@ -137,12 +137,7 @@
 </template>
 
 <script>
-  import { Button } from 'vant'
-  import { NavBar } from 'vant';
-  import { Area } from 'vant';
-  import { Radio } from 'vant';
-  import { Tag } from 'vant';
-  import { PullRefresh } from 'vant';
+  import { NavBar,Button,Area,Radio,Tag } from 'vant';
   import { getuserinforByopenId, updateuserinfo, sendmessage, validatemessage } from '../../../common/api'
 
   export default {
@@ -208,7 +203,6 @@
       [Area.name]: Area,
       [Radio.name]: Radio,
       [Tag.name]: Tag,
-      [PullRefresh.name]: PullRefresh,
     },
     methods: {
       //导航栏 前往个人中心
@@ -431,7 +425,7 @@
     },
     created() {
       let userData = this.getUserInfo();
-      console.log(userData);
+      // console.log(userData);
       // alert(JSON.stringify(userData));
       this.userInfo.email = userData.email || "";
       this.userInfo.mobile = userData.mobile || "";
@@ -572,5 +566,4 @@
   input[type="password"]:focus{
     border:1px solid #ff7496;
   }
-
 </style>
