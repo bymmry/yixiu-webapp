@@ -21,7 +21,7 @@
       <div class="row-line"></div>
       <!-- 个人信息详细部分 -->
       <div class="myinfo-message" v-if="!changed">
-        <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
+        <div v-for="(info,index) in userInfoItem " :key="index" class="myinfo-message-item">
           <div class="myinfo-message-tag textright">{{ info.name }}</div>
           <div class="myinfo-message-data">{{ userInfo[info.tag] }}</div>
         </div>
@@ -29,7 +29,7 @@
 
       <!-- 用户修改个人信息 -->
       <div class="myinfo-message" v-else>
-        <div v-for="(info,index) in userInfoItem " class="myinfo-message-item">
+        <div v-for="(info,index) in userInfoItem " :key="index" class="myinfo-message-item">
           <div class="myinfo-message-tag textright">{{ info.name }}</div>
 
 <!--      ID、生日、性别的判断  
@@ -130,7 +130,8 @@
         </div>
   -->
 
-    </div>
+    <!-- </div> -->
+    <cube-button @click="loginOut">退出登录</cube-button>
   </div>
 
 </template>
@@ -424,6 +425,9 @@
           console.log(err);
         }))
       },
+      loginOut(){
+        this.$router.push("/login");
+      }
     },
     created() {
       let userData = this.getUserInfo();

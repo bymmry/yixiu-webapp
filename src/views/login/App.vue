@@ -6,7 +6,7 @@
     <h3>Welcome</h3>
     <div class="loginBox">
       <div class="loginDes">
-        <span>用户名</span>
+        <span>手机号</span>
         <input type="text" placeholder="手机号" v-model="username">
       </div>
       <div class="loginDes">
