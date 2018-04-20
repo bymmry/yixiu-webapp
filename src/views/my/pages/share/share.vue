@@ -14,7 +14,7 @@
     <div class="messageTag">
       <!-- 信息标题 -->
       <div class="myinfo-title-container">
-        <div class="myinfo-title">邀请注册</div>
+        <div class="myinfo-title">邀请二维码</div>
       </div>
 
       <div class="row-line"></div>
@@ -23,7 +23,7 @@
         <div id="qrcode" ref="qrcode"></div>
       </div>
 
-      <p class="tips">邀请注册成功后，可获得 <span>50翼豆</span></p>
+      <p class="tips">邀请注册成功后，可获得 <span>5元</span></p>
     </div>
   </div>
 
