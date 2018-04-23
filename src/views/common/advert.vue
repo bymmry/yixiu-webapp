@@ -4,7 +4,7 @@
     <!-- <div class="back">
       <p>点击返回</p>
     </div> -->
-    <cube-scroll>
+    <cube-scroll class="scroll">
       <img @click="goBack" :src="imgSrc" alt="">
     </cube-scroll>
   </div>
@@ -42,6 +42,10 @@ export default {
   right: 0;
   height: 100%;
   z-index: 999;
+}
+.scroll{
+  width: 100%;
+  height: 100vh;
 }
 .advert img{
   display: block;
