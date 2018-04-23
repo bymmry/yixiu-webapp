@@ -6,6 +6,7 @@ import toShop from '../common/components/toShop';
 import shopDetail from '../common/components/shopDetail';
 import shop from '../common/components/shopList';
 import theShopDes from '../common/components/shop';
+import advert from './advert';
 
 export default [{
   path: '/orders',
@@ -65,5 +66,10 @@ export default [{
     path: "/shopContent",
     name: "shopContent",
     component: shopDetail
+  },
+  {
+    path: "/advert",
+    name: "advert",
+    component: advert
   }
 ]

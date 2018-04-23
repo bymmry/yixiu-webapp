@@ -19,9 +19,10 @@
     created(){
       let imgData = [
         {
-          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe1.jpg',
-          shopId: '5a96659dda3df52e946142ff',
-          type: 'shop'
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/top.jpg',
+          advertSrc: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/main.jpg',
+          // shopId: '5a96659dda3df52e946142ff',
+          type: 'advert'
         },
         {
           imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe2.jpg',
@@ -53,15 +54,30 @@
     },
     methods: {
       toShop: function(item) {
-        if(item.shopId){
-          console.log(this);
+        // 跳转至店铺
+        if(item.type == 'shop'){
+          if(item.shopId){
+            console.log(this);
+            this.$router.push({
+              path: `/shop/${item.shopId}`,
+              params: {
+                id: item.shopId
+              }
+            })
+          }
+        }
+
+        // 广告
+        if(item.type == 'advert') {
+
           this.$router.push({
-            path: `/shop/${item.shopId}`,
+            name: "advert",
             params: {
-              id: item.shopId
+              imgSrc: item.advertSrc
             }
           })
         }
+        
       }
     }
   }
@@ -79,4 +95,5 @@
 .van-swipe img {
   width: 100%;
 }
+
 </style>
