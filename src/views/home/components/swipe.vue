@@ -25,9 +25,10 @@
           type: 'advert'
         },
         {
-          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe2.jpg',
+          imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/top2.jpg',
+          advertSrc: "https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/mian2.jpg",
           shopId: '5aac6e86eb477d0e1d0bfbb4',
-          type: 'shop'
+          type: 'advert'
         },
         {
           imgUrl: 'https://allenyu-1252092265.cos.ap-chongqing.myqcloud.com/swipe3.jpg',

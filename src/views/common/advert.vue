@@ -4,7 +4,7 @@
     <!-- <div class="back">
       <p>点击返回</p>
     </div> -->
-    <cube-scroll class="scroll">
+    <cube-scroll class="scroll" :data="imgSrc">
       <img @click="goBack" :src="imgSrc" alt="">
     </cube-scroll>
   </div>
