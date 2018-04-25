@@ -51,10 +51,10 @@
       },
       qrcode () {
         let userData = this.getUserInfo();
-
+        // console.log(userData)
         let num = userData.mobile-0;
         $("#qrcode").qrcode({
-          text: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com/yixiuwebapp/register&phone=${num}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`,
+          text: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com/yixiuwebapp/register&response_type=code&scope=snsapi_userinfo&state=${userData._id}#wechat_redirect`,
           width:150,
           height:150
         });
