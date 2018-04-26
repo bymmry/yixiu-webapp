@@ -61,7 +61,18 @@
     },
     created(){
       let winUrl = decodeURIComponent(window.location.href);
-      alert(winUrl);
+      // alert(winUrl);
+
+      let code = location.href.indexOf('code') !== -1 && location.href.split('=')[1].split('&')[0];
+
+      let state = location.href.indexOf('state') !== -1 && location.href.split('state=')[1].split('&')[0];
+
+      console.log(state);
+      alert(state);
+
+      if (state != '123') {
+        sessionStorage.setItem('parentId', state);
+      }
     },
     methods: {
       backHome() {

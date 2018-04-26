@@ -75,26 +75,28 @@
             alert(winUrl);
           }
           else{
-
+            alert(winUrl);
+            toast.hide();
           }
         } else {
-          let pushData = this.reguserinfo(userData);
-          // console.log(pushData)
-          reguser(pushData).then(res => {
-            console.log(res);
-            //注册成功
-            // console.log(res)
-            // if (Data !== {} && Data !== null) {
-            let userData2 = JSON.stringify(res.data);
-            // console.log(res.data);
-            sessionStorage.setItem("userData", userData2);
-            // console.log(sessionStorage.getItem("userData"));
-            // }
+          toast.hide();
+          // let pushData = this.reguserinfo(userData);
+          // // console.log(pushData)
+          // reguser(pushData).then(res => {
+          //   console.log(res);
+          //   //注册成功
+          //   // console.log(res)
+          //   // if (Data !== {} && Data !== null) {
+          //   let userData2 = JSON.stringify(res.data);
+          //   // console.log(res.data);
+          //   sessionStorage.setItem("userData", userData2);
+          //   // console.log(sessionStorage.getItem("userData"));
+          //   // }
 
 
-          }, (err => {
-            console.log(err)
-          }))
+          // }, (err => {
+          //   console.log(err)
+          // }))
         }
         window.isAttestation = false;
         // if (location.href.indexOf('sellerHome') !== -1) {
