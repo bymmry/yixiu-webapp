@@ -48,7 +48,7 @@
       })
       toast.show();
       let winUrl = decodeURIComponent(window.location.href);
-      alert(winUrl);
+      // alert(winUrl);
       //带参数
       if (winUrl.indexOf('?') !== -1) {
         let userData = this.urlDataTurnObj(window.location.href);

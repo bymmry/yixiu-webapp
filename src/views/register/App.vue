@@ -59,6 +59,10 @@
         timer: null,
       }
     },
+    created(){
+      let winUrl = decodeURIComponent(window.location.href);
+      alert(winUrl);
+    },
     methods: {
       backHome() {
         this.$router.push("/home");
