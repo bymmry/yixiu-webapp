@@ -46,7 +46,7 @@
         this.$router.push("/home");
       },
       toRegister(){
-        this.$router.push("/register");
+        this.$router.push("/userregister");
       },
       async loginNow(){
         let that = this;

@@ -182,14 +182,14 @@ let filters = {
     // alert(userInfoStr);
     if(userInfoStr == 'undefined' || userInfoStr == undefined){
       alert("你还未登录，请先登录");
-      this.$router.push("/login");
+      this.$router.push("/userlogin");
       return;
     }else if(typeof userInfoStr === "string"){
       // alert(userInfoStr);
       let user = JSON.parse(userInfoStr);
       if(user.data || user.mobile == ""){
         alert("你还未登录，请先登录");
-        this.$router.push("/login");
+        this.$router.push("/userlogin");
       }else {
         return user;
       }

@@ -67,7 +67,7 @@
         this.$router.push("/home");
       },
       toLogin() {
-        this.$router.push("/login");
+        this.$router.push("/userlogin");
       },
       getCode(formData){
         if (!this.timer) {

@@ -149,14 +149,14 @@
           // alert("data.length = 0")
           sessionStorage.setItem("userData", JSON.stringify(userInfo));
           alert("你还未登录，请先登录");
-          this.$router.push("/login");
+          this.$router.push("/userlogin");
         }else{
           // alert("data.length != 0");
           userInfo = isRegister.data[isRegister.data.length - 1];
           // alert(JSON.stringify(userInfo))
           if(userInfo.mobile == ""){
             alert("你还未登录，请先登录");
-            this.$router.push("/login");
+            this.$router.push("/userlogin");
           }else{
             //更新用户信息
             // alert("else 已注册");
