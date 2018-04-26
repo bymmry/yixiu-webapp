@@ -15,7 +15,7 @@
 </template>
 
 <script>
-	import TicketItem from './TicketItem.vue'
+	import TicketItem from './ticketItem.vue'
   export default {
     components: {
 			TicketItem

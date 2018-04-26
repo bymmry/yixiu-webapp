@@ -33,7 +33,7 @@
 
 <script>
   import { NavBar } from 'vant';
-  import detailContent from "../components/detailContent";
+  import detailContent from "../components/detailcontent";
   import answerBox from "../components/answerBox";
   import topNav from "../components/topNav";
   import { getQuestionByQid, getQAListByQid } from '../../common/api'
