@@ -81,31 +81,8 @@
           }
         } else {
           toast.hide();
-          // let pushData = this.reguserinfo(userData);
-          // // console.log(pushData)
-          // reguser(pushData).then(res => {
-          //   console.log(res);
-          //   //注册成功
-          //   // console.log(res)
-          //   // if (Data !== {} && Data !== null) {
-          //   let userData2 = JSON.stringify(res.data);
-          //   // console.log(res.data);
-          //   sessionStorage.setItem("userData", userData2);
-          //   // console.log(sessionStorage.getItem("userData"));
-          //   // }
-
-
-          // }, (err => {
-          //   console.log(err)
-          // }))
         }
         window.isAttestation = false;
-        // if (location.href.indexOf('sellerHome') !== -1) {
-        //   this.checkIsShop(userData);
-        // } else {
-        //   this.$router.push("/home");
-        // }
-
 
       } else { // 不带参数
         
@@ -274,15 +251,14 @@
        */
       async registerMoney(userData){
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
-        alert(JSON.stringify(res));
-        // if(res.openid){
-        //   // alert(JSON.stringify(res.openid));
-        //   sessionStorage.setItem("openid", res.openid);
-        //   let userInfo = this.initUserInfo(res);
-        //   this.isUserRegister(userInfo);
-        // }else{
-        //   alert(JSON.stringify(res));
-        // }
+        // alert(JSON.stringify(res));
+        if(res.openid){
+          sessionStorage.setItem("openid", res.openid);
+          let userInfo = this.initUserInfo(res);
+          this.isUserRegister(userInfo);
+        }else{
+          alert(JSON.stringify(res));
+        }
       }
     }
   }

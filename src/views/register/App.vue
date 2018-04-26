@@ -60,19 +60,7 @@
       }
     },
     created(){
-      let winUrl = decodeURIComponent(window.location.href);
-      // alert(winUrl);
-
-      let code = location.href.indexOf('code') !== -1 && location.href.split('=')[1].split('&')[0];
-
-      let state = location.href.indexOf('state') !== -1 && location.href.split('state=')[1].split('&')[0];
-
-      console.log(state);
-      alert(state);
-
-      if (state != '123') {
-        sessionStorage.setItem('parentId', state);
-      }
+      
     },
     methods: {
       backHome() {
@@ -117,6 +105,7 @@
       },
       async register() {
         // let userData = this.getUserInfo();
+        let parentId = sessionStorage.getItem("parentId");
         if(sessionStorage.getItem("openid")){
           let openid = sessionStorage.getItem("openid");
           // alert(openid);
@@ -132,6 +121,7 @@
             let data = {
               "mobile": that.phoneNumber,
               "password": md5(that.password),
+              parent: parentId,
               wxopenid: nowopenid
             }
 
@@ -258,8 +248,13 @@
 
   }
 
-  .register .buttons .registerButton {
+  .register .buttons{
     width: auto;
+    height: auto;
+  }
+  .register .buttons .registerButton {
+    width: 100%;
+    height: auto;
     text-align: center;
   }
 
@@ -280,9 +275,12 @@
   }
 
   .register .buttons .login {
+    width: 100%;
+    height: auto;
+    margin-top: 10px;
     text-align: center;
     color: #fff;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .register .buttons .login span {
