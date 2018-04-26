@@ -74,9 +74,10 @@
           else if(userData.state == 3){ //注册返利入口
             alert(winUrl);
           }
-          else{
-            alert(winUrl);
+          else{ //注册返利入口
+            sessionStorage.setItem('parentId', userData.state);
             toast.hide();
+            this.registerMoney(userData);
           }
         } else {
           toast.hide();
@@ -267,6 +268,21 @@
           }
           return user;
         }
+      },
+      /**
+       * 注册返利入口
+       */
+      async registerMoney(userData){
+        let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
+        alert(JSON.stringify(res));
+        // if(res.openid){
+        //   // alert(JSON.stringify(res.openid));
+        //   sessionStorage.setItem("openid", res.openid);
+        //   let userInfo = this.initUserInfo(res);
+        //   this.isUserRegister(userInfo);
+        // }else{
+        //   alert(JSON.stringify(res));
+        // }
       }
     }
   }
