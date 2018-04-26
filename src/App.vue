@@ -40,7 +40,7 @@
     },
     async created() {
       // let winUrl = window.location.href;
-      // alert(winUrl);
+      alert(winUrl);
       toast = this.$createToast({
         txt: 'Loading...',
         mask: true,
@@ -71,7 +71,7 @@
           else if(userData.state == 2){ //app入口
             alert("app进入");
           }
-          else if(userData.state == 3){
+          else if(userData.state == 3){ //注册返利入口
             alert(winUrl);
           }
           else{
