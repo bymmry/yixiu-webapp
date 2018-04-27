@@ -28,7 +28,7 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
       </div>
       <div class="buttons" v-if="isShowSure">
         <div class="registerButton">
-          <input type="button" @click="register" :readonly="isReadonly" :class="{'sure': isShowRegister == 1}" value="确认修改">
+          <input type="button" @click="register" readonly="readonly" class="sure" value="确认修改">
         </div>
       </div>
     </div>
@@ -36,6 +36,7 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
 </template>
 
 <script>
+  import md5 from 'js-md5'; //MD5加密
   export default {
     data() {
       return {
@@ -44,7 +45,7 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
         Validate: "发送验证码",
         password: "",
         passwordSure: "",
-        isShowSure: false // 是否显示确认修改密码
+        isShowSure: true // 是否显示确认修改密码
       };
     },
 
@@ -73,6 +74,70 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
           }
         }
       },
+      async register(){
+        let parentId = sessionStorage.getItem("parentId");
+        if(sessionStorage.getItem("openid")){
+          let openid = sessionStorage.getItem("openid");
+          // alert(openid);
+          let userInfoStr = sessionStorage.getItem("userData");
+        
+
+          if (this.password == "" || this.phoneNumber == "") {
+            this.$toast("请填写手机和密码");
+          } else if (this.validateSure == this.validateNumber) {
+
+            if(this.password == this.passwordSure){
+              let that = this;
+              let nowopenid = [];
+              nowopenid.push(openid);
+              
+              let data = {};
+              console.log(typeof userInfoStr);
+              if(typeof userInfoStr == "string"){
+                let user = JSON.parse(userInfoStr);
+                let up = {
+                  collection: "User",
+                  find: {
+                    '_id': user._id
+                  },
+                  update: {
+                    "mobile": that.phoneNumber,
+                    "password": md5(that.password),
+                    parent: parentId,
+                    wxopenid: nowopenid,
+                    wx: user.wx
+                  } 
+                }
+                data = Object.assign({}, data, up);
+              }
+              
+              // alert(JSON.stringify(data));
+              let res = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, data);
+              console.log(res);
+              // alert(JSON.stringify(res))
+              if (res.code == 200) {
+                this.$toast("密码修改成功");
+                sessionStorage.setItem("userData", JSON.stringify(res.data));
+                setTimeout(() => {
+                  this.$router.push("/my");
+                }, 1000);
+              } else {
+                  this.$toast(res.errMsg);
+              }
+            }else {
+              this.$toast("两次密码不一样");
+              this.password = "";
+              this.passwordSure = "";
+            }
+
+            
+          } else if(this.validateSure != this.validateNumber){
+            this.$toast("验证码错误");
+          }else if(this.validateNumber == ""){
+            this.$toast("请输入验证码");
+          }
+        }
+      }
     }
   }
 
