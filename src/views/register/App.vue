@@ -22,7 +22,7 @@
       </div>
       <div class="buttons">
         <div class="registerButton">
-          <input type="button" @click="register" :class="{'sure': isShowRegister == 1}" value="立即注册">
+          <span type="button" @click="register" :class="{'sure': isShowRegister == 1}">立即注册</span>
         </div>
         <br/>
         <div class="login">
@@ -209,11 +209,11 @@
   .register .registerBox {
     width: auto;
     height: auto;
-    margin-top: 15%;
+    margin-top: 5%;
   }
 
   .register .registerBox .registerDes {
-    margin: 20px auto;
+    margin: 10px auto;
     width: 80vw;
     height: 30px;
     border-bottom: 1px solid #fff;
@@ -259,7 +259,8 @@
     text-align: center;
   }
 
-  .register .buttons .registerButton input {
+  .register .buttons .registerButton span {
+    display: inline-block;
     text-align: center;
     width: 80vw;
     margin: 10px auto;
@@ -271,7 +272,7 @@
     font-size: 23px;
   }
 
-  .register .buttons .registerButton input.sure {
+  .register .buttons .registerButton span.sure {
     color: #3878cd;
   }
 

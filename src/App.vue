@@ -143,6 +143,7 @@
         // alert(JSON.stringify(isRegister));
         
         toast.hide();
+        console.log("=========================================>user data");
         console.log(isRegister.data);
         if (isRegister.data.length == 0){
           //注册
@@ -152,25 +153,25 @@
           this.$router.push("/userlogin");
         }else{
           // alert("data.length != 0");
-          userInfo = isRegister.data[isRegister.data.length - 1];
+          userIn = isRegister.data[isRegister.data.length - 1];
           // alert(JSON.stringify(userInfo))
-          if(userInfo.mobile == ""){
+          if(userIn.mobile == ""){
             alert("你还未登录，请先登录");
             this.$router.push("/userlogin");
           }else{
             //更新用户信息
             // alert("else 已注册");
             // users = isRegister.data[0];
-            if(userInfo._id){
+            if(userIn._id){
               let update = {
                 collection: "User",
                 find: {
-                  '_id': userInfo._id
+                  '_id': userIn._id
                 },
                 update: {
-                  name: userInfo.wx.nickname,
-                  mobile: userInfo.mobile,
-                  wx: userInfo.wx
+                  name: userIn.wx.nickname,
+                  mobile: userIn.mobile,
+                  wx: userIn.wx
                 }
               }
               console.log(update);
@@ -178,7 +179,7 @@
             }
             
           
-            sessionStorage.setItem("userData", JSON.stringify(userInfo));
+            sessionStorage.setItem("userData", JSON.stringify(userIn));
             this.$toast("自动登录成功");
           }
          

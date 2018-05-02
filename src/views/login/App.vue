@@ -156,11 +156,11 @@
   .login .loginBox{
     width: auto;
     height: auto;
-    margin-top: 10%;
+    margin-top: 5%;
   }
   .login .loginBox .loginDes{
     margin: 0 auto;
-    padding: 20px 0;
+    padding: 10px 0;
     width: 210px;
     height: 30px;
   }
