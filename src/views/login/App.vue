@@ -16,8 +16,10 @@
     </div>
     <div class="buttons">
       <div @click="loginNow" class="loginButton">
-        <button>立即登录</button>
+        <!-- <button>立即登录</button> -->
+        <span>立即登录</span>
       </div>
+      <br/>
       <div class="register">
         <span @click="forgetPassword">忘记密码?</span>|<span @click="toRegister">立即注册</span>
       </div>
@@ -181,11 +183,12 @@
     width: auto;
     text-align: center;
   }
-  .login .buttons .loginButton button{
+  .login .buttons .loginButton span{
+    display: inline-block;
     text-align: center;
     width: 80vw;
     margin: 10px auto;
-    padding: 15px 0;
+    padding: 10px 0;
     border: none;
     background: #fff;
     color: #3878cd;

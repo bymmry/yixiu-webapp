@@ -24,6 +24,7 @@
         <div class="registerButton">
           <input type="button" @click="register" :class="{'sure': isShowRegister == 1}" value="立即注册">
         </div>
+        <br/>
         <div class="login">
           <span @click="toLogin">已有账号，返回登录</span>
         </div>
