@@ -20,14 +20,21 @@
         <!-- <sicon name="phone" scale="2"></sicon> -->
         <input type="password" placeholder="密码" v-model="password">
       </div>
+      <div class="registerButton">
+        <span type="button" @click="register" :class="{'sure': isShowRegister == 1}">立即注册</span>
+      </div>
+      <br/>
+      <div class="login">
+        <span @click="toLogin">已有账号，返回登录</span>
+      </div>
       <div class="buttons">
-        <div class="registerButton">
+        <!-- <div class="registerButton">
           <span type="button" @click="register" :class="{'sure': isShowRegister == 1}">立即注册</span>
         </div>
         <br/>
         <div class="login">
           <span @click="toLogin">已有账号，返回登录</span>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -253,16 +260,16 @@
     width: auto;
     height: auto;
   }
-  .register .buttons .registerButton {
+  .registerButton {
     width: 100%;
     height: auto;
     text-align: center;
   }
 
-  .register .buttons .registerButton span {
+  .registerButton span {
     display: inline-block;
     text-align: center;
-    width: 100vw;
+    width: 80vw;
     margin: 10px auto;
     padding: 15px 0;
     border: none;
@@ -272,11 +279,11 @@
     font-size: 23px;
   }
 
-  .register .buttons .registerButton span.sure {
+  .registerButton span.sure {
     color: #3878cd;
   }
 
-  .register .buttons .login {
+  .login {
     display: block;
     width: 100%;
     height: auto;
@@ -286,7 +293,7 @@
     font-size: 14px;
   }
 
-  .register .buttons .login span {
+  .login span {
     display: inline-block;
     padding: 5px;
   }

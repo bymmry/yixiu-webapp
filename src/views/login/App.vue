@@ -13,16 +13,22 @@
         <span>密码</span>
         <input type="password" v-model="password">
       </div>
-    </div>
-    <div class="buttons">
       <div @click="loginNow" class="loginButton">
         <!-- <button>立即登录</button> -->
+        <span>立即登录</span>
+      </div>
+      <div class="register">
+        <span @click="forgetPassword">忘记密码?</span>|<span @click="toRegister">立即注册</span>
+      </div>
+    </div>
+    <div class="buttons">
+      <!-- <div @click="loginNow" class="loginButton">
         <span>立即登录</span>
       </div>
       <br/>
       <div class="register">
         <span @click="forgetPassword">忘记密码?</span>|<span @click="toRegister">立即注册</span>
-      </div>
+      </div> -->
     </div>
     <wx-login v-if="false" class="wxLogin"></wx-login>
   </div>
@@ -183,11 +189,11 @@
     width: auto;
     height: auto;
   }
-  .login .buttons .loginButton{
+  .loginButton{
     width: auto;
     text-align: center;
   }
-  .login .buttons .loginButton span{
+  .loginButton span{
     display: inline-block;
     text-align: center;
     width: 80vw;
@@ -199,12 +205,12 @@
     border-radius: 5px;
     font-size: 23px;
   }
-  .login .buttons .register{
+  .register{
     text-align: center;
     color: #fff;
     font-size: 13px;
   }
-  .login .buttons .register span{
+  .register span{
     display: inline-block;
     padding: 5px;
   }
