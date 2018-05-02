@@ -141,6 +141,7 @@
         let lat = localStorage.getItem('lat');
         let req = {
           categoryName: categoryName,
+          limit: 20,
           position: {
             lng: lng,
             lat: lat

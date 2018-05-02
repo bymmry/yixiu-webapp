@@ -139,9 +139,15 @@
       });
       if (url.length === 2){
         const categoryName = url[1];
-        console.log(categoryName);
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
         let req = {
-          categoryName: categoryName
+          categoryName: categoryName,
+          limit: 20,
+          position: {
+            lng: lng,
+            lat: lat
+          },
         };
         this.getShopList(req);
       }else {
