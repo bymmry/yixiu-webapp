@@ -153,7 +153,7 @@
           this.$router.push("/userlogin");
         }else{
           // alert("data.length != 0");
-          userIn = isRegister.data[isRegister.data.length - 1];
+          let userIn = isRegister.data[isRegister.data.length - 1];
           // alert(JSON.stringify(userInfo))
           if(userIn.mobile == ""){
             alert("你还未登录，请先登录");

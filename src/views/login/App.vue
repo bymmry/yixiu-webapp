@@ -186,7 +186,7 @@
   .login .buttons .loginButton span{
     display: inline-block;
     text-align: center;
-    width: 80vw;
+    width: 100vw;
     margin: 10px auto;
     padding: 10px 0;
     border: none;

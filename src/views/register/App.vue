@@ -262,7 +262,7 @@
   .register .buttons .registerButton span {
     display: inline-block;
     text-align: center;
-    width: 80vw;
+    width: 100vw;
     margin: 10px auto;
     padding: 15px 0;
     border: none;
@@ -277,6 +277,7 @@
   }
 
   .register .buttons .login {
+    display: block;
     width: 100%;
     height: auto;
     margin-top: 10px;
