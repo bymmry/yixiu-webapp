@@ -259,6 +259,7 @@
   .funcbtn{
       position: absolute;
       display: flex;
+      z-index: 100;
       bottom: 0;
       left: 0;
       right: 0;
