@@ -23,7 +23,20 @@
         <div id="qrcode" ref="qrcode"></div>
       </div>
 
-      <p class="tips">邀请注册成功后，可获得 <span>5元</span></p>
+      <p class="tips">邀请注册成功后，可获得用户下单金额 <span>3%</span></p>
+    </div>
+    <div>
+      <div class="tips">邀请用户返利</div>
+      <div class="row-line-money"></div>
+      <div class="money" >
+        <div class="money">总返利：{{allnumber}}元</div>
+        <div class="money">已返利：{{surplusnumber}}元</div>
+        <div class="money">待返利：{{allnumber-surplusnumber}}元</div>
+      </div>
+      <div class="funcbtn">
+        <button @click="serchmoney" class="other">查询</button>
+        <button @click="getmoney">提现</button>
+      </div>
     </div>
   </div>
 
@@ -33,16 +46,24 @@
   import './modules/jquery-1.10.2.min.js';
   import './modules/jquery.qrcode.min.js';
 
-  import { NavBar} from 'vant';
+  import { NavBar, Button} from 'vant';
 
 
   export default {
     data () {
       return {
+        infoName: '分享',
+        allnumber: 0,
+        surplusnumber: 0,
+        userlist: [],
+        allUserIds: [],
+        // userids: [],
+        // userOrderlists: [],
       }
     },
     components: {
-      [NavBar.name]: NavBar
+      [NavBar.name]: NavBar,
+      [Button.name]: Button,
     },
     methods: {
       //导航栏 前往个人中心
@@ -54,11 +75,133 @@
         // console.log(userData)
         let num = userData.mobile-0;
         $("#qrcode").qrcode({
-          text: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com/yixiuwebapp/register&response_type=code&scope=snsapi_userinfo&IDvalue=${userData._id}&state=3#wechat_redirect`,
+          text: `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92877f3243727d9b&redirect_uri=http://m.yixiutech.com/yixiuwebapp/register&response_type=code&scope=snsapi_userinfo&IDvalue=${userData._id}&state=${userData._id}#wechat_redirect`,
           width:150,
           height:150
         });
-      }
+      },
+      async serchmoney () {
+        let userData = this.getUserInfo();
+        let userId = userData._id;
+        // let userId = "5ad21852ab85e142eaef9276";
+        // 1.获取关联用户
+        let userLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+            collection:'User',
+            parent: userId,
+            limit: 0,
+            select:{_id:1},
+		    })
+        console.log('----------------------');
+        console.log(userLists);
+        let userIdlist = userLists.data;
+        if(userIdlist.length == 0){
+          alert("已推荐0人，加油哦！");
+          return;
+        } else {
+          alert("已推荐" + userIdlist.length + "人");
+        }
+        
+        console.log(userIdlist.length);
+        console.log(userIdlist);
+
+        let userids = [];
+        if(userIdlist.length>0){
+          for(var x= 0; x<userIdlist.length; x++){
+            userids.push(userIdlist[x]._id);
+          }
+        }
+        this.allUserIds = userids;
+        console.log('----------------------1');
+        console.log(userids);
+        //2.根据获取到的列表,查询订单列表
+        // let iduser = "5ad209cfab85e142eaef9271"
+        let userOrderlist = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+          collection:'Order',
+          user:{
+            $in:userids//遍历childrenShoplist的_id放到这里面
+            // $in:[iduser]
+          },
+          limit: 0,
+          state: 13,
+          select:{payment:1},
+        })
+        console.log("--------------------------2");
+        console.log(userOrderlist);
+        let userOrderlists = userOrderlist.data;
+        let sumMoney = 0;
+        if(userOrderlists.length>0){
+          for(var y= 0; y<userOrderlists.length; y++){
+            sumMoney = sumMoney + userOrderlists[y].payment;
+           }
+        }
+        console.log("--------------------------3");
+        console.log(sumMoney);
+        this.allnumber = (sumMoney/100)*0.03;
+        console.log(this.allnumber);
+        // 已返利订单查询
+
+        let userOrderlistHadGet = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+          collection:'Order',
+          user:{
+            $in:userids//遍历childrenShoplist的_id放到这里面
+            // $in:[iduser]
+          },
+          limit: 0,
+          state: 13,
+          rebate: true,
+          select:{payment:1},
+        })
+
+        console.log(userOrderlistHadGet);
+        let userOrderlistHadGets = userOrderlistHadGet.data;
+        let sum = 0;
+        if(userOrderlistHadGets.length>0){
+          for(var y= 0; y<userOrderlistHadGets.length; y++){
+            sum = sum + userOrderlistHadGets[y].payment;
+           }
+        }
+        console.log("--------------------------3");
+        console.log(sum);
+        this.surplusnumber = (sum/100)*0.03;
+        console.log(this.surplusnumber);
+      },
+      
+      async getmoney () {
+        let data = { rebate: true};
+        if(this.allnumber - this.surplusnumber == 0){
+          alert("暂时没有可以提现的金额，加油哦！");
+        } else {
+          let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
+            collection:'Order',
+				    find: {
+					    user: this.userids,
+              state: 13,
+				    },
+				    update: data
+          });
+          if(res.code==200){
+            alert("提现成功");
+          } else {
+            alert("提现失败");
+          }
+        }
+        // alert("开始添加");
+        // let data = { mobile: 18584664675};
+        // let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
+        //   collection:'User',
+				//   find: {
+				// 	  user: this.userids,
+        //     _id: "5ad21852ab85e142eaef9276",
+				//   },
+				//   update: data
+        //   });
+        //   if(res.code==200){
+        //     alert("添加成功");
+        //   } else {
+        //     alert("添加失败");
+        //   }
+        // }
+      },
     },
     mounted () {    //钩子函数，等于vue1.0中的ready
       this.qrcode();
@@ -98,6 +241,41 @@
     margin-top: 4vh;
     margin-bottom: 4vh;
     background: #ecebeb;
+  }
+  .row-line-money{
+    width: 100%;
+    height: 0.2vh;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+  }
+  .money{
+    margin-left: 5vh;
+    margin-bottom: 2vh;
+  }
+  .funcbtn button.other{
+        background: #fff;
+        color: #2796CB;
+  }
+  .funcbtn{
+      position: absolute;
+      display: flex;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  }
+  .funcbtn button{
+      flex: 1;
+      border: none;
+      background-color: #4991e5;
+      float: left;
+      padding: 0;
+      width: 100vw;
+      line-height: 60px;
+      text-align: center;
+      color: #fff;
+      font-size: 6vw;
+        
+      border-top: 1px solid #eee;
   }
   .myinfo-message{
     position: relative;

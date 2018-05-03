@@ -166,11 +166,11 @@
             icon: "phone",
             url: "my/callphone"
           },
-          // {
-          //   name: "分享",
-          //   icon: "share",
-          //   url: "my/share"
-          // },
+          {
+            name: "分享",
+            icon: "share",
+            url: "my/share"
+          },
           // {
           //   name: "测试",
           //   icon: "question",
