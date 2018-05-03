@@ -228,7 +228,7 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
   .forget .buttons .registerButton input {
     text-align: center;
     width: 80vw;
-    margin: 10px auto;
+    margin: 10px 10vw;
     padding: 15px 0;
     border: none;
     background: #fff;

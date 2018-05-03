@@ -180,11 +180,13 @@
           return;
         }else if(index === 1){ //修的最好
           filterShop = {
-            serviceFinishCount: 1
+            serviceFinishCount: 1,
+            limit: 20
           }
         }else if(index === 2){ //julizuijin
           filterShop = {
-            distance: 1
+            distance: 1,
+            limit: 20
           }
         }
         Toast.loading({
@@ -270,7 +272,7 @@
             lng: lng,
             lat: lat
           },//用户定位信息的经纬度
-          limit: 10,//一次获取列表的条数,系统默认为10
+          limit: 20,//一次获取列表的条数,系统默认为10
           skip: 0//跳过几个数据,系统默认为0
         };
 
