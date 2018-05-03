@@ -53,8 +53,9 @@
 
           fd.append('file', file.file);
           
-          axios.post('https://m.yixiutech.com/upload', fd, config)
+          axios.post('https://m.yixiutech.com/upload2', fd, config)
           .then(res => {
+            console.log(res);
             if (res.data.data.match(/\.gif/)) {
               this.$emit("addnewphoto", res.data.data);
             }else{
@@ -85,7 +86,7 @@
             fd.append('file', zphoto.file);
             // fd.append('name', zphoto.file.name);
             
-            axios.post('https://m.yixiutech.com/upload', fd, config)
+            axios.post('https://m.yixiutech.com/upload2', fd, config)
             .then(res => {
               console.log(res)
               if (res.data.data.match(/\.gif/)) {
@@ -115,7 +116,7 @@
           // fd.append('file', file.file);
 
           
-          // axios.post('https://m.yixiutech.com/upload', fd, config)
+          // axios.post('https://m.yixiutech.com/upload2', fd, config)
           // .then(res => {
           //   if (res.data.data.match(/\.gif/)) {
           //     this.$emit("addnewphoto", res.data.data);
