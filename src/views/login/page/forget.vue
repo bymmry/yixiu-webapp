@@ -74,26 +74,26 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
           }
         }
       },
-      async register(){
+      async register() {
         let parentId = sessionStorage.getItem("parentId");
-        if(sessionStorage.getItem("openid")){
+        if (sessionStorage.getItem("openid")) {
           let openid = sessionStorage.getItem("openid");
           // alert(openid);
           let userInfoStr = sessionStorage.getItem("userData");
-        
+
 
           if (this.password == "" || this.phoneNumber == "") {
             this.$toast("请填写手机和密码");
           } else if (this.validateSure == this.validateNumber) {
 
-            if(this.password == this.passwordSure){
+            if (this.password == this.passwordSure) {
               let that = this;
               let nowopenid = [];
               nowopenid.push(openid);
-              
-              let data = {};
+
+              // let data = {};
               console.log(typeof userInfoStr);
-              if(typeof userInfoStr == "string"){
+              if (typeof userInfoStr == "string") {
                 let user = JSON.parse(userInfoStr);
                 let up = {
                   collection: "User",
@@ -106,35 +106,41 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
                     parent: parentId,
                     wxopenid: nowopenid,
                     wx: user.wx
-                  } 
+                  }
                 }
-                data = Object.assign({}, data, up);
-              }
-              
-              // alert(JSON.stringify(data));
-              let res = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, data);
-              console.log(res);
-              // alert(JSON.stringify(res))
-              if (res.code == 200) {
-                this.$toast("密码修改成功");
-                sessionStorage.setItem("userData", JSON.stringify(res.data));
-                setTimeout(() => {
-                  this.$router.push("/my");
-                }, 1000);
-              } else {
-                  this.$toast(res.errMsg);
-              }
-            }else {
-              this.$toast("两次密码不一样");
-              this.password = "";
-              this.passwordSure = "";
-            }
+                // data = Object.assign({}, data, up);
+                let data = {
+                  '_id': user._id,
+                  "password": md5(that.password)
+                }
 
-            
-          } else if(this.validateSure != this.validateNumber){
-            this.$toast("验证码错误");
-          }else if(this.validateNumber == ""){
-            this.$toast("请输入验证码");
+                console.log(that.password);
+                console.log(data);
+                // alert(JSON.stringify(data));
+                let res = await this.$api.sendData(`https://m.yixiutech.com/user/update/password`, data);
+                console.log(res);
+                // alert(JSON.stringify(res))
+                if (res.code == 200) {
+                  this.$toast("密码修改成功");
+                  sessionStorage.setItem("userData", JSON.stringify(res.data));
+                  setTimeout(() => {
+                    this.$router.push("/my");
+                  }, 1000);
+                } else {
+                  this.$toast(res.errMsg);
+                }
+              } else {
+                this.$toast("两次密码不一样");
+                this.password = "";
+                this.passwordSure = "";
+              }
+
+
+            } else if (this.validateSure != this.validateNumber) {
+              this.$toast("验证码错误");
+            } else if (this.validateNumber == "") {
+              this.$toast("请输入验证码");
+            }
           }
         }
       }
@@ -177,11 +183,12 @@ import { fadegettracking } from '../../../../../yixiu-seller/src/views/common/ap
     vertical-align: middle;
   }
 
-  .forget .title{
+  .forget .title {
     width: auto;
     padding: 15px;
     color: #fff;
   }
+
   .forget .registerBox {
     width: auto;
     height: auto;

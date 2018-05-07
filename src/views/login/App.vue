@@ -76,7 +76,7 @@
             let req;
             for(let i=0; i< res.data.wxopenid.length; i++){
               if(openid == res.data.wxopenid[i]){
-                alert("该账号已添加");
+                this.$toast("登录成功");
                 break;
               }else{
                 req = {
@@ -102,6 +102,10 @@
                 let newUserData = JSON.stringify(newRes.data);
                 sessionStorage.setItem("userData", newUserData);
               }
+            }
+            else{
+              let userData = JSON.stringify(res.data);
+              sessionStorage.setItem("userData", userData);
             }
           }else{
             let userData = JSON.stringify(res.data);

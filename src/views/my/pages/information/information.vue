@@ -381,7 +381,7 @@
           .then(res => {
             toast.hide()
             const tip = this.$createToast({
-              txt: '更新成功!',
+              txt: '更新成功！重新登录后生效！',
               type: 'correct',
               time: 1300
             })

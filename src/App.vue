@@ -59,6 +59,8 @@
          * state=123 公众号入口
          * 
          */
+        // document.body.appendChild('<script src="/static/baidumapv2/baidumap_offline_v2_load.js"><\/script>')
+
         if (userData.state) {
           if (userData.state == 123) { //公众号进入
             this.initGZHInfo(userData);
