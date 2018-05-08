@@ -64,7 +64,7 @@ export default {
 		let params = location.href.split('/').pop().split('&');
 
 
-		let res = await this.$api.sendData('https://m.yixiutech.com/sql/find', {collection: 'Goods'});
+		let res = await this.$api.sendData('https://m.yixiutech.com/sql/find', {collection: 'Goods', limit: 10000});
 
 		res.data.map(item => {
 			let temp = item;
