@@ -72,6 +72,7 @@
           }
           else if(userData.state == 2){ //app入口
             alert("app进入");
+            toast.hide();
           }
           else if(userData.state == 3){ //注册返利入口
             alert(winUrl);
@@ -178,11 +179,16 @@
               }
               console.log(update);
               let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
+              sessionStorage.setItem("userData", JSON.stringify(updateInfo));
+              this.$toast("自动登录成功");
+
+            }else{
+              sessionStorage.setItem("userData", JSON.stringify(userIn));
+              this.$toast("自动登录成功");
             }
             
           
-            sessionStorage.setItem("userData", JSON.stringify(userIn));
-            this.$toast("自动登录成功");
+            
           }
          
         }
