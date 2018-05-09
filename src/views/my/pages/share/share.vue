@@ -28,7 +28,8 @@
     <div>
       <div class="tips">邀请用户返利</div>
       <div class="row-line-money"></div>
-      <div class="money" >
+      <div class="money" >number
+        <div class="money">已邀请：{{number}}人</div>
         <div class="money">总返利：{{allnumber}}元</div>
         <div class="money">已返利：{{surplusnumber}}元</div>
         <div class="money">待返利：{{allnumber-surplusnumber}}元</div>
@@ -53,6 +54,7 @@
     data () {
       return {
         infoName: '分享',
+        number: 0,
         allnumber: 0,
         surplusnumber: 0,
         userlist: [],
@@ -94,12 +96,13 @@
         console.log('----------------------');
         console.log(userLists);
         let userIdlist = userLists.data;
-        if(userIdlist.length == 0){
-          alert("已推荐0人，加油哦！");
-          return;
-        } else {
-          alert("已推荐" + userIdlist.length + "人");
-        }
+        this.number = userIdlist.length;
+        // if(userIdlist.length == 0){
+        //   alert("已推荐0人，加油哦！");
+        //   return;
+        // } else {
+        //   alert("已推荐" + userIdlist.length + "人");
+        // }
         
         console.log(userIdlist.length);
         console.log(userIdlist);
@@ -238,15 +241,15 @@
   .row-line{
     width: 100%;
     height: 0.3vh;
-    margin-top: 4vh;
-    margin-bottom: 4vh;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
     background: #ecebeb;
   }
   .row-line-money{
     width: 100%;
     height: 0.2vh;
-    margin-top: 3vh;
-    margin-bottom: 2vh;
+    margin-top: 2vh;
+    margin-bottom: 1vh;
   }
   .money{
     margin-left: 5vh;
@@ -291,7 +294,7 @@
   }
   .tips{
     font-size: 3.8vw;
-    margin-top: 4vh;
+    margin-top: 3vh;
     text-align: center;
     color: #323643;
   }
