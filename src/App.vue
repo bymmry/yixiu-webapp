@@ -179,15 +179,11 @@
               }
               console.log(update);
               let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
-              sessionStorage.setItem("userData", JSON.stringify(updateInfo));
-              this.$toast("自动登录成功");
 
-            }else{
-              sessionStorage.setItem("userData", JSON.stringify(userIn));
-              this.$toast("自动登录成功");
             }
             
-          
+            sessionStorage.setItem("userData", JSON.stringify(userIn));
+            this.$toast("自动登录成功");
             
           }
          
