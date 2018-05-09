@@ -74,7 +74,7 @@
       }
     },
     methods: {
-      sureOrder: function () {
+      sureOrder() {
         let orderData = this.sureOrderData;
         //  确认下单
         Dialog.confirm({
@@ -92,6 +92,11 @@
             sureOrder(orderData).then((res) => {
               console.log(res);
               if(res.code == 200){
+                let mess = {
+                  type: "未付款",
+                  remark: "下单成功，请尽快付款！"
+                }
+                this.sendMessage(mess);
                 // console.log(this.data);
                 this._pay(orderData, res.data);
               }
@@ -103,6 +108,16 @@
           console.log("取消");
         });
 
+      },
+      async sendMessage(mess){
+        let userData = this.getUserInfo();
+        let phoneNumber = userData.mobile;
+        let message = {
+          "mobile": phoneNumber,
+          "status": mess.type,
+          "remark": mess.remark
+        };
+        let sys = await this.$api.sendData('https://m.yixiutech.com/sms/orderSend', message);
       },
       async _pay(payInfo, res) {
         let isWxMini;
@@ -170,6 +185,12 @@
         // alert(JSON.stringify(res));
         if(res.code == 200){
           this.$toast("支付成功");
+          
+          let mess = {
+            type: "已付款",
+            remark: "付款成功，商家会尽快接单，请您耐心等待！"
+          }
+          this.sendMessage(mess);
           this.$router.push("/orders");
         }else{
           this.$toast("支付失败");
