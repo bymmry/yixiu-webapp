@@ -28,7 +28,7 @@
     <div>
       <div class="tips">邀请用户返利</div>
       <div class="row-line-money"></div>
-      <div class="money" >number
+      <div class="money" >
         <div class="money">已邀请：{{number}}人</div>
         <div class="money">总返利：{{allnumber}}元</div>
         <div class="money">已返利：{{surplusnumber}}元</div>
