@@ -22,10 +22,34 @@
           <span>附近维修店</span>
         </h3>
       </div>
-      <shop-list></shop-list>
+      <shop-list ref="shopList" v-on:showFliterBox="showFliterBox" :filterDataPar="filterData"></shop-list>
       <div class="space"></div>
       <div id="allmap"></div>
       </cube-scroll>
+
+      <!-- 筛选弹出层 -->
+      <cube-popup type="my-popup" ref="fliterBox" class="fliterBox">
+        
+        <div class="filter">
+          <div class="close" @click="closeFilterBox">
+            <sicon name="close" scale="1.7"></sicon>
+          </div>
+              <div class="list"><van-checkbox v-model="filterData.score">评分最高</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.serviceFinishTime">速度最快</van-checkbox></div>
+              <!-- <div class="list"><van-checkbox v-model="filterData.serviceFinishCount">修的最好</van-checkbox></div> -->
+              <!-- <div class="list"><van-checkbox v-model="filterData.price">价格最低</van-checkbox></div> -->
+              <div class="list"><van-checkbox v-model="filterData.distance">距离最近</van-checkbox></div>
+              <div class="list"><van-checkbox v-model="filterData.pv">浏览量最高</van-checkbox></div>
+              <div>
+                <van-cell-group>
+                  <van-cell><van-radio v-model="radio" name="1">上门维修</van-radio></van-cell>
+                  <van-cell><van-radio v-model="radio" name="2">自行到店</van-radio></van-cell>
+                  <van-cell><van-radio v-model="radio" name="3">线上快递</van-radio></van-cell>
+                </van-cell-group>
+              </div>
+              <van-button @click="sureFliter">确定</van-button>
+            </div>
+      </cube-popup>
     </div>
     
    
@@ -42,7 +66,7 @@
   import Ticket from './components/tickets.vue'
   import Activity from './components/activity.vue'
   import shopList from '../common/components/shopListHome'
-  import { PullRefresh } from 'vant'
+  import { PullRefresh, Checkbox, CheckboxGroup, Button, Radio, Cell, CellGroup } from 'vant'
   import location from './pages/location.vue'
   import scroll from '../common/base/scroll'
   import wx from "weixin-js-sdk";
@@ -59,7 +83,13 @@
       Activity,
       shopList,
       location,
-      [PullRefresh.name]: PullRefresh
+      [PullRefresh.name]: PullRefresh,
+      [Checkbox.name]: Checkbox,
+      [CheckboxGroup.name]: CheckboxGroup,
+      [Button.name]: Button,
+      [Radio.name]: Radio,
+      [Cell.name]: Cell,
+      [CellGroup.name]: CellGroup,
     },
     data () {
       return {
@@ -67,7 +97,16 @@
         sessionPaySuccess: 0,
         activate: true,
         location: false,
-        city: ''
+        city: '',
+        filterData: {
+          score: true, //评分
+          serviceFinishTime: true, //速度
+          serviceFinishCount: true, //修好数量
+          price: true, //价格
+          distance: true,//距离
+          pv: true,//浏览量
+        },
+        radio: 1
       }
     },
     mounted () {
@@ -144,6 +183,44 @@
         //   // })
 
         // })
+      },
+      showFliterBox(){
+        console.log("showFliterBox");
+        let fliterBox = this.$refs.fliterBox;
+        fliterBox.show();
+      },
+      closeFilterBox(){
+        let fliterBox = this.$refs.fliterBox;
+        fliterBox.hide();
+      },
+      sureFliter(){
+        let fliterBox = this.$refs.fliterBox;
+        fliterBox.hide();
+
+        let lng = localStorage.getItem('lng');
+        let lat = localStorage.getItem('lat');
+        let filterShop = {
+          score: BooleanToNum(this.filterData.score), //评分
+          serviceFinishTime: BooleanToNum(this.filterData.serviceFinishTime), //速度
+          serviceFinishCount: BooleanToNum(this.filterData.serviceFinishCount), //修好数量
+          price: BooleanToNum(this.filterData.price), //价格
+          distance: BooleanToNum(this.filterData.distance),//距离
+          pv: BooleanToNum(this.filterData.pv),//浏览量
+          name: "",//商家名称
+          categoryName: "",//服务分类名称
+          serviceName: "",//服务名称
+          position: {
+            lng: lng,
+            lat: lat
+          },//用户定位信息的经纬度
+          limit: 20,//一次获取列表的条数,系统默认为10
+          skip: 0//跳过几个数据,系统默认为0
+        };
+
+        this.$refs.shopList.childFilter(filterShop);
+        function BooleanToNum(bool) {
+          return bool ? 1: -1;
+        }
       }
     }
   }
@@ -209,5 +286,37 @@
     display: inline-block;
     line-height: 5vh;
     font-size: 13px;
+  }
+
+  .filter{
+    width: 100vw;
+    height: 44vh;
+    background-color: #fff;
+    /* height: auto; */
+  }
+  .filter .close{
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+    margin-right: 15px;
+  }
+  
+  .filter > div.list{
+    width: 35vw;
+    height: 35px;
+    line-height: 35px;
+    display: inline-block;
+    padding: 0 5vw;
+  }
+  .filter > div.button{
+    width: auto;
+  }
+  .filter button{
+    float: right;
+    width: 60vw;
+    margin: 2vh 5vw;
+    background-color: #f85;
+    color: #fff;
   }
 </style>

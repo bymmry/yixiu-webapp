@@ -79,6 +79,7 @@
         type: Array,
         default: null
       },
+      filterDataPar: Object
     },
     data() {
       return {
@@ -251,7 +252,8 @@
         this.shopData = list;
       },
       filterShop: function () {
-        this.showFilter = true;
+        // this.showFilter = true;
+        this.$emit("showFliterBox", true);
       },
       sureFliter: function () {
         this.showFilter = false;
@@ -332,6 +334,9 @@
           return 999999
         }
         
+      },
+      childFilter(filterShop){
+        this.getShopList(filterShop);
       }
     }
   };

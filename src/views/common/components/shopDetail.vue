@@ -138,6 +138,8 @@
     created() {
       console.log(this.$route.params);
       this.shopInfo = this.$route.params.data;
+      this.telContactNumber = `tel:${this.shopInfo.contactNumber}`;
+      this.serviceWays = this.shopInfo.serviceWay;
       // let shopId = shopData._id;
       // if (!shopId) {
       //   this.$router.push('/home');
