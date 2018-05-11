@@ -20,7 +20,8 @@
     },
     data() {
       return {
-        shopServer: []
+        shopServer: [],
+        shopNumber: "",
       }
     },
     props: {
@@ -76,12 +77,19 @@
     methods: {
       sureOrder() {
         let orderData = this.sureOrderData;
+        let shopIDD = orderData.shop;
+        this.serchShopNumber(shopIDD);
         //  确认下单
         Dialog.confirm({
           title: '是否立即支付',
         }).then(() => {
           // on confirm
-          console.log(orderData);
+          // console.log(orderData);
+          // console.log("----------------------------1");
+          // console.log(orderData.shop);
+
+          // this.shopNumber = this.serchShopNumber(shopIDD);
+          // console.log(this.shopNumber);
           if(this.state == 10){ // 已付款订单
             let data = {
               _id: this.orderId
@@ -92,11 +100,13 @@
             sureOrder(orderData).then((res) => {
               console.log(res);
               if(res.code == 200){
-                let mess = {
-                  type: "未付款",
-                  remark: "下单成功，请尽快付款！"
-                }
-                this.sendMessage(mess);
+                // let mess = {
+                //   type: "未付款",
+                //   remark: "下单成功，请尽快付款！"
+                // }
+                // this.sendMessage(mess);
+                // console.log("----------------------------2");
+                // console.log(orderData.shop);
                 // console.log(this.data);
                 this._pay(orderData, res.data);
               }
@@ -109,9 +119,23 @@
         });
 
       },
+      async serchShopNumber(shopIDD){
+        // let x = "5af1d707d6877a46e32b3b9f";
+        let shopList = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+          collection:'Shop',
+          _id: shopIDD,
+          limit: 0,
+          select:{contactNumber:1}
+		    })
+        let sNumber = shopList.data;
+        let shNumber = sNumber[0].contactNumber;
+        this.shopNumber = shNumber;
+      },
       async sendMessage(mess){
-        let userData = this.getUserInfo();
-        let phoneNumber = userData.mobile;
+        // let userData = this.getUserInfo();
+        let phoneNumber = this.shopNumber;
+        // console.log("----------------------------2");
+        // console.log(phoneNumber);
         let message = {
           "mobile": phoneNumber,
           "status": mess.type,
@@ -188,7 +212,7 @@
           
           let mess = {
             type: "已付款",
-            remark: "付款成功，商家会尽快接单，请您耐心等待！"
+            remark: "您有新的订单哦，请商家尽快处理！"
           }
           this.sendMessage(mess);
           this.$router.push("/orders");
