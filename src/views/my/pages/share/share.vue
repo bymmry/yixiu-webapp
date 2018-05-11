@@ -126,7 +126,7 @@
           },
           limit: 0,
           state: 13,
-          select:{payment:1},
+          select:{payment:1, service:1},
         })
         console.log("--------------------------2");
         console.log(userOrderlist);
@@ -134,7 +134,10 @@
         let sumMoney = 0;
         if(userOrderlists.length>0){
           for(var y= 0; y<userOrderlists.length; y++){
-            sumMoney = sumMoney + userOrderlists[y].payment;
+            if(userOrderlists[y].service.length !== 0){
+              sumMoney = sumMoney + userOrderlists[y].payment;
+            }
+            
            }
         }
         console.log("--------------------------3");
@@ -151,8 +154,8 @@
           },
           limit: 0,
           state: 13,
-          rebate: true,
-          select:{payment:1},
+          userRebate: true,
+          select:{payment:1, service:1},
         })
 
         console.log(userOrderlistHadGet);
@@ -160,7 +163,9 @@
         let sum = 0;
         if(userOrderlistHadGets.length>0){
           for(var y= 0; y<userOrderlistHadGets.length; y++){
-            sum = sum + userOrderlistHadGets[y].payment;
+            if(userOrderlistHadGets[y].service.length !== 0){
+              sum = sum + userOrderlistHadGets[y].payment;
+            }
            }
         }
         console.log("--------------------------3");
