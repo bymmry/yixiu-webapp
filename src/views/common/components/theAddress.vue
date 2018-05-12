@@ -1,7 +1,7 @@
 <template>
   <div class="myadd-container">
     <h3>点击选择地址</h3>
-    <p v-if="fullAddress.length == 0">你还没有地址，去添加一个吧</p>
+    <p v-if="fullAddress.length == 0">你还没有地址，去个人中心<button @click="addMyAddress">添加</button>一个吧</p>
     <ul v-else>
         <li 
           v-for="(add,index) in fullAddress" 
@@ -14,27 +14,48 @@
             <p>{{add.info}}</p>
         </li>
     </ul>
+    <div>
+      <change-address v-show="addressStatus" :type="type" @addSuccess="addSuccess"></change-address>
+    </div>
   </div>
 
 </template>
 
 <script>
   //vant
-  import { NavBar } from 'vant';
+  import { NavBar, Button, Dialog } from 'vant';
   import { AddressList } from 'vant';
   import { PullRefresh } from 'vant';
-  import { getaddressById } from '../api'
-
+  import { getaddressById } from '../api';
+  import addAddress from './addAddress'
+  import changeAddress from './changeaddress'
   export default {
     name: 'theAddress',
     data () {
       return {
        fullAddress: [],
-       list:[]
+       list:[],
+       addressStatus: false,
+       type: "",
       }
+    },
+    components: {
+      [Button.name]: Button,
+      [Dialog.name]: Dialog,
+      [AddressList.name]: AddressList,
+      addAddress,
+      changeAddress
     },
     methods: {
       //获取地址数据
+      addMyAddress () {
+        this.addressStatus = true;
+        this.type = "new";
+      },
+      addSuccess() {
+        this.addressStatus = false;
+        this.addressMessage();
+      },
       async getaddressData(id){
         let addressData = await getaddressById(id)
 
@@ -57,7 +78,7 @@
     },
     created(){
       this.addressMessage();
-    }
+    },
   }
 </script>
 
