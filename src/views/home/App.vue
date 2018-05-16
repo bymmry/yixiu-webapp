@@ -19,7 +19,7 @@
       <div class="shopTitle">
         <h3>
           <!-- <sicon name="home" scale="1.6"></sicon> -->
-          <span>附近维修店</span>
+          <span>翼修商户</span>
         </h3>
       </div>
       <shop-list ref="shopList" v-on:showFliterBox="showFliterBox" v-on:showPlaceSearch="showPlaceSearch" :filterDataPar="filterData"></shop-list>
@@ -48,6 +48,7 @@
                 </van-cell-group>
               </div>
               <van-button @click="sureFliter">确定</van-button>
+
             </div>
       </cube-popup>
       
