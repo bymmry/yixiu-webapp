@@ -335,3 +335,13 @@ export function getemail(data){
     });
   });
 }
+// 获取店铺统计信息
+export function getshopAllData(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`${url}/stats/shop`,data).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

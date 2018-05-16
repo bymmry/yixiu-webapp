@@ -175,24 +175,37 @@
       },
       
       async getmoney () {
-        let data = { rebate: true};
-        if(this.allnumber - this.surplusnumber == 0){
-          alert("暂时没有可以提现的金额，加油哦！");
-        } else {
-          let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
-            collection:'Order',
-				    find: {
-					    user: this.userids,
-              state: 13,
-				    },
-				    update: data
-          });
-          if(res.code==200){
-            alert("提现成功");
-          } else {
-            alert("提现失败");
-          }
-        }
+        // let sheng = "重庆市";
+        // let shi = "重庆市";
+        // let qu = "渝中区";
+        // let shopLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+        //     collection:'Shop',
+        //     province: sheng,
+        //     // province: sheng,
+        //     // city: shi,
+        //     // district: qu,
+        //     limit: 0,
+
+		    // })
+        // console.log(shopLists);
+        // let data = { rebate: true};
+        // if(this.allnumber - this.surplusnumber == 0){
+        //   alert("暂时没有可以提现的金额，加油哦！");
+        // } else {
+        //   let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
+        //     collection:'Order',
+				//     find: {
+				// 	    user: this.userids,
+        //       state: 13,
+				//     },
+				//     update: data
+        //   });
+        //   if(res.code==200){
+        //     alert("提现成功");
+        //   } else {
+        //     alert("提现失败");
+        //   }
+        // }
         // alert("开始添加");
         // let data = { mobile: 18584664675};
         // let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
