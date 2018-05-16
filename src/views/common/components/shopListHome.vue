@@ -14,6 +14,9 @@
         <li @click="chooseMainType(0)" :class="{'active': currentIndex===0}"><span>综合排序</span></li>
         <li @click="chooseMainType(1)" :class="{'active': currentIndex===1}"><span>评分最高</span></li>
         <li @click="chooseMainType(2)" :class="{'active': currentIndex===2}"><span>距离最近</span></li>
+        <li @click="chooseMainType(4)" :class="{'active': currentIndex===4}">
+            <span>区域搜索</span>
+          </li>
         <li @click="chooseMainType(3)" :class="{'active': currentIndex===3}"><span>筛选<sicon name="screen" scale="1.5"></sicon></span>
           <van-popup
             v-model="showFilter"
@@ -189,6 +192,9 @@
             distance: 1,
             limit: 20
           }
+        }else if(index === 4){ //区域搜索
+          this.$emit("showPlaceSearch", true);
+          return;
         }
         Toast.loading({
           duration: 0,

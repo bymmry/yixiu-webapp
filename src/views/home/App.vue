@@ -22,7 +22,7 @@
           <span>附近维修店</span>
         </h3>
       </div>
-      <shop-list ref="shopList" v-on:showFliterBox="showFliterBox" :filterDataPar="filterData"></shop-list>
+      <shop-list ref="shopList" v-on:showFliterBox="showFliterBox" v-on:showPlaceSearch="showPlaceSearch" :filterDataPar="filterData"></shop-list>
       <div class="space"></div>
       <div id="allmap"></div>
       </cube-scroll>
@@ -50,6 +50,18 @@
               <van-button @click="sureFliter">确定</van-button>
             </div>
       </cube-popup>
+      
+      <!-- 区域搜索弹出层 -->
+      <cube-popup type="my-popup" ref="placeSearch">
+        <div class="placeSearch">
+          <div class="close" @click="closePlaceSearch">
+            <span>区域搜索</span>
+            <sicon name="close" scale="1.7"></sicon>
+          </div>
+          <place-search></place-search>
+        </div>
+        
+      </cube-popup>
     </div>
     
    
@@ -70,6 +82,7 @@
   import location from './pages/location.vue'
   import scroll from '../common/base/scroll'
   import wx from "weixin-js-sdk";
+  import placeSearch from '../common/components/placeSearch'
 
   export default {
     components: {
@@ -83,6 +96,7 @@
       Activity,
       shopList,
       location,
+      placeSearch,
       [PullRefresh.name]: PullRefresh,
       [Checkbox.name]: Checkbox,
       [CheckboxGroup.name]: CheckboxGroup,
@@ -221,6 +235,17 @@
         function BooleanToNum(bool) {
           return bool ? 1: -1;
         }
+      },
+      showPlaceSearch(show){
+        console.log(show);
+        if(show){
+          let placeSearch = this.$refs.placeSearch;
+          placeSearch.show();
+        }
+      },
+      closePlaceSearch(){
+        let placeSearch = this.$refs.placeSearch;
+        placeSearch.hide();
       }
     }
   }
@@ -318,5 +343,22 @@
     margin: 2vh 5vw;
     background-color: #f85;
     color: #fff;
+  }
+  .placeSearch{
+    bottom: 0;
+    width: 100vw;
+    height: 85vh;
+    border-radius: 5px;
+    background: #fff;
+  }
+  .placeSearch .close{
+    width: auto;
+    height: 30px;
+    line-height: 30px;
+    padding: 10px;
+  }
+  .placeSearch .close svg{
+    float: right;
+    margin-top: 7px;
   }
 </style>

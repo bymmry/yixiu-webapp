@@ -1,5 +1,6 @@
 <template>
   <div class="listView" ref="listView">
+    <p class="withoutShop" v-if="shopData.length == 0">该地区还没有店铺</p>
     <div v-if="shopData.length"
       class="shopMain"
       @click="selectItem(item)"
@@ -23,7 +24,7 @@
       </div>
     </div>
     <div class="loadMore">
-      <van-button v-show="showMore" @click="loadMore">点击加载更多</van-button>
+      <van-button v-if="shopData.length != 0" v-show="showMore" @click="loadMore">点击加载更多</van-button>
       <p>{{moreText}}</p>
     </div>
     <!-- </div>
@@ -96,9 +97,9 @@
         this.showMore = false;
         this.nowData += this.shopData.length;
         //ajax请求
-        console.log(this.reqData);
+        console.log(this.nowData);
         let more = {
-          skip: this.nowData
+          skip: this.nowData + 1
         };
         let req = Object.assign(this.reqData,more);
         console.log(req);
@@ -164,6 +165,10 @@
 </script>
 
 <style scoped>
+  .withoutShop{
+    text-align: center;
+    padding: 20px;
+  }
   /* .listView{
     height: 100vh;
   }
