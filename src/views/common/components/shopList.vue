@@ -478,7 +478,7 @@
   .placeSearch{
     bottom: 0;
     width: 100vw;
-    height: 85vh;
+    height: 100vh;
     border-radius: 5px;
     background: #fff;
   }
