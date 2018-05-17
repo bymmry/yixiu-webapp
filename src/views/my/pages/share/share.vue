@@ -47,7 +47,7 @@
   import './modules/jquery-1.10.2.min.js';
   import './modules/jquery.qrcode.min.js';
 
-  import { NavBar, Button} from 'vant';
+  import { NavBar, Button, Dialog} from 'vant';
 
 
   export default {
@@ -66,6 +66,7 @@
     components: {
       [NavBar.name]: NavBar,
       [Button.name]: Button,
+      [Dialog.name]: Dialog,
     },
     methods: {
       //导航栏 前往个人中心
@@ -175,15 +176,21 @@
       },
       
       async getmoney () {
-        // let sheng = "重庆市";
-        // let shi = "重庆市";
-        // let qu = "渝中区";
+        Dialog.alert({
+          message: '我们走，关注翼修领好礼！'
+        }).then(() => {
+          window.open("https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0MDY5NjIzMg==&scene=124#wechat_redirect")
+        });
+        // let sheng = '重庆市';
+        // let shi = '重庆市';
+        // let qu = '渝北区';
         // let shopLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
         //     collection:'Shop',
-        //     province: sheng,
-        //     // province: sheng,
-        //     // city: shi,
-        //     // district: qu,
+        //     pay: true,
+        //     qualification: true,
+        //     'addressInfo.province': sheng,
+        //     'addressInfo.city': shi,
+        //     'addressInfo.district': qu,
         //     limit: 0,
 
 		    // })

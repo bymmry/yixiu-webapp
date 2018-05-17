@@ -41,11 +41,14 @@
 </template>
 
 <script>
+  import { Dialog } from 'vant';
   import logo from '@/assets/logo.png'
   import md5 from 'js-md5'; //MD5加密
   const TIME_COUNT = 60;
   export default {
-    components: {},
+    components: {
+      [Dialog.name]:Dialog
+    },
     mounted: function () {
 
     },
@@ -151,6 +154,11 @@
             if (res.code == 200) {
               this.$toast("注册成功");
               sessionStorage.setItem("userData", JSON.stringify(res.data));
+              Dialog.alert({
+                message: '我们走，关注翼修领好礼！'
+                }).then(() => {
+                  window.open("https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0MDY5NjIzMg==&scene=124#wechat_redirect")
+              });
               setTimeout(() => {
                 this.$router.push("/my");
               }, 1000);
