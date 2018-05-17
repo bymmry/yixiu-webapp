@@ -15,7 +15,8 @@ import {
   Slide,
   Select,
   Upload,
-  Input
+  Input,
+  createAPI
   // IndexList,
 } from 'cube-ui'
 

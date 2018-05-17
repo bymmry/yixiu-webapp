@@ -97,9 +97,9 @@
         this.showMore = false;
         this.nowData += this.shopData.length;
         //ajax请求
-        console.log(this.nowData);
+        console.log(this.shopData)
         let more = {
-          skip: this.nowData + 1
+          skip: this.shopData.length + 1
         };
         let req = Object.assign(this.reqData,more);
         console.log(req);
