@@ -23,7 +23,7 @@
         </p>
       </div>
     </div>
-    <div class="loadMore">
+    <div class="loadMore" v-if="isShowLoadMore">
       <van-button v-if="shopData.length != 0" v-show="showMore" @click="loadMore">点击加载更多</van-button>
       <p>{{moreText}}</p>
     </div>
@@ -71,7 +71,11 @@
           return {}
         }
       },
-      shopNum: Number
+      shopNum: Number,
+      isShowLoadMore: {
+        type: Boolean,
+        default: true
+      }
     },
     watch: {
       shopData: function (val) {
@@ -90,6 +94,7 @@
     },
     methods: {
       selectItem: function (item) {
+        console.log(item);
         this.$emit("select", item);
       },
       loadMore: function () {

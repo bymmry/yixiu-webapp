@@ -9,7 +9,7 @@
     </div>
     <!-- <location v-on:changeCity="changeCity" v-if="location"  v-on:back="back"/> -->
     <cube-scroll class="listView">
-      <list-view :shopData="shopData"></list-view>
+      <list-view :shopData="shopData" @select="selectShop" :isShowLoadMore="false"></list-view>
     </cube-scroll>
   </cu>
 </template>
@@ -92,6 +92,19 @@
         let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
         this.shopData = res.data;
         Toast.clear();
+      },
+      selectShop: function (shop) {
+        console.log(shop);
+        let shopId = shop._id;
+        if (shopId) {
+          this.$router.push({
+            // path: `/shop/${shop._id}`,
+            path: `/theShopDes/${shop._id}`,
+            params: {
+              id: shopId
+            }
+          })
+        }
       }
     }
   }
