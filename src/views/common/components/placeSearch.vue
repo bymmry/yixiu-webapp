@@ -90,7 +90,29 @@
           message: '加载中...'
         });
         let res = await this.$api.sendData("https://m.yixiutech.com/sql/find", req);
-        this.shopData = res.data;
+        // this.shopData = res.data;
+
+        res.data.map((item) => {
+          let dis = this.getDistance(item);
+          item = Object.assign({}, item, {distance: dis});
+          if(item.qualificationState == "正常"){
+            this.shopData.push(item);
+          }
+        });
+          
+        //排序 ， 距离
+        this.shopData = this.shopData.sort(compare("distance"));
+        console.log(this.shopData);
+        
+
+        function compare(property){
+          return function(a,b){
+            let value1 = a[property];
+            let value2 = b[property];
+            return value1 - value2;
+          }
+        }
+          
         Toast.clear();
       },
       selectShop: function (shop) {
@@ -105,7 +127,21 @@
             }
           })
         }
-      }
+      },
+      getDistance: function(data){
+        if(data.position){
+          let lng = localStorage.getItem('lng');
+          let lat = localStorage.getItem('lat');
+          if(data.position.lat == "" || data.position.lng == ""){
+            return 999999
+          }else{
+            return parseInt(this.getGreatCircleDistance(data.position.lat, data.position.lng, lat, lng))
+          }
+        }else{
+          return 999999
+        }
+        
+      },
     }
   }
 
