@@ -181,7 +181,9 @@
 	  	  // 监听plusready事件  
 		    document.addEventListener( "plusready", function(){
 			  // 扩展API加载完毕，现在可以正常调用扩展API
+          alert( "准备调api" );
 			    plus.oauth.getServices( function(services){
+            alert( "正在调api" );
 				    auths = services;
             alert( "获取成功" );
 			    }, function(e){
