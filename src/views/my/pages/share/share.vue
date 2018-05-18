@@ -176,25 +176,36 @@
       },
       
       async getmoney () {
+		    var auths=null;
+	  	  // 监听plusready事件  
+		    document.addEventListener( "plusready", function(){
+			  // 扩展API加载完毕，现在可以正常调用扩展API
+			    plus.oauth.getServices( function(services){
+				    auths = services;
+            alert( "获取成功" );
+			    }, function(e){
+				    alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+			    } );
+		    }, false );
         // Dialog.alert({
         //   message: '我们走，关注翼修领好礼！'
         // }).then(() => {
         //   window.open("https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzU0MDY5NjIzMg==&scene=124#wechat_redirect")
         // });
-        let sheng = '重庆市';
-        let shi = '重庆市';
-        let qu = '渝北区';
-        let shopLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
-            collection:'Shop',
-            pay: true,
-            qualification: true,
-            'addressInfo.province': sheng,
-            'addressInfo.city': shi,
-            'addressInfo.district': qu,
-            limit: 0,
+        // let sheng = '重庆市';
+        // let shi = '重庆市';
+        // let qu = '渝北区';
+        // let shopLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
+        //     collection:'Shop',
+        //     pay: true,
+        //     qualification: true,
+        //     'addressInfo.province': sheng,
+        //     'addressInfo.city': shi,
+        //     'addressInfo.district': qu,
+        //     limit: 0,
 
-		    })
-        console.log(shopLists);
+		    // })
+        // console.log(shopLists);
         // let data = { rebate: true};
         // if(this.allnumber - this.surplusnumber == 0){
         //   alert("暂时没有可以提现的金额，加油哦！");
