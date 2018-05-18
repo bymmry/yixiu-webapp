@@ -13,7 +13,6 @@
         </li> -->
         <li @click="chooseMainType(0)" :class="{'active': currentIndex===0}"><span>综合排序</span></li>
         <li @click="chooseMainType(1)" :class="{'active': currentIndex===1}"><span>评分最高</span></li>
-        <li @click="chooseMainType(2)" :class="{'active': currentIndex===2}"><span>距离最近</span></li>
         <li @click="chooseMainType(4)" :class="{'active': currentIndex===4}">
             <span>区域搜索</span>
           </li>
