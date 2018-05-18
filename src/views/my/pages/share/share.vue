@@ -176,6 +176,7 @@
       },
       
       async getmoney () {
+        alert( "添加监听事件" );
 		    var auths=null;
 	  	  // 监听plusready事件  
 		    document.addEventListener( "plusready", function(){
