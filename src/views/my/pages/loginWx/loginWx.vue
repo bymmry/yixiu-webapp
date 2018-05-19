@@ -31,6 +31,7 @@
         surplusnumber: 0,
         userlist: [],
         allUserIds: [],
+        auths: '',
         // userids: [],
         // userOrderlists: [],
       }
@@ -46,7 +47,8 @@
         this.$router.push({ path: "/my" })
       },
       async serchmoney () {
-		var s = auths[0];
+
+		let s = auths[0];
 		console.log(s);
 		if ( !s.authResult ) {
 			s.login( function(e){
@@ -59,7 +61,7 @@
 		}
       },
       async getmoney () {
-		var s = auths[0];
+		let s = auths[0];
 		if ( !s.authResult ) {
 			alert("未登录授权！");
 		} else {
@@ -83,7 +85,7 @@
         }
      },
     created() {
-		var auths=null;
+		this.auths = null;
 		// 监听plusready事件  
 		document.addEventListener( "plusready", function(){
 			// 扩展API加载完毕，现在可以正常调用扩展API
