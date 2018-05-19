@@ -12,6 +12,7 @@ import feedback from './pages/feedback/feedback'
 import callphone from './pages/callphone/callphone'
 import rule from './pages/rule/rule'
 import share from './pages/share/share'
+import loginWx from './pages/loginWx/loginWx'
 
 export default [
 {
@@ -83,7 +84,13 @@ export default [
   // meta: {
   //   keepAlive: true // 需要被缓存
   // }
+},
+{
+  path: '/my/loginWx',
+  component: loginWx,
+  // meta: {
+  //   keepAlive: true // 需要被缓存
+  // }
 }
-
 
 ]

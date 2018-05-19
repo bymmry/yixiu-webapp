@@ -171,11 +171,11 @@
             icon: "share",
             url: "my/share"
           },
-          // {
-          //   name: "测试",
-          //   icon: "question",
-          //   url: "my/test"
-          // }
+          {
+            name: "web测试",
+            icon: "share",
+            url: "my/loginWx"
+          }
         ]
       }
     },
