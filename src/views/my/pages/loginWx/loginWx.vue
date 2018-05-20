@@ -48,7 +48,7 @@
       },
       async serchmoney () {
 
-		let s = auths[0];
+		let s = this.auths[0];
 		console.log(s);
 		if ( !s.authResult ) {
 			s.login( function(e){
@@ -61,7 +61,7 @@
 		}
       },
       async getmoney () {
-		let s = auths[0];
+		let s = this.auths[0];
 		if ( !s.authResult ) {
 			alert("未登录授权！");
 		} else {
@@ -73,8 +73,9 @@
 		}
       },
      async authLogout () {
-        for (var i in auths) {
-            var s = auths[i];
+        let auth = this.auths;
+        for (var i in auth) {
+            var s = auth[i];
             if (s.authResult) {
                 s.logout(function(e) {
                     console.log("注销登录认证成功！");
@@ -90,7 +91,7 @@
 		document.addEventListener( "plusready", function(){
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.oauth.getServices( function(services){
-				auths = services;
+				this.auths = services;
 			}, function(e){
 				alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			} );
