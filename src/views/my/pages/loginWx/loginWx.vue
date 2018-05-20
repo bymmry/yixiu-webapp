@@ -10,6 +10,8 @@
     <!-- 顶部留白 -->
     <div class="topblank"></div>
     <button @click="authLogout">登录注销</button>
+    <button @click="setStorage">存储数据</button>
+    <button @click="getStorage">显示数据</button>
     <div>
       <div class="funcbtn">
         <button @click="serchmoney" class="other">登录授权</button>
@@ -46,6 +48,14 @@
       prepage(){
         this.$router.push({ path: "/my" })
       },
+		
+		// Remove storage item
+      setStorage() {
+		plus.storage.setItem("longdong","18584664675");
+	  },
+      getStorage() {
+		alert(plus.storage.getItem("longdong"));
+	  },
       async serchmoney () {
 		this.auths = null;
 		// 监听plusready事件  
@@ -97,6 +107,8 @@
         }
      },
     created() {
+        plusReady ();
+        document.addEventListener("plusready",plusReady,false);
 		this.auths = null;
 		// 监听plusready事件  
 		document.addEventListener( "plusready", function(){
