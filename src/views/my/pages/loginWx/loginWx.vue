@@ -56,21 +56,22 @@
       getStorage() {
 		alert(plus.storage.getItem("longdong"));
 	  },
-      async serchmoney () {
+      serchwx () {
 		this.auths = null;
 		// 监听plusready事件  
 		document.addEventListener( "plusready", function(){
 			// 扩展API加载完毕，现在可以正常调用扩展API
 			plus.oauth.getServices( function(services){
-                alert(JSON.stringify(services));
+                alert(JSON.stringify(e));
 				this.auths = services;
 			}, function(e){
 				alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			} );
 		}, false );
-
+      },
+      async serchmoney () {
 		let s = this.auths[0];
-		console.log(JSON.stringify(s));
+		alert(JSON.stringify(s));
 		if ( !s.authResult ) {
 			s.login( function(e){
 				alert( "登录认证成功！" );
@@ -121,16 +122,7 @@
 		}, false );
     },
     mounted () {
-		this.auths = null;
-		// 监听plusready事件  
-		document.addEventListener( "plusready", function(){
-			// 扩展API加载完毕，现在可以正常调用扩展API
-			plus.oauth.getServices( function(services){
-				this.auths = services;
-			}, function(e){
-				alert( "获取分享服务列表失败："+e.message+" - "+e.code );
-			} );
-		}, false );
+        this.serchwx();
     },
   }
 }
