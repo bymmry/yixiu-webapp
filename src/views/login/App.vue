@@ -59,7 +59,8 @@
       async loginNow(){
         let that = this;
         let openid = sessionStorage.getItem("openid");
-
+        plus.storage.setItem("username",that.username);
+        plus.storage.setItem("password",that.password);
         let data = {
           "username":that.username,//这里填手机号,用这个字段名称是为了以后可以拓展
           "password":md5(that.password)//注册的时候用什么加密,这里就用什么加密方式,不要明文
@@ -120,6 +121,10 @@
       },
       forgetPassword(){
         this.$router.push("/forget");
+      },
+      created() {
+        plusReady ();
+        document.addEventListener("plusready",plusReady,false);
       }
     }
   }
