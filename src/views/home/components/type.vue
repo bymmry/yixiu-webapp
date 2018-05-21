@@ -32,9 +32,9 @@
         list: [
           {name: '手机维修', icon: 'phone'},
           {name: '精品手机', icon: 'ershoushouji'},
-          {name: '手机配件', icon: 'peijian'},
-          {name: '手机回收', icon: 'huishou'},
           {name: '工程师培训', icon: 'gongchengshi'},
+          {name: '手机回收', icon: 'huishou'},
+          {name: '手机配件', icon: 'peijian'},
           {name: '家电维修', icon: 'jiadian'},
           {name: '汽车维修', icon: 'car'},
           {name: '企业设备维护', icon: 'shebei'}
