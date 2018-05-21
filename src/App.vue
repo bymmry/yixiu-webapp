@@ -76,12 +76,12 @@
 			      // 扩展API加载完毕，现在可以正常调用扩展API
 			        plus.oauth.getServices( function(services){
 				        console.log(JSON.stringify(services));
-				        auths = services;
+				        this.auths = services;
 			        }, function(e){
 				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			        } );
 		        }, false );
-			      let s = auths[0];
+			      let s = this.auths[0];
 			      if ( !s.authResult ) {
 				      s.login( function(e){
 				    	alert( "登录认证成功！" );
