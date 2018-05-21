@@ -78,20 +78,11 @@
 			        plus.oauth.getServices( function(services){
 				        console.log(JSON.stringify(services));
 				        auths = services;
+                this.authLogin(auths);
 			        }, function(e){
 				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			        } );
 		        }, false );
-			      let s = auths[0];
-			      if ( !s.authResult ) {
-				      s.login( function(e){
-				    	alert( "登录认证成功！" );
-				    }, function(e){
-					    alert( "登录认证失败！" );
-				    } );
-			      }else{
-				      alert( "已经登录认证！" );
-			      }
             // this.initAppInfo();
             // toast.hide();
           }
@@ -121,6 +112,18 @@
       }
     },
     methods: {
+      authLogin (auths) {
+			  let s = auths[0];
+			  if ( !s.authResult ) {
+				  s.login( function(e){
+				  alert( "登录认证成功！" );
+				}, function(e){
+					  alert( "登录认证失败！" );
+				} );
+			  }else{
+				  alert( "已经登录认证！" );
+			  }
+      },
       async checkIsShop(userData) {
 
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {
