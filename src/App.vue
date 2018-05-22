@@ -121,10 +121,16 @@
 			  let s = auths[0];
 			  if ( !s.authResult ) {
 				  s.login( function(e){
-				  alert( "登录认证成功！" );
-				}, function(e){
+				    alert( "登录认证成功！" );
+				  }, function(e){
 					  alert( "登录认证失败！" );
-				} );
+				  } );
+				  s.getUserInfo( function(e){
+					  alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
+            sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
+				  }, function(e){
+					  alert( "获取用户信息失败："+e.message+" - "+e.code );
+				  } );
 			  }else{
 				  alert( "已经登录认证！" );
 			  }
