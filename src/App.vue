@@ -112,7 +112,7 @@
       }
     },
     methods: {
-      authLogin (auths) {
+      authLogin(auths) {
 			  let s = auths[0];
 			  if ( !s.authResult ) {
 				  s.login( function(e){

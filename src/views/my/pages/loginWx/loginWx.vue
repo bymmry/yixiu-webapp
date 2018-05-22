@@ -12,6 +12,7 @@
     <button @click="authLogout">登录注销</button>
     <button @click="setStorage">存储数据</button>
     <button @click="getStorage">显示数据</button>
+    <button @click="getWxinfo">显示微信信息</button>
     <div>
       <div class="funcbtn">
         <button @click="authLogin" class="other">登录授权</button>
@@ -58,7 +59,9 @@
 	  },
       // serchwx () {
       // },
-
+      getWxinfo() {
+        alert(sessionStorage.getItem("infoOfWX"));
+      },
       async authLogin () {
 		    let s = this.auths[0];
 		    alert(JSON.stringify(s));
