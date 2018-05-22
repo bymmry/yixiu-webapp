@@ -34,7 +34,7 @@
 			  }
 				s.getUserInfo( function(e){
 					alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
-          sessionStorage.setItem("infoOfWX", s.userInfo);
+          sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
           return JSON.stringify(s.userInfo);
 				}, function(e){
 					alert( "获取用户信息失败："+e.message+" - "+e.code );

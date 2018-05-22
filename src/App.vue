@@ -44,7 +44,7 @@
       toast = this.$createToast({
         txt: 'Loading...',
         mask: true,
-        time: 25000
+        time: 2000
       })
       toast.show();
       let winUrl = decodeURIComponent(window.location.href);
@@ -72,14 +72,16 @@
           }
           else if(userData.state == 2){ //app入口
             alert("app进入");
-            this.$router.push("/userlogin");
+            let that = this;
+            // this.$router.push("/userlogin");
             let auths = null;
             document.addEventListener( "plusready", function(){
 			      // 扩展API加载完毕，现在可以正常调用扩展API
 			        plus.oauth.getServices( function(services){
 				        console.log(JSON.stringify(services));
 				        auths = services;
-                this.authLogin(auths);
+                alert("webapp调用");
+                that.authLogin(auths);
 			        }, function(e){
 				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			        } );

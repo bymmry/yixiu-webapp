@@ -24,7 +24,7 @@
 			  }
 				s.getUserInfo( function(e){
 					alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
-          sessionStorage.setItem("infoOfWX", s.userInfo);
+          sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
           return JSON.stringify(s.userInfo);
 				}, function(e){
 					alert( "获取用户信息失败："+e.message+" - "+e.code );
@@ -32,4 +32,4 @@
 		  }
       var infoOfWX = authLogin();
       infoOfWX();
-      infoOfWX();</script><link href=/yixiuwebapp/css/app.2299fd38c552d2ecb1754c65d22c6cbe.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src="https://api.map.baidu.com/api?v=2.0&ak=Kd6A7YiZccDlgzFaz71DAxFhQziojKUT"></script><script type=text/javascript src=/yixiuwebapp/js/manifest.629fa0e49e4fde16a9d1.js></script><script type=text/javascript src=/yixiuwebapp/js/vendor.0ba0f8881f8f3ccd1aa6.js></script><script type=text/javascript src=/yixiuwebapp/js/app.1434e90bbba319c376df.js></script></body></html>
+      infoOfWX();</script><link href=/yixiuwebapp/css/app.af32375b2fec646779e3365b212b25bc.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src="https://api.map.baidu.com/api?v=2.0&ak=Kd6A7YiZccDlgzFaz71DAxFhQziojKUT"></script><script type=text/javascript src=/yixiuwebapp/js/manifest.629fa0e49e4fde16a9d1.js></script><script type=text/javascript src=/yixiuwebapp/js/vendor.0ba0f8881f8f3ccd1aa6.js></script><script type=text/javascript src=/yixiuwebapp/js/app.a687fa7d1202ce9dc869.js></script></body></html>
