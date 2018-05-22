@@ -82,6 +82,7 @@
 				        auths = services;
                 alert("webapp调用");
                 that.authLogin(auths);
+                that.authUserInfo(auths);
 			        }, function(e){
 				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
 			        } );
@@ -127,6 +128,19 @@
 				  alert( "已经登录认证！" );
 			  }
       },
+		  authUserInfo(auths) {
+			  var s = auths[0];
+			  if ( !s.authResult ) {
+				  alert("未登录授权！");
+			  } else {
+				  s.getUserInfo( function(e){
+					  alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
+            sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
+				  }, function(e){
+					  alert( "获取用户信息失败："+e.message+" - "+e.code );
+				  } );
+			  }
+		  },
       async checkIsShop(userData) {
 
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {
