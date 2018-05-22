@@ -71,25 +71,7 @@
 
           }
           else if(userData.state == 2){ //app入口
-            alert("app进入");
-            let that = this;
-            // this.$router.push("/userlogin");
-            let auths = null;
-            document.addEventListener( "plusready", function(){
-			      // 扩展API加载完毕，现在可以正常调用扩展API
-			        plus.oauth.getServices( function(services){
-				        console.log(JSON.stringify(services));
-				        auths = services;
-                alert("webapp调用");
-                that.authLogin(auths);
-                // alert("webapp获取信息");
-                // that.authUserInfo(auths);
-			        }, function(e){
-				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
-			        } );
-		        }, false );
-            // this.initAppInfo();
-            // toast.hide();
+            this.initAndroidApp();
           }
           else if(userData.state == 3){ //注册返利入口
             alert(winUrl);
@@ -107,9 +89,6 @@
       } else { // 不带参数
         
       }
-
-      // console.log(userData);
-      // sessionStorage.setItem("userData", userData);
     },
     data() {
       return {
@@ -118,6 +97,10 @@
     },
     methods: {
       authLogin(auths) {
+        if(auths){
+          
+        console.log(auths);
+        }
 			  let s = auths[0];
 			  if ( !s.authResult ) {
 				  s.login( function(e){
@@ -147,7 +130,27 @@
 					  alert( "获取用户信息失败："+e.message+" - "+e.code );
 				  } );
 			  }
-		  },
+      },
+      // 安卓app进入初始化
+      initAndroidApp(){
+        let that = this;
+        let auths = null;
+
+        document.addEventListener( "plusready", function(){
+        // 扩展API加载完毕，现在可以正常调用扩展API
+          alert("plusready()");
+          plus.oauth.getServices( function(services){
+            alert(JSON.stringify(services));
+            auths = services;
+            alert("webapp调用");
+            that.authLogin(auths);
+            // alert("webapp获取信息");
+            // that.authUserInfo(auths);
+          }, function(e){
+            alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+          } );
+        }, false );
+      },
       async checkIsShop(userData) {
 
         let res = await this.$api.sendData('https://m.yixiutech.com/shop/user/', {
@@ -161,7 +164,8 @@
         localStorage.setItem('shopData', JSON.stringify(res.data));
         this.$router.push('/sellerHome')
       },
-      initUserInfo(data) { //初始化用户信息
+      // 初始化用户信息
+      initUserInfo(data) {
         const information = {
           headimgurl: data.headimgurl || '',//用户头像
           name: data.nickname || '翼修用户', //用户名称
@@ -179,6 +183,7 @@
 
         return information;
       },
+      // 判断用户是否注册
       async isUserRegister(userInfo){
         //根据openid判断是否注册
         let nowopenid = [userInfo.wx.openid];
@@ -237,10 +242,8 @@
          
         }
       },
-      /**
-        *公众号进入
-        *公众号好用户初始化
-        */
+      // *公众号进入
+      // *公众号好用户初始化
       async initGZHInfo(userData){ //公众号好用户初始化
         // alert("公众号进入");
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
@@ -255,9 +258,7 @@
         }
         
       },
-      /**
-        *小程序进入
-        */
+      // *小程序进入
       async initXCXInfo(userData){ //小程序进入
         // alert("小程序进入");
         // alert(JSON.stringify(userData));
@@ -299,9 +300,7 @@
           return user;
         }
       },
-      /**
-       * 注册返利入口
-       */
+      //  * 注册返利入口
       async registerMoney(userData){
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         // alert(JSON.stringify(res));

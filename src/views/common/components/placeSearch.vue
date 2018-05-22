@@ -1,6 +1,6 @@
 <!-- 区域搜索 -->
 <template>
-  <cu class="placeSearch">
+  <div class="placeSearch">
     <span class="placeTitle placeButton" v-if="city == ''" @click="showCity">请选择区域</span>
     <span class="placeTitle" v-else @click="showCity">已选择：{{city}}（点击改变）</span>
     <div v-if="location" class="cityPickerBox">
@@ -11,7 +11,7 @@
     <cube-scroll class="listView">
       <list-view :shopData="shopData" @select="selectShop" :isShowLoadMore="false"></list-view>
     </cube-scroll>
-  </cu>
+  </div>
 </template>
 
 <script>
