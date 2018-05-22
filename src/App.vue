@@ -30,7 +30,7 @@
     reguser
   } from './views/common/api'
 
-  
+
   var toast;
   export default {
     name: 'App',
@@ -64,19 +64,15 @@
         if (userData.state) {
           if (userData.state == 123) { //公众号进入
             this.initGZHInfo(userData);
-            
-          }
-          else if(userData.state == 1){ //小程序入口
+
+          } else if (userData.state == 1) { //小程序入口
             this.initXCXInfo(userData);
 
-          }
-          else if(userData.state == 2){ //app入口
+          } else if (userData.state == 2) { //app入口
             this.initAndroidApp();
-          }
-          else if(userData.state == 3){ //注册返利入口
+          } else if (userData.state == 3) { //注册返利入口
             alert(winUrl);
-          }
-          else{ //注册返利入口
+          } else { //注册返利入口
             sessionStorage.setItem('parentId', userData.state);
             toast.hide();
             this.registerMoney(userData);
@@ -87,7 +83,7 @@
         window.isAttestation = false;
 
       } else { // 不带参数
-        
+
       }
     },
     data() {
@@ -97,59 +93,55 @@
     },
     methods: {
       authLogin(auths) {
-        if(auths){
-          
-        console.log(auths);
+        if (auths) {
+          let s = auths[0];
+          if (!s.authResult) {
+            s.login(function (e) {
+              alert("登录认证成功！");
+            }, function (e) {
+              alert("登录认证失败！");
+            });
+            s.getUserInfo(function (e) {
+              alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+              sessionStorage.setItem("userData", JSON.stringify(s.userInfo));
+            }, function (e) {
+              alert("获取用户信息失败：" + e.message + " - " + e.code);
+            });
+          } else {
+            alert("已经登录认证！");
+          }
+        }else{
+          alert("微信登录失败！");
         }
-			  let s = auths[0];
-			  if ( !s.authResult ) {
-				  s.login( function(e){
-				    alert( "登录认证成功！" );
-				  }, function(e){
-					  alert( "登录认证失败！" );
-				  } );
-				  s.getUserInfo( function(e){
-					  alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
-            sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
-				  }, function(e){
-					  alert( "获取用户信息失败："+e.message+" - "+e.code );
-				  } );
-			  }else{
-				  alert( "已经登录认证！" );
-			  }
+
       },
-		  authUserInfo(auths) {
-			  var s = auths[0];
-			  if ( !s.authResult ) {
-				  alert("未登录授权！");
-			  } else {
-				  s.getUserInfo( function(e){
-					  alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
+      authUserInfo(auths) {
+        var s = auths[0];
+        if (!s.authResult) {
+          alert("未登录授权！");
+        } else {
+          s.getUserInfo(function (e) {
+            alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
             sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
-				  }, function(e){
-					  alert( "获取用户信息失败："+e.message+" - "+e.code );
-				  } );
-			  }
+          }, function (e) {
+            alert("获取用户信息失败：" + e.message + " - " + e.code);
+          });
+        }
       },
       // 安卓app进入初始化
-      initAndroidApp(){
+      initAndroidApp() {
         let that = this;
-        let auths = null;
 
-        document.addEventListener( "plusready", function(){
-        // 扩展API加载完毕，现在可以正常调用扩展API
-          alert("plusready()");
-          plus.oauth.getServices( function(services){
-            alert(JSON.stringify(services));
-            auths = services;
-            alert("webapp调用");
-            that.authLogin(auths);
+        document.addEventListener("plusready", function () {
+          // 扩展API加载完毕，现在可以正常调用扩展API
+          plus.oauth.getServices(function (services) {
+            that.authLogin(services);
             // alert("webapp获取信息");
             // that.authUserInfo(auths);
-          }, function(e){
-            alert( "获取分享服务列表失败："+e.message+" - "+e.code );
-          } );
-        }, false );
+          }, function (e) {
+            alert("获取分享服务列表失败：" + e.message + " - " + e.code);
+          });
+        }, false);
       },
       async checkIsShop(userData) {
 
@@ -167,7 +159,7 @@
       // 初始化用户信息
       initUserInfo(data) {
         const information = {
-          headimgurl: data.headimgurl || '',//用户头像
+          headimgurl: data.headimgurl || '', //用户头像
           name: data.nickname || '翼修用户', //用户名称
           email: data.email || '', //邮箱
           mobile: data.mobile || '', //手机号
@@ -184,7 +176,7 @@
         return information;
       },
       // 判断用户是否注册
-      async isUserRegister(userInfo){
+      async isUserRegister(userInfo) {
         //根据openid判断是否注册
         let nowopenid = [userInfo.wx.openid];
         nowopenid.push()
@@ -197,28 +189,28 @@
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
         // alert(JSON.stringify(isRegister));
-        
+
         toast.hide();
         console.log("=========================================>user data");
         console.log(isRegister.data);
-        if (isRegister.data.length == 0){
+        if (isRegister.data.length == 0) {
           //注册
           // alert("data.length = 0")
           sessionStorage.setItem("userData", JSON.stringify(userInfo));
           alert("你还未登录，请先登录");
           this.$router.push("/userlogin");
-        }else{
+        } else {
           // alert("data.length != 0");
           let userIn = isRegister.data[isRegister.data.length - 1];
           // alert(JSON.stringify(userInfo))
-          if(userIn.mobile == ""){
+          if (userIn.mobile == "") {
             alert("你还未登录，请先登录");
             this.$router.push("/userlogin");
-          }else{
+          } else {
             //更新用户信息
             // alert("else 已注册");
             // users = isRegister.data[0];
-            if(userIn._id){
+            if (userIn._id) {
               let update = {
                 collection: "User",
                 find: {
@@ -234,32 +226,32 @@
               let updateInfo = await this.$api.sendData(`https://m.yixiutech.com/sql/update`, update);
 
             }
-            
+
             sessionStorage.setItem("userData", JSON.stringify(userIn));
             this.$toast("自动登录成功");
-            
+
           }
-         
+
         }
       },
       // *公众号进入
       // *公众号好用户初始化
-      async initGZHInfo(userData){ //公众号好用户初始化
+      async initGZHInfo(userData) { //公众号好用户初始化
         // alert("公众号进入");
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         // alert(JSON.stringify(res));
-        if(res.openid){
+        if (res.openid) {
           // alert(JSON.stringify(res.openid));
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
-        }else{
+        } else {
           this.$toast("账号信息有误");
         }
-        
+
       },
       // *小程序进入
-      async initXCXInfo(userData){ //小程序进入
+      async initXCXInfo(userData) { //小程序进入
         // alert("小程序进入");
         // alert(JSON.stringify(userData));
         //获取在不同的微信公众号或者小程序获取到的openid
@@ -274,17 +266,17 @@
         // let wxopenids = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, op);
         // console.log(wxopenids);
         // alert(JSON.stringify(wxopenids));
-        if(userData.openid){
+        if (userData.openid) {
           sessionStorage.setItem("openid", userData.openid);
           //初始化用户信息
           let userInfo = initInfo(userData);
           //判断用户是否注册
           this.isUserRegister(userInfo);
         }
-        
-        function initInfo(data){
+
+        function initInfo(data) {
           const user = {
-            headimgurl: data.headimgurl || data.avatarUrl || '',//用户头像
+            headimgurl: data.headimgurl || data.avatarUrl || '', //用户头像
             name: data.nickname || data.nickName || '翼修用户', //用户名称
             email: data.email || '', //邮箱
             mobile: data.mobile || '', //手机号
@@ -301,14 +293,14 @@
         }
       },
       //  * 注册返利入口
-      async registerMoney(userData){
+      async registerMoney(userData) {
         let res = await this.$api.getData(`https://m.yixiutech.com/user/wx/${userData.code}`);
         // alert(JSON.stringify(res));
-        if(res.openid){
+        if (res.openid) {
           sessionStorage.setItem("openid", res.openid);
           let userInfo = this.initUserInfo(res);
           this.isUserRegister(userInfo);
-        }else{
+        } else {
           alert(JSON.stringify(res));
         }
       }
