@@ -20,9 +20,7 @@
 			  } );
 		  }, false );
       function authLogin(){
-			  // alert(JSON.stringify(auths));
-			  // console.log(auths[0].id);
-			  // console.log(auths[0].description);
+        sessionStorage.setItem("longdong", "18584664675555");
 			  console.log(JSON.stringify(auths));
 			  var s = auths[0];
 			  if ( !s.authResult ) {
@@ -36,7 +34,7 @@
 			  }
 				s.getUserInfo( function(e){
 					alert( "获取用户信息成功："+JSON.stringify(s.userInfo) );
-          sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
+          sessionStorage.setItem("infoOfWX", s.userInfo);
           return JSON.stringify(s.userInfo);
 				}, function(e){
 					alert( "获取用户信息失败："+e.message+" - "+e.code );
