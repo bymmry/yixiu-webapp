@@ -82,6 +82,7 @@
 				        auths = services;
                 alert("webapp调用");
                 that.authLogin(auths);
+                alert("webapp获取信息");
                 that.authUserInfo(auths);
 			        }, function(e){
 				        alert( "获取分享服务列表失败："+e.message+" - "+e.code );
