@@ -123,10 +123,10 @@
           s.getUserInfo(function (e) {
             alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
             if (s.userInfo.openid) {
-              sessionStorage.setItem("openid", res.openid);
+              sessionStorage.setItem("openid", s.userInfo.openid);
               let userInfo = this.initUserInfo(s.userInfo);
               // this.isUserRegister(userInfo);
-              alert(JSON.stringify(s.userInfo));
+              alert(JSON.stringify(userInfo));
             } else {
               this.$toast("账号信息有误");
             }
