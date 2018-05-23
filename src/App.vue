@@ -97,12 +97,19 @@
           let s = auths[0];
           if (!s.authResult) {
             s.login((e) => {
-              this.$toast("登录认证成功！");
-              s.getUserInfo(function (e) {
-                alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
-                sessionStorage.setItem("userData", JSON.stringify(s.userInfo));
-              }, function (e) {
-                this.$toast("获取用户信息失败：" + e.message + " - " + e.code);
+              s.getUserInfo(e => {
+                alert("成功：" + JSON.stringify(s.userInfo));
+                alert(s.userInfo);
+                if (s.userInfo.openid) {
+                  sessionStorage.setItem("openid", s.userInfo.openid);
+                  let userInfo = this.initUserInfo(s.userInfo);
+                  alert( JSON.stringify(userInfo))
+                  // this.isUserRegister(userInfo);
+                } else {
+                  this.$toast("账号信息有误");
+                }
+              }, e => {
+                alert("获取用户信息失败：" + e.message + " - " + e.code);
               });
             }, (e) => {
               this.$toast("登录认证失败！");
@@ -121,13 +128,11 @@
           alert("未登录授权！");
         } else {
           s.getUserInfo(function (e) {
-            alert(typeof s.userInfo);
-            alert(s.userInfo);
+            alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
             if (s.userInfo.openid) {
-              sessionStorage.setItem("openid", s.userInfo.openid);
+              sessionStorage.setItem("openid", res.openid);
               let userInfo = this.initUserInfo(s.userInfo);
-              // this.isUserRegister(userInfo);
-              alert(JSON.stringify(userInfo));
+              this.isUserRegister(userInfo);
             } else {
               this.$toast("账号信息有误");
             }
