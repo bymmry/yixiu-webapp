@@ -98,13 +98,12 @@
           if (!s.authResult) {
             s.login((e) => {
               s.getUserInfo(e => {
-                alert("成功：" + JSON.stringify(s.userInfo));
-                alert(s.userInfo);
+                // alert("成功：" + JSON.stringify(s.userInfo));
+                // alert(s.userInfo);
                 if (s.userInfo.openid) {
                   sessionStorage.setItem("openid", s.userInfo.openid);
                   let userInfo = this.initUserInfo(s.userInfo);
-                  alert( JSON.stringify(userInfo))
-                  // this.isUserRegister(userInfo);
+                  this.isUserRegister(userInfo);
                 } else {
                   this.$toast("账号信息有误");
                 }
@@ -193,6 +192,7 @@
       async isUserRegister(userInfo) {
         //根据openid判断是否注册
         let nowopenid = [userInfo.wx.openid];
+        alert(nowopenid);
         nowopenid.push()
         let register = {
           collection: "User",
@@ -202,7 +202,7 @@
           // 'wxopenid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-        // alert(JSON.stringify(isRegister));
+        alert(JSON.stringify(isRegister));
 
         toast.hide();
         console.log("=========================================>user data");
