@@ -121,7 +121,8 @@
           alert("未登录授权！");
         } else {
           s.getUserInfo(function (e) {
-            alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+            alert(typeof s.userInfo);
+            alert("获取用户信息成功：" + s.userInfo);
             if (s.userInfo.openid) {
               sessionStorage.setItem("openid", s.userInfo.openid);
               let userInfo = this.initUserInfo(s.userInfo);
