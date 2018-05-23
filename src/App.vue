@@ -96,22 +96,22 @@
         if (auths) {
           let s = auths[0];
           if (!s.authResult) {
-            s.login(function (e) {
-              alert("登录认证成功！");
-            }, function (e) {
-              alert("登录认证失败！");
-            });
-            s.getUserInfo(function (e) {
-              alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
-              sessionStorage.setItem("userData", JSON.stringify(s.userInfo));
-            }, function (e) {
-              alert("获取用户信息失败：" + e.message + " - " + e.code);
+            s.login((e) => {
+              this.$toast("登录认证成功！");
+              s.getUserInfo(function (e) {
+                alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+                sessionStorage.setItem("userData", JSON.stringify(s.userInfo));
+              }, function (e) {
+                this.$toast("获取用户信息失败：" + e.message + " - " + e.code);
+              });
+            }, (e) => {
+              this.$toast("登录认证失败！");
             });
           } else {
-            alert("已经登录认证！");
+            this.$toast("已经登录认证！");
           }
-        }else{
-          alert("微信登录失败！");
+        } else {
+          this.$toast("微信登录失败！");
         }
 
       },
@@ -122,6 +122,14 @@
         } else {
           s.getUserInfo(function (e) {
             alert("获取用户信息成功：" + JSON.stringify(s.userInfo));
+            if (s.userInfo.openid) {
+              sessionStorage.setItem("openid", res.openid);
+              let userInfo = this.initUserInfo(s.userInfo);
+              // this.isUserRegister(userInfo);
+              alert(JSON.stringify(s.userInfo));
+            } else {
+              this.$toast("账号信息有误");
+            }
             sessionStorage.setItem("infoOfWX", JSON.stringify(s.userInfo));
           }, function (e) {
             alert("获取用户信息失败：" + e.message + " - " + e.code);
