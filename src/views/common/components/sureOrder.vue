@@ -2,15 +2,22 @@
 <template>
   <div class="sureOrder">
     <van-button @click="sureOrder" :disabled="nextStepButtonDisabled" bottom-action>
-      <sicon name="nextStep" scale="1.8"></sicon><span>提交订单￥{{this.TotalFee}}</span>
+      <sicon name="nextStep" scale="1.8"></sicon>
+      <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
   </div>
 </template>
 
 <script>
   import wx from "weixin-js-sdk";
-  import { Toast, Button, Dialog } from 'vant';
-  import { sureOrder } from '../api';
+  import {
+    Toast,
+    Button,
+    Dialog
+  } from 'vant';
+  import {
+    sureOrder
+  } from '../api';
   export default {
     name: 'sure-order',
     components: {
@@ -90,16 +97,16 @@
 
           // this.shopNumber = this.serchShopNumber(shopIDD);
           // console.log(this.shopNumber);
-          if(this.state == 10){ // 已付款订单
+          if (this.state == 10) { // 已付款订单
             let data = {
               _id: this.orderId
             }
             this._pay(orderData, data);
-          
-          }else{
+
+          } else {
             sureOrder(orderData).then((res) => {
               console.log(res);
-              if(res.code == 200){
+              if (res.code == 200) {
                 // let mess = {
                 //   type: "未付款",
                 //   remark: "下单成功，请尽快付款！"
@@ -112,26 +119,28 @@
               }
             });
           }
-          
+
         }).catch(() => {
           // on cancel
           console.log("取消");
         });
 
       },
-      async serchShopNumber(shopIDD){
+      async serchShopNumber(shopIDD) {
         // let x = "5af1d707d6877a46e32b3b9f";
         let shopList = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
-          collection:'Shop',
+          collection: 'Shop',
           _id: shopIDD,
           limit: 0,
-          select:{contactNumber:1}
-		    })
+          select: {
+            contactNumber: 1
+          }
+        })
         let sNumber = shopList.data;
         let shNumber = sNumber[0].contactNumber;
         this.shopNumber = shNumber;
       },
-      async sendMessage(mess){
+      async sendMessage(mess) {
         // let userData = this.getUserInfo();
         let phoneNumber = this.shopNumber;
         // console.log("----------------------------2");
@@ -146,13 +155,16 @@
       async _pay(payInfo, res) {
         let isWxMini;
         let openid = sessionStorage.getItem("openid");
+        let state = sessionStorage.getItem("state");
         let that = this;
         // console.log(data);
         isWxMini = window.__wxjs_environment === 'miniprogram';
 
-        payInfo = Object.assign({}, payInfo, {type: 1});
+        payInfo = Object.assign({}, payInfo, {
+          type: 1
+        });
 
-        if(isWxMini){
+        if (isWxMini) {
           //小程序环境
           // alert("小程序环境")
           let jumpUrl = encodeURIComponent(window.location.origin);
@@ -160,79 +172,89 @@
           wx.miniProgram.navigateTo({
             url: path
           });
-        }else {
+        } else {
           //非小程序环境
           // alert("非小程序环境")
-          if(openid){
-            // alert(openid);
-            // 
-            history.pushState(null,null,"/yixiuwebapp/payInfo");
+          if (state == 2) {
+            alert('app 网页支付')
+          } else {
+            if (openid) {
+              // alert(openid);
+              // 
+              history.pushState(null, null, "/yixiuwebapp/payInfo");
 
-            let req = {
-              total_fee: this.TotalFee*100,
-              openid: openid,
-              trade_type: 'JSAPI'
-            }
-            let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
-            if(sign.code == 200){
-              function onBridgeReady(){
-                WeixinJSBridge.invoke(
+              let req = {
+                total_fee: this.TotalFee * 100,
+                openid: openid,
+                trade_type: 'JSAPI'
+              }
+              let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+              if (sign.code == 200) {
+                function onBridgeReady() {
+                  WeixinJSBridge.invoke(
                     'getBrandWCPayRequest', sign.data,
-                    function(wxres){     
+                    function (wxres) {
                       // alert(JSON.stringify(res));
                       // alert(JSON.stringify(payInfo));
-                        if(wxres.err_msg == "get_brand_wcpay_request:ok" ) {
-                          that.paySuccess(res._id);
-                        }else{
-                          that.$toast("支付失败");
-                        }     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                      if (wxres.err_msg == "get_brand_wcpay_request:ok") {
+                        that.paySuccess(res._id);
+                      } else {
+                        that.$toast("支付失败");
+                      } // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
                     }
-                ); 
-              }
-              if (typeof WeixinJSBridge == "undefined"){
-                if( document.addEventListener ){
-                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-                }else if (document.attachEvent){
-                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                  );
                 }
-              }else{
-                onBridgeReady();
+                if (typeof WeixinJSBridge == "undefined") {
+                  if (document.addEventListener) {
+                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                  } else if (document.attachEvent) {
+                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                  }
+                } else {
+                  onBridgeReady();
+                }
               }
             }
           }
-          
+
+
         }
       },
-      async paySuccess(id){
+      async paySuccess(id) {
         let res = await this.$api.getData(`https://m.yixiutech.com/order/paySuccess/${id}`);
         // alert(JSON.stringify(res));
-        if(res.code == 200){
+        if (res.code == 200) {
           this.$toast("支付成功");
-          
+
           let mess = {
             type: "已付款",
             remark: "您有新的订单哦，请商家尽快处理！"
           }
           this.sendMessage(mess);
           this.$router.push("/orders");
-        }else{
+        } else {
           this.$toast("支付失败");
         }
       }
     }
   };
+
 </script>
 
 <style scoped>
-  .sureOrder button{
+  .sureOrder button {
     border-radius: 4px;
   }
-  .sureOrder button svg{
+
+  .sureOrder button svg {
     vertical-align: middle;
     margin-right: 10px;
   }
-  .sureOrder button span{
+
+  .sureOrder button span {
     vertical-align: middle;
   }
+
 </style>
+

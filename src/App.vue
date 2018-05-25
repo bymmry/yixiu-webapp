@@ -69,6 +69,7 @@
             this.initXCXInfo(userData);
 
           } else if (userData.state == 2) { //app入口
+            sessionStorage.setItem('state', userData.state);
             this.initAndroidApp();
           } else if (userData.state == 3) { //注册返利入口
             alert(winUrl);
@@ -192,7 +193,7 @@
       async isUserRegister(userInfo) {
         //根据openid判断是否注册
         let nowopenid = [userInfo.wx.openid];
-        alert(nowopenid);
+        // alert(nowopenid);
         nowopenid.push()
         let register = {
           collection: "User",
@@ -202,7 +203,7 @@
           // 'wxopenid': userInfo.wx.openid
         }
         let isRegister = await this.$api.sendData(`https://m.yixiutech.com/sql/find`, register);
-        alert(JSON.stringify(isRegister));
+        // alert(JSON.stringify(isRegister));
 
         toast.hide();
         console.log("=========================================>user data");
