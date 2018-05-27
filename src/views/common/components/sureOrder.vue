@@ -195,6 +195,7 @@
               trade_type: tradeType
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
+            alert(JSON.stringify(sign));
             if (sign.code == 200) {
               function onBridgeReady() {
                 WeixinJSBridge.invoke(
