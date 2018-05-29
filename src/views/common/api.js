@@ -355,3 +355,13 @@ export function getIp(){
     });
   });
 }
+//H5支付
+export function H5pay(data){
+  return new Promise((resolve, reject) => {
+    ajax.post(`https://api.mch.weixin.qq.com/pay/unifiedorder`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

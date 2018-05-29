@@ -27,7 +27,7 @@
 
 <script>
   import { NavBar, Button, Dialog} from 'vant';
-  import { getIp } from '../../../common/api';
+  import { getIp, H5pay } from '../../../common/api';
   import md5 from 'js-md5'; //MD5加密
   export default {
     data () {
@@ -106,9 +106,9 @@
        this.body = "H5支付";//内容  
        this.total_fee = 1; //金额  
        this.spbill_create_ip = ip; //IP  
-       this.notify_url = "http://www.baidu.com"; //回调地址  
+       this.notify_url = "http://m.yixiutech.com"; //回调地址  
        this.trade_type = 'MWEB';//交易类型 具体看API 里面有详细介绍  
-       let scene_info ='{"h5_info":{"type":"Wap","wap_url":"http://m.yixiutech.com/yixiuwebapp/home","wap_name":"支付"}}';//场景信息 必要参数
+       let scene_info ='{"h5_info":{"type":"Wap","wap_url":"http://m.yixiutech.com","wap_name":"翼修"}}';//场景信息 必要参数
        let signA = `appid=${this.appid}` + `&body=${this.body}` + `&mch_id=${this.mch_id}` + `&nonce_str=${this.nonce_str}`
         + `&notify_url=${this.notify_url}` + `&out_trade_no=${this.out_trade_no}` + `&scene_info=${scene_info}`
         + `&spbill_create_ip=${this.spbill_create_ip}` + `&total_fee=${this.total_fee}` + `&trade_type=${this.trade_type}`;
@@ -117,6 +117,7 @@
       //  alert(strSignTmp);
        let sign = md5(`${strSignTmp}`).toUpperCase(); // MD5 后转换成大写 
        alert(sign);
+       let url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信传参地址
        let post_data = `<xml>  
                        <appid>${this.appid}`+`</appid>  
                        <body>${this.body}`+`</body>  
@@ -131,7 +132,14 @@
                        <sign>${sign}`+`</sign>
                    </xml>`;//拼接成XML 格式  
        alert(post_data);
-       let url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信传参地址  
+       console.log(post_data);
+      //  let url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信传参地址
+       H5pay(post_data)
+        .then(res => {
+          alert(res);
+        },(err => {
+          alert(res);
+        }))  
       },
       async authLogin () {
 		    let s = this.auths[0];
