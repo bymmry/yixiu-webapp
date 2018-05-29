@@ -345,3 +345,13 @@ export function getshopAllData(data){
     });
   });
 }
+//获取ip
+export function getIp(){
+  return new Promise((resolve, reject) => {
+    ajax.get(`http://httpbin.org/ip`).then((res) => {
+      resolve(res);
+    }).then((err) => {
+      reject(err);
+    });
+  });
+}

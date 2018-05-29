@@ -14,6 +14,7 @@
     <button @click="getStorage">显示数据</button>
     <button @click="getWxinfo">显示微信信息</button>
     <button @click="getWxinfo1">显示微信信息2</button>
+    <button @click="webapp">webapp支付测试</button>
     <div>
       <div class="funcbtn">
         <button @click="authLogin" class="other">登录授权</button>
@@ -26,6 +27,8 @@
 
 <script>
   import { NavBar, Button, Dialog} from 'vant';
+  import { getIp } from '../../../common/api';
+  import md5 from 'js-md5'; //MD5加密
   export default {
     data () {
       return {
@@ -36,6 +39,17 @@
         userlist: [],
         allUserIds: [],
         auths: null,
+        appid: "",
+        mch_id: "",//微信官方的  
+        key: "",//自己设置的微信商家key
+        rand: "",
+        out_trade_no: "",//平台内部订单号
+        nonce_str: "",//随机字符串 
+        body: "",//内容  
+        total_fee: 0,//金额  
+        spbill_create_ip: "",//IP  
+        notify_url: "", //回调地址  
+        trade_type: "",//交易类型 具体看API 里面有详细介绍  
         // userids: [],
         // userOrderlists: [],
       }
@@ -65,6 +79,59 @@
       },
       getWxinfo1() {
         alert(sessionStorage.getItem("longdong"));
+      },
+      webapp() {
+        let ip = '';
+        getIp().then(res => {
+          let ip = res.origin;
+          // alert(res.origin);
+        },(err => {
+          console.log(err);
+        }))
+        // ip
+       this.appid = "wx92877f3243727d9b";//微信给的  
+       this.mch_id = "1499236172";//微信官方的  
+       this.key = "GONGSHUWEN112233GONGSHUWEN112233";//自己设置的微信商家key  
+       
+       let nuM = "";
+       for (var i=0;i<8;i++) {
+        nuM+=Math.floor(Math.random()*10);
+       }
+      //  alert(nuM);
+       this.rand = nuM;  
+      //  this.out_trade_no = new Date().getTime();//平台内部订单号
+       this.out_trade_no = "253651351352";//平台内部订单号
+       alert(this.out_trade_no);
+       this.nonce_str = md5(this.out_trade_no);//随机字符串  
+       this.body = "H5支付";//内容  
+       this.total_fee = 1; //金额  
+       this.spbill_create_ip = ip; //IP  
+       this.notify_url = "http://www.baidu.com"; //回调地址  
+       this.trade_type = 'MWEB';//交易类型 具体看API 里面有详细介绍  
+       let scene_info ='{"h5_info":{"type":"Wap","wap_url":"http://m.yixiutech.com/yixiuwebapp/home","wap_name":"支付"}}';//场景信息 必要参数
+       let signA = `appid=${this.appid}` + `&body=${this.body}` + `&mch_id=${this.mch_id}` + `&nonce_str=${this.nonce_str}`
+        + `&notify_url=${this.notify_url}` + `&out_trade_no=${this.out_trade_no}` + `&scene_info=${scene_info}`
+        + `&spbill_create_ip=${this.spbill_create_ip}` + `&total_fee=${this.total_fee}` + `&trade_type=${this.trade_type}`;
+      //  alert(signA);
+       let strSignTmp = `${signA}` + `&key=${this.key}`; //拼接字符串  注意顺序微信有个测试网址 顺序按照他的来 直接点下面的校正测试 包括下面XML  是否正确  
+      //  alert(strSignTmp);
+       let sign = md5(`${strSignTmp}`).toUpperCase(); // MD5 后转换成大写 
+       alert(sign);
+       let post_data = `<xml>  
+                       <appid>${this.appid}`+`</appid>  
+                       <body>${this.body}`+`</body>  
+                       <mch_id>${this.mch_id}`+`</mch_id>  
+                       <nonce_str>${this.nonce_str}`+`</nonce_str>  
+                       <notify_url>${this.notify_url}`+`</notify_url>  
+                       <out_trade_no>${this.out_trade_no}`+`</out_trade_no>  
+                       <scene_info>${scene_info}`+`</scene_info>  
+                       <spbill_create_ip>${this.spbill_create_ip}`+`</spbill_create_ip>  
+                       <total_fee>${this.total_fee}`+`</total_fee>  
+                       <trade_type>${this.trade_type}`+`</trade_type>  
+                       <sign>${sign}`+`</sign>
+                   </xml>`;//拼接成XML 格式  
+       alert(post_data);
+       let url = "https://api.mch.weixin.qq.com/pay/unifiedorder";//微信传参地址  
       },
       async authLogin () {
 		    let s = this.auths[0];

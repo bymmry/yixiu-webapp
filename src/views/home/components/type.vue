@@ -33,7 +33,7 @@
           {name: '手机维修', icon: 'phone'},
           {name: '精品手机', icon: 'ershoushouji'},
           {name: '工程师培训', icon: 'gongchengshi'},
-          {name: '手机回收', icon: 'huishou'},
+          {name: '快速上门', icon: 'huishou'},
           {name: '手机配件', icon: 'peijian'},
           {name: '家电维修', icon: 'jiadian'},
           {name: '汽车维修', icon: 'car'},
