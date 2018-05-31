@@ -15,6 +15,7 @@
     <button @click="getWxinfo">显示微信信息</button>
     <button @click="getWxinfo1">显示微信信息2</button>
     <button @click="webapp">webapp支付测试</button>
+    <button @click="webappPay">移动支付测试</button>
     <div>
       <div class="funcbtn">
         <button @click="authLogin" class="other">登录授权</button>
@@ -140,6 +141,9 @@
         },(err => {
           alert(res);
         }))  
+      },
+      webappPay () {
+
       },
       async authLogin () {
 		    let s = this.auths[0];
