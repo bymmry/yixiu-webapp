@@ -20,7 +20,7 @@
         this.name === '手机维修' ? this.$router.push('/shop') : 
           (this.name === '精品手机' ? this.$router.push('/phoneArrondi') : 
           (this.name === '工程师培训' ? this.$router.push('/teaching') : 
-          (this.name === '快速上门' ? <a href="www.yixiutech.com"/> : 
+          (this.name === '快速上门' ? <a href="www.yixiutech.com"></a> : 
           (this.name === '更多' ? this.showMore() : this.functionunavailable() ))));
       },
       showMore() {
