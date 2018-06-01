@@ -171,17 +171,19 @@
 		    }
       },
      async authLogout () {
-        let auth = this.auths;
-        for (var i in auth) {
-            var s = auth[i];
-            if (s.authResult) {
-                s.logout(function(e) {
-                    console.log("注销登录认证成功！");
-                }, function(e) {
-                    console.log("注销登录认证失败！");
-                });
-            }
-        }
+       let herf = 'www.baidu.com'
+       window.location.herf = herf;
+        // let auth = this.auths;
+        // for (var i in auth) {
+        //     var s = auth[i];
+        //     if (s.authResult) {
+        //         s.logout(function(e) {
+        //             console.log("注销登录认证成功！");
+        //         }, function(e) {
+        //             console.log("注销登录认证失败！");
+        //         });
+        //     }
+        // }
      },
     created() {
       plusReady ();
