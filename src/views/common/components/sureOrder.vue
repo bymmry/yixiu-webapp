@@ -186,6 +186,7 @@
             if(sign.code == 200){
               let herf = sign.data.result.mweb_url[0];
               console.log(herf);
+              alert(herf);
               window.location.herf = herf;
             }else{
               alert(JSON.stringify(sign));
