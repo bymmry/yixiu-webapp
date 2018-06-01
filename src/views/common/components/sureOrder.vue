@@ -175,17 +175,30 @@
         } else {
           //非小程序环境
           // alert("非小程序环境")
-          // if (state == 2) {
-          //   alert('app 网页支付')
-          // } else {
-          if (openid) {
+          if (state == 2) {
+            alert('app 网页支付')
+
+            let req = {
+              total_fee: this.TotalFee * 100,
+              trade_type: 'MWEB'
+            }
+            let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
+            if(sign.code == 200){
+              let herf = sign.data.result.mweb_url[0];
+              console.log(herf);
+              window.location.herf = herf;
+            }else{
+              alert(JSON.stringify(sign));
+            }
+          } 
+          else if (openid) {
             // alert(openid);
             // 
             let tradeType = 'JSAPI';
-            if (state == 2) {
-              alert('app 网页支付');
-              tradeType = 'MWEB';
-            }
+            // if (state == 2) {
+            //   alert('app 网页支付');
+            //   tradeType = 'MWEB';
+            // }
 
             history.pushState(null, null, "/yixiuwebapp/payInfo");
 
@@ -195,7 +208,12 @@
               trade_type: tradeType
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
-            alert(JSON.stringify(sign));
+
+            // let data = sign.data.data;
+            // let herf = sign.result.mweb_url[0];
+
+            // window.location.herf = herf;
+
             if (sign.code == 200) {
               function onBridgeReady() {
                 WeixinJSBridge.invoke(
@@ -222,6 +240,8 @@
               } else {
                 onBridgeReady();
               }
+            }else{
+              alert(JSON.stringify(sign));
             }
           }
           // }
