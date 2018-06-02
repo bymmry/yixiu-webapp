@@ -184,9 +184,11 @@
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             if(sign.code == 200){
-              let herf = sign.data.result.mweb_url[0];
-              console.log(herf);
-              window.location.herf = herf;
+              let href = sign.data.result.mweb_url[0];
+              console.log(href);
+              window.location.href = href;
+              // window.open('www.baidu.com');
+              // this.$router.replace(herf);
             }else{
               alert(JSON.stringify(sign));
             }
