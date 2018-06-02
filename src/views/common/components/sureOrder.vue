@@ -5,10 +5,12 @@
       <sicon name="nextStep" scale="1.8"></sicon>
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
+    <!-- <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay> -->
   </div>
 </template>
 
 <script>
+  import surePay from './surePay.vue';
   import wx from "weixin-js-sdk";
   import {
     Toast,
@@ -23,12 +25,14 @@
     components: {
       [Button.name]: Button,
       [Toast.name]: Toast,
-      [Dialog.name]: Dialog
+      [Dialog.name]: Dialog,
+      surePay
     },
     data() {
       return {
         shopServer: [],
         shopNumber: "",
+        orderId: ''
       }
     },
     props: {
@@ -115,6 +119,7 @@
                 // console.log("----------------------------2");
                 // console.log(orderData.shop);
                 // console.log(this.data);
+                this.orderId = res.data._id;
                 this._pay(orderData, res.data);
               }
             });
@@ -176,7 +181,7 @@
           //非小程序环境
           // alert("非小程序环境")
           if (state == 2) {
-            alert('app 网页支付')
+            // alert('app 网页支付')
 
             let req = {
               total_fee: this.TotalFee * 100,
@@ -184,11 +189,12 @@
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             if(sign.code == 200){
-              let href = sign.data.result.mweb_url[0];
+              let href = `${sign.data.result.mweb_url[0]}$redirect_url=https%3A%2F%2Fm.yixiutech.com/yixiuwebapp/surePay`;
               console.log(href);
               window.location.href = href;
-              // window.open('www.baidu.com');
-              // this.$router.replace(herf);
+
+              // console.log(this.$refs.surePays.$children[0])
+              // this.$refs.surePays.$children[0].show()
 
             }else{
               alert(JSON.stringify(sign));
@@ -267,6 +273,10 @@
         } else {
           this.$toast("支付失败");
         }
+      },
+      hasPaySuccess(){
+        this.$refs.surePays.$children[0].hide();
+        this.paySuccess(this.orderId);
       }
     }
   };
