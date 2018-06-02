@@ -195,7 +195,8 @@
             if(sign.code == 200){
               let href = sign.data.result.mweb_url[0];
               console.log(href);
-              window.location.href = href;
+              // window.location.href = `https://${href}`;
+              window.open(href)
 
               console.log(this.$refs.surePays.$children[0])
               this.$refs.surePays.$children[0].show()

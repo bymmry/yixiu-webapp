@@ -7,7 +7,6 @@ import shopDetail from '../common/components/shopDetail';
 import shop from '../common/components/shopList';
 import theShopDes from '../common/components/shop';
 import advert from './advert';
-import surePay from '../common/components/surePay'
 
 export default [{
   path: '/orders',
@@ -72,10 +71,5 @@ export default [{
     path: "/advert",
     name: "advert",
     component: advert
-  },
-  {
-    path: "/surePay",
-    name: "surePay",
-    component: surePay
   }
 ]
