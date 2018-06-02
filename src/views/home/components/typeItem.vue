@@ -27,7 +27,7 @@
         this.$emit("showMore");
       },
       goHome() {
-        <a href="www.yixiutech.com"></a>;
+        window.location.href = 'http://www.yixiutech.com';
       }
     }
   }
