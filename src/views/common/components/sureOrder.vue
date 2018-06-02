@@ -189,7 +189,7 @@
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             if(sign.code == 200){
-              let href = `${sign.data.result.mweb_url[0]}$redirect_url=https%3A%2F%2Fm.yixiutech.com/yixiuwebapp/surePay`;
+              let href = `${sign.data.result.mweb_url[0]}$redirect_url=https%3A%2F%2Fm.yixiutech.com/yixiuwebapp/surePay?orderId=${res._id}`;
               console.log(href);
               window.location.href = href;
 

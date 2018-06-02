@@ -20,7 +20,7 @@
 
     methods: {
       paySuccess() {
-        this.$emit("hasPaySuccess", true);
+        alert(window.location.href);
       }
     }
   }
