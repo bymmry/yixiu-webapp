@@ -196,6 +196,7 @@
               let href = sign.data.result.mweb_url[0];
               console.log(href);
               // window.location.href = `https://${href}`;
+              alert(href);
               window.open(href)
 
               console.log(this.$refs.surePays.$children[0])
