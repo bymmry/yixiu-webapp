@@ -189,6 +189,7 @@
               window.location.href = href;
               // window.open('www.baidu.com');
               // this.$router.replace(herf);
+
             }else{
               alert(JSON.stringify(sign));
             }

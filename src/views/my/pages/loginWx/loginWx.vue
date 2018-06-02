@@ -189,6 +189,7 @@
           });
         }
       },
+<<<<<<< HEAD
       async authLogout() {
         let auth = this.auths;
         for (var i in auth) {
@@ -231,6 +232,51 @@
         }, false);
       },
     }
+=======
+     async authLogout () {
+       let herf = 'www.baidu.com'
+       window.location.herf = herf;
+        // let auth = this.auths;
+        // for (var i in auth) {
+        //     var s = auth[i];
+        //     if (s.authResult) {
+        //         s.logout(function(e) {
+        //             console.log("注销登录认证成功！");
+        //         }, function(e) {
+        //             console.log("注销登录认证失败！");
+        //         });
+        //     }
+        // }
+     },
+    created() {
+      plusReady ();
+      document.addEventListener("plusready",plusReady,false);
+		  this.auths = null;
+		  // 监听plusready事件  
+		  document.addEventListener( "plusready", function(){
+			  // 扩展API加载完毕，现在可以正常调用扩展API
+			  plus.oauth.getServices( function(services){
+				  this.auths = services;
+			  }, function(e){
+				  alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+			  } );
+		  }, false );
+    },
+    mounted () {
+      // this.auths = null;
+      let that = this;
+		  // 监听plusready事件  
+		  document.addEventListener( "plusready", function(){
+			  // 扩展API加载完毕，现在可以正常调用扩展API
+			  plus.oauth.getServices( function(services){
+          alert(JSON.stringify(e));
+				  that.auths = services;
+			  }, function(e){
+				  alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+			  } );
+		  }, false );
+    },
+>>>>>>> ad096f516d8981622dbc03bd1c0ff1740c3b50da
   }
 
 </script>

@@ -176,12 +176,36 @@
       },
       
       async getmoney () {
+        // let data = { money: 0};
+        // if(1 == 0){
+        //   alert("暂时没有可以提现的金额，加油哦！");
+        // } else {
+        //   let res = await this.$api.sendData('https://m.yixiutech.com/sql/update', {
+        //     collection:'Shop',
+				//     find: {
+				// 	    _id: '5af2b123d6877a46e32b3c1b',
+        //       pay: true,
+				//     },
+				//     update: data
+        //   });
+        //   if(res.code==200){
+        //     alert("成功");
+        //   } else {
+        //     alert("失败");
+        //   }
+        // }
+        let count = 0;
         let userLists = await this.$api.sendData('https://m.yixiutech.com/sql/find/', {
-            collection:'User',
+            collection:'Shop',
             limit: 0,
-
 		    })
-        console.log(userLists);
+        let a = userLists.data;
+        for(var x=0 ; x<a.length ;x++){
+          // console.log(x);
+          console.log(a[x].money);
+          count++;
+        }
+        
         // alert( "添加监听事件" );
 		    // var auths=null;
 	  	  // // 监听plusready事件  
