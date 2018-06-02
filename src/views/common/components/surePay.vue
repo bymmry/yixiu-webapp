@@ -1,13 +1,13 @@
 <!-- h5支付结果判断 -->
 <template>
-  <div class="surePay" ref="surePay">
+  <cube-popup ref="surePay">
     <div class="isPaySuccess">
       <ul>
         <li @click="paySuccess">支付完成</li>
-        <li>支付遇到问题，重新支付</li>
+        <li @click="rePay">支付遇到问题，重新支付</li>
       </ul>
     </div>
-  </div>
+  </cube-popup>
 </template>
 
 <script>
@@ -20,7 +20,10 @@
 
     methods: {
       paySuccess() {
-        alert(window.location.href);
+        this.$emit("hasPaySuccess",true)
+      },
+      rePay(){
+        this.$emit("hasPaySuccess",false)
       }
     }
   }

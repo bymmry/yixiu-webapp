@@ -5,7 +5,7 @@
       <sicon name="nextStep" scale="1.8"></sicon>
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
-    <!-- <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay> -->
+    <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay>
   </div>
 </template>
 
@@ -32,7 +32,9 @@
       return {
         shopServer: [],
         shopNumber: "",
-        orderId: ''
+        orderId: '',
+        orderData: '',
+        sign: ''
       }
     },
     props: {
@@ -120,6 +122,7 @@
                 // console.log(orderData.shop);
                 // console.log(this.data);
                 this.orderId = res.data._id;
+                this.orderData = orderData;
                 this._pay(orderData, res.data);
               }
             });
@@ -188,13 +191,14 @@
               trade_type: 'MWEB'
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
+            this.sign = sign.data;
             if(sign.code == 200){
-              let href = `${sign.data.result.mweb_url[0]}$redirect_url=https://m.yixiutech.com/yixiuwebapp/surePay?orderId=${res._id}`;
+              let href = sign.data.result.mweb_url[0];
               console.log(href);
               window.location.href = href;
 
-              // console.log(this.$refs.surePays.$children[0])
-              // this.$refs.surePays.$children[0].show()
+              console.log(this.$refs.surePays.$children[0])
+              this.$refs.surePays.$children[0].show()
 
             }else{
               alert(JSON.stringify(sign));
@@ -218,7 +222,14 @@
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
-            // let data = sign.data.data;
+            let data = {
+              "appId":sign.appId,     //公众号名称，由商户传入     
+              "timeStamp":sign.timeStamp,         //时间戳，自1970年以来的秒数     
+              "nonceStr":sign.nonceStr, //随机串     
+              "package":sign.package,     
+              "signType":sign.signType,         //微信签名方式：     
+              "paySign":sign.paySign //微信签名 
+            }
             // let herf = sign.result.mweb_url[0];
 
             // window.location.herf = herf;
@@ -226,7 +237,7 @@
             if (sign.code == 200) {
               function onBridgeReady() {
                 WeixinJSBridge.invoke(
-                  'getBrandWCPayRequest', sign.data,
+                  'getBrandWCPayRequest', data,
                   function (wxres) {
                     alert(wxres);
                     // alert(JSON.stringify(res));
@@ -274,9 +285,23 @@
           this.$toast("支付失败");
         }
       },
-      hasPaySuccess(){
-        this.$refs.surePays.$children[0].hide();
-        this.paySuccess(this.orderId);
+      hasPaySuccess(option){
+        if(option){
+          this.$refs.surePays.$children[0].hide();
+          this.isSurePay();
+          // this.paySuccess(this.orderId);
+          let req
+        }else{
+          this._pay(this.orderData, this.orderId);
+        }
+        
+      },
+      async isSurePay(){
+        let req = {
+          'out_trade_no': this.sign.out_trade_no
+        }
+        let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/orderquery', req);
+        alert(JSON.stringify(res));
       }
     }
   };
