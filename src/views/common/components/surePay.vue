@@ -7,6 +7,7 @@
         <li class="com" @click="paySuccess">支付完成</li>
         <li class="re" @click="rePay">支付遇到问题，重新支付</li>
       </ul>
+      <iframe v-if="mweb!= ''" :src="mweb" frameborder="0"></iframe>
     </div>
   </div>
 </template>
@@ -14,7 +15,9 @@
 <script>
   export default {
     data() {
-      return {};
+      return {
+        mweb: ''
+      };
     },
 
     components: {},
@@ -22,7 +25,7 @@
     created(){
       console.log(this.$route.params);
       let data = this.$route.params;
-      window.location.href = data.mweb;
+      this.mweb = data.mweb;
     },
 
     methods: {
