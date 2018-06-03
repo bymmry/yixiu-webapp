@@ -69,7 +69,10 @@ export default [{
   {
     path: "/shopContent",
     name: "shopContent",
-    component: shopDetail
+    component: shopDetail,
+    meta: {
+      keepAlive: true // 需要被缓存
+    }
   },
   {
     path: "/advert",
