@@ -6,7 +6,7 @@
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
     <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay>
-    <iframe v-if="isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe>
+    <iframe v-if="thePayHref == mwebUrl && isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -37,7 +37,8 @@
         orderData: '',
         sign: '',
         isShowPayFrame: false,
-        thePayHref: ''
+        thePayHref: '',
+        mwebUrl: ''
       }
     },
     props: {
@@ -198,6 +199,7 @@
             this.sign = sign.data;
             if(sign.code == 200){
               let href = `${sign.data.result.mweb_url[0]}`;
+              this.mwebUrl = href;
               // console.log(href);
               alert(href)
               
@@ -333,7 +335,7 @@
     bottom: 0;
     z-index: 9999;
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
   }
 </style>
 
