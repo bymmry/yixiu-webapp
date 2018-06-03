@@ -5,8 +5,8 @@
       <sicon name="nextStep" scale="1.8"></sicon>
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
-    <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay>
-    <iframe v-if="thePayHref == mwebUrl && isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe>
+    <!-- <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay> -->
+    <!-- <iframe v-if="thePayHref == mwebUrl && isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe> -->
   </div>
 </template>
 
@@ -35,10 +35,7 @@
         shopNumber: "",
         orderId: '',
         orderData: '',
-        sign: '',
-        isShowPayFrame: false,
-        thePayHref: '',
-        mwebUrl: ''
+        sign: ''
       }
     },
     props: {
@@ -198,17 +195,19 @@
             this.sign = sign.data;
             if(sign.code == 200){
               let href = `${sign.data.result.mweb_url[0]}`;
-              this.mwebUrl = href;
-              // console.log(href);
-              alert(href)
-              
-              this.thePayHref = href;
-              this.isShowPayFrame = true
               // window.location.href = href;
               // alert(href);
               // window.open(href)
 
-              this.$refs.surePays.$children[0].show()
+              // this.$refs.surePays.$children[0].show()
+
+              this.$router.push({
+                name: 'surePay',
+                params: {
+                  mweb: href,
+                  id: this.orderId
+                }
+              });
 
             }else{
               alert(JSON.stringify(sign));

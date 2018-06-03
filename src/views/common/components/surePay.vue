@@ -1,6 +1,6 @@
 <!-- h5支付结果判断 -->
 <template>
-  <cube-popup ref="surePay">
+  <div class="surePay" ref="surePay">
     <div class="isPaySuccess">
       <h3>请确认支付是否完成</h3>
       <ul>
@@ -8,7 +8,7 @@
         <li class="re" @click="rePay">支付遇到问题，重新支付</li>
       </ul>
     </div>
-  </cube-popup>
+  </div>
 </template>
 
 <script>
@@ -19,12 +19,18 @@
 
     components: {},
 
+    created(){
+      console.log(this.$route.params);
+      let data = this.$route.params;
+      window.location.href = data.mweb;
+    },
+
     methods: {
       paySuccess() {
-        this.$emit("hasPaySuccess",true)
+        this.$emit("hasPaySuccess", true)
       },
-      rePay(){
-        this.$emit("hasPaySuccess",false)
+      rePay() {
+        this.$emit("hasPaySuccess", false)
       }
     }
   }
@@ -32,14 +38,30 @@
 </script>
 
 <style scoped>
+  .surePay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    background: #eee;
+  }
+
   .isPaySuccess {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* background: #eee; */
     width: 60vw;
     height: 150px;
     background: #fff;
     color: #777;
     border-radius: 5px;
   }
-  .isPaySuccess h3{
+
+  .isPaySuccess h3 {
     text-align: center;
     height: 40px;
     line-height: 40px;
@@ -50,17 +72,18 @@
     text-align: center;
     border-top: 1px solid #eee;
   }
-  .isPaySuccess ul li.com{
+
+  .isPaySuccess ul li.com {
     color: red;
     height: 69px;
     line-height: 69px;
   }
-  .isPaySuccess ul li.re{
+
+  .isPaySuccess ul li.re {
     height: 39px;
     line-height: 39px;
     font-size: 13px;
   }
-  
 
 </style>
 
