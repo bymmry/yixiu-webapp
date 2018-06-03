@@ -185,7 +185,7 @@
           // alert("非小程序环境")
           if (state == 2) {
             // alert('app 网页支付')
-            let nowHref = window.location.href
+            let nowHref = encodeURIComponent(window.location.href)
 
             let req = {
               total_fee: this.TotalFee * 100,
@@ -194,7 +194,7 @@
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             this.sign = sign.data;
             if(sign.code == 200){
-              let href = sign.data.result.mweb_url[0];
+              let href = `&{sign.data.result.mweb_url[0]}redirect_url=${nowHref}`;
               // console.log(href);
               alert(href)
               window.location.href = href;
