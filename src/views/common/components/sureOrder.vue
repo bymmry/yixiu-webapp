@@ -186,7 +186,7 @@
           // alert("非小程序环境")
           if (state == 2) {
             // alert('app 网页支付')
-            alert(window.location.href);
+            // alert(window.location.href);
             let req = {
               total_fee: this.TotalFee * 100,
               trade_type: 'MWEB'
@@ -304,7 +304,7 @@
           'out_trade_no': this.sign.out_trade_no
         }
         let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/orderquery', req);
-        alert(JSON.stringify(res));
+        // alert(JSON.stringify(res));
         if(res.trade_state == 'SUCCESS'){
           this.paySuccess(this.orderId);
         }else{
