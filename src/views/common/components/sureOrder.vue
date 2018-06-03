@@ -6,6 +6,7 @@
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
     <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay>
+    <iframe v-if="isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -34,7 +35,9 @@
         shopNumber: "",
         orderId: '',
         orderData: '',
-        sign: ''
+        sign: '',
+        isShowPayFrame: false,
+        thePayHref: ''
       }
     },
     props: {
@@ -194,14 +197,16 @@
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             this.sign = sign.data;
             if(sign.code == 200){
-              let href = `${sign.data.result.mweb_url[0]}&redirect_url=${orderHref}`;
+              let href = `${sign.data.result.mweb_url[0]}`;
               // console.log(href);
               alert(href)
-              window.location.href = href;
+              
+              this.thePayHref = href;
+              this.isShowPayFrame = true
+              // window.location.href = href;
               // alert(href);
               // window.open(href)
 
-              console.log(this.$refs.surePays.$children[0])
               this.$refs.surePays.$children[0].show()
 
             }else{
@@ -320,6 +325,15 @@
   .sureOrder button span {
     vertical-align: middle;
   }
-
+  .payFrame{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+  }
 </style>
 
