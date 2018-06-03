@@ -7,7 +7,10 @@ export default[
     children: [
       {
         path: ":id", //
-        component: orderDetail
+        component: orderDetail,
+        meta: {
+          keepAlive: true // 需要被缓存
+        }
       }
     ],
     meta: {
