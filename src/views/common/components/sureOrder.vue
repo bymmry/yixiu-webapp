@@ -224,25 +224,20 @@
             }
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign', req);
 
-            let data = {
-              "appId":sign.data.appId,     //公众号名称，由商户传入     
-              "timeStamp":sign.data.timeStamp,         //时间戳，自1970年以来的秒数     
-              "nonceStr":sign.data.nonceStr, //随机串     
-              "package":sign.data.package,     
-              "signType":sign.data.signType,         //微信签名方式：     
-              "paySign":sign.data.paySign //微信签名 
-            }
-            alert(JSON.stringify(sign))
-            // let herf = sign.result.mweb_url[0];
-
-            // window.location.herf = herf;
-
             if (sign.code == 200) {
+              let data = {
+                "appId":sign.data.appId,     //公众号名称，由商户传入     
+                "timeStamp":sign.data.timeStamp,         //时间戳，自1970年以来的秒数     
+                "nonceStr":sign.data.nonceStr, //随机串     
+                "package":sign.data.package,     
+                "signType":sign.data.signType,         //微信签名方式：     
+                "paySign":sign.data.paySign //微信签名 
+              }
+
               function onBridgeReady() {
                 WeixinJSBridge.invoke(
                   'getBrandWCPayRequest', data,
                   function (wxres) {
-                    alert(wxres);
                     // alert(JSON.stringify(res));
                     // alert(JSON.stringify(payInfo));
                     if (wxres.err_msg == "get_brand_wcpay_request:ok") {
