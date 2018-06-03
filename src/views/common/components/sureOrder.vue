@@ -304,12 +304,15 @@
           'out_trade_no': this.sign.out_trade_no
         }
         let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/orderquery', req);
-        // alert(JSON.stringify(res));
-        if(res.trade_state == 'SUCCESS'){
-          this.paySuccess(this.orderId);
-        }else{
-          this.toast("支付失败！");
+        if(res.code == 200){
+          if(res.data.xml.trade_state == 'SUCCESS'){
+            this.paySuccess(this.orderId);
+          }else{
+            this.toast("支付失败！");
+          }
         }
+        // alert(JSON.stringify(res));
+        
 
       }
     }
