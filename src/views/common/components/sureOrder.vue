@@ -194,7 +194,7 @@
             let sign = await this.$api.sendData('https://m.yixiutech.com/wx/pay/sign2', req);
             this.sign = sign.data;
             if(sign.code == 200){
-              let href = `&{sign.data.result.mweb_url[0]}redirect_url=${nowHref}`;
+              let href = `&{sign.data.result.mweb_url[0]}&redirect_url=${nowHref}`;
               // console.log(href);
               alert(href)
               window.location.href = href;
