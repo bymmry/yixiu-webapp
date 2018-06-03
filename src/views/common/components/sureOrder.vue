@@ -305,7 +305,7 @@
         }
         let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/orderquery', req);
         alert(JSON.stringify(res));
-        if(res.trade_state == ''){
+        if(res.trade_state == 'SUCCESS'){
           this.paySuccess(this.orderId);
         }else{
           this.toast("支付失败！");
