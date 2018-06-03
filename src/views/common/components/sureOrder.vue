@@ -5,13 +5,13 @@
       <sicon name="nextStep" scale="1.8"></sicon>
       <span>提交订单￥{{this.TotalFee}}</span>
     </van-button>
-    <!-- <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay> -->
+    <sure-pay v-on:hasPaySuccess="hasPaySuccess" ref="surePays"></sure-pay>
     <!-- <iframe v-if="thePayHref == mwebUrl && isShowPayFrame" class="payFrame" :src="thePayHref" frameborder="0"></iframe> -->
   </div>
 </template>
 
 <script>
-  import surePay from './surePay.vue';
+  import surePay from './surePayPoup.vue';
   import wx from "weixin-js-sdk";
   import {
     Toast,
@@ -199,7 +199,7 @@
               // alert(href);
               // window.open(href)
 
-              // this.$refs.surePays.$children[0].show()
+              this.$refs.surePays.$children[0].show()
 
               this.$router.push({
                 name: 'surePay',
