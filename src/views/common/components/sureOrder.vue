@@ -294,7 +294,6 @@
         if(option){
           this.$refs.surePays.$children[0].hide();
           this.isSurePay();
-          // this.paySuccess(this.orderId);
         }else{
           this._pay(this.orderData, this.orderId);
         }
@@ -306,6 +305,12 @@
         }
         let res = await this.$api.sendData('https://m.yixiutech.com/wx/pay/orderquery', req);
         alert(JSON.stringify(res));
+        if(res.trade_state == ''){
+          this.paySuccess(this.orderId);
+        }else{
+          this.toast("支付失败！");
+        }
+
       }
     }
   };
